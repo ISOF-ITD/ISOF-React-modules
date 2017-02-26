@@ -6,6 +6,8 @@ export default class PlaceView extends React.Component {
 	constructor(props) {
 		super(props);
 
+		console.log('ISOF: PlaceView')
+
 		window.placeView = this;
 
 		this.state = {

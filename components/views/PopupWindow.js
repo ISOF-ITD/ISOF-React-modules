@@ -1,8 +1,6 @@
 import React from 'react';
 import { hashHistory } from 'react-router';
 
-import routeHelper from './../utils/routeHelper';
-
 export default class PopupWindow extends React.Component {
 	constructor(props) {
 		super(props);
@@ -15,7 +13,9 @@ export default class PopupWindow extends React.Component {
 	}
 
 	closeButtonClick() {
-		hashHistory.push(routeHelper.createPlacesPathFromPlace(hashHistory.getCurrentLocation().pathname));
+		if (this.props.onClose) {
+			this.props.onClose();
+		}
 	}
 
 	componentWillReceiveProps(props) {

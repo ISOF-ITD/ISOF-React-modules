@@ -2,12 +2,12 @@ import React from 'react';
 
 import L from 'leaflet';
 import 'leaflet.markercluster';
-import './../lib/leaflet-heat';
+import './../../lib/leaflet-heat';
 import 'leaflet.vectorgrid';
 import _ from 'underscore';
 
 import MapCollection from './../collections/MapCollection';
-import mapHelper from './../utils/mapHelper';
+import mapHelper from './../../utils/mapHelper';
 
 export default class MapView extends React.Component {
 

@@ -5,7 +5,7 @@ import 'leaflet.markercluster';
 import _ from 'underscore';
 
 import MapCollection from './../collections/MapCollection';
-import mapHelper from './../utils/mapHelper';
+import mapHelper from './../../utils/mapHelper';
 
 export default class SimpleMap extends React.Component {
 
