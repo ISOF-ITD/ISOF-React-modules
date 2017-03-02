@@ -22,7 +22,6 @@ export default class RecordList extends React.Component {
 	}
 
 	componentDidMount() {
-		console.log(this.props)
 		this.fetchData(this.props);
 	}
 

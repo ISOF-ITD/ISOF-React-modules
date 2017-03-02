@@ -354,6 +354,12 @@ export default {
 		},
 */
 		{
+			label: 'ESRI Gray',
+			url: 'http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+			attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+			maxZoom: 16
+		},
+		{
 			label: 'Open Map Surfer',
 			url: 'http://korona.geog.uni-heidelberg.de/tiles/roads/x={x}&y={y}&z={z}',
 			maxZoom: 20,
@@ -376,12 +382,6 @@ export default {
 			url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
 			maxZoom: 18,
 			attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-		},
-		{
-			label: 'ESRI Gray',
-			url: 'http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
-			attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
-			maxZoom: 16
 		},
 		{
 			label: 'Sverige Socken',
