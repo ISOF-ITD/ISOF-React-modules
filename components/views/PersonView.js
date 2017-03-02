@@ -8,7 +8,8 @@ export default class PersonView extends React.Component {
 		super(props);
 
 		this.state = {
-			data: {}
+			data: {},
+			personId: null
 		};
 
 		this.url = 'http://www4.sprakochfolkminnen.se/sagner/api/person/';
@@ -16,11 +17,21 @@ export default class PersonView extends React.Component {
 
 	componentDidMount() {
 		this.fetchData(this.props.params);
+
+		if (this.props.params.person_id) {
+			this.setState({
+				personId: this.props.params.person_id
+			});
+		}
 	}
 
 	componentWillReceiveProps(props) {
 		if (props.params.person_id != this.props.params.person_id) {
 			this.fetchData(props.params);
+
+			this.setState({
+				personId: props.params.person_id
+			});
 		}
 	}
 
@@ -107,23 +118,7 @@ export default class PersonView extends React.Component {
 					<div className="twelve columns">
 						<h4>Uppteckningar</h4>
 
-						<div className="table-wrapper person-records-container">
-							<table className="table-responsive" width="100%">
-								<thead>
-									<tr>
-										<th scope="col">Titel</th>
-										<th scope="col">Kategori</th>
-										<th scope="col">Socken, Landskap</th>
-										<th scope="col">Roll</th>
-										<th scope="col">Uppteckningsår</th>
-										<th scope="col">Materialtyp</th>
-									</tr>
-								</thead>
-								<tbody>
-									{recordItems}
-								</tbody>
-							</table>
-						</div>
+						<RecordList person={this.state.personId} />
 
 					</div>
 				</div>

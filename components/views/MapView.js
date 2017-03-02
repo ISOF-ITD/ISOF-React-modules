@@ -36,7 +36,7 @@ export default class MapView extends React.Component {
 			layers: [layers[Object.keys(layers)[0]]],
 			scrollWheelZoom: true
 		});
-
+/*
 		this.vectorGridLayer = L.vectorGrid.protobuf('http://localhost:8084/geoserver/gwc/service/wmts?REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&LAYER=sverige_socken_sweref:se_socken_clipped&STYLE=&TILEMATRIX=EPSG:900913:{z}&TILEMATRIXSET=EPSG:900913&FORMAT=application/x-protobuf;type=mapbox-vector&TILECOL={x}&TILEROW={y}', {
 			interactive: true,
 			vectorTileLayerStyles: {
@@ -82,7 +82,7 @@ export default class MapView extends React.Component {
 		});
 
 		this.vectorGridLayer.addTo(this.map);
-
+*/
 		L.control.layers(layers).addTo(this.map);
 
 		this.setViewmode('clusters');
@@ -226,6 +226,10 @@ export default class MapView extends React.Component {
 				return [mapItem.lat, mapItem.lng, mapItem.c];
 			}.bind(this));
 			this.markers.setLatLngs(latLngs);
+		}
+
+		if (this.props.onMapUpdate) {
+			this.props.onMapUpdate();
 		}
 	}
 

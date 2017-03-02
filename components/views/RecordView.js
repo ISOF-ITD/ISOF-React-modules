@@ -71,7 +71,7 @@ export default class RecordView extends React.Component {
 					<div className="twelve columns">
 						<h2>{this.state.data.title}<br/>
 							<span className="lighter">
-								Materialtyp: {this.state.data.type == 'arkiv' ? 'Arkiv' : this.state.data.type == 'register' ? 'Register' : this.state.data.type == 'tryckt' ? 'Tryckt' : '' }
+								Materialtyp: {this.state.data.type}
 							</span>
 						</h2>
 					</div>
@@ -80,7 +80,7 @@ export default class RecordView extends React.Component {
 				<div className="row">
 
 					<div className="six columns">
-						<p>{this.state.data.text}</p>
+						<p dangerouslySetInnerHTML={{__html: this.state.data.text}} />
 
 						{
 							this.state.data.comment && this.state.data.comment != '' &&

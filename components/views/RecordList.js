@@ -22,6 +22,8 @@ export default class RecordList extends React.Component {
 	}
 
 	componentDidMount() {
+		console.log('RecordList: componentDidMount');
+		console.log(this.props);
 		this.fetchData(this.props);
 	}
 
@@ -83,41 +85,27 @@ export default class RecordList extends React.Component {
 		}.bind(this)) : [];
 
 		return (
-			<div className="search-results-wrapper">
-				<a className="search-results-button visible"><strong>Visa sökträffar som lista</strong></a>
+			<div className="table-wrapper list-container">
 
-				<div className="container-wrapper">
-					<div className="container">
+				<table width="100%" className="table-responsive">
+					<thead>
+						<tr>
+							<th scope="col">Titel</th>
+							<th scope="col">Kategori</th>
+							<th scope="col">Socken, Landskap</th>
+							<th scope="col">Uppteckningsår</th>
+							<th scope="col">Materialtyp</th>
+						</tr>
+					</thead>
+					<tbody>
+						{items}
+					</tbody>
+				</table>
 
-						<div className="row">
-							<h2>Sökträffar som lista</h2>
-							<div className="records-list-wrapper">
-								<div className="table-wrapper list-container">
 
-									<table width="100%" className="table-responsive">
-										<thead>
-											<tr>
-												<th scope="col">Titel</th>
-												<th scope="col">Kategori</th>
-												<th scope="col">Socken, Landskap</th>
-												<th scope="col">Uppteckningsår</th>
-												<th scope="col">Materialtyp</th>
-											</tr>
-										</thead>
-										<tbody>
-											{items}
-										</tbody>
-									</table>
-
-								</div>
-
-								<div className="pagination">
-									<p className="page-info"></p>
-									<a className="button prev-button" onClick={this.prevPage}>Föregående</a> <a className="button next-button" onClick={this.nextPage}>Nästa</a>
-								</div>
-							</div>
-						</div>
-					</div>
+				<div className="pagination">
+					<p className="page-info"></p>
+					<a className="button prev-button" onClick={this.prevPage}>Föregående</a> <a className="button next-button" onClick={this.nextPage}>Nästa</a>
 				</div>
 			</div>
 		);

@@ -78,7 +78,7 @@ export default class PlaceView extends React.Component {
 		
 				<div className="row">
 					<div className="twelve columns">
-						<h2>{this.state.data.name}</h2>
+						<h1>{this.state.data.name}</h1>
 						<p><strong>Härad</strong>: {this.state.data.harad}, <strong>Län</strong>: {this.state.data.county}, <strong>Landskap</strong>: {this.state.data.landskap}</p>
 					</div>
 				</div>
@@ -91,7 +91,7 @@ export default class PlaceView extends React.Component {
 
 				<div className="row search-results-container">
 					<div className="twelve columns">
-						<h4>Sökträffar</h4>
+						<h2>Sökträffar</h2>
 						<div className="records-list-container"></div>
 					</div>
 				</div>
@@ -100,7 +100,7 @@ export default class PlaceView extends React.Component {
 
 					<div className="row">
 						<div className="twelve columns">
-							<h4>Intervjuade personer</h4>
+							<h2>Intervjuade personer</h2>
 
 							<div className="table-wrapper">
 								<table width="100%">
