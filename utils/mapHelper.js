@@ -3,6 +3,8 @@ import turfInside from 'turf-inside';
 import L from 'leaflet';
 import Proj from 'proj4leaflet';
 
+import config from './../../scripts/config.js';
+
 const swedenBorder = {
 	"features": [
 		{
@@ -327,8 +329,8 @@ const swedenBorder = {
 
 export default {
 	markerIcon: L.icon({
-		iconUrl: 'img/map-marker.png',
-		shadowUrl: 'img/map-marker-shadow.png',
+		iconUrl: config.siteUrl+'img/map-marker.png',
+		shadowUrl: config.siteUrl+'img/map-marker-shadow.png',
 
 		iconSize:     [15, 23], // size of the icon
 		shadowSize:   [14, 10], // size of the shadow
@@ -338,7 +340,7 @@ export default {
 	}),
 
 	orangeIcon: L.icon({
-		iconUrl: 'img/marker-orange.png',
+		iconUrl: config.siteUrl+'img/marker-orange.png',
 		iconSize: [27, 27],
 		iconAnchor: [15, 15],
 		popupAnchor: [0, 0]

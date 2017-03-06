@@ -3,6 +3,8 @@ import React from 'react';
 import SimpleMap from './SimpleMap';
 import RecordList from './RecordList';
 
+import config from './../../../scripts/config.js';
+
 export default class PersonView extends React.Component {
 	constructor(props) {
 		super(props);
@@ -12,7 +14,7 @@ export default class PersonView extends React.Component {
 			personId: null
 		};
 
-		this.url = 'http://www4.sprakochfolkminnen.se/sagner/api/person/';
+		this.url = config.apiUrl+'person/';
 	}
 
 	componentDidMount() {

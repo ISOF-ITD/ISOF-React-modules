@@ -1,5 +1,7 @@
 import React from 'react';
 
+import config from './../../../scripts/config.js';
+
 export default class RecordView extends React.Component {
 	constructor(props) {
 		super(props);
@@ -8,7 +10,7 @@ export default class RecordView extends React.Component {
 			data: {}
 		};
 
-		this.url = 'http://www4.sprakochfolkminnen.se/sagner/api/record/';
+		this.url = config.apiUrl+'record/';
 	}
 
 	componentDidMount() {

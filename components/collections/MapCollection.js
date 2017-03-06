@@ -1,11 +1,11 @@
 import 'whatwg-fetch';
 import _ from 'underscore';
 
-const baseUrl = 'http://www4.sprakochfolkminnen.se/sagner/api/locations/';
+import config from './../../../scripts/config.js';
 
 export default class MapCollection {
 	constructor(onComplete) {
-		this.url = baseUrl;
+		this.url = config.apiUrl+'locations/';
 		this.onComplete = onComplete;
 	}
 

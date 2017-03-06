@@ -2,6 +2,8 @@ import React from 'react';
 
 import SimpleMap from './SimpleMap';
 
+import config from './../../../scripts/config.js';
+
 export default class PlaceView extends React.Component {
 	constructor(props) {
 		super(props);
@@ -15,7 +17,7 @@ export default class PlaceView extends React.Component {
 			placeMarker: {}
 		};
 
-		this.url = 'http://www4.sprakochfolkminnen.se/sagner/api/place/';
+		this.url = config.apiUrl+'place/';
 	}
 
 	componentDidMount() {

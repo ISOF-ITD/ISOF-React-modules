@@ -1,10 +1,11 @@
 import 'whatwg-fetch';
 import _ from 'underscore';
 
-const baseUrl = 'http://www4.sprakochfolkminnen.se/sagner/api/records/';
+import config from './../../../scripts/config.js';
 
 export default class RecordsCollection {
 	constructor(onComplete) {
+		this.url = config.apiUrl+'records/';
 		this.url = baseUrl;
 		this.onComplete = onComplete;
 	}
