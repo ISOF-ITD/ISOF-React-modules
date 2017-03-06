@@ -29,7 +29,7 @@ export default class MapCollection {
 			paramString += key+'/'+params[key]+'/';
 		}
 
-		fetch(this.url+'/'+paramString)
+		fetch(this.url+paramString)
 			.then(function(response) {
 				return response.json()
 			}).then(function(json) {

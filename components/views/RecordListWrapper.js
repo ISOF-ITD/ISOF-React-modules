@@ -25,6 +25,8 @@ export default class RecordListWrapper extends React.Component {
 							<h2>Sökträffar som lista</h2>
 							<div className="records-list-wrapper">
 								<RecordList 
+									search={this.props.params.search || null} 
+									search_field={this.props.params.search_field || null} 
 									type={this.props.params.type || null} 
 									category={this.props.params.category || null} 
 									person={this.props.params.person || null}

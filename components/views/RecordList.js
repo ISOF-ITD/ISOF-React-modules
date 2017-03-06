@@ -22,8 +22,6 @@ export default class RecordList extends React.Component {
 	}
 
 	componentDidMount() {
-		console.log('RecordList: componentDidMount');
-		console.log(this.props);
 		this.fetchData(this.props);
 	}
 
@@ -61,6 +59,8 @@ export default class RecordList extends React.Component {
 	fetchData(params) {
 		this.collections.fetch({
 			page: this.currentPage,
+			search: params.search || null,
+			search_field: params.search_field || null,
 			type: params.type || null,
 			category: params.category || null,
 			person: params.person || null

@@ -25,15 +25,21 @@ export default class PopupWindow extends React.Component {
 	}
 
 	componentWillUnmount() {
-		document.body.classList.remove('has-overlay');
+		if (this.props.onHide) {
+			this.props.onHide();
+		}
 	}
 
 	render() {
 		if (this.state.windowOpen) {
-			document.body.classList.add('has-overlay');
+			if (this.props.onShow) {
+				this.props.onShow();
+			}
 		}
 		else {
-			document.body.classList.remove('has-overlay');
+			if (this.props.onHide) {
+				this.props.onHide();
+			}
 		}
 
 		return (

@@ -22,7 +22,6 @@ export default class RecordView extends React.Component {
 	}
 
 	fetchData(params) {
-		console.log('PersonView: fetchData');
 		if (params.record_id) {
 			fetch(this.url+params.record_id)
 				.then(function(response) {

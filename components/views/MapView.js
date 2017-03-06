@@ -3,7 +3,7 @@ import React from 'react';
 import L from 'leaflet';
 import 'leaflet.markercluster';
 import './../../lib/leaflet-heat';
-import 'leaflet.vectorgrid';
+//import 'leaflet.vectorgrid';
 import _ from 'underscore';
 
 import MapCollection from './../collections/MapCollection';
@@ -16,9 +16,13 @@ export default class MapView extends React.Component {
 
 		window.mapView = this;
 
-		window.L = L;
+		this.state = {
+			viewMode: 'clusters'
+		};
 
 		this.mapData = [];
+
+		this.changeViewMode = this.changeViewMode.bind(this);
 
 		this.collections = new MapCollection(function(json) {
 			this.mapData = json.data || [];
@@ -83,9 +87,11 @@ export default class MapView extends React.Component {
 
 		this.vectorGridLayer.addTo(this.map);
 */
-		L.control.layers(layers).addTo(this.map);
+		L.control.layers(layers, null, {
+			position: 'topleft'
+		}).addTo(this.map);
 
-		this.setViewmode('clusters');
+//		this.setViewmode('clusters');
 
 		this.fetchData(this.props.searchParams);
 	}
@@ -109,72 +115,96 @@ export default class MapView extends React.Component {
 	fetchData(params) {
 		if (params) {
 			this.collections.fetch({
+				search: params.search || null,
+				search_field: params.search_field || null,
 				type: params.type || 'arkiv;tryckt',
 				category: params.category
 			});
 		}
 	}
 
+	changeViewMode(event) {
+		this.setViewmode(event.target.dataset.viewmode);
+	}
+
 	setViewmode(viewMode) {
-		if (viewMode != this.viewMode) {
-			this.viewMode = viewMode;
-
-			if (this.markers) {
-				if (this.markers.clearLayers) {
-					this.markers.clearLayers();
-				}
-
-				this.map.removeLayer(this.markers);
-			}
-
-			switch (this.viewMode) {
-				case 'markers':
-					this.markers = L.featureGroup();
-					this.map.addLayer(this.markers);
-					break;
-				case 'clusters':
-					this.markers = new L.MarkerClusterGroup({
-						showCoverageOnHover: false,
-						maxClusterRadius: 40,
-						iconCreateFunction: function (cluster) {
-							var childCount = cluster.getChildCount();
-							var c = ' marker-cluster-';
-							if (childCount < 10) {
-								c += 'small';
-							} else if (childCount < 20) {
-								c += 'medium';
-							} else {
-								c += 'large';
-							}
-							return new L.DivIcon({
-								html: '<div><span>'+
-									'<b>'+childCount+'</b>'+
-									'</span></div>',
-								className: 'marker-cluster'+c,
-								iconSize: new L.Point(24, 24)
-							});
-						}
-					});
-					this.map.addLayer(this.markers);
-					break;
-				case 'heatmap':
-					this.markers = L.heatLayer([], {
-						minOpacity: 0.35,
-						radius: 18,
-						blur: 15
-					});
-					this.markers.addTo(this.map);
-			}
+		if (viewMode != this.state.viewMode) {
+			this.setState({
+				viewMode: viewMode
+			});
 
 			if (this.mapData.length > 0) {
-				this.updateMap();
+				setTimeout(function() {
+					this.createLayers();
+
+					this.updateMap();
+				}.bind(this), 50);
 			}
 		}
 	}
 
+	createLayers() {
+		console.log('MapView: createLayers');
+		if (this.markers) {
+			if (this.markers.clearLayers) {
+				this.markers.clearLayers();
+			}
+
+			this.map.removeLayer(this.markers);
+		}
+
+		switch (this.state.viewMode) {
+			case 'markers':
+				this.markers = L.featureGroup();
+				this.map.addLayer(this.markers);
+				break;
+			case 'clusters':
+				this.markers = new L.MarkerClusterGroup({
+					showCoverageOnHover: false,
+					maxClusterRadius: 40,
+					iconCreateFunction: function (cluster) {
+						var childCount = cluster.getChildCount();
+						var c = ' marker-cluster-';
+						if (childCount < 10) {
+							c += 'small';
+						} else if (childCount < 20) {
+							c += 'medium';
+						} else {
+							c += 'large';
+						}
+						return new L.DivIcon({
+							html: '<div><span>'+
+								'<b>'+childCount+'</b>'+
+								'</span></div>',
+							className: 'marker-cluster'+c,
+							iconSize: new L.Point(24, 24)
+						});
+					}
+				});
+				this.map.addLayer(this.markers);
+				break;
+			case 'heatmap':
+				this.markers = L.heatLayer([], {
+					minOpacity: 0.35,
+					radius: 18,
+					blur: 15
+				});
+				this.markers.addTo(this.map);
+		}
+	}
+
 	updateMap() {
-		if (this.viewMode == 'markers' || this.viewMode == 'clusters') {			
-			this.markers.clearLayers();
+		console.log('MapView: updateMap');
+		console.log('state.viewMode: '+this.state.viewMode);
+		console.log(this.markers);
+
+		if (this.state.viewMode == 'markers' || this.state.viewMode == 'clusters') {
+			if (this.markers) {
+				this.markers.clearLayers();
+			}
+			else {
+				this.createLayers();
+			}
 
 			if (this.mapData.length > 0) {
 				var bounds = [];
@@ -221,7 +251,7 @@ export default class MapView extends React.Component {
 				});
 			}
 		}
-		if (this.viewMode == 'heatmap') {
+		if (this.state.viewMode == 'heatmap') {
 			var latLngs = _.map(this.mapData, function(mapItem) {
 				return [mapItem.lat, mapItem.lng, mapItem.c];
 			}.bind(this));
@@ -236,6 +266,13 @@ export default class MapView extends React.Component {
 	render() {
 		return (
 			<div className="map-wrapper">
+				{this.props.children}
+
+				<div className="map-viewmode-menu">
+					<a className={'icon-marker'+(this.state.viewMode == 'clusters' ? ' selected' : '')} data-viewmode="clusters" onClick={this.changeViewMode}><span>Cluster</span></a>
+					<a className={'icon-heatmap'+(this.state.viewMode == 'heatmap' ? ' selected' : '')} data-viewmode="heatmap" onClick={this.changeViewMode}><span>Heatmap</span></a>
+				</div>
+
 				<div className="map-view" ref="mapView"></div>
 			</div>
 		);

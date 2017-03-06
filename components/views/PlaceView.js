@@ -42,13 +42,6 @@ export default class PlaceView extends React.Component {
 				})
 			;
 		}
-
-		console.log('PlaceView: fetchData');
-		console.log(params);
-
-		if ((params.type && params.type != '') || (params.category && params.category != '')) {
-			fetch(this.url)
-		}
 	}
 
 	render() {
