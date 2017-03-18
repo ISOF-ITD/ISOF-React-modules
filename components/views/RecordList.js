@@ -16,7 +16,9 @@ export default class RecordList extends React.Component {
 
 		this.collections = new RecordsCollection(function(json) {
 			this.setState({
-				records: json.data
+				records: json.data,
+				total: json.metadata.total,
+				currentPage: this.currentPage
 			});
 		}.bind(this));
 	}
@@ -37,7 +39,10 @@ export default class RecordList extends React.Component {
 		}
 		
 		if (JSON.stringify(currentParams) !== JSON.stringify(params)) {
-			if (currentParams.type != params.type ||currentParams.category != params.category) {
+			if (currentParams.type != params.type || 
+					currentParams.category != params.category || 
+					currentParams.person != params.person || 
+					currentParams.recordPlace != params.recordPlace) {
 				this.currentPage = 1;
 			}
 			this.fetchData(params);
@@ -45,26 +50,27 @@ export default class RecordList extends React.Component {
 	}
 
 	nextPage() {
-		console.log('next page');
 		this.currentPage += 1;
 		this.fetchData(this.props);
 	}
 	
 	prevPage() {
-		console.log('prev page');
 		this.currentPage -= 1;
 		this.fetchData(this.props);
 	}
 	
 	fetchData(params) {
-		this.collections.fetch({
-			page: this.currentPage,
-			search: params.search || null,
-			search_field: params.search_field || null,
-			type: params.type || null,
-			category: params.category || null,
-			person: params.person || null
-		});
+		if (params.search || params.type || params.category || params.person || params.recordPlace ) {
+			this.collections.fetch({
+				page: this.currentPage,
+				search: params.search || null,
+				search_field: params.search_field || null,
+				type: params.type || null,
+				category: params.category || null,
+				person: params.person || null,
+				record_place: params.recordPlace || null
+			});
+		}
 	}
 
 	render() {
@@ -75,7 +81,7 @@ export default class RecordList extends React.Component {
 				<td data-title="Socken, Landskap:">
 				{
 					item.places &&
-					<span>{item.places[0].name+', '+item.places[0].landskap}</span>
+					<a href={'#place/'+item.places[0].id}>{item.places[0].name+', '+item.places[0].landskap}</a>
 				}
 				</td>
 				<td data-title="Uppteckningsår:">{item.year > 0 ? item.year : ''}</td>
@@ -105,7 +111,9 @@ export default class RecordList extends React.Component {
 
 				<div className="pagination">
 					<p className="page-info"></p>
-					<a className="button prev-button" onClick={this.prevPage}>Föregående</a> <a className="button next-button" onClick={this.nextPage}>Nästa</a>
+					<button disabled={this.state.currentPage == 1} className="button prev-button" onClick={this.prevPage}>Föregående</button>
+					<span> </span>
+					<button disabled={this.state.total <= this.state.currentPage*50} className="button next-button" onClick={this.nextPage}>Nästa</button>
 				</div>
 			</div>
 		);

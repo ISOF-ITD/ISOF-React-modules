@@ -1,5 +1,6 @@
 import React from 'react';
 
+import RecordList from './RecordList';
 import SimpleMap from './SimpleMap';
 
 import config from './../../../scripts/config.js';
@@ -22,6 +23,27 @@ export default class PlaceView extends React.Component {
 
 	componentDidMount() {
 		this.fetchData(this.props.params);
+		console.log('PlaceView: componentDidMount');
+		console.log(this.props.params);
+
+		var state = {};
+		if (this.props.params.category) {
+			state['category'] = this.props.params.category;
+		}
+		if (this.props.params.type) {
+			state['type'] = this.props.params.type;
+		}
+		if (this.props.params.place_id) {
+			state['recordPlace'] = this.props.params.place_id;
+		}
+		if (this.props.params.search) {
+			state['searchQuery'] = this.props.params.search;
+		}
+		if (this.props.params.search_field) {
+			state['searchField'] = this.props.params.search_field;
+		}
+		this.setState(state);
+
 	}
 
 	componentWillReceiveProps(props) {
@@ -87,7 +109,9 @@ export default class PlaceView extends React.Component {
 				<div className="row search-results-container">
 					<div className="twelve columns">
 						<h2>Sökträffar</h2>
-						<div className="records-list-container"></div>
+
+						<RecordList category={this.state.category} type={this.state.type} recordPlace={this.state.recordPlace} search={this.state.searchQuery} search_field={this.state.searchField} />
+
 					</div>
 				</div>
 

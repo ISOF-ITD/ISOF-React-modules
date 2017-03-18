@@ -6,12 +6,11 @@ import config from './../../../scripts/config.js';
 export default class RecordsCollection {
 	constructor(onComplete) {
 		this.url = config.apiUrl+'records/';
-		this.url = baseUrl;
 		this.onComplete = onComplete;
 	}
 
 	fetch(params) {
-		var page = params.page ? params.page-1 : 0;
+		var page = params.page ? (params.page-1)*50 : 0;
 
 		var paramString = '';
 

@@ -118,7 +118,11 @@ export default class MapView extends React.Component {
 				search: params.search || null,
 				search_field: params.search_field || null,
 				type: params.type || 'arkiv;tryckt',
-				category: params.category
+				category: params.category,
+				year_from: params.year_from || null,
+				year_to: params.year_to || null,
+				person_relation: params.person_relation || null,
+				gender: params.gender || null
 			});
 		}
 	}
@@ -144,7 +148,6 @@ export default class MapView extends React.Component {
 	}
 
 	createLayers() {
-		console.log('MapView: createLayers');
 		if (this.markers) {
 			if (this.markers.clearLayers) {
 				this.markers.clearLayers();
@@ -155,6 +158,10 @@ export default class MapView extends React.Component {
 
 		switch (this.state.viewMode) {
 			case 'markers':
+				this.markers = L.featureGroup();
+				this.map.addLayer(this.markers);
+				break;
+			case 'circles':
 				this.markers = L.featureGroup();
 				this.map.addLayer(this.markers);
 				break;
@@ -190,14 +197,17 @@ export default class MapView extends React.Component {
 					blur: 15
 				});
 				this.markers.addTo(this.map);
+			case 'heatmap-count':
+				this.markers = L.heatLayer([], {
+					minOpacity: 0.35,
+					radius: 18,
+					blur: 15
+				});
+				this.markers.addTo(this.map);
 		}
 	}
 
 	updateMap() {
-		console.log('MapView: updateMap');
-		console.log('state.viewMode: '+this.state.viewMode);
-		console.log(this.markers);
-
 		if (this.state.viewMode == 'markers' || this.state.viewMode == 'clusters') {
 			if (this.markers) {
 				this.markers.clearLayers();
@@ -251,7 +261,77 @@ export default class MapView extends React.Component {
 				});
 			}
 		}
+		if (this.state.viewMode == 'circles') {
+			if (this.markers) {
+				this.markers.clearLayers();
+			}
+			else {
+				this.createLayers();
+			}
+
+			if (this.mapData.length > 0) {
+				var bounds = [];
+				
+				var minValue = _.min(this.mapData, function(mapItem) {
+					return Number(mapItem.c);
+				}).c;
+
+				var maxValue = _.max(this.mapData, function(mapItem) {
+					return Number(mapItem.c);
+				}).c;
+
+				_.each(this.mapData, function(mapItem) {
+					if (mapItem.lat && mapItem.lng) {
+						var marker = L.circleMarker([mapItem.lat, mapItem.lng], {
+							radius: ((mapItem.c/maxValue)*20)+2,
+							fillColor: "#b62837",
+							fillOpacity: 0.4,
+							color: '#000',
+							weight: 0.8
+						});
+
+						marker.on('click', function(event) {
+							if (this.props.onMarkerClick) {
+								this.props.onMarkerClick(mapItem.id);
+							}
+						}.bind(this));
+
+						this.markers.addLayer(marker);
+					}
+				}.bind(this));
+/*
+				if (this.legendsEl) {
+					var template = _.template($("#mapLegendsTemplate").html());
+					this.legendsEl.html(template({
+						minValue: Number(minValue),
+						maxValue: Number(maxValue)
+					}));
+					this.legendsEl.addClass('visible');
+				}
+*/
+			}
+		}
 		if (this.state.viewMode == 'heatmap') {
+			var latLngs = _.map(this.mapData, function(mapItem) {
+				return [mapItem.lat, mapItem.lng, 0.5];
+			}.bind(this));
+			this.markers.setLatLngs(latLngs);
+		}
+		if (this.state.viewMode == 'heatmap-count') {
+			this.map.removeLayer(this.markers);
+
+			var maxCount = _.max(this.mapData, function(mapItem) {
+				return Number(mapItem.c);
+			}).c;
+
+			this.markers = L.heatLayer([], {
+				minOpacity: 0.35,
+				radius: 18,
+				blur: 15,
+				max: maxCount
+			});
+			this.markers.addTo(this.map);
+
 			var latLngs = _.map(this.mapData, function(mapItem) {
 				return [mapItem.lat, mapItem.lng, mapItem.c];
 			}.bind(this));
@@ -263,6 +343,10 @@ export default class MapView extends React.Component {
 		}
 	}
 
+	shouldComponentUpdate() {
+		return false;
+	}
+
 	render() {
 		return (
 			<div className="map-wrapper">
@@ -271,6 +355,8 @@ export default class MapView extends React.Component {
 				<div className="map-viewmode-menu">
 					<a className={'icon-marker'+(this.state.viewMode == 'clusters' ? ' selected' : '')} data-viewmode="clusters" onClick={this.changeViewMode}><span>Cluster</span></a>
 					<a className={'icon-heatmap'+(this.state.viewMode == 'heatmap' ? ' selected' : '')} data-viewmode="heatmap" onClick={this.changeViewMode}><span>Heatmap</span></a>
+					<a className={'icon-heatmap'+(this.state.viewMode == 'heatmap-count' ? ' selected' : '')} data-viewmode="heatmap-count" onClick={this.changeViewMode}><span>Heatmap</span></a>
+					<a className={(this.state.viewMode == 'circles' ? ' selected' : '')} data-viewmode="circles" onClick={this.changeViewMode}><span>Circles</span></a>
 				</div>
 
 				<div className="map-view" ref="mapView"></div>
