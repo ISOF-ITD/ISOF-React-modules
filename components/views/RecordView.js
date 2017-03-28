@@ -1,13 +1,17 @@
 import React from 'react';
 
 import config from './../../../scripts/config.js';
+import localLibrary from './../../utils/localLibrary.js';
 
 export default class RecordView extends React.Component {
 	constructor(props) {
 		super(props);
 
+		this.toggleSaveRecord = this.toggleSaveRecord.bind(this);
+
 		this.state = {
-			data: {}
+			data: {},
+			saved: false
 		};
 
 		this.url = config.apiUrl+'record/';
@@ -23,6 +27,26 @@ export default class RecordView extends React.Component {
 		}
 	}
 
+	toggleSaveRecord() {
+		var libraryItem = {
+			id: this.state.data.id,
+			title: this.state.data.title
+		};
+
+		if (!localLibrary.find(libraryItem)) {
+			localLibrary.add(libraryItem);
+			this.setState({
+				saved: true
+			});
+		}
+		else {
+			localLibrary.remove(libraryItem);
+			this.setState({
+				saved: false
+			});
+		}
+	}
+
 	fetchData(params) {
 		if (params.record_id) {
 			fetch(this.url+params.record_id)
@@ -30,7 +54,10 @@ export default class RecordView extends React.Component {
 					return response.json()
 				}).then(function(json) {
 					this.setState({
-						data: json
+						data: json,
+						saved: localLibrary.find({
+							id: json.id
+						})
 					});
 				}.bind(this)).catch(function(ex) {
 					console.log('parsing failed', ex)
@@ -40,9 +67,20 @@ export default class RecordView extends React.Component {
 	}
 
 	render() {
-		var imageUrl = 'http://www4.sprakochfolkminnen.se/Folkminnen/Svenska_sagor_filer/';
-		var mediaItems = this.state.data.media && this.state.data.media.length > 0 ? this.state.data.media.map(function(image, index) {
-			return <a key={index} className="image-link" target="_blank" href={imageUrl+image.source}><img className="archive-image" src={imageUrl+image.source} alt="" /></a>
+		var mediaItems = this.state.data.media && this.state.data.media.length > 0 ? this.state.data.media.map(function(mediaItem, index) {
+			if (mediaItem.type == 'image') {
+				return <a key={index} className="image-link" target="_blank" href={config.imageUrl+mediaItem.source}><img className="archive-image" src={config.imageUrl+mediaItem.source} alt="" /></a>
+			}
+			else if (mediaItem.type == 'audio') {
+				return <div key={index}>
+					{
+						mediaItem.title && mediaItem.title != '' &&
+						<p>{mediaItem.title}<br/><br/></p>
+					}
+					<audio controls="controls" src={config.audioUrl+mediaItem.source}></audio>
+					<hr/>
+				</div>;
+			}
 		}) : [];
 
 		var personItems = this.state.data.persons && this.state.data.persons.length > 0 ? this.state.data.persons.map(function(person, index) {
@@ -68,30 +106,31 @@ export default class RecordView extends React.Component {
 
 		return <div className="container">
 		
-				<div className="row">
-					<div className="twelve columns">
-						<h2>{this.state.data.title}<br/>
-							<span className="lighter">
-								Materialtyp: {this.state.data.type}
-							</span>
-						</h2>
+				<div className="container-header">
+					<div className="row">
+						<div className="twelve columns">
+							<h2>{this.state.data.title} <button className={'save-button'+(this.state.saved ? ' saved' : '')} onClick={this.toggleSaveRecord}><span>Spara</span></button></h2>
+							<p><strong>Materialtyp</strong>: {this.state.data.type}</p>
+						</div>
 					</div>
 				</div>
 
 				<div className="row">
 
-					<div className="six columns">
-						<p dangerouslySetInnerHTML={{__html: this.state.data.text}} />
+					{
+						this.state.data.text &&
+						<div className="six columns">
+							<p dangerouslySetInnerHTML={{__html: this.state.data.text}} />
 
-						{
-							this.state.data.comment && this.state.data.comment != '' &&
-							<p><strong>Kommentarer:</strong><br/>{this.state.data.comment}</p>
-						}
-					</div>
-
+							{
+								this.state.data.comment && this.state.data.comment != '' &&
+								<p><strong>Kommentarer:</strong><br/>{this.state.data.comment}</p>
+							}
+						</div>
+					}
 					{
 						mediaItems.length > 0 &&
-						<div className="four columns u-pull-right">
+						<div className={'columns '+(this.state.data.text ? 'four u-pull-right' : 'twelve')}>
 							{mediaItems}
 						</div>
 					}
@@ -105,7 +144,7 @@ export default class RecordView extends React.Component {
 					<div className="row">
 
 						<div className="twelve columns">
-							<h4>Personer</h4>
+							<h3>Personer</h3>
 
 							<div className="table-wrapper">
 								<table width="100%" className="table-responsive">
@@ -126,13 +165,17 @@ export default class RecordView extends React.Component {
 
 					</div>
 				}
+				{
+					personItems.length > 0 && placeItems.length > 0 &&
+					<hr/>
+				}
 
 				{
 					placeItems.length > 0 &&
 					<div className="row">
 
 						<div className="six columns">
-							<h4>Platser</h4>
+							<h3>Platser</h3>
 
 							<div className="table-wrapper">
 								<table width="100%">
@@ -175,13 +218,13 @@ export default class RecordView extends React.Component {
 
 						{
 							this.state.data.archive && this.state.data.archive.archive && this.state.data.archive.page != 'null' &&
-							<p><strong>Sid. nr</strong><br/>this.state.data.archive.page}</p>
+							<p><strong>Sid. nr</strong><br/>{this.state.data.archive.page}</p>
 						}
 					</div>
 
 					<div className="four columns">
 						<p><strong>Materialtyp</strong><br/>
-							{this.state.data.type == 'arkiv' ? 'Arkiv' : this.state.data.type == 'register' ? 'Register' : this.state.data.type == 'tryckt' ? 'Tryckt' : '' }
+							{this.state.data.type ? this.state.data.type.charAt(0).toUpperCase() + this.state.data.type.slice(1) : ''}
 						</p>
 
 						<p><strong>Kategori</strong><br/>

@@ -24,7 +24,9 @@ export default class RecordList extends React.Component {
 	}
 
 	componentDidMount() {
-		this.fetchData(this.props);
+		if (!this.props.disableAutoFetch) {
+			this.fetchData(this.props);
+		}
 	}
 
 	componentWillReceiveProps(props) {
@@ -60,17 +62,15 @@ export default class RecordList extends React.Component {
 	}
 	
 	fetchData(params) {
-		if (params.search || params.type || params.category || params.person || params.recordPlace ) {
-			this.collections.fetch({
-				page: this.currentPage,
-				search: params.search || null,
-				search_field: params.search_field || null,
-				type: params.type || null,
-				category: params.category || null,
-				person: params.person || null,
-				record_place: params.recordPlace || null
-			});
-		}
+		this.collections.fetch({
+			page: this.currentPage,
+			search: params.search || null,
+			search_field: params.search_field || null,
+			type: params.type || 'arkiv;tryckt',
+			category: params.category || null,
+			person: params.person || null,
+			record_place: params.recordPlace || null
+		});
 	}
 
 	render() {
@@ -108,13 +108,16 @@ export default class RecordList extends React.Component {
 					</tbody>
 				</table>
 
-
-				<div className="pagination">
-					<p className="page-info"></p>
-					<button disabled={this.state.currentPage == 1} className="button prev-button" onClick={this.prevPage}>Föregående</button>
-					<span> </span>
-					<button disabled={this.state.total <= this.state.currentPage*50} className="button next-button" onClick={this.nextPage}>Nästa</button>
-				</div>
+				{
+					this.state.total > 50 &&
+					<div className="list-pagination">
+						<hr/>
+						<p className="page-info"><strong>{'Visar 50 av '+this.state.total}</strong></p><br/>
+						<button disabled={this.state.currentPage == 1} className="button prev-button" onClick={this.prevPage}>Föregående</button>
+						<span> </span>
+						<button disabled={this.state.total <= this.state.currentPage*50} className="button next-button" onClick={this.nextPage}>Nästa</button>
+					</div>
+				}
 			</div>
 		);
 	}

@@ -347,45 +347,46 @@ export default {
 	}),
 
 	tileLayers: [
-/*
-		{
-			label: 'Lantmäteriet',
-			url: 'http://ifsf0001:k7r9ZjQh4SN77N6p@maps.lantmateriet.se/topowebb/v1/wmts/1.0.0/topowebb/default/3006/{z}/{y}/{x}.png',
-			maxZoom: 20,
-			attribution: '&copy; <a href="http://www.lantmateriet.se/en/">Lantmäteriet</a> Topografisk Webbkarta Visning'
-		},
-*/
 		{
 			label: 'Open Screet Map Mapnik',
 			url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-			maxZoom: 19,
-			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+			options: {
+				maxZoom: 19,
+				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+			}
+		},
+		{
+			label: 'Lantmäteriet',
+			url: 'http://ifsf0001:k7r9ZjQh4SN77N6p@maps.lantmateriet.se/topowebb/v1/wmts/1.0.0/topowebb/default/3006/{z}/{y}/{x}.png',
+			options: {
+				maxZoom: 20,
+				attribution: '&copy; <a href="http://www.lantmateriet.se/en/">Lantmäteriet</a> Topografisk Webbkarta Visning',
+				crossOrigin: true,
+			}
 		},
 		{
 			label: 'Open Map Surfer',
 			url: 'http://korona.geog.uni-heidelberg.de/tiles/roads/x={x}&y={y}&z={z}',
-			maxZoom: 20,
-			attribution: 'Imagery from <a href="http://giscience.uni-hd.de/">GIScience Research Group @ University of Heidelberg</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+			options: {
+				maxZoom: 20,
+				attribution: 'Imagery from <a href="http://giscience.uni-hd.de/">GIScience Research Group @ University of Heidelberg</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+			}
 		},
 		{
 			label: 'ESRI World Imagery',
 			url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-			maxZoom: 18,
-			attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+			options: {
+				maxZoom: 18,
+				attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+			}
 		},
 		{
 			label: 'ESRI Gray',
 			url: 'http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
-			attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
-			maxZoom: 16
-		},
-		{
-			label: 'Sverige Socken',
-			url: 'http://localhost:8084/geoserver/sverige_socken_sweref/wms?',
-			attribution: '&copy; <a href="http://www.lantmateriet.se/en/">Lantmäteriet</a>',
-			maxZoom: 16,
-			isWms: true,
-			layerName: 'sverige_socken_sweref:se_socken_clipped'
+			options: {
+				attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+				maxZoom: 16
+			}
 		}
 	],
 
@@ -403,10 +404,7 @@ export default {
 				});
 			}
 			else {
-				newLayer = L.tileLayer(this.tileLayers[i].url, {
-					maxZoom: this.tileLayers[i].maxZoom,
-					attribution: this.tileLayers[i].attribution
-				});
+				newLayer = L.tileLayer(this.tileLayers[i].url, this.tileLayers[i].options);
 			}
 			ret[this.tileLayers[i].label] = newLayer;
 		}

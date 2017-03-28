@@ -1,6 +1,9 @@
 import 'whatwg-fetch';
 import _ from 'underscore';
 
+import 'whatwg-fetch';
+import Promise from 'promise-polyfill'; 
+
 import config from './../../../scripts/config.js';
 
 export default class MapCollection {

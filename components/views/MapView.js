@@ -15,9 +15,11 @@ export default class MapView extends React.Component {
 		super(props);
 
 		window.mapView = this;
+		window.L = L;
 
 		this.state = {
-			viewMode: 'clusters'
+			viewMode: 'clusters',
+			loading: false
 		};
 
 		this.mapData = [];
@@ -27,6 +29,10 @@ export default class MapView extends React.Component {
 		this.collections = new MapCollection(function(json) {
 			this.mapData = json.data || [];
 			this.updateMap();
+
+			this.setState({
+				loading: false
+			});
 		}.bind(this));
 	}
 
@@ -34,6 +40,7 @@ export default class MapView extends React.Component {
 		var layers = mapHelper.createLayers();
 
 		this.map = L.map(this.refs.mapView, {
+//			crs: mapHelper.getSweref99crs(),
 			center: [61.5122, 16.7211], 
 			zoom: 5,
 			minZoom: 3,
@@ -113,6 +120,10 @@ export default class MapView extends React.Component {
 	}
 
 	fetchData(params) {
+		this.setState({
+			loading: true
+		});
+
 		if (params) {
 			this.collections.fetch({
 				search: params.search || null,
@@ -343,13 +354,13 @@ export default class MapView extends React.Component {
 		}
 	}
 
-	shouldComponentUpdate() {
-		return false;
+	shouldComponentUpdate(nextProps, nextState) {
+		return this.state.loading != nextState.loading;
 	}
 
 	render() {
 		return (
-			<div className="map-wrapper">
+			<div className={'map-wrapper'+(this.state.loading ? ' map-loading' : '')}>
 				{this.props.children}
 
 				<div className="map-viewmode-menu">
@@ -357,6 +368,10 @@ export default class MapView extends React.Component {
 					<a className={'icon-heatmap'+(this.state.viewMode == 'heatmap' ? ' selected' : '')} data-viewmode="heatmap" onClick={this.changeViewMode}><span>Heatmap</span></a>
 					<a className={'icon-heatmap'+(this.state.viewMode == 'heatmap-count' ? ' selected' : '')} data-viewmode="heatmap-count" onClick={this.changeViewMode}><span>Heatmap</span></a>
 					<a className={(this.state.viewMode == 'circles' ? ' selected' : '')} data-viewmode="circles" onClick={this.changeViewMode}><span>Circles</span></a>
+				</div>
+
+				<div className="map-progress">
+					<div className="indicator"></div>
 				</div>
 
 				<div className="map-view" ref="mapView"></div>

@@ -9,8 +9,6 @@ export default class PlaceView extends React.Component {
 	constructor(props) {
 		super(props);
 
-		console.log('ISOF: PlaceView')
-
 		window.placeView = this;
 
 		this.state = {
@@ -23,8 +21,6 @@ export default class PlaceView extends React.Component {
 
 	componentDidMount() {
 		this.fetchData(this.props.params);
-		console.log('PlaceView: componentDidMount');
-		console.log(this.props.params);
 
 		var state = {};
 		if (this.props.params.category) {
@@ -93,10 +89,12 @@ export default class PlaceView extends React.Component {
 		return (
 			<div className="container">
 		
-				<div className="row">
-					<div className="twelve columns">
-						<h1>{this.state.data.name}</h1>
-						<p><strong>Härad</strong>: {this.state.data.harad}, <strong>Län</strong>: {this.state.data.county}, <strong>Landskap</strong>: {this.state.data.landskap}</p>
+				<div className="container-header">
+					<div className="row">
+						<div className="twelve columns">
+							<h2>{this.state.data.name}</h2>
+							<p><strong>Härad</strong>: {this.state.data.harad}, <strong>Län</strong>: {this.state.data.county}, <strong>Landskap</strong>: {this.state.data.landskap}</p>
+						</div>
 					</div>
 				</div>
 
@@ -106,20 +104,29 @@ export default class PlaceView extends React.Component {
 					</div>
 				</div>
 
-				<div className="row search-results-container">
-					<div className="twelve columns">
-						<h2>Sökträffar</h2>
+				{
+					(this.state.category || this.state.type || this.state.searchQuery || this.state.searchField) &&
+					<div className="row search-results-container">
+						<div className="twelve columns">
+							<h3>Sökträffar</h3>
 
-						<RecordList category={this.state.category} type={this.state.type} recordPlace={this.state.recordPlace} search={this.state.searchQuery} search_field={this.state.searchField} />
+							<RecordList category={this.state.category} type={this.state.type} recordPlace={this.state.recordPlace} search={this.state.searchQuery} search_field={this.state.searchField} />
 
+						</div>
 					</div>
-				</div>
+				}
 
-				{this.state.data.informants && this.state.data.informants.length > 0 &&
+				{
+					this.state.data.informants && this.state.data.informants.length > 0 &&
+					<hr/>
+				}
+
+				{
+					this.state.data.informants && this.state.data.informants.length > 0 &&
 
 					<div className="row">
 						<div className="twelve columns">
-							<h2>Intervjuade personer</h2>
+							<h3>Intervjuade personer</h3>
 
 							<div className="table-wrapper">
 								<table width="100%">
@@ -139,11 +146,17 @@ export default class PlaceView extends React.Component {
 
 				}
 
-				{this.state.data.records && this.state.data.records.length > 0 &&
+				{
+					this.state.data.records && this.state.data.records.length > 0 &&
+					<hr/>
+				}
+
+				{
+					this.state.data.records && this.state.data.records.length > 0 &&
 
 					<div className="row">
 						<div className="twelve columns">
-							<h4>Samtliga uppteckningar från orten</h4>
+							<h3>Samtliga uppteckningar från orten</h3>
 
 							<div className="table-wrapper">
 								<table width="100%" className="table-responsive">

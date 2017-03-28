@@ -21,7 +21,7 @@ export default class SimpleMap extends React.Component {
 			zoom: 5,
 			minZoom: 3,
 			layers: [layers[Object.keys(layers)[0]]],
-			scrollWheelZoom: true
+			scrollWheelZoom: this.props.scrollWheelZoom || false
 		});
 
 		L.control.layers(layers).addTo(this.map);

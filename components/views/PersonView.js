@@ -73,19 +73,21 @@ export default class PersonView extends React.Component {
 		return (
 			<div className="container">
 				
-				<div className="row">
-					<div className="twelve columns">
-						<h2>{(this.state.data.firstname ? this.state.data.firstname : '')+' '+(this.state.data.surname ? this.state.data.surname : '')}</h2>
-						<p>
-						{
-							(this.state.data.birth_year && this.state.data.birth_year > 0 ? 'Föddes '+this.state.data.birth_year : '')+
-							(this.state.data.birth_year && this.state.data.birth_year > 0 && this.state.data.home ? ' i ' : '')
-						}
-						{
-							this.state.data.home &&
-							<a href={'#place/'+this.state.data.home[0].id}>{this.state.data.home[0].name+', '+this.state.data.home[0].landskap}</a>
-						}
-						</p>
+				<div className="container-header">
+					<div className="row">
+						<div className="twelve columns">
+							<h2>{(this.state.data.firstname ? this.state.data.firstname : '')+' '+(this.state.data.surname ? this.state.data.surname : '')}</h2>
+							<p>
+							{
+								(this.state.data.birth_year && this.state.data.birth_year > 0 ? 'Föddes '+this.state.data.birth_year : '')+
+								(this.state.data.birth_year && this.state.data.birth_year > 0 && this.state.data.home ? ' i ' : '')
+							}
+							{
+								this.state.data.home &&
+								<a href={'#place/'+this.state.data.home[0].id}>{this.state.data.home[0].name+', '+this.state.data.home[0].landskap}</a>
+							}
+							</p>
+						</div>
 					</div>
 				</div>
 
@@ -115,12 +117,14 @@ export default class PersonView extends React.Component {
 
 				</div>
 
+				<hr/>
+
 				<div className="row">
 			
 					<div className="twelve columns">
-						<h4>Uppteckningar</h4>
+						<h3>Uppteckningar</h3>
 
-						<RecordList person={this.state.personId} />
+						<RecordList disableAutoFetch="true" person={this.state.personId} />
 
 					</div>
 				</div>
