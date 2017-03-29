@@ -44,7 +44,7 @@ export default class DropdownMenu extends React.Component {
 	}
 
 	render() {
-		// commit test
+		// another commit test
 		return (
 			<div ref="container" className={'dropdown-wrapper'+(this.props.dropdownDirection ? ' dropdown-direction-'+this.props.dropdownDirection : '')}>
 
