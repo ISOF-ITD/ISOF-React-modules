@@ -22,7 +22,7 @@ export default class LocalLibraryView extends React.Component {
 		}) : <h3 className="text-center">Inga sparade sägner</h3>;
 		return (
 			<div className="local-library-wrapper">
-				<DropdownMenu className={'map-floating-control map-floating-button visible library-open-button'+(savedRecords && savedRecords.length > 0 ? ' has-items' : '')} dropdownDirection="up" headerText="Mina sägner">
+				<DropdownMenu className={'map-floating-control map-floating-button visible library-open-button'+(savedRecords && savedRecords.length > 0 ? ' has-items' : '')} dropdownDirection="up" headerText={this.props.headerText}>
 					{items}
 				</DropdownMenu>
 			</div>
