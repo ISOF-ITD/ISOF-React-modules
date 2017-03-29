@@ -1,12 +1,14 @@
 import _ from 'underscore';
 
+import config from './../../scripts/config.js';
+
 export default {
 	_getList() {
-		return localStorage.getItem('sagenkarta_library') ? JSON.parse(localStorage.getItem('sagenkarta_library')) : [];
+		return localStorage.getItem(config.localLibraryName) ? JSON.parse(localStorage.getItem(config.localLibraryName)) : [];
 	},
 
 	_saveList(list) {
-		localStorage.setItem('sagenkarta_library', JSON.stringify(list));
+		localStorage.setItem(config.localLibraryName, JSON.stringify(list));
 	},
 
 	add(item) {

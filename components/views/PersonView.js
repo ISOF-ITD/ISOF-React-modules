@@ -71,12 +71,12 @@ export default class PersonView extends React.Component {
 		}) : [];
 
 		return (
-			<div className="container">
+			<div className={'container'+(this.state.data.id ? '' : ' loading')}>
 				
 				<div className="container-header">
 					<div className="row">
 						<div className="twelve columns">
-							<h2>{(this.state.data.firstname ? this.state.data.firstname : '')+' '+(this.state.data.surname ? this.state.data.surname : '')}</h2>
+							<h2>{this.state.data.name ? this.state.data.name : ''}</h2>
 							<p>
 							{
 								(this.state.data.birth_year && this.state.data.birth_year > 0 ? 'Föddes '+this.state.data.birth_year : '')+

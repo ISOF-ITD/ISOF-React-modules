@@ -36,9 +36,16 @@ export default class PopupWindow extends React.Component {
 	}
 
 	componentWillReceiveProps(props) {
+		console.log('PopupWindow: componentWillReceiveProps');
+		console.log(props.children == this.props.children);
+
 		this.setState({
 			windowOpen: Boolean(props.children) && !props.children.props.route.manuallyOpenPopup
 		});
+
+		if (!props.children == this.props.children) {
+			this.refs.contentWrapper.scrollTo(0, 0);
+		}
 	}
 
 	componentWillUnmount() {
@@ -65,7 +72,7 @@ export default class PopupWindow extends React.Component {
 					this.props.children && this.props.children.props.route.manuallyOpenPopup &&
 					<a className="popup-open-button map-floating-control visible" onClick={this.openButtonClickHandler}><strong>{this.props.children.props.route.openButtonLabel}</strong></a>
 				}
-				<div className={'popup-content-wrapper'}>
+				<div ref="contentWrapper" className={'popup-content-wrapper'}>
 					<div className="page-content">
 						<a className="close-button" onClick={this.closeButtonClick}></a>
 						{this.props.children}

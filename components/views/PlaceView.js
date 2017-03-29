@@ -67,7 +67,7 @@ export default class PlaceView extends React.Component {
 	render() {
 		var informantsItems = this.state.data.informants && this.state.data.informants.length > 0 ? this.state.data.informants.map(function(informant, index) {
 			return <tr key={index}>
-				<td><a href={'#person/'+informant.id}>{informant.firstname+' '+informant.surname}</a></td>
+				<td><a href={'#person/'+informant.id}>{informant.name}</a></td>
 				<td>{informant.birth_year > 0 ? informant.birth_year : ''}</td>
 			</tr>;
 		}.bind(this)) : [];
@@ -87,7 +87,7 @@ export default class PlaceView extends React.Component {
 		}.bind(this)) : [];
 
 		return (
-			<div className="container">
+			<div className={'container'+(this.state.data.id ? '' : ' loading')}>
 		
 				<div className="container-header">
 					<div className="row">

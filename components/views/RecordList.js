@@ -1,6 +1,8 @@
 import React from 'react';
 import RecordsCollection from './../collections/RecordsCollection';
 
+import config from './../../../scripts/config.js';
+
 export default class RecordList extends React.Component {
 	constructor(props) {
 		super(props);
@@ -66,7 +68,7 @@ export default class RecordList extends React.Component {
 			page: this.currentPage,
 			search: params.search || null,
 			search_field: params.search_field || null,
-			type: params.type || 'arkiv;tryckt',
+			type: params.type || config.apiRecordsType,
 			category: params.category || null,
 			person: params.person || null,
 			record_place: params.recordPlace || null
@@ -91,7 +93,7 @@ export default class RecordList extends React.Component {
 		}.bind(this)) : [];
 
 		return (
-			<div className="table-wrapper list-container">
+			<div className={'table-wrapper list-container'+(this.state.records.length > 0 ? '' : ' loading')}>
 
 				<table width="100%" className="table-responsive">
 					<thead>

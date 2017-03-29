@@ -329,8 +329,8 @@ const swedenBorder = {
 
 export default {
 	markerIcon: L.icon({
-		iconUrl: config.siteUrl+'img/map-marker.png',
-		shadowUrl: config.siteUrl+'img/map-marker-shadow.png',
+		iconUrl: config.appUrl+'img/map-marker.png',
+		shadowUrl: config.appUrl+'img/map-marker-shadow.png',
 
 		iconSize:     [15, 23], // size of the icon
 		shadowSize:   [14, 10], // size of the shadow
@@ -340,7 +340,7 @@ export default {
 	}),
 
 	orangeIcon: L.icon({
-		iconUrl: config.siteUrl+'img/marker-orange.png',
+		iconUrl: config.appUrl+'img/marker-orange.png',
 		iconSize: [27, 27],
 		iconAnchor: [15, 15],
 		popupAnchor: [0, 0]

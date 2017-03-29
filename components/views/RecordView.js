@@ -3,6 +3,8 @@ import React from 'react';
 import config from './../../../scripts/config.js';
 import localLibrary from './../../utils/localLibrary.js';
 
+import ShareButtons from './ShareButtons';
+
 export default class RecordView extends React.Component {
 	constructor(props) {
 		super(props);
@@ -85,7 +87,7 @@ export default class RecordView extends React.Component {
 
 		var personItems = this.state.data.persons && this.state.data.persons.length > 0 ? this.state.data.persons.map(function(person, index) {
 			return <tr key={index}>
-				<td data-title=""><a href={'#person/'+person.id}>{(person.firstname ? person.firstname : '')+' '+(person.surname ? person.surname : '')}</a></td>
+				<td data-title=""><a href={'#person/'+person.id}>{person.name ? person.name : ''}</a></td>
 				<td data-title="Födelseår">{person.birth_year && person.birth_year > 0 ? person.birth_year : ''}</td>
 				<td data-title="Födelseort">
 					{
@@ -104,7 +106,7 @@ export default class RecordView extends React.Component {
 			</tr>;
 		}) : [];
 
-		return <div className="container">
+		return <div className={'container'+(this.state.data.id ? '' : ' loading')}>
 		
 				<div className="container-header">
 					<div className="row">
@@ -115,7 +117,7 @@ export default class RecordView extends React.Component {
 					</div>
 				</div>
 
-				<div className="row">
+  				<div className="row">
 
 					{
 						this.state.data.text &&
@@ -126,12 +128,17 @@ export default class RecordView extends React.Component {
 								this.state.data.comment && this.state.data.comment != '' &&
 								<p><strong>Kommentarer:</strong><br/>{this.state.data.comment}</p>
 							}
+							<ShareButtons path={'record/'+this.state.data.id} />
 						</div>
 					}
 					{
 						mediaItems.length > 0 &&
 						<div className={'columns '+(this.state.data.text ? 'four u-pull-right' : 'twelve')}>
 							{mediaItems}
+							{
+								!this.state.data.text &&								
+								<ShareButtons path={'record/'+this.state.data.id} />
+							}
 						</div>
 					}
 

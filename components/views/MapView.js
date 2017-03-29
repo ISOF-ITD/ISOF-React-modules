@@ -8,6 +8,7 @@ import _ from 'underscore';
 
 import MapCollection from './../collections/MapCollection';
 import mapHelper from './../../utils/mapHelper';
+import config from './../../../scripts/config.js';
 
 export default class MapView extends React.Component {
 
@@ -128,7 +129,7 @@ export default class MapView extends React.Component {
 			this.collections.fetch({
 				search: params.search || null,
 				search_field: params.search_field || null,
-				type: params.type || 'arkiv;tryckt',
+				type: params.type || config.apiRecordsType,
 				category: params.category,
 				year_from: params.year_from || null,
 				year_to: params.year_to || null,
@@ -355,7 +356,7 @@ export default class MapView extends React.Component {
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
-		return this.state.loading != nextState.loading;
+		return this.state.loading != nextState.loading || this.state.viewMode != nextState.viewMode;
 	}
 
 	render() {
@@ -366,8 +367,7 @@ export default class MapView extends React.Component {
 				<div className="map-viewmode-menu">
 					<a className={'icon-marker'+(this.state.viewMode == 'clusters' ? ' selected' : '')} data-viewmode="clusters" onClick={this.changeViewMode}><span>Cluster</span></a>
 					<a className={'icon-heatmap'+(this.state.viewMode == 'heatmap' ? ' selected' : '')} data-viewmode="heatmap" onClick={this.changeViewMode}><span>Heatmap</span></a>
-					<a className={'icon-heatmap'+(this.state.viewMode == 'heatmap-count' ? ' selected' : '')} data-viewmode="heatmap-count" onClick={this.changeViewMode}><span>Heatmap</span></a>
-					<a className={(this.state.viewMode == 'circles' ? ' selected' : '')} data-viewmode="circles" onClick={this.changeViewMode}><span>Circles</span></a>
+					<a className={'icon-circles'+(this.state.viewMode == 'circles' ? ' selected' : '')} data-viewmode="circles" onClick={this.changeViewMode}><span>Circles</span></a>
 				</div>
 
 				<div className="map-progress">
