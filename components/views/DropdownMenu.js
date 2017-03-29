@@ -44,6 +44,7 @@ export default class DropdownMenu extends React.Component {
 	}
 
 	render() {
+		// commit test
 		return (
 			<div ref="container" className={'dropdown-wrapper'+(this.props.dropdownDirection ? ' dropdown-direction-'+this.props.dropdownDirection : '')}>
 				<a className={'dropdown-link'+(this.props.className ? ' '+this.props.className : '')} onClick={this.menuButtonClick}>{this.props.label || ''}</a>
