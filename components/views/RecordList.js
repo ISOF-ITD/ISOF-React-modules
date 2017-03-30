@@ -1,5 +1,6 @@
 import React from 'react';
 import RecordsCollection from './../collections/RecordsCollection';
+import RecordListItem from './RecordListItem';
 
 import config from './../../../scripts/config.js';
 
@@ -77,18 +78,7 @@ export default class RecordList extends React.Component {
 
 	render() {
 		var items = this.state.records ? this.state.records.map(function(item, index) {
-			return <tr key={item.id}>
-				<td className="text-larger"><a href={'#record/'+item.id}>{item.title ? item.title : '(Untitled'}</a></td>
-				<td data-title="Kategori:">{item.taxonomy.name}</td>
-				<td data-title="Socken, Landskap:">
-				{
-					item.places &&
-					<a href={'#place/'+item.places[0].id}>{item.places[0].name+', '+item.places[0].landskap}</a>
-				}
-				</td>
-				<td data-title="Uppteckningsår:">{item.year > 0 ? item.year : ''}</td>
-				<td data-title="Materialtyp:">{item.type}</td>
-			</tr>;
+			return <RecordListItem key={item.id} item={item} />;
 
 		}.bind(this)) : [];
 

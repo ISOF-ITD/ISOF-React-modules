@@ -36,9 +36,6 @@ export default class PopupWindow extends React.Component {
 	}
 
 	componentWillReceiveProps(props) {
-		console.log('PopupWindow: componentWillReceiveProps');
-		console.log(props.children == this.props.children);
-
 		this.setState({
 			windowOpen: Boolean(props.children) && !props.children.props.route.manuallyOpenPopup
 		});
