@@ -34,7 +34,10 @@ export default class RecordView extends React.Component {
 	playButtonClickHandler(event) {
 		if (window.eventBus) {
 			window.eventBus.dispatch('audio.play', {
-				recordId: this.state.data.id,
+				record: {
+					id: this.state.data.id,
+					title: this.state.data.title,
+				},
 				audio: this.state.data.media[event.target.dataset.index]
 			});
 		}

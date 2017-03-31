@@ -1,5 +1,5 @@
 import React from 'react';
-import RecordListItemAudioPlayer from './RecordListItemAudioPlayer';
+import ListPlayButton from './ListPlayButton';
 
 import config from './../../../scripts/config.js';
 
@@ -9,7 +9,7 @@ export default class RecordListItem extends React.Component {
 			<td className="text-larger">
 				{
 					this.props.item.type == 'inspelning' &&
-					<RecordListItemAudioPlayer recordId={this.props.item.id} />
+					<ListPlayButton recordId={this.props.item.id} />
 				}
 				<a href={'#record/'+this.props.item.id}>{this.props.item.title ? this.props.item.title : '(Untitled'}</a>
 			</td>

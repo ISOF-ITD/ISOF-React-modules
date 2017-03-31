@@ -49,6 +49,9 @@ export default class PopupWindow extends React.Component {
 		if (this.props.onHide) {
 			this.props.onHide();
 		}
+		if (window.eventBus) {
+			window.eventBus.dispatch('popup.close');
+		}
 	}
 
 	render() {
@@ -56,10 +59,20 @@ export default class PopupWindow extends React.Component {
 			if (this.props.onShow) {
 				this.props.onShow();
 			}
+			if (window.eventBus) {
+				setTimeout(function() {
+					window.eventBus.dispatch('popup.open');
+				}.bind(this), 100);
+			}
 		}
 		else {
 			if (this.props.onHide) {
 				this.props.onHide();
+			}
+			if (window.eventBus) {
+				setTimeout(function() {
+					window.eventBus.dispatch('popup.close');
+				}.bind(this), 100);
 			}
 		}
 

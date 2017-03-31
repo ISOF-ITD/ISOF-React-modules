@@ -1,7 +1,7 @@
 import React from 'react';
 import config from './../../../scripts/config.js';
 
-export default class RecordListItemAudioPlayer extends React.Component {
+export default class ListPlayButton extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -17,6 +17,6 @@ export default class RecordListItemAudioPlayer extends React.Component {
 	}
 
 	render() {
-		return <span><button alt="Spela" className="play-button" onClick={this.playButtonClickHandler}></button></span>;
+		return <button alt="Spela" className="play-button inline" onClick={this.playButtonClickHandler}></button>;
 	}
 }
