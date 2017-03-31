@@ -82,35 +82,44 @@ export default class RecordList extends React.Component {
 
 		}.bind(this)) : [];
 
-		return (
-			<div className={'table-wrapper list-container'+(this.state.records.length > 0 ? '' : ' loading')}>
+		if (this.state.records) {
+			return (
+				<div className={'table-wrapper list-container'+(this.state.records.length > 0 ? '' : ' loading')}>
 
-				<table width="100%" className="table-responsive">
-					<thead>
-						<tr>
-							<th scope="col">Titel</th>
-							<th scope="col">Kategori</th>
-							<th scope="col">Socken, Landskap</th>
-							<th scope="col">Uppteckningsår</th>
-							<th scope="col">Materialtyp</th>
-						</tr>
-					</thead>
-					<tbody>
-						{items}
-					</tbody>
-				</table>
+					<table width="100%" className="table-responsive">
+						<thead>
+							<tr>
+								<th scope="col">Titel</th>
+								<th scope="col">Kategori</th>
+								<th scope="col">Socken, Landskap</th>
+								<th scope="col">Uppteckningsår</th>
+								<th scope="col">Materialtyp</th>
+							</tr>
+						</thead>
+						<tbody>
+							{items}
+						</tbody>
+					</table>
 
-				{
-					this.state.total > 50 &&
-					<div className="list-pagination">
-						<hr/>
-						<p className="page-info"><strong>{'Visar 50 av '+this.state.total}</strong></p><br/>
-						<button disabled={this.state.currentPage == 1} className="button prev-button" onClick={this.prevPage}>Föregående</button>
-						<span> </span>
-						<button disabled={this.state.total <= this.state.currentPage*50} className="button next-button" onClick={this.nextPage}>Nästa</button>
-					</div>
-				}
-			</div>
-		);
+					{
+						this.state.total > 50 &&
+						<div className="list-pagination">
+							<hr/>
+							<p className="page-info"><strong>{'Visar 50 av '+this.state.total}</strong></p><br/>
+							<button disabled={this.state.currentPage == 1} className="button prev-button" onClick={this.prevPage}>Föregående</button>
+							<span> </span>
+							<button disabled={this.state.total <= this.state.currentPage*50} className="button next-button" onClick={this.nextPage}>Nästa</button>
+						</div>
+					}
+				</div>
+			);			
+		}
+		else {
+			return (
+				<div className="table-wrapper list-container">
+					<h3>Inga sökträffar</h3>
+				</div>
+			);
+		}
 	}
 }

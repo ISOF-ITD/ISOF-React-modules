@@ -10,6 +10,8 @@ export default class RecordView extends React.Component {
 		super(props);
 
 		this.toggleSaveRecord = this.toggleSaveRecord.bind(this);
+		this.playButtonClickHandler = this.playButtonClickHandler.bind(this);
+
 
 		this.state = {
 			data: {},
@@ -26,6 +28,15 @@ export default class RecordView extends React.Component {
 	componentWillReceiveProps(props) {
 		if (props.params.record_id != this.props.params.record_id) {
 			this.fetchData(props.params);
+		}
+	}
+
+	playButtonClickHandler(event) {
+		if (window.eventBus) {
+			window.eventBus.dispatch('audio.play', {
+				recordId: this.state.data.id,
+				audio: this.state.data.media[event.target.dataset.index]
+			});
 		}
 	}
 
@@ -69,6 +80,10 @@ export default class RecordView extends React.Component {
 	}
 
 	render() {
+		/*
+					<audio controls="controls" src={config.audioUrl+mediaItem.source}></audio>
+					<hr/>
+		*/
 		var mediaItems = this.state.data.media && this.state.data.media.length > 0 ? this.state.data.media.map(function(mediaItem, index) {
 			if (mediaItem.type == 'image') {
 				return <a key={index} className="image-link" target="_blank" href={config.imageUrl+mediaItem.source}><img className="archive-image" src={config.imageUrl+mediaItem.source} alt="" /></a>
@@ -77,13 +92,14 @@ export default class RecordView extends React.Component {
 				return <div key={index}>
 					{
 						mediaItem.title && mediaItem.title != '' &&
-						<p>{mediaItem.title}<br/><br/></p>
+						<div>
+							<button alt="Spela" className={'play-button'} data-index={index} onClick={this.playButtonClickHandler}></button>{mediaItem.title}
+							<hr/>
+						</div>
 					}
-					<audio controls="controls" src={config.audioUrl+mediaItem.source}></audio>
-					<hr/>
 				</div>;
 			}
-		}) : [];
+		}.bind(this)) : [];
 
 		var personItems = this.state.data.persons && this.state.data.persons.length > 0 ? this.state.data.persons.map(function(person, index) {
 			return <tr key={index}>

@@ -71,7 +71,7 @@ export default class PopupWindow extends React.Component {
 				}
 				<div ref="contentWrapper" className={'popup-content-wrapper'}>
 					<div className="page-content">
-						<a className="close-button" onClick={this.closeButtonClick}></a>
+						<a className="close-button white" onClick={this.closeButtonClick}></a>
 						{this.props.children}
 					</div>
 				</div>

@@ -94,7 +94,7 @@
 
 			background-color: #fff;
 
-			border: 1px solid #a7a7a7;
+//			border: 1px solid #a7a7a7;
 			box-shadow: 0 2px 6px rgba(0,0,0,.2);
 			border-radius: 3px;
 
@@ -179,6 +179,12 @@
 
 					.transform(rotate(-45deg));
 				}
+
+				&.white {
+					&:before, &:after {
+						background: #fff;
+					}
+				}
 			}
 
 			.fb-share-button {
@@ -193,9 +199,20 @@
 				margin: -20px -50px 40px;
 				padding: 30px 50px 30px;
 
-				background: #edeff1;
+				color: #fff;
 
-				background: @color-gray;
+				background-image: url('../img/header-back.gif');
+				background-position: center;
+
+//				background: @color-gray;
+
+				h2 {
+					color: #fff;
+				}
+
+				a {
+					color: #fff;
+				}
 
 				p {
 					margin-bottom: 0;
@@ -226,18 +243,16 @@
 
 	border: none;
 
-	background-image: url('../img/icon-star-black.png');
+	background-image: url('../img/icon-star-transparent.png');
 	background-size: 22px 22px;
 	background-repeat: no-repeat;
-
-	opacity: 0.3;
 
 	&:hover {
 		opacity: 0.6;
 	}
 
 	&.saved {
-		background-image: url('../img/icon-star-red.png');
+		background-image: url('../img/icon-star-white.png');
 
 		opacity: 1;
 	}
@@ -245,4 +260,23 @@
     span {
     	display: none;
     }
+}
+
+.play-button {
+	position: relative;
+	
+	top: 6px;
+
+	width: 25px;
+	height: 25px;
+
+	padding: 0;
+	margin: 0 10px 0 0;
+
+	border-radius: 100%;
+
+	background-color: #fff;
+	background-image: url('../img/icon-arrow-right.png');
+	background-position: center;
+	background-repeat: no-repeat;
 }
