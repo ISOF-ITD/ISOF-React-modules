@@ -80,7 +80,7 @@ export default class PopupWindow extends React.Component {
 			<div className={'popup-wrapper'+(this.state.windowOpen || this.state.manualOpen ? ' visible' : '')}>
 				{
 					this.props.children && this.props.children.props.route.manuallyOpenPopup &&
-					<a className="popup-open-button map-floating-control visible" onClick={this.openButtonClickHandler}><strong>{this.props.children.props.route.openButtonLabel}</strong></a>
+					<a className="popup-open-button map-floating-control map-bottom-control visible" onClick={this.openButtonClickHandler}><strong>{this.props.children.props.route.openButtonLabel}</strong></a>
 				}
 				<div ref="contentWrapper" className={'popup-content-wrapper'}>
 					<div className="page-content">

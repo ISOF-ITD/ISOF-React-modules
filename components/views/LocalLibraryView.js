@@ -21,7 +21,7 @@ export default class LocalLibraryView extends React.Component {
 			return <a key={index} href={'#/record/'+item.id} className="item">{item.title}</a>
 		}) : <h3 className="text-center">Inga sparade sägner</h3>;
 		return (
-			<div className="local-library-wrapper">
+			<div className="local-library-wrapper map-bottom-control">
 				<DropdownMenu className={'map-floating-control map-floating-button visible library-open-button'+(savedRecords && savedRecords.length > 0 ? ' has-items' : '')} dropdownDirection="up" headerText={this.props.headerText}>
 					{items}
 				</DropdownMenu>

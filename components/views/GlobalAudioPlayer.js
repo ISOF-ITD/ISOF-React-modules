@@ -103,7 +103,7 @@ export default class GlobalAudioPlayer extends React.Component {
 	}
 
 	render() {
-		return <div className={'global-audio-player-wrapper map-floating-control'+(this.state.docked ? ' docked' : '')+(this.state.loaded ? ' visible' : '')}>
+		return <div className={'global-audio-player-wrapper map-floating-control map-bottom-control'+(this.state.docked ? ' docked' : '')+(this.state.loaded ? ' visible' : '')}>
 			<div className={'global-audio-player'} disabled={!this.state.loaded}>
 				<div className="player-content">
 					{
