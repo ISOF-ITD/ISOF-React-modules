@@ -3,6 +3,7 @@ import RecordsCollection from './../collections/RecordsCollection';
 import RecordListItem from './RecordListItem';
 
 import config from './../../../scripts/config.js';
+import routeHelper from './../../../scripts/utils/routeHelper';
 
 export default class RecordList extends React.Component {
 	constructor(props) {
@@ -77,8 +78,10 @@ export default class RecordList extends React.Component {
 	}
 
 	render() {
+		var searchRouteParams = routeHelper.createSearchRoute(this.props);
+
 		var items = this.state.records ? this.state.records.map(function(item, index) {
-			return <RecordListItem key={item.id} item={item} />;
+			return <RecordListItem key={item.id} item={item} routeParams={searchRouteParams} />;
 
 		}.bind(this)) : [];
 

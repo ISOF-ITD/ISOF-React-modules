@@ -1,5 +1,6 @@
 import React from 'react';
 import ListPlayButton from './ListPlayButton';
+import { hashHistory } from 'react-router';
 
 import config from './../../../scripts/config.js';
 
@@ -11,7 +12,7 @@ export default class RecordListItem extends React.Component {
 					this.props.item.type == 'inspelning' &&
 					<ListPlayButton recordId={this.props.item.id} />
 				}
-				<a href={'#record/'+this.props.item.id}>{this.props.item.title ? this.props.item.title : '(Untitled'}</a>
+				<a href={'#record/'+this.props.item.id+(this.props.routeParams ? this.props.routeParams : '')}>{this.props.item.title ? this.props.item.title : '(Untitled'}</a>
 			</td>
 			<td data-title="Kategori:">{this.props.item.taxonomy.name}</td>
 			<td data-title="Socken, Landskap:">
