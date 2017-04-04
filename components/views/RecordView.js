@@ -1,17 +1,17 @@
 import React from 'react';
+import _ from 'underscore';
 
 import config from './../../../scripts/config.js';
 import localLibrary from './../../utils/localLibrary.js';
 
 import ShareButtons from './ShareButtons';
+import ListPlayButton from './ListPlayButton';
 
 export default class RecordView extends React.Component {
 	constructor(props) {
 		super(props);
 
 		this.toggleSaveRecord = this.toggleSaveRecord.bind(this);
-		this.playButtonClickHandler = this.playButtonClickHandler.bind(this);
-
 
 		this.state = {
 			data: {},
@@ -28,18 +28,6 @@ export default class RecordView extends React.Component {
 	componentWillReceiveProps(props) {
 		if (props.params.record_id != this.props.params.record_id) {
 			this.fetchData(props.params);
-		}
-	}
-
-	playButtonClickHandler(event) {
-		if (window.eventBus) {
-			window.eventBus.dispatch('audio.play', {
-				record: {
-					id: this.state.data.id,
-					title: this.state.data.title,
-				},
-				audio: this.state.data.media[event.target.dataset.index]
-			});
 		}
 	}
 
@@ -83,26 +71,31 @@ export default class RecordView extends React.Component {
 	}
 
 	render() {
-		/*
-					<audio controls="controls" src={config.audioUrl+mediaItem.source}></audio>
-					<hr/>
-		*/
-		var mediaItems = this.state.data.media && this.state.data.media.length > 0 ? this.state.data.media.map(function(mediaItem, index) {
-			if (mediaItem.type == 'image') {
-				return <a key={index} className="image-link" target="_blank" href={config.imageUrl+mediaItem.source}><img className="archive-image" src={config.imageUrl+mediaItem.source} alt="" /></a>
-			}
-			else if (mediaItem.type == 'audio') {
-				return <div key={index}>
-					{
-						mediaItem.title && mediaItem.title != '' &&
-						<div>
-							<button alt="Spela" className={'play-button'} data-index={index} onClick={this.playButtonClickHandler}></button>{mediaItem.title}
-							<hr/>
-						</div>
-					}
-				</div>;
-			}
-		}.bind(this)) : [];
+		var imageItems = [];
+		var audioItems = [];
+
+		if (this.state.data.media && this.state.data.media.length > 0) {
+			var imageDataItems = _.filter(this.state.data.media, function(dataItem) {
+				return dataItem.type == 'image';
+			});
+			imageItems = imageDataItems.map(function(mediaItem, index) {
+				return <a key={index} className="image-link" target="_blank" href={config.imageUrl+mediaItem.source}><img className="archive-image" src={config.imageUrl+mediaItem.source} alt="" /></a>;
+			});
+		}
+
+		if (this.state.data.media && this.state.data.media.length > 0) {
+			var audioDataItems = _.filter(this.state.data.media, function(dataItem) {
+				return dataItem.type == 'audio';
+			});
+			audioItems = audioDataItems.map(function(mediaItem, index) {
+				return <tr key={index}>
+					<td data-title="Lyssna:">
+						<ListPlayButton media={mediaItem} recordId={this.state.data.id} recordTitle={this.state.data.title} />
+					</td>
+					<td>{mediaItem.title}</td>
+				</tr>;
+			}.bind(this));
+		}
 
 		var personItems = this.state.data.persons && this.state.data.persons.length > 0 ? this.state.data.persons.map(function(person, index) {
 			return <tr key={index}>
@@ -151,9 +144,21 @@ export default class RecordView extends React.Component {
 						</div>
 					}
 					{
-						mediaItems.length > 0 &&
+						(imageItems.length > 0 || audioItems.length > 0) &&
 						<div className={'columns '+(this.state.data.text ? 'four u-pull-right' : 'twelve')}>
-							{mediaItems}
+							{
+								imageItems
+							}
+							{
+								audioItems.length > 0 &&
+								<div className="table-wrapper">
+									<table width="100%" className="table-responsive">
+										<tbody>
+											{audioItems}
+										</tbody>
+									</table>
+								</div>
+							}
 							{
 								!this.state.data.text &&								
 								<ShareButtons path={'record/'+this.state.data.id} />

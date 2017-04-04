@@ -8,11 +8,13 @@ export default class RecordListItem extends React.Component {
 	render() {
 		return <tr>
 			<td className="text-larger">
-				{
-					this.props.item.type == 'inspelning' &&
-					<ListPlayButton recordId={this.props.item.id} />
-				}
-				<a href={'#record/'+this.props.item.id+(this.props.routeParams ? this.props.routeParams : '')}>{this.props.item.title ? this.props.item.title : '(Untitled'}</a>
+				<a href={'#record/'+this.props.item.id+(this.props.routeParams ? this.props.routeParams : '')}>
+					{
+						this.props.item.type == 'inspelning' &&
+						<ListPlayButton />
+					}
+					{this.props.item.title ? this.props.item.title : '(Utan titel'}
+				</a>
 			</td>
 			<td data-title="Kategori:">{this.props.item.taxonomy.name}</td>
 			<td data-title="Socken, Landskap:">

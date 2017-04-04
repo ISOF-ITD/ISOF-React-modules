@@ -5,6 +5,16 @@ export default class GlobalAudioPlayer extends React.Component {
 	constructor(props) {
 		super(props);
 
+		window.isofAudioPlayer = {
+			player: this,
+			currentAudio: {
+				record: null,
+				media: null,
+				playing: false,
+				paused: false
+			}
+		};
+
 		this.audioCanPlayHandler = this.audioCanPlayHandler.bind(this);
 		this.audioEndedHandler = this.audioEndedHandler.bind(this);
 		this.audioPlayHandler = this.audioPlayHandler.bind(this);
@@ -22,58 +32,76 @@ export default class GlobalAudioPlayer extends React.Component {
 			audio: null,
 			loaded: false,
 			playing: false,
+			paused: false,
 			audio: null,
-			record: null,
-			docked: false
+			record: null
 		};
 
 		if (window.eventBus) {
-			window.eventBus.addEventListener('audio.play', function(event) {
+			window.eventBus.addEventListener('audio.playaudio', function(event) {
 				this.playAudio(event.target);
 			}.bind(this));
-/*
-			window.eventBus.addEventListener('popup.open', function() {
-				this.setState({
-					docked: true
-				});
+			window.eventBus.addEventListener('audio.pauseaudio', function(event) {
+				this.pauseAudio();
 			}.bind(this));
-
-			window.eventBus.addEventListener('popup.close', function() {
-				this.setState({
-					docked: false
-				});
-			}.bind(this));
-*/
 		}
 	}
 
 	audioCanPlayHandler(event) {
-		console.log('audioCanPlayHandler');
-
 		this.setState({
 			loaded: true
 		});
+
+		if (window.eventBus) {
+			window.eventBus.dispatch('audio.playervisible');
+		}		
 
 		this.audio.play();
 	}
 
 	audioEndedHandler(event) {
-		console.log('audioEndedHandler');
+		isofAudioPlayer.currentAudio.playing = false;
+		isofAudioPlayer.currentAudio.paused = false;
+
+		if (window.eventBus) {
+			window.eventBus.dispatch('audio.stop', {
+				paused: false
+			});
+		}
+
+		this.setState({
+			paused: false,
+			playing: false
+		})
 	}
 
 	audioPlayHandler(event) {
-		console.log('audioPlayHandler');
+		isofAudioPlayer.currentAudio.playing = true;
+		isofAudioPlayer.currentAudio.paused = false;
+
+		if (window.eventBus) {
+			window.eventBus.dispatch('audio.play');
+		}		
 
 		this.setState({
-			playing: true
+			playing: true,
+			paused: false
 		});
 	}
 
 	audioPauseHandler(event) {
-		console.log('audioPauseHandler');
+		isofAudioPlayer.currentAudio.playing = false;
+		isofAudioPlayer.currentAudio.paused = true;
+
+		if (window.eventBus) {
+			window.eventBus.dispatch('audio.stop', {
+				paused: true
+			});
+		}		
 
 		this.setState({
-			playing: false
+			playing: false,
+			paused: true
 		});
 	}
 
@@ -88,22 +116,39 @@ export default class GlobalAudioPlayer extends React.Component {
 		}
 	}
 
+	pauseAudio() {
+		if (this.state.loaded && this.state.playing) {
+			this.audio.pause();
+		}
+	}
+
+	resumeAudio() {
+		if (this.state.loaded && this.state.paused) {
+			this.audio.play();
+		}
+	}
+
 	playAudio(data) {
-		console.log('playAudio');
-		console.log(data);
+		if (isofAudioPlayer.currentAudio.record == data.record.id && isofAudioPlayer.currentAudio.media == data.audio.source && this.state.paused) {
+			this.resumeAudio();
+		}
+		else {
+			isofAudioPlayer.currentAudio.record = data.record.id;
+			isofAudioPlayer.currentAudio.media = data.audio.source;
 
-		this.setState({
-			playing: false,
-			audio: data.audio,
-			record: data.record
-		});
+			this.setState({
+				playing: false,
+				audio: data.audio,
+				record: data.record
+			});
 
-		this.audio.src = config.audioUrl+data.audio.source;
-		this.audio.load();
+			this.audio.src = config.audioUrl+data.audio.source;
+			this.audio.load();
+		}
 	}
 
 	render() {
-		return <div className={'global-audio-player-wrapper map-floating-control map-bottom-control'+(this.state.docked ? ' docked' : '')+(this.state.loaded ? ' visible' : '')}>
+		return <div className={'global-audio-player-wrapper map-bottom-control'+(this.state.loaded ? ' visible' : '')}>
 			<div className={'global-audio-player'} disabled={!this.state.loaded}>
 				<div className="player-content">
 					{

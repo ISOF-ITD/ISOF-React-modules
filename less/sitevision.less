@@ -13,10 +13,16 @@ header {
 
 		z-index: 1;
 
+		.transition(top 300ms ease-in-out);
+
 		@media (max-width: 550px) {
 			img {
 				width: 85px !important;
 			}
+		}
+
+		.has-docked-control & {
+			top: 65px;
 		}
 	}
 
@@ -85,6 +91,12 @@ header {
 		pointer-events: all;
 
 		z-index: 100;
+
+		.transition(top 300ms ease-in-out);
+
+		.has-docked-control & {
+			top: 80px;
+		}
 
 		@media (max-width: 650px) {
 			display: none;
