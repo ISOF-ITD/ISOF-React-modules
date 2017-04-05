@@ -2,6 +2,7 @@ import React from 'react';
 
 import RecordList from './RecordList';
 import SimpleMap from './SimpleMap';
+import ListPlayButton from './ListPlayButton';
 
 import config from './../../../scripts/config.js';
 
@@ -74,7 +75,15 @@ export default class PlaceView extends React.Component {
 
 		var recordsItems = this.state.data.records && this.state.data.records.length > 0 ? this.state.data.records.map(function(record, index) {
 			return <tr key={index}>
-				<td data-title=""><a href={'#record/'+record.id}>{record.title ? record.title : '(Untitled)'}</a></td>
+				<td data-title="">
+					<a href={'#record/'+record.id}>
+						{
+							record.type == 'inspelning' &&
+							<ListPlayButton />
+						}
+						{record.title ? record.title : '(Untitled)'}
+					</a>
+				</td>
 				<td data-title="Kategori">{record.taxonomy.name}</td>
 				<td data-title="Socken, Landskap">
 					{record.places &&
