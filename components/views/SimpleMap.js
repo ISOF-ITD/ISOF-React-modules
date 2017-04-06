@@ -38,16 +38,23 @@ export default class SimpleMap extends React.Component {
 	}
 
 	addMarker(markerData) {
-		if (markerData) {
-			var marker = L.marker([Number(markerData.lat), Number(markerData.lng)], {
+		if (markerData && markerData.lat && markerData.lng) {
+			var existingMarker = false;
+
+			if (this.marker) {
+				existingMarker = true;
+				this.map.removeLayer(this.marker);
+			}
+
+			this.marker = L.marker([Number(markerData.lat), Number(markerData.lng)], {
 				title: markerData.label,
 				icon: mapHelper.orangeIcon
 			});
 
-			this.map.addLayer(marker);
+			this.map.addLayer(this.marker);
 
 			this.map.panTo([Number(markerData.lat), Number(markerData.lng)], {
-				animate: false
+				animate: existingMarker
 			});
 		}
 	}
