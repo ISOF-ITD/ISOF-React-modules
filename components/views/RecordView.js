@@ -254,12 +254,18 @@ export default class RecordView extends React.Component {
 					</div>
 
 					<div className="four columns">
-						<p><strong>Materialtyp</strong><br/>
-							{this.state.data.type ? this.state.data.type.charAt(0).toUpperCase() + this.state.data.type.slice(1) : ''}
-						</p>
+						{
+							this.state.data.type &&
+							<p><strong>Materialtyp</strong><br/>
+								{this.state.data.type ? this.state.data.type.charAt(0).toUpperCase() + this.state.data.type.slice(1) : ''}
+							</p>
+						}
 
-						<p><strong>Kategori</strong><br/>
-							{this.state.data.taxonomy ? this.state.data.taxonomy.name : ''}</p>
+						{
+							this.state.data.taxonomy && this.state.data.taxonomy.name &&
+							<p><strong>Kategori</strong><br/>
+								{this.state.data.taxonomy ? this.state.data.taxonomy.name : ''}</p>
+						}
 					</div>
 
 					<div className="four columns">
