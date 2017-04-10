@@ -355,6 +355,16 @@ export default {
 				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 			}
 		},
+		/*
+		{
+			label: 'Lantmäteriet',
+			url: 'https://api.lantmateriet.se/open/topowebb-ccby/v1/wmts/token/36c696a2a831dcf8aa64c192b55d4d/1.0.0/topowebb/default/3006/{z}/{y}/{x}.png',
+			options: {
+				maxZoom: 9,
+				minZoom: 0,
+				attribution: '&copy; <a href="http://www.lantmateriet.se/en/">Lantmäteriet</a> Topografisk Webbkarta Visning'
+			}
+		},
 		{
 			label: 'Lantmäteriet',
 			url: 'http://ifsf0001:k7r9ZjQh4SN77N6p@maps.lantmateriet.se/topowebb/v1/wmts/1.0.0/topowebb/default/3006/{z}/{y}/{x}.png',
@@ -364,6 +374,8 @@ export default {
 				crossOrigin: true,
 			}
 		},
+		*/
+
 		{
 			label: 'Open Map Surfer',
 			url: 'http://korona.geog.uni-heidelberg.de/tiles/roads/x={x}&y={y}&z={z}',
@@ -399,6 +411,7 @@ export default {
 			if (this.tileLayers[i].isWms) {
 				newLayer = L.tileLayer.wms(this.tileLayers[i].url, {
 					layers: this.tileLayers[i].layerName,
+					minZoom: this.tileLayers[i].minZoom || 3,
 					maxZoom: this.tileLayers[i].maxZoom,
 					attribution: this.tileLayers[i].attribution
 				});
