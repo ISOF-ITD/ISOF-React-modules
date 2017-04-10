@@ -5,6 +5,7 @@ import config from './../../../scripts/config.js';
 import localLibrary from './../../utils/localLibrary.js';
 
 import ShareButtons from './ShareButtons';
+import SimpleMap from './SimpleMap';
 import ListPlayButton from './ListPlayButton';
 
 export default class RecordView extends React.Component {
@@ -230,7 +231,10 @@ export default class RecordView extends React.Component {
 						</div>
 
 						<div className="six columns">
-							<div className="map-container small"></div>
+							{
+								this.state.data.places && this.state.data.places.length > 0 && this.state.data.places[0].lat && this.state.data.places[0].lng &&
+								<SimpleMap marker={{lat: this.state.data.places[0].lat, lng: this.state.data.places[0].lng, label: this.state.data.places[0].name}} />
+							}
 						</div>
 
 					</div>
@@ -268,7 +272,7 @@ export default class RecordView extends React.Component {
 						{
 							this.state.data.taxonomy && this.state.data.taxonomy.name &&
 							<p><strong>Kategori</strong><br/>
-								{this.state.data.taxonomy ? this.state.data.taxonomy.name : ''}</p>
+								<a href={'#/places/category/'+this.state.data.taxonomy.category.toLowerCase()}>{this.state.data.taxonomy.name}</a></p>
 						}
 					</div>
 
