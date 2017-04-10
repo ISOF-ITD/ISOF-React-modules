@@ -40,3 +40,55 @@
 .map-bottom-control {
 	bottom: 20px;
 }
+
+.close-button {
+	display: block;
+
+	width: 20px;
+	height: 20px;
+
+	padding: 0;
+
+	border: none;
+
+	z-index: 2;
+
+	cursor: pointer;
+
+	.transition(all 300ms ease-in-out);
+
+	&:hover {
+		.transform(scale(1.4));
+	}
+
+	&:before, &:after {
+		content: " ";
+
+		display: block;
+
+		position: absolute;
+
+		width: 20px;
+		height: 2px;
+
+		background: #555;
+	}
+
+	&:before {
+		top: 9px;
+
+		.transform(rotate(45deg));
+	}
+
+	&:after {
+		top: 9px;
+
+		.transform(rotate(-45deg));
+	}
+
+	&.white {
+		&:before, &:after {
+			background: #fff;
+		}
+	}
+}

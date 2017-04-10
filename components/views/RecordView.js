@@ -13,6 +13,7 @@ export default class RecordView extends React.Component {
 		super(props);
 
 		this.toggleSaveRecord = this.toggleSaveRecord.bind(this);
+		this.mediaImageClickHandler = this.mediaImageClickHandler.bind(this);
 
 		this.state = {
 			data: {},
@@ -29,6 +30,16 @@ export default class RecordView extends React.Component {
 	componentWillReceiveProps(props) {
 		if (props.params.record_id != this.props.params.record_id) {
 			this.fetchData(props.params);
+			if (window.eventBus) {
+				window.eventBus.dispatch('overlay.hide');
+			}
+		}
+	}
+
+	componentWillUnmount() {
+		console.log('componentWillUnmount')
+		if (window.eventBus) {
+			window.eventBus.dispatch('overlay.hide');
 		}
 	}
 
@@ -48,6 +59,14 @@ export default class RecordView extends React.Component {
 			localLibrary.remove(libraryItem);
 			this.setState({
 				saved: false
+			});
+		}
+	}
+
+	mediaImageClickHandler(event) {
+		if (window.eventBus) {
+			window.eventBus.dispatch('overlay.viewimage', {
+				imageUrl: event.target.dataset.image
 			});
 		}
 	}
@@ -80,8 +99,8 @@ export default class RecordView extends React.Component {
 				return dataItem.type == 'image';
 			});
 			imageItems = imageDataItems.map(function(mediaItem, index) {
-				return <a key={index} className="image-link" target="_blank" href={config.imageUrl+mediaItem.source}><img className="archive-image" src={config.imageUrl+mediaItem.source} alt="" /></a>;
-			});
+				return <img key={index} className="archive-image" data-image={mediaItem.source} onClick={this.mediaImageClickHandler} src={config.imageUrl+mediaItem.source} alt="" />;
+			}.bind(this));
 		}
 
 		if (this.state.data.media && this.state.data.media.length > 0) {
