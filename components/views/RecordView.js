@@ -133,12 +133,16 @@ export default class RecordView extends React.Component {
 
 					{
 						this.state.data.text &&
-						<div className="six columns">
+						<div className="eight columns">
 							<p dangerouslySetInnerHTML={{__html: this.state.data.text}} />
 
 							{
 								this.state.data.comment && this.state.data.comment != '' &&
 								<p><strong>Kommentarer:</strong><br/>{this.state.data.comment}</p>
+							}
+							{
+								this.state.data.printed_source && this.state.data.type == 'tryckt' &&
+								<p><em>{this.state.data.printed_source}</em></p>
 							}
 							<ShareButtons path={'record/'+this.state.data.id} />
 						</div>
