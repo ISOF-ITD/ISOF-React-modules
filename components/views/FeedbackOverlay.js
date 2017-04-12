@@ -91,7 +91,10 @@ export default class FeedbackOverlay extends React.Component {
 
 	componentWillReceiveProps() {
 		this.setState({
-			messageSent: false
+			messageSent: false,
+			emailInputValue: '',
+			nameInputValue: '',
+			messageInputValue: ''
 		});
 	}
 
