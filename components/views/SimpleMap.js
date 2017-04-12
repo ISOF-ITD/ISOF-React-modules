@@ -39,10 +39,10 @@ export default class SimpleMap extends React.Component {
 
 	addMarker(markerData) {
 		if (markerData && markerData.lat && markerData.lng) {
-			var existingMarker = false;
+			var animateMap = this.props.animate;
 
 			if (this.marker) {
-				existingMarker = true;
+				animateMap = true;
 				this.map.removeLayer(this.marker);
 			}
 
@@ -54,7 +54,7 @@ export default class SimpleMap extends React.Component {
 			this.map.addLayer(this.marker);
 
 			this.map.panTo([Number(markerData.lat), Number(markerData.lng)], {
-				animate: existingMarker
+				animate: animateMap
 			});
 		}
 	}
