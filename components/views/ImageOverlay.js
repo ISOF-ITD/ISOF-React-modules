@@ -13,17 +13,20 @@ export default class ImageOverlay extends React.Component {
 		};
 
 		if (window.eventBus) {
+
 			window.eventBus.addEventListener('overlay.viewimage', function(event) {
 				this.setState({
 					imageUrl: event.target.imageUrl,
 					visible: true
 				});
 			}.bind(this));
+
 			window.eventBus.addEventListener('overlay.hide', function(event) {
 				this.setState({
 					visible: false
 				});
 			}.bind(this));
+			
 		}
 	}
 
@@ -35,11 +38,13 @@ export default class ImageOverlay extends React.Component {
 
 	render() {
 		return <div className={'overlay-container'+(this.state.visible ? ' visible' : '')}>
-			<div className="image-overlay">
-				<img src={config.imageUrl+this.state.imageUrl} />
 
-				<button className="close-button white" onClick={this.closeButtonClickHandler}></button>
-			</div>
+			{
+				this.state.imageUrl &&
+				<img className="overlay-image" src={config.imageUrl+this.state.imageUrl} />
+			}
+
+			<button className="close-button white" onClick={this.closeButtonClickHandler}></button>
 		</div>;
 	}
 }

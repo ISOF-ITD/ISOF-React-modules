@@ -7,6 +7,7 @@ import localLibrary from './../../utils/localLibrary.js';
 import ShareButtons from './ShareButtons';
 import SimpleMap from './SimpleMap';
 import ListPlayButton from './ListPlayButton';
+import FeedbackButton from './FeedbackButton';
 
 export default class RecordView extends React.Component {
 	constructor(props) {
@@ -147,6 +148,8 @@ export default class RecordView extends React.Component {
 							<p><strong>Materialtyp</strong>: {this.state.data.type}</p>
 						</div>
 					</div>
+
+					<FeedbackButton title={this.state.data.title} type="Sägen" />
 				</div>
 
   				<div className="row">

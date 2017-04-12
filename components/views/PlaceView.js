@@ -110,6 +110,8 @@ export default class PlaceView extends React.Component {
 				<div className="row">
 					<div className="twelve columns">
 						<SimpleMap marker={this.state.data.lat && this.state.data.lng ? {lat: this.state.data.lat, lng: this.state.data.lng, label: this.state.data.name} : null} />
+
+						<br/><FeedbackButton />
 					</div>
 				</div>
 

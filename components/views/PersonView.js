@@ -2,6 +2,7 @@ import React from 'react';
 
 import SimpleMap from './SimpleMap';
 import RecordList from './RecordList';
+import FeedbackButton from './FeedbackButton';
 
 import config from './../../../scripts/config.js';
 
@@ -76,7 +77,7 @@ export default class PersonView extends React.Component {
 				<div className="container-header">
 					<div className="row">
 						<div className="twelve columns">
-							<h2>{this.state.data.name ? this.state.data.name : ''}</h2>
+							<h2>{this.state.data.name || ''}</h2>
 							<p>
 							{
 								(this.state.data.birth_year && this.state.data.birth_year > 0 ? 'Föddes '+this.state.data.birth_year : '')+
@@ -89,6 +90,8 @@ export default class PersonView extends React.Component {
 							</p>
 						</div>
 					</div>
+
+					<FeedbackButton title={this.state.data.name || ''} type="Person" />
 				</div>
 
 				{

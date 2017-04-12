@@ -129,6 +129,21 @@
 			margin-top: 5px;
 		}
 
+		.advanced-button {
+			display: block;
+			
+			margin: 0 -12px -25px -12px;
+			padding: 10px 10px 10px 15px;
+
+			border-top: 1px solid #c6c7c8;
+
+			cursor: pointer;
+
+			&:hover {
+				background: rgba(255, 255, 255, 0.35);
+			}
+		}
+
 		.advanced-content {
 			margin: 0;
 
@@ -196,10 +211,14 @@
 		}
 
 		&.advanced {
+			.advanced-button {
+				background: rgba(255, 255, 255, 0.55);
+			}
+
 			.advanced-content {
 				max-height: 800px;
 
-				margin: 15px 0 5px 0;
+				margin: 25px 0 5px 0;
 
 				opacity: 1;
 
