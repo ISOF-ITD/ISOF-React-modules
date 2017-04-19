@@ -348,8 +348,8 @@ export default {
 
 	tileLayers: [
 		{
-			label: 'Lantmäteriet',
-			url: 'http://www4.sprakochfolkminnen.se/sagner/api/lm_proxy/{z}/{y}/{x}.png',
+			label: 'Lantmäteriet topografisk karta',
+			url: 'http://www4.sprakochfolkminnen.se/sagner/api/lm_proxy/{z}/{y}/{x}',
 			options: {
 				attribution: '&copy; <a href="http://www.lantmateriet.se/en/">Lantmäteriet</a> Topografisk Webbkarta Visning',
 				crossOrigin: true,

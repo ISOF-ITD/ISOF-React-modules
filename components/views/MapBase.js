@@ -6,13 +6,6 @@ import 'leaflet.markercluster';
 import mapHelper from './../../utils/mapHelper';
 
 export default class MapBase extends React.Component {
-
-	constructor(props) {
-		super(props);
-
-		console.log('MapBase');
-	}
-
 	componentDidMount() {
 		var layers = mapHelper.createLayers();
 
@@ -34,7 +27,7 @@ export default class MapBase extends React.Component {
 	}
 
 	mapBaseLayerChangeHandler(event) {
-		if (event.name == 'Lantmäteriet' && this.map.options.crs.code != 'EPSG:3006') {
+		if (event.name.indexOf('Lantmäteriet') > -1 && this.map.options.crs.code != 'EPSG:3006') {
 			var mapCenter = this.map.getCenter();
 			var mapZoom = this.map.getZoom();
 
@@ -48,7 +41,7 @@ export default class MapBase extends React.Component {
 			});
 		}
 
-		if (event.name != 'Lantmäteriet' && this.map.options.crs.code == 'EPSG:3006') {
+		if (event.name.indexOf('Lantmäteriet') == -1 && this.map.options.crs.code == 'EPSG:3006') {
 			var mapCenter = this.map.getCenter();
 			var mapZoom = this.map.getZoom();
 

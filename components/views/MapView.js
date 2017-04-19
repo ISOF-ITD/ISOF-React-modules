@@ -346,7 +346,6 @@ export default class MapView extends React.Component {
 	}
 
 	render() {
-		console.log('MapView: render <MapBase />');
 		return (
 			<div className={'map-wrapper'+(this.state.loading ? ' map-loading' : '')}>
 				{this.props.children}
@@ -361,7 +360,7 @@ export default class MapView extends React.Component {
 					<div className="indicator"></div>
 				</div>
 
-				<MapBase ref="mapView" className="map-view" layersControlPosition="topleft" />
+				<MapBase ref="mapView" className="map-view" layersControlPosition="topleft" scrollWheelZoom="true" />
 			</div>
 		);
 	}
