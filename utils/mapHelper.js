@@ -332,9 +332,9 @@ export default {
 		iconUrl: config.appUrl+'img/map-marker.png',
 		shadowUrl: config.appUrl+'img/map-marker-shadow.png',
 
-		iconSize:     [15, 23], // size of the icon
-		shadowSize:   [14, 10], // size of the shadow
-		iconAnchor:   [8, 22], // point of the icon which will correspond to marker's location
+		iconSize:     [15, 23],	// size of the icon
+		shadowSize:   [14, 10],	// size of the shadow
+		iconAnchor:   [8, 22],	// point of the icon which will correspond to marker's location
 		shadowAnchor: [8, 22],  // the same for the shadow
 		popupAnchor:  [-1, -15] // point from which the popup should open relative to the iconAnchor
 	}),
@@ -348,30 +348,28 @@ export default {
 
 	tileLayers: [
 		{
+			label: 'Lantmäteriet',
+			url: 'http://www4.sprakochfolkminnen.se/sagner/api/lm_proxy/{z}/{y}/{x}.png',
+			options: {
+				attribution: '&copy; <a href="http://www.lantmateriet.se/en/">Lantmäteriet</a> Topografisk Webbkarta Visning',
+				crossOrigin: true,
+			}
+		},
+		{
 			label: 'Open Screet Map Mapnik',
 			url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 			options: {
-				maxZoom: 19,
 				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 			}
 		},
 		/*
 		{
-			label: 'Lantmäteriet',
+			label: 'Lantmäteriet', // Lantmäteriet open
 			url: 'https://api.lantmateriet.se/open/topowebb-ccby/v1/wmts/token/36c696a2a831dcf8aa64c192b55d4d/1.0.0/topowebb/default/3006/{z}/{y}/{x}.png',
 			options: {
 				maxZoom: 9,
 				minZoom: 0,
 				attribution: '&copy; <a href="http://www.lantmateriet.se/en/">Lantmäteriet</a> Topografisk Webbkarta Visning'
-			}
-		},
-		{
-			label: 'Lantmäteriet',
-			url: 'http://ifsf0001:k7r9ZjQh4SN77N6p@maps.lantmateriet.se/topowebb/v1/wmts/1.0.0/topowebb/default/3006/{z}/{y}/{x}.png',
-			options: {
-				maxZoom: 20,
-				attribution: '&copy; <a href="http://www.lantmateriet.se/en/">Lantmäteriet</a> Topografisk Webbkarta Visning',
-				crossOrigin: true,
 			}
 		},
 		*/
@@ -380,7 +378,6 @@ export default {
 			label: 'Open Map Surfer',
 			url: 'http://korona.geog.uni-heidelberg.de/tiles/roads/x={x}&y={y}&z={z}',
 			options: {
-				maxZoom: 20,
 				attribution: 'Imagery from <a href="http://giscience.uni-hd.de/">GIScience Research Group @ University of Heidelberg</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 			}
 		},
@@ -388,7 +385,6 @@ export default {
 			label: 'ESRI World Imagery',
 			url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
 			options: {
-				maxZoom: 18,
 				attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 			}
 		},
@@ -396,8 +392,7 @@ export default {
 			label: 'ESRI Gray',
 			url: 'http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
 			options: {
-				attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
-				maxZoom: 16
+				attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ'
 			}
 		}
 	],

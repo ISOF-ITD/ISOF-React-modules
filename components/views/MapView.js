@@ -6,6 +6,8 @@ import './../../lib/leaflet-heat';
 //import 'leaflet.vectorgrid';
 import _ from 'underscore';
 
+import MapBase from './MapBase';
+
 import MapCollection from './../collections/MapCollection';
 import mapHelper from './../../utils/mapHelper';
 import config from './../../../scripts/config.js';
@@ -38,16 +40,6 @@ export default class MapView extends React.Component {
 	}
 
 	componentDidMount() {
-		var layers = mapHelper.createLayers();
-
-		this.map = L.map(this.refs.mapView, {
-//			crs: mapHelper.getSweref99crs(),
-			center: [61.5122, 16.7211], 
-			zoom: 5,
-			minZoom: 3,
-			layers: [layers[Object.keys(layers)[0]]],
-			scrollWheelZoom: true
-		});
 /*
 		this.vectorGridLayer = L.vectorGrid.protobuf('http://localhost:8084/geoserver/gwc/service/wmts?REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&LAYER=sverige_socken_sweref:se_socken_clipped&STYLE=&TILEMATRIX=EPSG:900913:{z}&TILEMATRIXSET=EPSG:900913&FORMAT=application/x-protobuf;type=mapbox-vector&TILECOL={x}&TILEROW={y}', {
 			interactive: true,
@@ -93,14 +85,8 @@ export default class MapView extends React.Component {
 
 		});
 
-		this.vectorGridLayer.addTo(this.map);
+		this.vectorGridLayer.addTo(this.refs.mapView.map);
 */
-		L.control.layers(layers, null, {
-			position: 'topleft'
-		}).addTo(this.map);
-
-//		this.setViewmode('clusters');
-
 		this.fetchData(this.props.searchParams);
 	}
 
@@ -165,17 +151,17 @@ export default class MapView extends React.Component {
 				this.markers.clearLayers();
 			}
 
-			this.map.removeLayer(this.markers);
+			this.refs.mapView.map.removeLayer(this.markers);
 		}
 
 		switch (this.state.viewMode) {
 			case 'markers':
 				this.markers = L.featureGroup();
-				this.map.addLayer(this.markers);
+				this.refs.mapView.map.addLayer(this.markers);
 				break;
 			case 'circles':
 				this.markers = L.featureGroup();
-				this.map.addLayer(this.markers);
+				this.refs.mapView.map.addLayer(this.markers);
 				break;
 			case 'clusters':
 				this.markers = new L.MarkerClusterGroup({
@@ -200,7 +186,7 @@ export default class MapView extends React.Component {
 						});
 					}
 				});
-				this.map.addLayer(this.markers);
+				this.refs.mapView.map.addLayer(this.markers);
 				break;
 			case 'heatmap':
 				this.markers = L.heatLayer([], {
@@ -208,14 +194,14 @@ export default class MapView extends React.Component {
 					radius: 18,
 					blur: 15
 				});
-				this.markers.addTo(this.map);
+				this.markers.addTo(this.refs.mapView.map);
 			case 'heatmap-count':
 				this.markers = L.heatLayer([], {
 					minOpacity: 0.35,
 					radius: 18,
 					blur: 15
 				});
-				this.markers.addTo(this.map);
+				this.markers.addTo(this.refs.mapView.map);
 		}
 	}
 
@@ -268,7 +254,7 @@ export default class MapView extends React.Component {
 					}
 				}.bind(this));
 
-				this.map.fitBounds(bounds, {
+				this.refs.mapView.map.fitBounds(bounds, {
 					maxZoom: 10
 				});
 			}
@@ -330,7 +316,7 @@ export default class MapView extends React.Component {
 			this.markers.setLatLngs(latLngs);
 		}
 		if (this.state.viewMode == 'heatmap-count') {
-			this.map.removeLayer(this.markers);
+			this.refs.mapView.map.removeLayer(this.markers);
 
 			var maxCount = _.max(this.mapData, function(mapItem) {
 				return Number(mapItem.c);
@@ -342,7 +328,7 @@ export default class MapView extends React.Component {
 				blur: 15,
 				max: maxCount
 			});
-			this.markers.addTo(this.map);
+			this.markers.addTo(this.refs.mapView.map);
 
 			var latLngs = _.map(this.mapData, function(mapItem) {
 				return [mapItem.lat, mapItem.lng, mapItem.c];
@@ -360,6 +346,7 @@ export default class MapView extends React.Component {
 	}
 
 	render() {
+		console.log('MapView: render <MapBase />');
 		return (
 			<div className={'map-wrapper'+(this.state.loading ? ' map-loading' : '')}>
 				{this.props.children}
@@ -374,7 +361,7 @@ export default class MapView extends React.Component {
 					<div className="indicator"></div>
 				</div>
 
-				<div className="map-view" ref="mapView"></div>
+				<MapBase ref="mapView" className="map-view" layersControlPosition="topleft" />
 			</div>
 		);
 	}
