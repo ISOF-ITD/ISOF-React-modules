@@ -3,9 +3,11 @@ import _ from 'underscore';
 export default {
 	getCategoryName(categoryLetter) {
 		if (categoryLetter) {
-			return _.find(this.categories, function(item) {
-				return item.letter == categoryLetter;
-			}.bind(this)).label;
+			var categoryObj = _.find(this.categories, function(item) {
+				return item.letter.toLowerCase() == categoryLetter.toLowerCase();
+			}.bind(this));
+
+			return categoryObj ? categoryObj.label : '(Ingen kategori)';
 		}
 		else {
 			return null;
