@@ -20,14 +20,19 @@ export default class MapCollection {
 	}
 
 	fetch(params) {
-
-		var paramString = '';
+		var paramStrings = [];
 
 		params = this.cleanParams(params);
 
 		for (var key in params) {
-			paramString += key+'/'+params[key]+'/';
+			paramStrings.push(key+'/'+params[key]);
 		}
+
+		if (config.fetchOnlyCategories) {
+			paramStrings.push('only_categories/true');
+		}
+
+		var paramString = paramStrings.join('/');
 
 		fetch(this.url+paramString)
 			.then(function(response) {

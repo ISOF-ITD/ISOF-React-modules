@@ -36,7 +36,7 @@ export default class MapView extends React.Component {
 			this.setState({
 				loading: false
 			});
-		}.bind(this));
+		}.bind(this), this.props.fetchOnlyCategories);
 	}
 
 	componentDidMount() {

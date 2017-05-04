@@ -51,7 +51,7 @@ export default class PlaceView extends React.Component {
 
 	fetchData(params) {
 		if (params.place_id) {
-			fetch(this.url+params.place_id+'/type/'+config.apiRecordsType)
+			fetch(this.url+params.place_id+'/type/'+config.apiRecordsType+(config.fetchOnlyCategories ? '/only_categories/true' : ''))
 				.then(function(response) {
 					return response.json()
 				}).then(function(json) {

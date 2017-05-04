@@ -12,13 +12,19 @@ export default class RecordsCollection {
 	fetch(params) {
 		var page = params.page ? (params.page-1)*50 : 0;
 
-		var paramString = '';
+		var paramStrings = [];
 
 		for (var key in params) {
 			if (params[key] && key != 'page') {
-				paramString += key+'/'+params[key]+'/';
+				paramStrings.push(key+'/'+params[key]);
 			}
 		}
+
+		if (config.fetchOnlyCategories) {
+			paramStrings.push('only_categories/true');
+		}
+
+		var paramString = paramStrings.join('/');
 
 		fetch(this.url+((page)+'/50/')+paramString)
 			.then(function(response) {
