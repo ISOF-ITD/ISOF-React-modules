@@ -13,7 +13,7 @@ export default class MapBase extends React.Component {
 			crs: mapHelper.getSweref99crs(),
 			center: [61.5122, 16.7211], 
 			zoom: 1,
-			minZoom: 0,
+			minZoom: 1,
 			maxZoom: 13,
 			layers: [layers[Object.keys(layers)[0]]],
 			scrollWheelZoom: this.props.scrollWheelZoom || false
@@ -33,7 +33,7 @@ export default class MapBase extends React.Component {
 
 			this.map.options.crs = mapHelper.getSweref99crs();
 
-			this.map.options.minZoom = 0;
+			this.map.options.minZoom = 1;
 			this.map.options.maxZoom = 13;
 
 			this.map.setView(mapCenter, mapZoom-4, {

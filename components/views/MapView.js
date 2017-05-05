@@ -28,6 +28,7 @@ export default class MapView extends React.Component {
 		this.mapData = [];
 
 		this.changeViewMode = this.changeViewMode.bind(this);
+		this.mapBaseLayerChangeHandler = this.mapBaseLayerChangeHandler.bind(this);
 
 		this.collections = new MapCollection(function(json) {
 			this.mapData = json.data || [];
@@ -104,6 +105,10 @@ export default class MapView extends React.Component {
 		if (JSON.stringify(currentSearchParams) !== JSON.stringify(searchParams)) {
 			this.fetchData(searchParams);
 		}
+	}
+
+	mapBaseLayerChangeHandler(event) {
+		this.updateMap();
 	}
 
 	fetchData(params) {
@@ -360,7 +365,7 @@ export default class MapView extends React.Component {
 					<div className="indicator"></div>
 				</div>
 
-				<MapBase ref="mapView" className="map-view" layersControlPosition="topleft" scrollWheelZoom="true" />
+				<MapBase ref="mapView" className="map-view" layersControlPosition="topleft" scrollWheelZoom="true" onBaseLayerChange={this.mapBaseLayerChangeHandler} />
 			</div>
 		);
 	}
