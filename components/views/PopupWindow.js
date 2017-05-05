@@ -35,12 +35,18 @@ export default class PopupWindow extends React.Component {
 		});
 	}
 
+	componentDidMount() {
+		this.setState({
+			windowOpen: Boolean(this.props.children) && !this.props.children.props.route.manuallyOpenPopup
+		});
+	}
+
 	componentWillReceiveProps(props) {
 		this.setState({
 			windowOpen: Boolean(props.children) && !props.children.props.route.manuallyOpenPopup
 		});
 
-		if (!props.children == this.props.children) {
+		if (!props.children == this.props.children && !this.props.disableAutoScrolling) {
 			this.refs.contentWrapper.scrollTo(0, 0);
 		}
 	}
@@ -84,7 +90,7 @@ export default class PopupWindow extends React.Component {
 				}
 				<div ref="contentWrapper" className={'popup-content-wrapper'}>
 					<div className="page-content">
-						<a className="close-button white" onClick={this.closeButtonClick}></a>
+						<a className={'close-button'+(this.props.closeButtonStyle == 'dark' ? '' : this.props.closeButtonStyle == 'white' ? ' white' : ' white')} onClick={this.closeButtonClick}></a>
 						{this.props.children}
 					</div>
 				</div>

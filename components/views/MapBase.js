@@ -12,7 +12,7 @@ export default class MapBase extends React.Component {
 		this.map = L.map(this.refs.mapView, {
 			crs: mapHelper.getSweref99crs(),
 			center: [61.5122, 16.7211], 
-			zoom: 5,
+			zoom: 1,
 			minZoom: 0,
 			maxZoom: 13,
 			layers: [layers[Object.keys(layers)[0]]],
@@ -53,6 +53,10 @@ export default class MapBase extends React.Component {
 			this.map.setView(mapCenter, mapZoom+4, {
 				animate: false
 			});
+		}
+
+		if (this.props.onBaseLayerChange) {
+			this.props.onBaseLayerChange(event);
 		}
 	}
 
