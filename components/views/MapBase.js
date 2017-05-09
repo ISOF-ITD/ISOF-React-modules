@@ -9,15 +9,26 @@ export default class MapBase extends React.Component {
 	componentDidMount() {
 		var layers = mapHelper.createLayers();
 
-		this.map = L.map(this.refs.mapView, {
-			crs: mapHelper.getSweref99crs(),
+		if (this.props.disableSwedenMap) {
+			delete layers[mapHelper.tileLayers[0].label];
+		}
+
+		var mapOptions = {
 			center: [61.5122, 16.7211], 
-			zoom: 1,
-			minZoom: 1,
+			zoom: 4,
+			minZoom: 4,
 			maxZoom: 13,
 			layers: [layers[Object.keys(layers)[0]]],
 			scrollWheelZoom: this.props.scrollWheelZoom || false
-		});
+		};
+
+		if (!this.props.disableSwedenMap) {
+			mapOptions.crs = mapHelper.getSweref99crs();
+			mapOptions.zoom = 1;
+			mapOptions.minZoom = 1;
+		}
+
+		this.map = L.map(this.refs.mapView, mapOptions);
 
 		L.control.layers(layers, null, {
 			position: this.props.layersControlPosition || 'topright'
