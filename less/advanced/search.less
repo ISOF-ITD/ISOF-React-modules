@@ -1,0 +1,81 @@
+.advanced-search-form {
+	position: relative;
+
+	.search-input, .search-button {
+		height: 44px;
+	}
+
+	.search-input {
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+	}
+
+	.search-input-wrapper {
+		position: relative;
+
+		.expand-button {
+			position: absolute;
+
+			right: 0;
+
+			width: 40px;
+
+			padding: 0;
+
+			font-size: 1.4rem;
+			font-family: serif;
+			color: #a6192e;
+
+			border-color: #d8d8d8;
+
+			background: #efefef;
+
+			span {
+				position: relative;
+
+				top: -5px;
+			}
+
+			&:hover {
+				background: #e6e6e6;
+			}
+		}
+	}
+
+	.expanded-content {
+		max-height: 0;
+
+		padding: 20px;
+
+		opacity: 0;
+
+		overflow: hidden;
+
+		.transition(all 300ms ease-in-out);
+
+		.component-frame();
+
+		.expanded& {
+			max-height: 1000px;
+
+			opacity: 1;
+		}
+	}
+
+	.checkbox-list {
+		max-height: 200px;
+
+		padding: 10px 10px 5px 10px;
+
+		box-sizing: border-box;
+		border: 1px solid #d1d1d1;
+		border-radius: 3px;
+
+		background: #f8f8f8;
+
+		overflow-y: auto;
+
+		label {
+			font-weight: normal;
+		}
+	}
+}
