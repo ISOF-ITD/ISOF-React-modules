@@ -127,25 +127,27 @@ export default class AutocompleteInput extends React.Component {
 	}
 
 	fetchData(str) {
-		if (!this.waitingForFetch) {
-			this.waitingForFetch = true;
-
-			fetch(this.props.searchUrl+str)
-				.then(function(response) {
-					return response.json()
-				})
-				.then(function(json) {
-					this.setState({
-						data: json.data,
-						listIndex: -1
-					});
-					this.waitingForFetch = false;
-				}.bind(this))
-				.catch(function(ex) {
-					console.log('parsing failed', ex)
-				})
-			;
+		if (this.waitingForFetch || (this.props.minChars && str.length < this.props.minChars)) {
+			return;
 		}
+
+		this.waitingForFetch = true;
+
+		fetch(this.props.searchUrl.replace('$s', str))
+			.then(function(response) {
+				return response.json()
+			})
+			.then(function(json) {
+				this.setState({
+					data: json.data,
+					listIndex: -1
+				});
+				this.waitingForFetch = false;
+			}.bind(this))
+			.catch(function(ex) {
+				console.log('parsing failed', ex)
+			})
+		;
 	}
 
 	render() {
