@@ -25,6 +25,8 @@ export default class AutocompleteInput extends React.Component {
 	}
 
 	inputValueChangeHandler(event) {
+		event.persist();
+		
 		if (event.target.value == '') {
 			this.setState({
 				inputValue: '',
@@ -35,6 +37,7 @@ export default class AutocompleteInput extends React.Component {
 			if (this.props.onChange) {
 				this.props.onChange({
 					target: {
+						name: this.props.inputName || '',
 						value: ''
 					}
 				});
@@ -47,17 +50,14 @@ export default class AutocompleteInput extends React.Component {
 				this.fetchData(this.state.inputValue);
 
 				if (this.props.onChange) {
-					this.props.onChange({
-						target: {
-							value: this.state.inputValue
-						}
-					});
+					this.props.onChange(event);
 				}
 			}.bind(this));
 		}
 	}
 
 	inputKeyDownHandler(event) {
+		event.persist();
 		if (event.keyCode == 38) { // up
 			if (this.state.listIndex > 0) {
 				this.setState({
@@ -65,11 +65,7 @@ export default class AutocompleteInput extends React.Component {
 					inputValue: this.props.valueField ? this.state.data[this.state.listIndex-1][this.props.valueField] : this.state.data[this.state.listIndex-1]
 				}, function() {
 					if (this.props.onChange) {
-						this.props.onChange({
-							target: {
-								value: this.state.inputValue
-							}
-						});
+						this.props.onChange(event);
 					}
 				}.bind(this));
 			}
@@ -81,11 +77,7 @@ export default class AutocompleteInput extends React.Component {
 					inputValue: this.props.valueField ? this.state.data[this.state.listIndex+1][this.props.valueField] : this.state.data[this.state.listIndex+1]
 				}, function() {
 					if (this.props.onChange) {
-						this.props.onChange({
-							target: {
-								value: this.state.inputValue
-							}
-						});
+						this.props.onChange(event);
 					}
 				}.bind(this));
 			}
@@ -119,6 +111,7 @@ export default class AutocompleteInput extends React.Component {
 			if (this.props.onChange) {
 				this.props.onChange({
 					target: {
+						name: this.props.inputName || '',
 						value: this.state.inputValue
 					}
 				});
@@ -163,6 +156,7 @@ export default class AutocompleteInput extends React.Component {
 		return <div ref="container" className="autocomplete-input">
 			<input className={this.props.inputClassName} 
 				type="text" 
+				name={this.props.inputName || ''}
 				value={this.state.inputValue} 
 				onChange={this.inputValueChangeHandler}
 				onBlur={this.inputBlurHandler}
