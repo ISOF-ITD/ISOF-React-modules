@@ -47,7 +47,17 @@ export default class AutocompleteInput extends React.Component {
 			this.setState({
 				inputValue: event.target.value
 			}, function() {
-				this.fetchData(this.state.inputValue);
+				if (this.state.inputValue.indexOf(',') > -1) {
+					var inputStrings = this.state.inputValue.split(',');
+					var searchValue = inputStrings[inputStrings.length-1];
+
+					if (searchValue != '') {
+						this.fetchData(searchValue);
+					}
+				}
+				else {
+					this.fetchData(this.state.inputValue);
+				}
 
 				if (this.props.onChange) {
 					this.props.onChange(event);
@@ -62,7 +72,7 @@ export default class AutocompleteInput extends React.Component {
 			if (this.state.listIndex > 0) {
 				this.setState({
 					listIndex: this.state.listIndex-1,
-					inputValue: this.props.valueField ? this.state.data[this.state.listIndex-1][this.props.valueField] : this.state.data[this.state.listIndex-1]
+					inputValue: this.assignInputValue(this.props.valueField ? this.state.data[this.state.listIndex-1][this.props.valueField] : this.state.data[this.state.listIndex-1])
 				}, function() {
 					if (this.props.onChange) {
 						this.props.onChange(event);
@@ -74,7 +84,7 @@ export default class AutocompleteInput extends React.Component {
 			if (this.state.listIndex < this.state.data.length) {
 				this.setState({
 					listIndex: this.state.listIndex+1,
-					inputValue: this.props.valueField ? this.state.data[this.state.listIndex+1][this.props.valueField] : this.state.data[this.state.listIndex+1]
+					inputValue: this.assignInputValue(this.props.valueField ? this.state.data[this.state.listIndex+1][this.props.valueField] : this.state.data[this.state.listIndex+1])
 				}, function() {
 					if (this.props.onChange) {
 						this.props.onChange(event);
@@ -104,9 +114,26 @@ export default class AutocompleteInput extends React.Component {
 		}.bind(this), 200);
 	}
 
-	itemClickHandler(item) {
+	assignInputValue(value) {
+		var inputValue = this.state.inputValue;
+
+		var ret = '';
+
+		if (inputValue.indexOf(',') > -1) {
+			var inputValues = inputValue.split(',');
+			inputValues[inputValues.length-1] = value;
+
+			ret = inputValues.join(',');
+		}
+		else {
+			ret = value;
+		}
+		return ret;
+	}
+
+	itemClickHandler(item) {		
 		this.setState({
-			inputValue: item
+			inputValue: this.assignInputValue(item)
 		}, function() {
 			if (this.props.onChange) {
 				this.props.onChange({

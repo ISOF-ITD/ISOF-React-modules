@@ -41,7 +41,9 @@
 .documents-list {
 	position: relative;
 
-	.component-frame();
+	&:not(.container-style-disabled) {
+		.component-frame();
+	}
 
 	.list-heading {
 		padding: 15px;
@@ -55,6 +57,7 @@
 
 			padding: 5px;
 			margin-bottom: 0;
+			margin-right: 10px;
 			
 			border: none;
 			border-radius: 0;

@@ -32,7 +32,13 @@
 
 	padding: 50px 10px 0 0;
 
-	.component-frame();
+	&:not(.disable-component-frame) {
+		.component-frame();
+	}
+
+	&.no-header {
+		padding-top: 10px;
+	}
 
 	.total-number {
 		position: absolute;
@@ -44,43 +50,104 @@
 		color: #737373;
 	}
 
-	.graph-container {
-		.axis {
-			font: 1.4rem;
+	.axis {
+		font: 1.4rem;
 
-			path, line {
-				fill: none;
-				stroke: #D4D8DA;
-				stroke-width: 1px;
-				shape-rendering: crispEdges;
-			}
-		}
-
-		path.line {
+		path, line {
 			fill: none;
-		}
-
-		.overlay {
-			fill: none;
-			pointer-events: all;
-		}
-
-		.focus circle {
-			fill: #F1F3F3;
-			stroke: #6F257F;
-			stroke-width: 5px;
-		}
-
-		.axis-marker {
-			stroke: #999;
+			stroke: #D4D8DA;
 			stroke-width: 1px;
-			stroke-dasharray: 3,3;
+			shape-rendering: crispEdges;
+		}
+	}
+
+	.bar {
+		&.clickable {
+			cursor: pointer;
+		}
+	}
+
+	path.line {
+		fill: none;
+		stroke-width: 1.4px;
+	}
+
+	.overlay {
+		fill: none;
+		pointer-events: all;
+	}
+
+	.time-range {
+		fill: #999;
+	}
+
+	.focus circle {
+		fill: #F1F3F3;
+		stroke: #6F257F;
+		stroke-width: 5px;
+	}
+
+	.axis-marker {
+		stroke: #999;
+		stroke-width: 1px;
+		stroke-dasharray: 3,3;
+	}
+
+	.arc {
+		path {
+			stroke: #fff;
 		}
 	}
 
 	.graph-controls {
+		select {
+			position: absolute;
+			
+			top: 10px;
+			right: 10px;
+		}
+
+		h3 {
+			position: absolute;
+
+			top: 10px;
+			left: 10px;
+
+			margin: 10px 5px;
+
+			color: #333;
+			font-size: 1rem;
+		}
+	}
+
+	.graph-header {
 		position: absolute;
-		top: 10px;
+
+		top: 20px;
 		right: 10px;
+		left: 10px;
+
+		text-align: center;
+	}
+}
+
+.legends {
+	padding: 0px 40px 10px 40px;
+
+	.legend {
+		margin: 10px 0;
+
+		font-size: 0.9rem;
+
+		.color {
+			float: left;
+			
+			width: 15px;
+			height: 15px;
+			
+			margin-right: 10px;
+			
+			border-radius: 2px;
+		}
 	}
 }
