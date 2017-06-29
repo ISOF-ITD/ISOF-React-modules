@@ -17,7 +17,11 @@ export default class DropdownMenu extends React.Component {
 	menuButtonClick() {
 		this.setState({
 			menuOpen: !this.state.menuOpen
-		});
+		}, function() {
+			if (this.state.menuOpen && this.props.onOpen) {
+				this.props.onOpen();
+			}
+		}.bind(this));
 	}
 
 	closeMenu() {
@@ -44,13 +48,24 @@ export default class DropdownMenu extends React.Component {
 	}
 
 	render() {
-		// another commit test
+		var dropdownStyle = {};
+
+		if (this.props.dropdownHeight) {
+			dropdownStyle['height'] = this.props.dropdownHeight.indexOf('px') == -1 ? this.props.dropdownHeight+'px' : this.props.dropdownHeight;
+			dropdownStyle['maxHeight'] = this.props.dropdownHeight.indexOf('px') == -1 ? this.props.dropdownHeight+'px' : this.props.dropdownHeight;
+		}
+
+		if (this.props.dropdownWidth) {
+			dropdownStyle['width'] = this.props.dropdownWidth.indexOf('px') == -1 ? this.props.dropdownWidth+'px' : this.props.dropdownWidth;
+		}
+
 		return (
 			<div ref="container" className={'dropdown-wrapper'+(this.props.dropdownDirection ? ' dropdown-direction-'+this.props.dropdownDirection : '')}>
 
 				<a className={'dropdown-link'+(this.props.className ? ' '+this.props.className : '')} onClick={this.menuButtonClick}>{this.props.label || ''}</a>
 
-				<div className={'dropdown-container minimal-scrollbar dropdown-list'+(this.state.menuOpen || this.props.keepOpen ? ' open' : '')+(this.props.headerText ? ' has-header' : '')}>
+				<div className={'dropdown-container minimal-scrollbar dropdown-list'+(this.state.menuOpen || this.props.keepOpen ? ' open' : '')+(this.props.headerText ? ' has-header' : '')}
+					style={dropdownStyle}>
 					{
 						this.props.headerText &&
 						<div className="panel-heading dropdown-heading">
@@ -60,6 +75,12 @@ export default class DropdownMenu extends React.Component {
 					<div className="list-container minimal-scrollbar">
 						{this.props.children}
 					</div>
+					{
+						this.props.footerContent &&
+						<div className="dropdown-footer">
+							{this.props.footerContent}
+						</div>
+					}
 				</div>
 
 			</div>

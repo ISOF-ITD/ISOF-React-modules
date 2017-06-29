@@ -4,7 +4,7 @@ import _ from 'underscore';
 import config from './../../../scripts/config.js';
 import localLibrary from './../../utils/localLibrary.js';
 
-import ShareButtons from './ShareButtons';
+import ShareButtons from './../controls/ShareButtons';
 import SimpleMap from './SimpleMap';
 import ListPlayButton from './ListPlayButton';
 import FeedbackButton from './FeedbackButton';

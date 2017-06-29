@@ -43,7 +43,13 @@ export default class Slider extends React.Component {
 
 	sliderChangeHandler(event) {
 		if (this.props.onChange) {
-			this.props.onChange(event);
+			this.props.onChange({
+				target: {
+					name: this.props.inputName || '',
+					type: 'slider',
+					value: event
+				}
+			});
 		}
 	}
 

@@ -14,7 +14,7 @@ export default class MapBase extends React.Component {
 		}
 
 		var mapOptions = {
-			center: [61.5122, 16.7211], 
+			center: [63.5, 16.7211], 
 			zoom: 4,
 			minZoom: 4,
 			maxZoom: 13,
@@ -71,6 +71,12 @@ export default class MapBase extends React.Component {
 		}
 	}
 
+	invalidateSize() {
+		if (this.map) {
+			this.map.invalidateSize();
+		}
+	}
+
 	componentWillReceiveProps(props) {
 		if (props.marker) {
 			this.addMarker(props.marker);
@@ -79,7 +85,7 @@ export default class MapBase extends React.Component {
 
 	render() {
 		return (
-			<div className={this.props.className || 'map-container small'} ref="mapView"></div>
+			<div className={this.props.className || 'map-container small'} ref="mapView" style={this.props.mapHeight ? {height: (this.props.mapHeight.indexOf('px') == -1 ? this.props.mapHeight+'px' : this.props.mapHeight)} : null}></div>
 		);
 	}
 }
