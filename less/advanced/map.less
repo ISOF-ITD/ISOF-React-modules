@@ -28,3 +28,38 @@
 path.leaflet-interactive {
 //	stroke-width: 2;
 }
+
+.color-legends {
+	position: absolute;
+
+	left: 20px;
+	bottom: 20px;
+
+	z-index: 500;
+
+	pointer-events: none;
+
+	.color-item {
+		display: block;
+
+		position: relative;
+
+		.color {
+			display: inline-block;
+
+			width: 20px;
+			height: 20px;
+		}
+
+		.label {
+			position: relative;
+
+			top: -5px;
+
+			margin-left: 5px;
+
+			font-size: 0.8rem;
+			line-height: 0;
+		}
+	}
+}
