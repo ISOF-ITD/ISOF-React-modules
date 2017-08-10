@@ -402,6 +402,7 @@ export default {
 				attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ'
 			}
 		},
+/*
 		{
 			label: 'Göteborgs og Bohus län',
 			url: 'http://localhost/ISOF/Sagenkarta-GUI/www/tiles/gbl/{z}/{x}/{y}.png',
@@ -409,6 +410,7 @@ export default {
 				attribution: 'Data &copy; Lantmäteriet'
 			}
 		}
+*/
 	],
 
 	createLayers() {
