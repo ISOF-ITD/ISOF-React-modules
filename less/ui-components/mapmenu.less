@@ -24,10 +24,39 @@
 	.nordic-switch-wrapper {
 		position: relative;
 
+		padding: 0;
+
 		border-bottom-left-radius: 0;
 		border-bottom-right-radius: 0;
 
 		z-index: 1400;
+
+		a {
+			display: inline-block;
+
+			width: 50%;
+
+			padding: 12px;
+
+			box-sizing: border-box;
+
+			text-decoration: none;
+			text-align: center;
+
+			cursor: pointer;
+
+			.transition(all 200ms ease-in-out);
+
+			&.selected {
+				color: #fff;
+				
+				background: #d4454c;
+			}
+
+			&:hover {
+				text-decoration: underline;
+			}
+		}
 	}
 
 	.search-box {
