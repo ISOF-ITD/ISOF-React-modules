@@ -244,6 +244,13 @@
 
 	z-index: 200;
 
+	.transform(translateX(150%));
+	.transition(all 300ms ease-in-out);
+
+	&.visible {
+		.transform(translateX(0));
+	}
+
 	.documents-list {
 		position: initial;
 

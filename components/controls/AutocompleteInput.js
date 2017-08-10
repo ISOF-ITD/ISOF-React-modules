@@ -17,7 +17,8 @@ export default class AutocompleteInput extends React.Component {
 	}
 
 	componentWillReceiveProps(props) {
-		if (props.value && props.value != this.state.inputValue) {
+		if (props.value != this.state.inputValue) {
+			console.log('set the state!');
 			this.setState({
 				inputValue: props.value
 			});
