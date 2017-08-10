@@ -346,6 +346,13 @@ export default {
 		popupAnchor: [0, 0]
 	}),
 
+	blueIcon: L.icon({
+		iconUrl: config.appUrl+'img/marker-blue.png',
+		iconSize: [27, 27],
+		iconAnchor: [15, 15],
+		popupAnchor: [0, 0]
+	}),
+
 	tileLayers: [
 		{
 			label: 'Lantmäteriet topografisk karta',
@@ -393,6 +400,13 @@ export default {
 			url: 'http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
 			options: {
 				attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ'
+			}
+		},
+		{
+			label: 'Göteborgs og Bohus län',
+			url: 'http://localhost/ISOF/Sagenkarta-GUI/www/tiles/gbl/{z}/{x}/{y}.png',
+			options: {
+				attribution: 'Data &copy; Lantmäteriet'
 			}
 		}
 	],
