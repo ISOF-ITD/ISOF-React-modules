@@ -253,9 +253,7 @@ export default class MapView extends React.Component {
 
 						this.markers.addLayer(marker);
 
-						if (mapHelper.inSweden(mapItem.lat, mapItem.lng)) {
-							bounds.push([mapItem.lat, mapItem.lng])
-						}
+						bounds.push([mapItem.lat, mapItem.lng]);
 					}
 				}.bind(this));
 

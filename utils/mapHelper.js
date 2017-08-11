@@ -4,7 +4,7 @@ import L from 'leaflet';
 import Proj from 'proj4leaflet';
 
 import config from './../../scripts/config.js';
-
+/*
 const swedenBorder = {
 	"features": [
 		{
@@ -326,7 +326,7 @@ const swedenBorder = {
 	],
 	"type": "FeatureCollection"
 };
-
+*/
 export default {
 	markerIcon: L.icon({
 		iconUrl: config.appUrl+'img/map-marker.png',
@@ -435,7 +435,7 @@ export default {
 
 		return ret;
 	},
-
+/*
 	inSweden(lat, lng) {
 		return (turfInside({
 			type: 'Feature',
@@ -445,7 +445,7 @@ export default {
 			}
 		}, swedenBorder.features[0]));
 	},
-
+*/
 	getSweref99crs() {
 		var crs = new L.Proj.CRS('EPSG:3006',
 			'+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs',

@@ -102,7 +102,13 @@ export default class PlaceView extends React.Component {
 					<div className="row">
 						<div className="twelve columns">
 							<h2>{this.state.data.name}</h2>
-							<p><strong>Härad</strong>: {this.state.data.harad}, <strong>Län</strong>: {this.state.data.county}, <strong>Landskap</strong>: {this.state.data.landskap}</p>
+							<p>
+								{
+									this.state.data.fylke ?
+									<span><strong>Fylke</strong>: {this.state.data.fylke}</span> :
+									<span><strong>Härad</strong>: {this.state.data.harad}, <strong>Län</strong>: {this.state.data.county}, <strong>Landskap</strong>: {this.state.data.landskap}</span>
+								}
+							</p>
 						</div>
 					</div>
 				</div>

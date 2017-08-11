@@ -135,7 +135,7 @@ export default class RecordView extends React.Component {
 
 		var placeItems = this.state.data.places && this.state.data.places.length > 0 ? this.state.data.places.map(function(place, index) {
 			return <tr key={index}>
-				<td><a href={'#place/'+place.id}>{place.name+', '+place.harad}</a></td>
+				<td><a href={'#place/'+place.id}>{place.name+', '+(place.fylke ? place.fylke : place.harad)}</a></td>
 			</tr>;
 		}) : [];
 

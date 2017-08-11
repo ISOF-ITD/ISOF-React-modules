@@ -32,6 +32,10 @@ export default class MapCollection {
 			paramStrings.push('only_categories/true');
 		}
 
+		if (!window.applicationSettings.includeNordic) {
+			paramStrings.push('country/'+config.country);
+		}
+
 		var paramString = paramStrings.join('/');
 
 		fetch(this.url+paramString)
