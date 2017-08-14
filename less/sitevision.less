@@ -1,3 +1,10 @@
+body {
+	background-color: #fff;
+	background-image: url('../img/loader.gif');
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
 header {
 	background: transparent !important;
 
@@ -46,6 +53,19 @@ header {
 		
 		z-index: 1100;
 
+		.transition(all 400ms ease-in-out);
+		.transition-delay(700ms);
+
+		opacity: 0;
+
+		.transform(translateY(50px));
+
+		.app-initialized & {
+			opacity: 1;
+
+			.transform(translateY(0));
+		}
+
 		@media (max-width: 650px) {
 			display: none;
 		}
@@ -92,7 +112,17 @@ header {
 
 		z-index: 1100;
 
-		.transition(top 300ms ease-in-out);
+		.transition(all 300ms ease-in-out);
+
+		opacity: 0;
+
+		.transform(translateY(-50x));
+
+		.app-initialized & {
+			opacity: 1;
+
+			.transform(translateY(0));
+		}
 
 		.has-docked-control & {
 			top: 80px;
