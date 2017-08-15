@@ -9,6 +9,10 @@
 
 	pointer-events: none;
 
+	@media print {
+		display: none;
+	}
+
 	@media (max-width: 550px) {
 		left: 10px;
 		right: 10px;
@@ -32,7 +36,20 @@
 
 		cursor: pointer;
 
-		.transition(all 200ms ease-in-out);
+		opacity: 0;
+
+		.transform(translateY(-50px));
+
+		.transition(all 400ms ease-in-out);
+		.transition-delay(0ms);
+
+		.app-initialized & {
+			opacity: 1;
+
+			.transform(translateY(0));
+
+			.transition-delay(300ms);
+		}
 
 		@media (max-width: 550px) {
 			left: 130px;
@@ -206,7 +223,7 @@
 
 				pointer-events: all;
 
-				.transition-delay(0);
+				.transition-delay(0ms);
 			}
 		}
 
@@ -259,11 +276,24 @@
 
 		max-height: 800px;
 
-		.transition(all 300ms ease-in-out);
+		opacity: 0;
+
+		.transform(translateX(50px));
+
+		.transition(all 500ms ease-in-out);
+
+		.transition-delay(0ms);
 
 		pointer-events: none;
 
 		z-index: 1400;
+
+		.app-initialized & {
+			opacity: 1;
+
+			.transform(translateX(0));
+			.transition-delay(600ms);
+		}
 
 		@media (max-width: 550px) {
 			top: 70px;

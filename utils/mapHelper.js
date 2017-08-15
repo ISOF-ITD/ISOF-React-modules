@@ -353,6 +353,13 @@ export default {
 		popupAnchor: [0, 0]
 	}),
 
+	redIcon: L.icon({
+		iconUrl: config.appUrl+'img/marker-red.png',
+		iconSize: [27, 27],
+		iconAnchor: [15, 15],
+		popupAnchor: [0, 0]
+	}),
+
 	tileLayers: [
 		{
 			label: 'Lantmäteriet topografisk karta',
