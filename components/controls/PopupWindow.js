@@ -61,7 +61,7 @@ export default class PopupWindow extends React.Component {
 	}
 
 	render() {
-		if (this.state.windowOpen) {
+		if (this.state.windowOpen || this.state.manualOpen) {
 			if (this.props.onShow) {
 				this.props.onShow();
 			}
@@ -73,6 +73,7 @@ export default class PopupWindow extends React.Component {
 		}
 		else {
 			if (this.props.onHide) {
+				console.log('run onHide');
 				this.props.onHide();
 			}
 			if (window.eventBus) {
