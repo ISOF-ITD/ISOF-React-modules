@@ -73,6 +73,13 @@ export default class PlaceView extends React.Component {
 			</tr>;
 		}.bind(this)) : [];
 
+		var personsItems = this.state.data.persons && this.state.data.persons.length > 0 ? this.state.data.persons.map(function(person, index) {
+			return <tr key={index}>
+				<td><a href={'#person/'+person.id}>{person.name}</a></td>
+				<td>{person.birth_year > 0 ? person.birth_year : ''}</td>
+			</tr>;
+		}.bind(this)) : [];
+
 		var recordsItems = this.state.data.records && this.state.data.records.length > 0 ? this.state.data.records.map(function(record, index) {
 			return <tr key={index}>
 				<td data-title="">
@@ -147,6 +154,36 @@ export default class PlaceView extends React.Component {
 									</thead>
 									<tbody>
 										{informantsItems}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
+				}
+
+				{
+					this.state.data.persons && this.state.data.persons.length > 0 &&
+					<hr/>
+				}
+
+				{
+					this.state.data.persons && this.state.data.persons.length > 0 &&
+
+					<div className="row">
+						<div className="twelve columns">
+							<h3>Personer födda i {this.state.data.name}</h3>
+
+							<div className="table-wrapper">
+								<table width="100%">
+									<thead>
+										<tr>
+											<th>Namn</th>
+											<th>Födelseår</th>
+										</tr>
+									</thead>
+									<tbody>
+										{personsItems}
 									</tbody>
 								</table>
 							</div>
