@@ -19,7 +19,14 @@ export default class LocalLibraryView extends React.Component {
 		var savedRecords = localLibrary.list();
 
 		var items = savedRecords && savedRecords.length > 0 ? savedRecords.map(function(item, index) {
-			return <a key={index} href={'#/record/'+item.id} className="item">{item.title}</a>
+			return <a key={index} href={'#/record/'+item.id} className="item">
+				{
+					item.title
+				}
+				{
+					item.place && <span className="u-pull-right">{item.place}</span>
+				}
+			</a>
 		}) : <h3 className="text-center">Inga sparade sägner</h3>;
 
 //		var footerContent = <div className="drowdown-footer">Share!</div>;

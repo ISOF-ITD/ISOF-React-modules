@@ -226,7 +226,7 @@ export default class MapView extends React.Component {
 					if (mapItem.lat && mapItem.lng) {
 						var marker = L.marker([Number(mapItem.lat), Number(mapItem.lng)], {
 							title: mapItem.name,
-							icon: mapHelper.redIcon
+							icon: mapHelper.orangeIcon
 						});
 /*
 						var template = _.template($("#markerPopupTemplate").html());

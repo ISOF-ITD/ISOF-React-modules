@@ -47,7 +47,8 @@ export default class RecordView extends React.Component {
 	toggleSaveRecord() {
 		var libraryItem = {
 			id: this.state.data.id,
-			title: this.state.data.title
+			title: this.state.data.title,
+			place: this.state.data.places && this.state.data.places.length > 0 ? this.state.data.places[0].name : null
 		};
 
 		if (!localLibrary.find(libraryItem)) {
