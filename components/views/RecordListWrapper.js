@@ -5,6 +5,25 @@ import WindowScroll from './../../utils/windowScroll';
 export default class RecordListWrapper extends React.Component {
 	constructor(props) {
 		super(props);
+
+		this.languageChangedHandler = this.languageChangedHandler.bind(this);
+	}
+
+	languageChangedHandler() {
+		console.log('language changed');
+		this.forceUpdate();
+	}
+
+	componentDidMount() {
+		if (window.eventBus) {
+			window.eventBus.addEventListener('Lang.setCurrentLang', this.languageChangedHandler)
+		}
+	}
+
+	componentWillUnmount() {
+		if (window.eventBus) {
+			window.eventBus.removeEventListener('Lang.setCurrentLang', this.languageChangedHandler)
+		}
 	}
 
 	render() {
@@ -14,7 +33,7 @@ export default class RecordListWrapper extends React.Component {
 				<div className="container-header">
 					<div className="row">
 						<div className="twelve columns">
-							<h2>Sökträffar som lista</h2>
+							<h2>{l('Sökträffar som lista')}</h2>
 						</div>
 					</div>
 				</div>

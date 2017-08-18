@@ -8,6 +8,8 @@ export default class PopupWindow extends React.Component {
 		this.closeButtonClick = this.closeButtonClick.bind(this);
 		this.openButtonClickHandler = this.openButtonClickHandler.bind(this);
 
+		this.languageChangedHandler = this.languageChangedHandler.bind(this);
+
 		this.state = {
 			windowOpen: false,
 			manualOpen: false
@@ -35,7 +37,16 @@ export default class PopupWindow extends React.Component {
 		});
 	}
 
+	languageChangedHandler() {
+		console.log('language changed');
+		this.forceUpdate();
+	}
+
 	componentDidMount() {
+		if (window.eventBus) {
+			window.eventBus.addEventListener('Lang.setCurrentLang', this.languageChangedHandler)
+		}
+
 		this.setState({
 			windowOpen: Boolean(this.props.children) && !this.props.children.props.route.manuallyOpenPopup
 		});
@@ -48,6 +59,12 @@ export default class PopupWindow extends React.Component {
 
 		if (!props.children == this.props.children && !this.props.disableAutoScrolling) {
 			this.refs.contentWrapper.scrollTo(0, 0);
+		}
+	}
+
+	componentWillUnmount() {
+		if (window.eventBus) {
+			window.eventBus.removeEventListener('Lang.setCurrentLang', this.languageChangedHandler)
 		}
 	}
 
@@ -86,7 +103,7 @@ export default class PopupWindow extends React.Component {
 			<div className={'popup-wrapper'+(this.state.windowOpen || this.state.manualOpen ? ' visible' : '')}>
 				{
 					this.props.children && this.props.children.props.route.manuallyOpenPopup &&
-					<a className="popup-open-button map-floating-control map-bottom-control visible" onClick={this.openButtonClickHandler}><strong>{this.props.children.props.route.openButtonLabel}</strong></a>
+					<a className="popup-open-button map-floating-control map-bottom-control visible" onClick={this.openButtonClickHandler}><strong>{l(this.props.children.props.route.openButtonLabel)}</strong></a>
 				}
 				<div ref="contentWrapper" className={'popup-content-wrapper'}>
 					<div className="page-content">

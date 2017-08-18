@@ -187,7 +187,7 @@ export default class MapView extends React.Component {
 								'<b>'+childCount+'</b>'+
 								'</span></div>',
 							className: 'marker-cluster'+c,
-							iconSize: new L.Point(24, 24)
+							iconSize: new L.Point(28, 28)
 						});
 					}
 				});
@@ -226,7 +226,7 @@ export default class MapView extends React.Component {
 					if (mapItem.lat && mapItem.lng) {
 						var marker = L.marker([Number(mapItem.lat), Number(mapItem.lng)], {
 							title: mapItem.name,
-							icon: mapHelper.orangeIcon
+							icon: mapHelper.markerIcon
 						});
 /*
 						var template = _.template($("#markerPopupTemplate").html());

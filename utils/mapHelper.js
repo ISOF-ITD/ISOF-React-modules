@@ -329,13 +329,13 @@ const swedenBorder = {
 
 export default {
 	markerIcon: L.icon({
-		iconUrl: config.appUrl+'img/map-marker.png',
-		shadowUrl: config.appUrl+'img/map-marker-shadow.png',
+		iconUrl: config.appUrl+'img/map-marker-blue-location.png',
+		shadowUrl: config.appUrl+'img/marker-shadow.png',
 
-		iconSize:     [15, 23],	// size of the icon
-		shadowSize:   [14, 10],	// size of the shadow
-		iconAnchor:   [8, 22],	// point of the icon which will correspond to marker's location
-		shadowAnchor: [8, 22],  // the same for the shadow
+		iconSize:     [28, 36],	// size of the icon
+		shadowSize:   [41, 41],	// size of the shadow
+		iconAnchor:   [14, 35],	// point of the icon which will correspond to marker's location
+		shadowAnchor: [12, 40],  // the same for the shadow
 		popupAnchor:  [-1, -15] // point from which the popup should open relative to the iconAnchor
 	}),
 
