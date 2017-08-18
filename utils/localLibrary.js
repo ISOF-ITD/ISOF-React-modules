@@ -23,7 +23,14 @@ export default {
 		var storageList = this._getList();
 
 		storageList = _.reject(storageList, function(listItem) {
-			return listItem.id == item.id;
+			if (typeof item == 'object') {
+				console.log('object');
+				return listItem.id == item.id;
+			}
+			else {
+				console.log('id: '+item);
+				return listItem.id == item;
+			}
 		});
 
 		this._saveList(storageList);
