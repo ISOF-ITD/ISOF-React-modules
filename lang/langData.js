@@ -1,5 +1,8 @@
 export default {
 	'no': {
-		'Karta': 'Kort'
+		'Karta': 'Kort',
+		'Mina sägner': 'Mine legender',
+
+		'Sök': 'Søke'
 	}
 }
