@@ -19,7 +19,8 @@ export default class MapBase extends React.Component {
 			minZoom: 4,
 			maxZoom: 13,
 			layers: [layers[Object.keys(layers)[0]]],
-			scrollWheelZoom: this.props.scrollWheelZoom || false
+			scrollWheelZoom: this.props.scrollWheelZoom || false,
+			zoomControl: false
 		};
 
 		if (!this.props.disableSwedenMap) {
@@ -29,6 +30,10 @@ export default class MapBase extends React.Component {
 		}
 
 		this.map = L.map(this.refs.mapView, mapOptions);
+
+		L.control.zoom({
+			position: this.props.zoomControlPosition || 'topright'
+		}).addTo(this.map);
 
 		L.control.layers(layers, null, {
 			position: this.props.layersControlPosition || 'topright'

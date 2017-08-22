@@ -38,7 +38,6 @@ export default class RecordView extends React.Component {
 	}
 
 	componentWillUnmount() {
-		console.log('componentWillUnmount')
 		if (window.eventBus) {
 			window.eventBus.dispatch('overlay.hide');
 		}

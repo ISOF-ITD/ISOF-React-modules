@@ -44,6 +44,7 @@ export default class PlaceView extends React.Component {
 		}
 		this.setState(state);
 
+		console.log(this.props);
 	}
 
 	componentWillReceiveProps(props) {
@@ -117,17 +118,24 @@ export default class PlaceView extends React.Component {
 					</div>
 				</div>
 
-				<div className="row">
-					<div className="twelve columns">
-						<SimpleMap marker={this.state.data.lat && this.state.data.lng ? {lat: this.state.data.lat, lng: this.state.data.lng, label: this.state.data.name} : null} />
+				{
+					!this.props.route.hideMap &&
+					<div className="row">
+						<div className="twelve columns">
+							<SimpleMap marker={this.state.data.lat && this.state.data.lng ? {lat: this.state.data.lat, lng: this.state.data.lng, label: this.state.data.name} : null} />
+						</div>
 					</div>
-				</div>
+				}
 
 				{
 					(this.state.text_ids || this.state.category || this.state.type || this.state.searchQuery || this.state.searchField) &&
 					<div className="row search-results-container">
 						<div className="twelve columns">
-							<h3>Sökträffar</h3>
+	
+							{
+								!this.props.route.showOnlyResults &&
+								<h3>Sökträffar</h3>
+							}
 
 							<RecordList text_ids={this.state.text_ids} category={this.state.category} type={this.state.type} recordPlace={this.state.recordPlace} search={this.state.searchQuery} search_field={this.state.searchField} />
 
@@ -136,96 +144,110 @@ export default class PlaceView extends React.Component {
 				}
 
 				{
-					this.state.data.informants && this.state.data.informants.length > 0 &&
-					<hr/>
-				}
+					!this.props.route.hidePersons &&
+					<div>
 
-				{
-					this.state.data.informants && this.state.data.informants.length > 0 &&
+						{
+							this.state.data.informants && this.state.data.informants.length > 0 &&
+							<hr/>
+						}
 
-					<div className="row">
-						<div className="twelve columns">
-							<h3>Intervjuade personer</h3>
+						{
+							this.state.data.informants && this.state.data.informants.length > 0 &&
 
-							<div className="table-wrapper">
-								<table width="100%">
-									<thead>
-										<tr>
-											<th>Namn</th>
-											<th>Födelseår</th>
-										</tr>
-									</thead>
-									<tbody>
-										{informantsItems}
-									</tbody>
-								</table>
+							<div className="row">
+								<div className="twelve columns">
+									<h3>Intervjuade personer</h3>
+
+									<div className="table-wrapper">
+										<table width="100%">
+											<thead>
+												<tr>
+													<th>Namn</th>
+													<th>Födelseår</th>
+												</tr>
+											</thead>
+											<tbody>
+												{informantsItems}
+											</tbody>
+										</table>
+									</div>
+								</div>
 							</div>
-						</div>
-					</div>
 
-				}
+						}
 
-				{
-					this.state.data.persons && this.state.data.persons.length > 0 &&
-					<hr/>
-				}
+						{
+							this.state.data.persons && this.state.data.persons.length > 0 &&
+							<hr/>
+						}
 
-				{
-					this.state.data.persons && this.state.data.persons.length > 0 &&
+						{
+							this.state.data.persons && this.state.data.persons.length > 0 &&
 
-					<div className="row">
-						<div className="twelve columns">
-							<h3>Personer födda i {this.state.data.name}</h3>
+							<div className="row">
+								<div className="twelve columns">
+									<h3>Personer födda i {this.state.data.name}</h3>
 
-							<div className="table-wrapper">
-								<table width="100%">
-									<thead>
-										<tr>
-											<th>Namn</th>
-											<th>Födelseår</th>
-										</tr>
-									</thead>
-									<tbody>
-										{personsItems}
-									</tbody>
-								</table>
+									<div className="table-wrapper">
+										<table width="100%">
+											<thead>
+												<tr>
+													<th>Namn</th>
+													<th>Födelseår</th>
+												</tr>
+											</thead>
+											<tbody>
+												{personsItems}
+											</tbody>
+										</table>
+									</div>
+								</div>
 							</div>
-						</div>
+
+						}
+
 					</div>
-
 				}
 
 				{
-					this.state.data.records && this.state.data.records.length > 0 &&
-					<hr/>
-				}
+					!this.props.route.showOnlyResults &&
+					<div>
 
-				{
-					this.state.data.records && this.state.data.records.length > 0 &&
+						{
+							this.state.data.records && this.state.data.records.length > 0 &&
+							<hr/>
+						}
 
-					<div className="row">
-						<div className="twelve columns">
-							<h3>Samtliga uppteckningar från orten</h3>
+						{
+							this.state.data.records && this.state.data.records.length > 0 &&
 
-							<div className="table-wrapper">
-								<table width="100%" className="table-responsive">
-									<thead>
-										<tr>
-											<th>Titel</th>
-											<th>Kategori</th>
-											<th>Socken, Landskap</th>
-											<th>Uppteckningsår</th>
-											<th>Materialtyp</th>
-										</tr>
-									</thead>
-									<tbody>
-										{recordsItems}
-									</tbody>
-								</table>
+							<div className="row">
+								<div className="twelve columns">
+									<h3>Samtliga uppteckningar från orten</h3>
+
+									<div className="table-wrapper">
+										<table width="100%" className="table-responsive">
+											<thead>
+												<tr>
+													<th>Titel</th>
+													<th>Kategori</th>
+													<th>Socken, Landskap</th>
+													<th>Uppteckningsår</th>
+													<th>Materialtyp</th>
+												</tr>
+											</thead>
+											<tbody>
+												{recordsItems}
+											</tbody>
+										</table>
+									</div>
+								</div>
 							</div>
-						</div>
-					</div>
 
+						}
+
+					</div>
 				}
 
 			</div>
