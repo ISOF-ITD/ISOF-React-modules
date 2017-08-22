@@ -93,6 +93,7 @@ export default class MapView extends React.Component {
 
 	componentWillReceiveProps(props) {
 		var currentSearchParams = JSON.parse(JSON.stringify(this.props.searchParams));
+
 		if (currentSearchParams.place_id) {
 			delete currentSearchParams.place_id;
 		}
@@ -125,7 +126,8 @@ export default class MapView extends React.Component {
 				year_from: params.year_from || null,
 				year_to: params.year_to || null,
 				person_relation: params.person_relation || null,
-				gender: params.gender || null
+				gender: params.gender || null,
+				text_ids: params.text_ids || null
 			});
 		}
 	}

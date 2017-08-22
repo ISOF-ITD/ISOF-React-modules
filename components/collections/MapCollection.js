@@ -20,19 +20,26 @@ export default class MapCollection {
 	}
 
 	fetch(params) {
-		var paramStrings = [];
+		var paramString;
 
-		params = this.cleanParams(params);
-
-		for (var key in params) {
-			paramStrings.push(key+'/'+params[key]);
+		if (params.text_ids) { // Hämtar bara platser för vissa sägner
+			paramString = 'text_ids/'+params.text_ids;
 		}
+		else {
+			var paramStrings = [];
 
-		if (config.fetchOnlyCategories) {
-			paramStrings.push('only_categories/true');
+			params = this.cleanParams(params);
+
+			for (var key in params) {
+				paramStrings.push(key+'/'+params[key]);
+			}
+
+			if (config.fetchOnlyCategories) {
+				paramStrings.push('only_categories/true');
+			}
+
+			paramString = paramStrings.join('/');
 		}
-
-		var paramString = paramStrings.join('/');
 
 		fetch(this.url+paramString)
 			.then(function(response) {

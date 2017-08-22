@@ -64,7 +64,7 @@ export default class DropdownMenu extends React.Component {
 
 				<a className={'dropdown-link'+(this.props.className ? ' '+this.props.className : '')} onClick={this.menuButtonClick}>{this.props.label || ''}</a>
 
-				<div className={'dropdown-container minimal-scrollbar dropdown-list'+(this.state.menuOpen || this.props.keepOpen ? ' open' : '')+(this.props.headerText ? ' has-header' : '')}
+				<div className={'dropdown-container minimal-scrollbar dropdown-list'+(this.state.menuOpen || this.props.keepOpen ? ' open' : '')+(this.props.headerText ? ' has-header' : '')+(this.props.footerContent ? ' has-footer' : '')}
 					style={dropdownStyle}>
 					{
 						this.props.headerText &&

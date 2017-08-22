@@ -39,6 +39,9 @@ export default class PlaceView extends React.Component {
 		if (this.props.params.search_field) {
 			state['searchField'] = this.props.params.search_field;
 		}
+		if (this.props.params.text_ids) {
+			state['text_ids'] = this.props.params.text_ids;
+		}
 		this.setState(state);
 
 	}
@@ -121,12 +124,12 @@ export default class PlaceView extends React.Component {
 				</div>
 
 				{
-					(this.state.category || this.state.type || this.state.searchQuery || this.state.searchField) &&
+					(this.state.text_ids || this.state.category || this.state.type || this.state.searchQuery || this.state.searchField) &&
 					<div className="row search-results-container">
 						<div className="twelve columns">
 							<h3>Sökträffar</h3>
 
-							<RecordList category={this.state.category} type={this.state.type} recordPlace={this.state.recordPlace} search={this.state.searchQuery} search_field={this.state.searchField} />
+							<RecordList text_ids={this.state.text_ids} category={this.state.category} type={this.state.type} recordPlace={this.state.recordPlace} search={this.state.searchQuery} search_field={this.state.searchField} />
 
 						</div>
 					</div>

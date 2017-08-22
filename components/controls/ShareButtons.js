@@ -4,8 +4,13 @@ import config from './../../../scripts/config.js';
 
 export default class RecordView extends React.Component {
 	componentDidMount() {
-		if (FB) {
-			FB.XFBML.parse();
+		try {
+			if (FB) {
+				FB.XFBML.parse();
+			}
+		}
+		catch (e) {
+			console.log(e);
 		}
 	}
 

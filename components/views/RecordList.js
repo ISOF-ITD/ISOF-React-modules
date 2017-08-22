@@ -73,7 +73,8 @@ export default class RecordList extends React.Component {
 			type: params.type || config.apiRecordsType,
 			category: params.category || null,
 			person: params.person || null,
-			record_place: params.recordPlace || null
+			record_place: params.recordPlace || null,
+			text_ids: params.text_ids || null
 		});
 	}
 

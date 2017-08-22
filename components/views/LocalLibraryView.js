@@ -1,9 +1,14 @@
 import React from 'react';
 import { hashHistory } from 'react-router';
 
+import config from './../../../scripts/config.js';
+
 import DropdownMenu from './../controls/DropdownMenu';
+import ShareButton from './../controls/ShareButtons';
 
 import localLibrary from './../../utils/localLibrary.js';
+
+import clipboard from './../../utils/clipboard';
 
 export default class LocalLibraryView extends React.Component {
 	constructor(props) {
@@ -12,6 +17,7 @@ export default class LocalLibraryView extends React.Component {
 		this.libraryButtonClickHandler = this.libraryButtonClickHandler.bind(this);
 		this.itemClickHandler = this.itemClickHandler.bind(this);
 		this.itemRemoveButtonClickHander = this.itemRemoveButtonClickHander.bind(this);
+		this.copyLinkClickHandler = this.copyLinkClickHandler.bind(this);
 	}
 
 	itemClickHandler(event) {
@@ -30,6 +36,10 @@ export default class LocalLibraryView extends React.Component {
 		this.forceUpdate();
 	}
 
+	copyLinkClickHandler(event) {
+		clipboard.copy(event.currentTarget.dataset.url);
+	}
+
 	render() {
 		var savedRecords = localLibrary.list();
 
@@ -45,14 +55,23 @@ export default class LocalLibraryView extends React.Component {
 			</a>
 		}.bind(this)) : <h3 className="text-center">Inga sparade sägner</h3>;
 
-//		var footerContent = <div className="drowdown-footer">Share!</div>;
+		var legendIds = savedRecords.map(function(item) {
+			return item.id;
+		}).join(';');
+
+		var shareLink = 'places/text_ids/'+legendIds;
+
+		var footerContent = <div className="drowdown-footer">
+			<ShareButton path={shareLink} />
+			<a className="u-pull-right u-cursor-pointer" onClick={this.copyLinkClickHandler} data-url={config.siteUrl+'#/'+shareLink}>Kopiera länk</a>
+		</div>;
 
 		return (
 			<div className="local-library-wrapper map-bottom-control">
 				<DropdownMenu className={'map-floating-control map-floating-button visible library-open-button has-footer'+(savedRecords && savedRecords.length > 0 ? ' has-items' : '')} 
 					dropdownDirection="up" 
 					height="500px"
-					
+					footerContent={footerContent}
 					headerText={this.props.headerText}>
 					{items}
 				</DropdownMenu>
