@@ -63,129 +63,129 @@ table {
 	}
 }
 
-@media not print {
-	table.table-responsive {
-		margin-bottom: 0;
 
-		& tr:last-child td {
-			border-bottom: none;
-		}
+table.table-responsive {
+	margin-bottom: 0;
 
-	 	thead {
-			// Accessibly hide <thead> on narrow viewports
-			position: absolute;
-			clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
-			clip: rect(1px, 1px, 1px, 1px);
-			padding: 0;
-			border: 0;
-			height: 1px; 
-			width: 1px; 
-			overflow: hidden;
+	& tr:last-child td {
+		border-bottom: none;
+	}
 
-			th {
-				padding-left: 0;
-			}
-			
-			@media (min-width: @bp-bart) {
-				// Unhide <thead> on wide viewports
-				position: relative;
-				clip: auto;
-				height: auto;
-				width: auto;
-				overflow: auto;
-			}
+ 	thead {
+		// Accessibly hide <thead> on narrow viewports
+		position: absolute;
+		clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+		clip: rect(1px, 1px, 1px, 1px);
+		padding: 0;
+		border: 0;
+		height: 1px; 
+		width: 1px; 
+		overflow: hidden;
+
+		th {
+			padding-left: 0;
 		}
 		
-		// Set these items to display: block for narrow viewports
-		tbody,
-		tr,
-		th,
-		td {
-			display: block;
-
-			white-space: normal;
-		}
-		
-		tr {	 
-			@media (min-width: @bp-bart) {
-				display: table-row; 
-			}
-		}
-		
-		th,
-		td {
-			@media (min-width: @bp-bart) {
-				// Undo display: block 
-				display: table-cell;
-			}
-		}
-		
-		tbody {
-			@media (min-width: @bp-bart) {
-				// Undo display: block 
-				display: table-row-group; 
-			}
-			
-			tr {
-				border-bottom: 1px solid #7e7e7e;
-				
-				@media (min-width: @bp-bart) {
-					// Undo display: block 
-					display: table-row;
-
-					border-bottom: none;
-				}
-				
-				&:last-of-type {
-					margin-bottom: 0;
-
-					border-bottom: none;
-				}
-				
-				&:nth-of-type(even) {
-					@media (min-width: @bp-bart) {
-					}
-				}
-			}
-			
-			td {
-				padding-left: 0;
-
-				min-height: 50px;
-
-				box-sizing: border-box;
-
-				&:first-child {
-					font-size: 1.1rem;
-					font-weight: bold;
-					padding-left: 0;
-				}
-
-				@media (min-width: @bp-bart) {
-					&:first-child {
-						font-size: 1rem;
-						font-weight: normal;
-					}
-				}
-			}
-
-			td[data-title]:before {
-				content: attr(data-title);
-
-				float: left;
-
-				margin-right: 15px;
-
-				font-weight: bold;
-
-				@media (min-width: @bp-bart) {
-					// Don’t show data-title labels 
-					content: none; 
-				}
-			} 
+		@media (min-width: @bp-bart) {
+			// Unhide <thead> on wide viewports
+			position: relative;
+			clip: auto;
+			height: auto;
+			width: auto;
+			overflow: auto;
 		}
 	}
+	
+	// Set these items to display: block for narrow viewports
+	tbody,
+	tr,
+	th,
+	td {
+		display: block;
+
+		white-space: normal;
+	}
+	
+	tr {	 
+		@media (min-width: @bp-bart) {
+			display: table-row; 
+		}
+	}
+	
+	th,
+	td {
+		@media (min-width: @bp-bart) {
+			// Undo display: block 
+			display: table-cell;
+		}
+	}
+	
+	tbody {
+		@media (min-width: @bp-bart) {
+			// Undo display: block 
+			display: table-row-group; 
+		}
+		
+		tr {
+			border-bottom: 1px solid #7e7e7e;
+			
+			@media (min-width: @bp-bart) {
+				// Undo display: block 
+				display: table-row;
+
+				border-bottom: none;
+			}
+			
+			&:last-of-type {
+				margin-bottom: 0;
+
+				border-bottom: none;
+			}
+			
+			&:nth-of-type(even) {
+				@media (min-width: @bp-bart) {
+				}
+			}
+		}
+		
+		td {
+			padding-left: 0;
+
+			min-height: 50px;
+
+			box-sizing: border-box;
+
+			&:first-child {
+				font-size: 1.1rem;
+				font-weight: bold;
+				padding-left: 0;
+			}
+
+			@media (min-width: @bp-bart) {
+				&:first-child {
+					font-size: 1rem;
+					font-weight: normal;
+				}
+			}
+		}
+
+		td[data-title]:before {
+			content: attr(data-title);
+
+			float: left;
+
+			margin-right: 15px;
+
+			font-weight: bold;
+
+			@media (min-width: @bp-bart) {
+				// Don’t show data-title labels 
+				content: none; 
+			}
+		} 
+	}
 }
+
 
 td .play-button {
 	position: relative;
