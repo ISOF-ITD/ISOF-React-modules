@@ -8,6 +8,7 @@ import ShareButtons from './../controls/ShareButtons';
 import SimpleMap from './SimpleMap';
 import ListPlayButton from './ListPlayButton';
 import FeedbackButton from './FeedbackButton';
+import ElementNotificationMessage from './../controls/ElementNotificationMessage';
 
 export default class RecordView extends React.Component {
 	constructor(props) {
@@ -144,7 +145,15 @@ export default class RecordView extends React.Component {
 				<div className="container-header">
 					<div className="row">
 						<div className="twelve columns">
-							<h2>{this.state.data.title} <button className={'save-button'+(this.state.saved ? ' saved' : '')} onClick={this.toggleSaveRecord}><span>Spara</span></button></h2>
+							<h2>{this.state.data.title} <ElementNotificationMessage 
+															placement="under" 
+															placementOffsetX="-1" 
+															messageId="saveLegendsNotification" 
+															forgetAfterClick="true" 
+															closeTrigger="click" 
+															autoHide="true" 
+															message="Klicka på stjärnan för att spara sägner till din egen lista.">
+								<button className={'save-button'+(this.state.saved ? ' saved' : '')} onClick={this.toggleSaveRecord}><span>Spara</span></button></ElementNotificationMessage></h2>
 							<p><strong>Materialtyp</strong>: {this.state.data.type}</p>
 						</div>
 					</div>

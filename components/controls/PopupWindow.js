@@ -38,7 +38,6 @@ export default class PopupWindow extends React.Component {
 	}
 
 	languageChangedHandler() {
-		console.log('language changed');
 		this.forceUpdate();
 	}
 

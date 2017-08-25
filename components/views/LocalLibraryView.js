@@ -5,6 +5,7 @@ import config from './../../../scripts/config.js';
 
 import DropdownMenu from './../controls/DropdownMenu';
 import ShareButton from './../controls/ShareButtons';
+import ElementNotificationMessage from './../controls/ElementNotificationMessage';
 
 import localLibrary from './../../utils/localLibrary.js';
 
@@ -18,6 +19,8 @@ export default class LocalLibraryView extends React.Component {
 		this.itemClickHandler = this.itemClickHandler.bind(this);
 		this.itemRemoveButtonClickHander = this.itemRemoveButtonClickHander.bind(this);
 		this.copyLinkClickHandler = this.copyLinkClickHandler.bind(this);
+
+		this.savedRecords = [];
 	}
 
 	itemClickHandler(event) {
@@ -41,9 +44,13 @@ export default class LocalLibraryView extends React.Component {
 	}
 
 	render() {
-		var savedRecords = localLibrary.list();
+		if (this.savedRecords.length == 0 && localLibrary.list().length > 0 && this.refs.elementNotification) {
+			this.refs.elementNotification.show();
+		}
 
-		var items = savedRecords && savedRecords.length > 0 ? savedRecords.map(function(item, index) {
+		this.savedRecords = localLibrary.list();
+
+		var items = this.savedRecords && this.savedRecords.length > 0 ? this.savedRecords.map(function(item, index) {
 			return <a key={index} data-id={item.id} onClick={this.itemClickHandler} className="item">
 				{
 					item.title
@@ -55,7 +62,7 @@ export default class LocalLibraryView extends React.Component {
 			</a>
 		}.bind(this)) : <h3 className="text-center">Inga sparade sägner</h3>;
 
-		var legendIds = savedRecords.map(function(item) {
+		var legendIds = this.savedRecords.map(function(item) {
 			return item.id;
 		}).join(';');
 
@@ -68,13 +75,26 @@ export default class LocalLibraryView extends React.Component {
 
 		return (
 			<div className="local-library-wrapper map-bottom-control">
-				<DropdownMenu className={'map-floating-control map-floating-button visible library-open-button has-footer'+(savedRecords && savedRecords.length > 0 ? ' has-items' : '')} 
-					dropdownDirection="up" 
-					height="500px"
-					footerContent={footerContent}
-					headerText={this.props.headerText}>
-					{items}
-				</DropdownMenu>
+
+				<ElementNotificationMessage 
+					ref="elementNotification" 
+					placement="above" 
+					placementOffsetX="27" 
+					placementOffsetY="-62" 
+					messageId="myLegendsNotification" 
+					forgetAfterClick="true" 
+					manuallyOpen="true" 
+					closeTrigger="click" 
+					message="Klicka här för att visa lista över dina sparade sägner."
+				>
+					<DropdownMenu className={'map-floating-control map-floating-button visible library-open-button has-footer'+(this.savedRecords && this.savedRecords.length > 0 ? ' has-items' : '')} 
+						dropdownDirection="up" 
+						height="500px"
+						footerContent={footerContent}
+						headerText={this.props.headerText}>
+						{items}
+					</DropdownMenu>
+				</ElementNotificationMessage>
 			</div>
 		);
 	}

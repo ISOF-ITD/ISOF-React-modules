@@ -23,7 +23,6 @@ export default class FeedbackOverlay extends React.Component {
 
 		if (window.eventBus) {
 			window.eventBus.addEventListener('overlay.feedback', function(event) {
-				console.log(event.target);
 				this.setState({
 					visible: true,
 					type: event.target.type,

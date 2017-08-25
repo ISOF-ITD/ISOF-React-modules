@@ -43,8 +43,6 @@ export default class PlaceView extends React.Component {
 			state['text_ids'] = this.props.params.text_ids;
 		}
 		this.setState(state);
-
-		console.log(this.props);
 	}
 
 	componentWillReceiveProps(props) {
@@ -144,6 +142,46 @@ export default class PlaceView extends React.Component {
 				}
 
 				{
+					!this.props.route.showOnlyResults &&
+					<div>
+
+						{
+							this.state.data.records && this.state.data.records.length > 0 &&
+							<hr/>
+						}
+
+						{
+							this.state.data.records && this.state.data.records.length > 0 &&
+
+							<div className="row">
+								<div className="twelve columns">
+									<h3>Samtliga uppteckningar från orten</h3>
+
+									<div className="table-wrapper">
+										<table width="100%" className="table-responsive">
+											<thead>
+												<tr>
+													<th>Titel</th>
+													<th>Kategori</th>
+													<th>Socken, Landskap</th>
+													<th>Uppteckningsår</th>
+													<th>Materialtyp</th>
+												</tr>
+											</thead>
+											<tbody>
+												{recordsItems}
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+
+						}
+
+					</div>
+				}
+
+				{
 					!this.props.route.hidePersons &&
 					<div>
 
@@ -199,46 +237,6 @@ export default class PlaceView extends React.Component {
 											</thead>
 											<tbody>
 												{personsItems}
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-
-						}
-
-					</div>
-				}
-
-				{
-					!this.props.route.showOnlyResults &&
-					<div>
-
-						{
-							this.state.data.records && this.state.data.records.length > 0 &&
-							<hr/>
-						}
-
-						{
-							this.state.data.records && this.state.data.records.length > 0 &&
-
-							<div className="row">
-								<div className="twelve columns">
-									<h3>Samtliga uppteckningar från orten</h3>
-
-									<div className="table-wrapper">
-										<table width="100%" className="table-responsive">
-											<thead>
-												<tr>
-													<th>Titel</th>
-													<th>Kategori</th>
-													<th>Socken, Landskap</th>
-													<th>Uppteckningsår</th>
-													<th>Materialtyp</th>
-												</tr>
-											</thead>
-											<tbody>
-												{recordsItems}
 											</tbody>
 										</table>
 									</div>

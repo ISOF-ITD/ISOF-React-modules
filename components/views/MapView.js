@@ -72,8 +72,6 @@ export default class MapView extends React.Component {
 		});
 
 		this.vectorGridLayer.on('click', function(event) {
-			console.log(event);
-
 			window.feature = event.layer;
 
 			this.vectorGridLayer.setFeatureStyle(event.layer.properties.OBJEKT_ID, {

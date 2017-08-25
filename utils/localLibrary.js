@@ -24,11 +24,9 @@ export default {
 
 		storageList = _.reject(storageList, function(listItem) {
 			if (typeof item == 'object') {
-				console.log('object');
 				return listItem.id == item.id;
 			}
 			else {
-				console.log('id: '+item);
 				return listItem.id == item;
 			}
 		});
