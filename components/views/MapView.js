@@ -287,7 +287,7 @@ export default class MapView extends React.Component {
 					if (mapItem.lat && mapItem.lng) {
 						var marker = L.circleMarker([mapItem.lat, mapItem.lng], {
 							radius: ((mapItem.c/maxValue)*20)+2,
-							fillColor: "#b62837",
+							fillColor: "#047bff",
 							fillOpacity: 0.4,
 							color: '#000',
 							weight: 0.8
