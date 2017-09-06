@@ -19,6 +19,12 @@ export default class RecordList extends React.Component {
 		this.prevPage = this.prevPage.bind(this);
 
 		this.collections = new RecordsCollection(function(json) {
+			if (!json.data || json.data.length == 0) {
+				if (window.eventBus) {
+					window.eventBus.dispatch('popup-notification.notify', null, 'Inga sökträffar');
+				}
+			}
+
 			this.setState({
 				records: json.data,
 				total: json.metadata.total,

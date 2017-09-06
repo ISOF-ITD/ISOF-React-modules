@@ -40,7 +40,12 @@ export default class LocalLibraryView extends React.Component {
 	}
 
 	copyLinkClickHandler(event) {
-		clipboard.copy(event.currentTarget.dataset.url);
+		if (clipboard.copy(event.currentTarget.dataset.url)) {
+			if (window.eventBus) {
+				window.eventBus.dispatch('popup-notification.notify', null, 'Länk till dina sägner har kopierats.');
+			}
+		}
+
 	}
 
 	render() {

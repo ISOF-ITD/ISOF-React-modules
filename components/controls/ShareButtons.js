@@ -4,14 +4,18 @@ import config from './../../../scripts/config.js';
 
 export default class RecordView extends React.Component {
 	componentDidMount() {
-		try {
-			if (FB) {
-				FB.XFBML.parse();
+		var fbInit = function() {
+			try {
+				if (FB) {
+					FB.XFBML.parse();
+				}
+			}
+			catch (e) {
+				setTimeout(fbInit, 2000);
 			}
 		}
-		catch (e) {
-			console.log(e);
-		}
+
+		fbInit();
 	}
 
 	render() {

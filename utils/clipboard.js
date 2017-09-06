@@ -22,8 +22,12 @@ export default {
 		try {
 			var successful = document.execCommand('copy');
 			var msg = successful ? 'successful' : 'unsuccessful';
+
+			return true;
 		} catch (err) {
 			console.log('Unable to copy, unable to cope.');
+
+			return false;
 		}
 
 		document.body.removeChild(textArea);

@@ -56,6 +56,11 @@ export default class RecordView extends React.Component {
 			this.setState({
 				saved: true
 			});
+
+			if (window.eventBus) {
+				window.eventBus.dispatch('popup-notification.notify', null, '<strong>'+this.state.data.title+'</strong> har sparats till dina sägner.');
+			}
+
 		}
 		else {
 			localLibrary.remove(libraryItem);
@@ -101,7 +106,9 @@ export default class RecordView extends React.Component {
 				return dataItem.type == 'image';
 			});
 			imageItems = imageDataItems.map(function(mediaItem, index) {
-				return <img key={index} className="archive-image" data-image={mediaItem.source} onClick={this.mediaImageClickHandler} src={config.imageUrl+mediaItem.source} alt="" />;
+				if (mediaItem.source.indexOf('.pdf') == -1) {
+					return <img key={index} className="archive-image" data-image={mediaItem.source} onClick={this.mediaImageClickHandler} src={config.imageUrl+mediaItem.source} alt="" />;
+				}
 			}.bind(this));
 		}
 
@@ -170,7 +177,7 @@ export default class RecordView extends React.Component {
 
 							{
 								this.state.data.comment && this.state.data.comment != '' &&
-								<p><strong>Kommentarer:</strong><br/>{this.state.data.comment}</p>
+								<p><strong>Ordförklaringar och dylikt i upptekningarna/utgåvorna:</strong><br/><span dangerouslySetInnerHTML={{__html: this.state.data.comment}} /></p>
 							}
 							{
 								this.state.data.printed_source && this.state.data.type == 'tryckt' &&
