@@ -57,7 +57,7 @@ export default class ElementNotificationMessage extends React.Component {
 						this.setState({
 							messageVisible: true
 						})
-					}.bind(this), 2000);
+					}.bind(this), this.props.openTimeout || 2000);
 				}
 			}
 			else {
@@ -65,7 +65,7 @@ export default class ElementNotificationMessage extends React.Component {
 					this.setState({
 						messageVisible: true
 					})
-				}.bind(this), 2000);
+				}.bind(this), this.props.openTimeout || 2000);
 			}
 		}
 
@@ -74,7 +74,7 @@ export default class ElementNotificationMessage extends React.Component {
 				this.setState({
 					messageVisible: false
 				})
-			}.bind(this), 15000);
+			}.bind(this), this.props.openDuration || 15000);
 		}
 	}
 
