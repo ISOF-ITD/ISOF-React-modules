@@ -72,7 +72,7 @@ export default class DropdownMenu extends React.Component {
 							<span className="heading-label">{this.props.headerText}</span>
 						</div>
 					}
-					<div className="list-container minimal-scrollbar">
+					<div className={(this.props.containerType == 'text' ? 'text-container' : 'list-container')+' minimal-scrollbar'}>
 						{this.props.children}
 					</div>
 					{

@@ -56,8 +56,6 @@
 
 		&.dropdown-list {
 			&.has-header {
-				position: relative;
-
 				height: 350px;
 
 				overflow-y: visible;
@@ -67,7 +65,7 @@
 					box-shadow: none;
 				}
 
-				.list-container {
+				.list-container, .text-container {
 					position: absolute;
 
 					top: 66px;
@@ -106,6 +104,10 @@
 				box-sizing: border-box;
 
 				background: #edeff1;
+			}
+
+			.text-container {
+				padding: 22px;
 			}
 
 			.list-container {
