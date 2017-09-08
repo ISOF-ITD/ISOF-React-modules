@@ -74,7 +74,7 @@ export default class LocalLibraryView extends React.Component {
 		var shareLink = 'places/text_ids/'+legendIds;
 
 		var footerContent = <div className="drowdown-footer">
-			<ShareButton path={shareLink} />
+			<ShareButton path={config.siteUrl+'#/'+shareLink} />
 			<a className="u-pull-right u-cursor-pointer" onClick={this.copyLinkClickHandler} data-url={config.siteUrl+'#/'+shareLink}>Kopiera länk</a>
 		</div>;
 

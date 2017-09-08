@@ -6,104 +6,53 @@ export default class PopupWindow extends React.Component {
 		super(props);
 
 		this.closeButtonClick = this.closeButtonClick.bind(this);
-		this.openButtonClickHandler = this.openButtonClickHandler.bind(this);
-
-		this.languageChangedHandler = this.languageChangedHandler.bind(this);
 
 		this.state = {
-			windowOpen: false,
-			manualOpen: false
+			windowOpen: false
 		};
 	}
 
 	closeButtonClick() {
-		if (this.props.children.props.route.manuallyOpenPopup) {
-			this.setState({
-				windowOpen: false,
-				manualOpen: false
-			});
-		}
-		else {
-			if (this.props.onClose) {
-				this.props.onClose();
-			}
+		this.closeWindow();
+	}
+
+	closeWindow() {
+		this.setState({
+			windowOpen: false
+		});
+		if (this.props.onClose) {
+			this.props.onClose();
 		}
 	}
 
 	openButtonClickHandler() {
+		this.openWindow();
+	}
+
+	openWindow() {
 		this.setState({
-			windowOpen: true,
-			manualOpen: true
+			windowOpen: true
 		});
 	}
 
-	languageChangedHandler() {
-		this.forceUpdate();
-	}
-
 	componentDidMount() {
-		if (window.eventBus) {
-			window.eventBus.addEventListener('Lang.setCurrentLang', this.languageChangedHandler)
-		}
-
 		this.setState({
-			windowOpen: Boolean(this.props.children) && !this.props.children.props.route.manuallyOpenPopup
+			windowOpen: this.props.windowOpen
 		});
 	}
 
 	componentWillReceiveProps(props) {
-		this.setState({
-			windowOpen: Boolean(props.children) && !props.children.props.route.manuallyOpenPopup
-		});
-
-		if (!props.children == this.props.children && !this.props.disableAutoScrolling) {
-			this.refs.contentWrapper.scrollTo(0, 0);
+		if (props.windowOpen && !this.state.windowOpen) {
+			this.openWindow();
 		}
-	}
-
-	componentWillUnmount() {
-		if (window.eventBus) {
-			window.eventBus.removeEventListener('Lang.setCurrentLang', this.languageChangedHandler)
-		}
-	}
-
-	componentWillUnmount() {
-		if (this.props.onHide) {
-			this.props.onHide();
-		}
-		if (window.eventBus) {
-			window.eventBus.dispatch('popup.close');
+		else if (!pros.windowOpen && this.state.windowOpen) {
+			this.closeWindow();
 		}
 	}
 
 	render() {
-		if (this.state.windowOpen || this.state.manualOpen) {
-			if (this.props.onShow) {
-				this.props.onShow();
-			}
-			if (window.eventBus) {
-				setTimeout(function() {
-					window.eventBus.dispatch('popup.open');
-				}.bind(this), 100);
-			}
-		}
-		else {
-			if (this.props.onHide) {
-				this.props.onHide();
-			}
-			if (window.eventBus) {
-				setTimeout(function() {
-					window.eventBus.dispatch('popup.close');
-				}.bind(this), 100);
-			}
-		}
-
 		return (
-			<div className={'popup-wrapper'+(this.state.windowOpen || this.state.manualOpen ? ' visible' : '')}>
-				{
-					this.props.children && this.props.children.props.route.manuallyOpenPopup &&
-					<a className="popup-open-button map-floating-control map-bottom-control visible" onClick={this.openButtonClickHandler}><strong>{l(this.props.children.props.route.openButtonLabel)}</strong></a>
-				}
+			<div className={'popup-wrapper'+(this.state.windowOpen ? ' visible' : '')}>
 				<div ref="contentWrapper" className={'popup-content-wrapper'}>
 					<div className="page-content">
 						<a className={'close-button'+(this.props.closeButtonStyle == 'dark' ? '' : this.props.closeButtonStyle == 'white' ? ' white' : ' white')} onClick={this.closeButtonClick}></a>
