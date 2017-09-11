@@ -183,7 +183,7 @@ export default class RecordView extends React.Component {
 								this.state.data.printed_source && this.state.data.type == 'tryckt' &&
 								<p><em>{this.state.data.printed_source}</em></p>
 							}
-							<ShareButtons path={config.siteUrl+'#/record/'+this.state.data.id} />
+							<ShareButtons path={config.siteUrl+'#/record/'+this.state.data.id} text={'"'+this.state.data.title+'"'} />
 						</div>
 					}
 					{
