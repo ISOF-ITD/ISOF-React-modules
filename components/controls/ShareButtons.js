@@ -33,7 +33,7 @@ export default class RecordView extends React.Component {
 
 	render() {
 		return <div className="share-buttons">
-			<div className="fb-share-button u-cf" style={{overflow: 'hidden', height: '20px'}} 
+			<div className="fb-share-button u-cf" style={{overflow: 'hidden', height: '20px', maxHeight: '20px'}} 
 				data-href={this.props.path} 
 				data-layout="button_count"></div>
 			<a className="twitter-share-button"
