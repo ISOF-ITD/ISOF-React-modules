@@ -16,7 +16,11 @@
 
 	pointer-events: none;
 	
-	.transition(opacity 300ms ease-in-out);
+	.transition(opacity 500ms ease-in-out);
+
+	&.light-modal {
+		background: rgba(78, 78, 78, 0.2);
+	}
 
 	&.visible {
 		pointer-events: all;
@@ -124,6 +128,10 @@
 			padding: 20px;
 		}
 
+		&.medium {
+			width: 800px;
+		}
+
 		&.large {
 			width: 95%;
 		}
@@ -155,13 +163,27 @@
 			right: 20px;
 		}
 
+		h2, h3 {
+			display: block;
+		}
+
 		>h3 {
 			margin-top: 0;
 		}
 
+		p + h2, p + h3 {
+			margin-top: 25px;
+		}
+
 		.image-list {
-			img {
-				width: 100%;
+			.image-item {
+				max-width: 150px;
+
+				margin: 0 10px 10px 0;
+
+				border: 1px solid @color-gray-border;
+
+				cursor: pointer;
 			}
 		}
 	}

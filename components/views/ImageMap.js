@@ -14,34 +14,6 @@ export default class ImageMap extends React.Component {
 	}
 
 	componentDidMount() {
-		console.log(this.props);
-
-		if (this.props.image) {
-			this.loadImage(this.props.image);
-		}
-	}
-
-	componentWillReceiveProps(props) {
-		if (props.image) {
-			this.loadImage(props.image);
-		}
-	}
-
-	loadImage(url) {
-		this.imageEl = new Image();
-		this.imageEl.onload = this.imageLoadedHandler;
-		this.imageEl.src = url;
-	}
-
-	imageLoadedHandler() {
-		console.log('imageLoadedHandler');
-		console.log(this.imageEl);
-		var containerWidth = this.refs.container.clientWidth;
-		var containerHeight = this.refs.container.clientWidth;
-
-		var imageWidth = this.imageEl.width;
-		var imageHeight = this.imageEl.height;
-
 		this.map = L.map(this.refs.mapView, {
 			minZoom: 0,
 			maxZoom: 3,
@@ -49,19 +21,47 @@ export default class ImageMap extends React.Component {
 			crs: L.CRS.Simple
 		});
 
-		window.map = this.map;
+		if (this.props.image) {
+			this.loadImage(this.props.image);
+		}
+	}
 
-		console.log(containerWidth);
+	componentWillReceiveProps(props) {
+		if (props.image && props.image != this.props.image) {
+			this.loadImage(props.image);
+		}
+	}
+
+	loadImage(url) {
+		if (this.imageOverlay) {
+			this.map.removeLayer(this.imageOverlay);
+		}
+
+		this.imageEl = new Image();
+		this.imageEl.onload = this.imageLoadedHandler;
+		this.imageEl.src = url;
+	}
+
+	imageLoadedHandler() {
+		var containerWidth = this.refs.container.clientWidth;
+		var containerHeight = this.refs.container.clientWidth;
+
+		var imageWidth = this.imageEl.width;
+		var imageHeight = this.imageEl.height;
 
 		var factor = containerWidth/imageWidth;
 		var bounds = [[0, 0], [imageHeight*factor, imageWidth*factor]];
 
-		var imageOverlay = L.imageOverlay(this.imageEl.src, bounds);
-		imageOverlay.addTo(this.map);
+		if (this.imageOverlay) {
+			this.map.removeLayer(this.imageOverlay);
+		}
+
+		this.imageOverlay = L.imageOverlay(this.imageEl.src, bounds);
+		this.imageOverlay.addTo(this.map);
 
 		this.map.setMaxBounds(bounds);
 
-		this.map.panTo([imageHeight, 0]);
+		this.map.setView([imageHeight, 0], 0);
 	}
 
 	render() {

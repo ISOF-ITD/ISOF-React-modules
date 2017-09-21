@@ -167,3 +167,15 @@ header {
 .map-viewmode-menu {
 	top: 301px !important;
 }
+
+.sv-text-portlet-content {
+	>* {
+		display: none !important;
+	}
+
+	&.mce-edit-focus {
+		>* {
+			display: block !important;
+		}
+	}
+}

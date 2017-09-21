@@ -8,17 +8,17 @@ export default class TranscriptionOverlay extends React.Component {
 
 		this.closeButtonClickHandler = this.closeButtonClickHandler.bind(this);
 
-		this.messageInputChangeHandler = this.messageInputChangeHandler.bind(this);
-		this.nameInputChangeHandler = this.nameInputChangeHandler.bind(this);
-		this.emailInputChangeHandler = this.emailInputChangeHandler.bind(this);
+		this.inputChangeHandler = this.inputChangeHandler.bind(this);
+
+		this.mediaImageClickHandler = this.mediaImageClickHandler.bind(this);
 
 		this.sendButtonClickHandler = this.sendButtonClickHandler.bind(this);
 
 		this.state = {
 			visible: false,
-			messageInputValue: '',
-			nameInputValue: '',
-			emailInputValue: '',
+			messageInput: '',
+			nameInput: '',
+			emailInput: '',
 			messageSent: false,
 			currentImage: null
 		};
@@ -48,21 +48,15 @@ export default class TranscriptionOverlay extends React.Component {
 		});
 	}
 
-	messageInputChangeHandler(event) {
+	mediaImageClickHandler(event) {
 		this.setState({
-			messageInputValue: event.target.value
+			imageIndex: event.currentTarget.dataset.index
 		});
 	}
 
-	nameInputChangeHandler(event) {
+	inputChangeHandler(event) {
 		this.setState({
-			nameInputValue: event.target.value
-		});
-	}
-
-	emailInputChangeHandler(event) {
-		this.setState({
-			emailInputValue: event.target.value
+			[event.target.name]: event.target.value
 		});
 	}
 
@@ -104,8 +98,6 @@ export default class TranscriptionOverlay extends React.Component {
 	}
 
 	render() {
-		console.log(this.state);
-
 		if (this.state.messageSent) {
 			var overlayContent = <div>
 				<p>Meddelande skickat. Tack.</p>
@@ -116,7 +108,7 @@ export default class TranscriptionOverlay extends React.Component {
 			if (this.state.images && this.state.images.length > 0) {
 				var imageItems = this.state.images.map(function(mediaItem, index) {
 					if (mediaItem.source.indexOf('.pdf') == -1) {
-						return <img style={{maxWidth: 100}} key={index} className="archive-image" data-image={mediaItem.source} onClick={this.mediaImageClickHandler} src={config.imageUrl+mediaItem.source} alt="" />;
+						return <img data-index={index} key={index} className="image-item" data-image={mediaItem.source} onClick={this.mediaImageClickHandler} src={config.imageUrl+mediaItem.source} alt="" />;
 					}
 				}.bind(this));
 			}
@@ -129,13 +121,13 @@ export default class TranscriptionOverlay extends React.Component {
 					<hr/>
 
 					<label>Ditt namn:</label>
-					<input className="u-full-width" type="text" value={this.state.nameInputValue} onChange={this.nameInputChangeHandler} />
+					<input name="nameInput" className="u-full-width" type="text" value={this.state.nameInput} onChange={this.inputChangeHandler} />
 
 					<label>Din e-post adress:</label>
-					<input className="u-full-width" type="text" value={this.state.emailInputValue} onChange={this.emailInputChangeHandler} />
+					<input name="emailInput" className="u-full-width" type="text" value={this.state.emailInput} onChange={this.inputChangeHandler} />
 
 					<label>Transkription:</label>
-					<textarea className="u-full-width" value={this.state.messageInputValue} onChange={this.messageInputChangeHandler} style={{height: 380}}></textarea>
+					<textarea name="messageInput" className="u-full-width" value={this.state.messageInput} onChange={this.inputChangeHandler} style={{height: 380}}></textarea>
 
 					<button className="button-primary" onClick={this.sendButtonClickHandler}>Skicka</button>
 				</div>
