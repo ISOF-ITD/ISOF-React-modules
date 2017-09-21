@@ -8,6 +8,7 @@ import ShareButtons from './../controls/ShareButtons';
 import SimpleMap from './SimpleMap';
 import ListPlayButton from './ListPlayButton';
 import FeedbackButton from './FeedbackButton';
+import TranscribeButton from './TranscribeButton';
 import ElementNotificationMessage from './../controls/ElementNotificationMessage';
 
 export default class RecordView extends React.Component {
@@ -147,6 +148,20 @@ export default class RecordView extends React.Component {
 			</tr>;
 		}) : [];
 
+		var textElement;
+
+		if (this.state.data.text && this.state.data.text.indexOf('transkriberad') > -1 && this.state.data.text.length < 25 && this.state.data.media.length > 0) {
+			textElement = <p><TranscribeButton 
+				className="button-primary" 
+				label="Transkribera" 
+				title={this.state.data.title} 
+				recordId={this.state.data.id} 
+				images={this.state.data.media} /></p>;
+		}
+		else {
+			textElement = <p dangerouslySetInnerHTML={{__html: this.state.data.text}} />;
+		}
+
 		return <div className={'container'+(this.state.data.id ? '' : ' loading')}>
 		
 				<div className="container-header">
@@ -173,7 +188,9 @@ export default class RecordView extends React.Component {
 					{
 						this.state.data.text &&
 						<div className="eight columns">
-							<p dangerouslySetInnerHTML={{__html: this.state.data.text}} />
+							{
+								textElement
+							}
 
 							{
 								this.state.data.comment && this.state.data.comment != '' &&
