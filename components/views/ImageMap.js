@@ -65,8 +65,8 @@ export default class ImageMap extends React.Component {
 	}
 
 	render() {
-		return <div ref="container" style={{height: 600, marginBottom: 20}} className={'image-map-container'}>
-			<div className="map-container" style={{height: 600}} ref="mapView" />
+		return <div ref="container" className={'image-map-container'}>
+			<div className="map-container" ref="mapView" />
 		</div>
 	}
 }

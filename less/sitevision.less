@@ -169,11 +169,22 @@ header {
 }
 
 .sv-text-portlet-content {
+	.sv-editing-mode & {	
+		&:before {
+			content: "Dold modul - klicka för att editera";
+			display: block;
+		}
+	}
+
 	>* {
 		display: none !important;
 	}
 
 	&.mce-edit-focus {
+		&:before {
+			display: none;
+		}
+		
 		>* {
 			display: block !important;
 		}

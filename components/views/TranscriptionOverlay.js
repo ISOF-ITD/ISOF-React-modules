@@ -61,19 +61,19 @@ export default class TranscriptionOverlay extends React.Component {
 	}
 
 	sendButtonClickHandler() {
-		return;
-		
+		console.log(this.state);
+
 		var data = {
-			from_email: this.state.emailInputValue,
-			from_name: this.state.nameInputValue,
-			subject: "Sägenkarta: Felanmälning",
-			message: this.state.type+': '+this.state.title+'\n'+
+			from_email: this.state.emailInput,
+			from_name: this.state.nameInput,
+			subject: "Sägenkarta: Transkribering",
+			message: this.state.title+'\n'+
 				this.state.url+'\n\n'+
-				'Från: '+this.state.nameInputValue+' ('+this.state.emailInputValue+')\n\n'+
-				this.state.messageInputValue
+				'Från: '+this.state.nameInput+' ('+this.state.emailInput+')\n\n'+
+				this.state.messageInput
 		};
 
-		fetch(config.apiUrl+'feedback', {
+		fetch(config.apiUrl+'transcribe', {
 			method: "POST",
 			body: JSON.stringify(data)
 		})
