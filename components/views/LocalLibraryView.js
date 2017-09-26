@@ -19,8 +19,13 @@ export default class LocalLibraryView extends React.Component {
 		this.itemClickHandler = this.itemClickHandler.bind(this);
 		this.itemRemoveButtonClickHander = this.itemRemoveButtonClickHander.bind(this);
 		this.copyLinkClickHandler = this.copyLinkClickHandler.bind(this);
+		this.dropdownOpenHandler = this.dropdownOpenHandler.bind(this);
 
 		this.savedRecords = [];
+
+		this.state = {
+			dropdownOpen: false
+		};
 	}
 
 	itemClickHandler(event) {
@@ -29,6 +34,14 @@ export default class LocalLibraryView extends React.Component {
 
 	libraryButtonClickHandler() {
 
+	}
+
+	dropdownOpenHandler() {
+		this.setState({
+			dropdownOpen: true
+		}, function() {
+			this.refs.shareButtons.initialize();
+		}.bind(this));
 	}
 
 	itemRemoveButtonClickHander(event) {
@@ -74,7 +87,10 @@ export default class LocalLibraryView extends React.Component {
 		var shareLink = 'places/text_ids/'+legendIds;
 
 		var footerContent = <div className="drowdown-footer">
-			<ShareButton path={config.siteUrl+'#/'+shareLink} text="Några intressanta sägner på sägenkartan: " />
+			{
+				this.state.dropdownOpen &&
+				<ShareButton ref="shareButtons" manualInit={true} path={config.siteUrl+'#/'+shareLink} text="Några intressanta sägner på sägenkartan: " />
+			}
 			<a className="u-pull-right u-cursor-pointer" onClick={this.copyLinkClickHandler} data-url={config.siteUrl+'#/'+shareLink}>Kopiera länk</a>
 		</div>;
 
@@ -96,7 +112,8 @@ export default class LocalLibraryView extends React.Component {
 						dropdownDirection="up" 
 						height="500px"
 						footerContent={footerContent}
-						headerText={this.props.headerText}>
+						headerText={this.props.headerText} 
+						onOpen={this.dropdownOpenHandler}>
 						{items}
 					</DropdownMenu>
 				</ElementNotificationMessage>
