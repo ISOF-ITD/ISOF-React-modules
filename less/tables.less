@@ -30,6 +30,7 @@ table {
 		background-color: #fff;
 		background-repeat: no-repeat;
 		background-position: center;
+		background-attachment: fixed;
 		background-image: url('../img/loader.gif');
 
 		>table {
@@ -38,6 +39,18 @@ table {
 
 		>.list-pagination {
 			opacity: 0;
+		}
+	}
+
+	&.loading-page {
+		background-color: #fff;
+		background-repeat: no-repeat;
+		background-position: center;
+		background-attachment: fixed;
+		background-image: url('../img/loader.gif');
+
+		>table {
+			opacity: 0.5;
 		}
 	}
 

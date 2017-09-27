@@ -194,11 +194,11 @@ export default class RecordView extends React.Component {
 
 							{
 								this.state.data.comment && this.state.data.comment != '' &&
-								<p><strong>Ordförklaringar och dylikt i upptekningarna/utgåvorna:</strong><br/><span dangerouslySetInnerHTML={{__html: this.state.data.comment}} /></p>
+								<p className="text-small"><strong>Ordförklaringar och dylikt i upptekcningarna/utgåvorna:</strong><br/><span dangerouslySetInnerHTML={{__html: this.state.data.comment}} /></p>
 							}
 							{
 								this.state.data.printed_source && this.state.data.type == 'tryckt' &&
-								<p><em>{this.state.data.printed_source}</em></p>
+								<p className="text-small"><em>{this.state.data.printed_source}</em></p>
 							}
 							<ShareButtons path={config.siteUrl+'#/record/'+this.state.data.id} text={'"'+this.state.data.title+'"'} />
 						</div>
