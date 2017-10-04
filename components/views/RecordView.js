@@ -171,9 +171,9 @@ export default class RecordView extends React.Component {
 															placement="under" 
 															placementOffsetX="-1" 
 															messageId="saveLegendsNotification" 
-															forgetAfterClick="true" 
+															forgetAfterClick={true} 
 															closeTrigger="click" 
-															autoHide="true" 
+															autoHide={true} 
 															message="Klicka på stjärnan för att spara sägner till din egen lista.">
 								<button className={'save-button'+(this.state.saved ? ' saved' : '')} onClick={this.toggleSaveRecord}><span>Spara</span></button></ElementNotificationMessage></h2>
 							<p><strong>Materialtyp</strong>: {this.state.data.type}</p>

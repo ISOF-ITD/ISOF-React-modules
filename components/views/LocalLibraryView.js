@@ -103,8 +103,8 @@ export default class LocalLibraryView extends React.Component {
 					placementOffsetX="27" 
 					placementOffsetY="-62" 
 					messageId="myLegendsNotification" 
-					forgetAfterClick="true" 
-					manuallyOpen="true" 
+					forgetAfterClick={true} 
+					manuallyOpen={true} 
 					closeTrigger="click" 
 					message="Klicka här för att visa lista över dina sparade sägner."
 				>
