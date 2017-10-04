@@ -24,6 +24,9 @@ export default class MapBase extends React.Component {
 			maxZoom: 13,
 			layers: [this.layers[Object.keys(this.layers)[0]]],
 			scrollWheelZoom: this.props.scrollWheelZoom || false
+			layers: [layers[Object.keys(layers)[0]]],
+			scrollWheelZoom: this.props.scrollWheelZoom || false,
+			zoomControl: false
 		};
 
 		if (!this.props.disableSwedenMap) {
@@ -36,7 +39,11 @@ export default class MapBase extends React.Component {
 
 		this.map = L.map(this.refs.mapView, mapOptions);
 
-		L.control.layers(this.layers, null, {
+		L.control.zoom({
+			position: this.props.zoomControlPosition || 'topright'
+		}).addTo(this.map);
+
+		L.control.layers(layers, null, {
 			position: this.props.layersControlPosition || 'topright'
 		}).addTo(this.map);
 
@@ -56,8 +63,6 @@ export default class MapBase extends React.Component {
 	}
 
 	mapBaseLayerChangeHandler(event) {
-		this.currentBaseLayer = event.name;
-		
 		if (event.name.indexOf('Lantmäteriet') > -1 && this.map.options.crs.code != 'EPSG:3006') {
 			var mapCenter = this.map.getCenter();
 			var mapZoom = this.map.getZoom();

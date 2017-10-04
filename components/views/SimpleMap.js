@@ -38,7 +38,7 @@ export default class SimpleMap extends React.Component {
 
 			this.marker = L.marker([Number(markerData.lat), Number(markerData.lng)], {
 				title: markerData.label,
-				icon: mapHelper.blueIcon
+				icon: mapHelper.markerIcon
 			});
 
 			this.refs.mapView.map.addLayer(this.marker);

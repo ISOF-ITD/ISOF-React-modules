@@ -30,6 +30,12 @@
 		right: 0;
 
 		z-index: 1200;
+
+		.expanded& {
+			max-height: 95%;
+
+			overflow-y: auto;
+		}
 	}
 
 	.search-input-wrapper {
@@ -46,6 +52,25 @@
 		&.focused {
 			border-color: #a66e77;
 			box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+		}
+
+		.search-tabs {
+			position: absolute;
+			
+			top: -32px;
+			right: 34px;
+
+			a {
+				height: 30px;
+
+				padding: 0 15px;
+
+				line-height: 30px;
+
+				&.selected {
+					height: 31px;
+				}
+			}
 		}
 
 		.search-input, .search-button {
@@ -172,36 +197,6 @@
 			opacity: 1;
 
 			overflow: visible;
-		}
-	}
-
-	.checkbox-list {
-		height: 127px;
-
-		padding: 10px 10px 5px 10px;
-
-		box-sizing: border-box;
-		border: 1px solid #d1d1d1;
-		border-radius: 3px;
-
-		background: #fff;
-
-		overflow-y: auto;
-
-		.minimal-scrollbar();
-
-		.item {
-			margin-bottom: 5px;
-
-			font-weight: 400;
-
-			label {
-				font-weight: normal;
-			}
-
-			input {
-				margin-bottom: 0;
-			}
 		}
 	}
 }

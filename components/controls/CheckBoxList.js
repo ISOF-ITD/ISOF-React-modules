@@ -42,7 +42,7 @@ export default class CheckBoxList extends React.Component {
 	render() {
 		var items = this.props.values ? this.props.values.map(function(value, index) {
 			if (typeof(value) == 'object') {
-				return <label key={index} className="item"><input type="checkbox" value={value[this.props.valueField || 'value']} checked={this.state.selectedItems.indexOf(value[this.props.valueField || 'value']) > -1} onChange={this.checkBoxChangeHandler} /> {value[this.props.labelField || 'label']}</label>
+				return <label key={index} className="item"><input type="checkbox" value={value[this.props.valueField || 'value']} checked={this.state.selectedItems.indexOf(value[this.props.valueField || 'value']) > -1} onChange={this.checkBoxChangeHandler} /> {this.props.labelFunction ? this.props.labelFunction(value) : value[this.props.labelField || 'label']}</label>
 			}
 			else {
 				return <label key={index} className="item"><input type="checkbox" value={value} checked={this.state.selectedItems.indexOf(value) > -1} onChange={this.checkBoxChangeHandler} /> {value}</label>

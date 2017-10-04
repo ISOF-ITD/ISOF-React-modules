@@ -72,8 +72,6 @@ export default class MapView extends React.Component {
 		});
 
 		this.vectorGridLayer.on('click', function(event) {
-			console.log(event);
-
 			window.feature = event.layer;
 
 			this.vectorGridLayer.setFeatureStyle(event.layer.properties.OBJEKT_ID, {
@@ -93,6 +91,7 @@ export default class MapView extends React.Component {
 
 	componentWillReceiveProps(props) {
 		var currentSearchParams = JSON.parse(JSON.stringify(this.props.searchParams));
+
 		if (currentSearchParams.place_id) {
 			delete currentSearchParams.place_id;
 		}
@@ -125,7 +124,8 @@ export default class MapView extends React.Component {
 				year_from: params.year_from || null,
 				year_to: params.year_to || null,
 				person_relation: params.person_relation || null,
-				gender: params.gender || null
+				gender: params.gender || null,
+				text_ids: params.text_ids || null
 			});
 		}
 	}
@@ -187,7 +187,7 @@ export default class MapView extends React.Component {
 								'<b>'+childCount+'</b>'+
 								'</span></div>',
 							className: 'marker-cluster'+c,
-							iconSize: new L.Point(24, 24)
+							iconSize: new L.Point(28, 28)
 						});
 					}
 				});
@@ -226,7 +226,7 @@ export default class MapView extends React.Component {
 					if (mapItem.lat && mapItem.lng) {
 						var marker = L.marker([Number(mapItem.lat), Number(mapItem.lng)], {
 							title: mapItem.name,
-							icon: mapHelper.blueIcon
+							icon: mapHelper.markerIcon
 						});
 /*
 						var template = _.template($("#markerPopupTemplate").html());
@@ -285,7 +285,7 @@ export default class MapView extends React.Component {
 					if (mapItem.lat && mapItem.lng) {
 						var marker = L.circleMarker([mapItem.lat, mapItem.lng], {
 							radius: ((mapItem.c/maxValue)*20)+2,
-							fillColor: "#b62837",
+							fillColor: "#047bff",
 							fillOpacity: 0.4,
 							color: '#000',
 							weight: 0.8
@@ -353,17 +353,20 @@ export default class MapView extends React.Component {
 			<div className={'map-wrapper'+(this.state.loading ? ' map-loading' : '')}>
 				{this.props.children}
 
-				<div className="map-viewmode-menu">
-					<a className={'icon-marker'+(this.state.viewMode == 'clusters' ? ' selected' : '')} data-viewmode="clusters" onClick={this.changeViewMode}><span>Cluster</span></a>
-					<a className={'icon-heatmap'+(this.state.viewMode == 'heatmap' ? ' selected' : '')} data-viewmode="heatmap" onClick={this.changeViewMode}><span>Heatmap</span></a>
-					<a className={'icon-circles'+(this.state.viewMode == 'circles' ? ' selected' : '')} data-viewmode="circles" onClick={this.changeViewMode}><span>Circles</span></a>
-				</div>
+				{
+					!this.props.hideMapmodeMenu &&
+					<div className="map-viewmode-menu">
+						<a className={'icon-marker'+(this.state.viewMode == 'clusters' ? ' selected' : '')} data-viewmode="clusters" onClick={this.changeViewMode}><span>Cluster</span></a>
+						<a className={'icon-heatmap'+(this.state.viewMode == 'heatmap' ? ' selected' : '')} data-viewmode="heatmap" onClick={this.changeViewMode}><span>Heatmap</span></a>
+						<a className={'icon-circles'+(this.state.viewMode == 'circles' ? ' selected' : '')} data-viewmode="circles" onClick={this.changeViewMode}><span>Circles</span></a>
+					</div>
+				}
 
 				<div className="map-progress">
 					<div className="indicator"></div>
 				</div>
 
-				<MapBase ref="mapView" className="map-view" layersControlPosition="topleft" scrollWheelZoom="true" onBaseLayerChange={this.mapBaseLayerChangeHandler} />
+				<MapBase ref="mapView" className="map-view" layersControlPosition={this.props.layersControlPosition || 'topleft'} zoomControlPosition={this.props.zoomControlPosition || 'topleft'} scrollWheelZoom={true} onBaseLayerChange={this.mapBaseLayerChangeHandler} />
 			</div>
 		);
 	}
