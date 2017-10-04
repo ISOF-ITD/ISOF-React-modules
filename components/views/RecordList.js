@@ -1,4 +1,6 @@
 import React from 'react';
+import { hashHistory } from 'react-router';
+
 import RecordsCollection from './../collections/RecordsCollection';
 import RecordListItem from './RecordListItem';
 
@@ -9,11 +11,10 @@ export default class RecordList extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.currentPage = 1;
-
 		this.state = {
 			records: [],
-			fetchingPage: false
+			fetchingPage: false,
+			currentPage: 1
 		};
 
 		this.nextPage = this.nextPage.bind(this);
@@ -29,7 +30,6 @@ export default class RecordList extends React.Component {
 			this.setState({
 				records: json.data,
 				total: json.metadata.total,
-				currentPage: this.currentPage,
 				fetchingPage: false
 			});
 		}.bind(this));
@@ -37,7 +37,11 @@ export default class RecordList extends React.Component {
 
 	componentDidMount() {
 		if (!this.props.disableAutoFetch) {
-			this.fetchData(this.props);
+			this.setState({
+				currentPage: this.props.page || 1
+			}, function() {
+				this.fetchData(this.props);
+			}.bind(this));
 		}
 	}
 
@@ -53,25 +57,31 @@ export default class RecordList extends React.Component {
 		}
 		
 		if (JSON.stringify(currentParams) !== JSON.stringify(params)) {
+			/*
 			if (currentParams.search != params.search || 
 					currentParams.type != params.type || 
 					currentParams.category != params.category || 
 					currentParams.person != params.person || 
 					currentParams.recordPlace != params.recordPlace) {
-				this.currentPage = 1;
+				this.setState({
+					currentPage: 1
+				});
 			}
-			this.fetchData(params);
+			*/
+			this.setState({
+				currentPage: params.page || 1
+			}, function() {
+				this.fetchData(params);
+			}.bind(this));
 		}
 	}
 
 	nextPage() {
-		this.currentPage += 1;
-		this.fetchData(this.props);
+		hashHistory.push('/places'+routeHelper.createSearchRoute(this.props)+'/page/'+(Number(this.state.currentPage)+1));
 	}
 	
 	prevPage() {
-		this.currentPage -= 1;
-		this.fetchData(this.props);
+		hashHistory.push('/places'+routeHelper.createSearchRoute(this.props)+'/page/'+(Number(this.state.currentPage)-1));
 	}
 	
 	fetchData(params) {
@@ -80,7 +90,7 @@ export default class RecordList extends React.Component {
 		});
 
 		this.collections.fetch({
-			page: this.currentPage,
+			page: this.state.currentPage,
 			search: params.search || null,
 			search_field: params.search_field || null,
 			type: params.type || config.apiRecordsType,
