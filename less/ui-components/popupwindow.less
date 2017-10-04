@@ -15,14 +15,25 @@
 		z-index: 1100;
 
 		.transition(all 300ms ease-in-out);
-		.transform(translateY(80px));
+
+		opacity: 0;
+
+		.transform(translateY(50px));
+		.transition(all 400ms ease-in-out);
+
+		.app-initialized & {
+			opacity: 1;
+
+			.transform(translateY(0));
+			.transition-delay(500ms);
+		}
 
 		&:hover {
 			text-decoration: underline;
 		}
 
-		&.visible {
-			.transform(translateY(0));
+		@media print {
+			display: none;
 		}
 
 		@media (max-width: 550px) {
@@ -61,6 +72,18 @@
 			pointer-events: all;
 		}
 
+		@media print {
+			position: initial;
+
+			overflow: visible;
+
+			.container {
+				width: 100%;
+				max-width: initial !important;
+
+				padding: 0 !important;
+			}
+		}
 
 		.has-docked-control & {
 			top: 60px;
@@ -103,15 +126,26 @@
 			box-shadow: 0 2px 6px rgba(0,0,0,.2);
 			border-radius: 3px;
 
+			box-sizing: border-box;
+
 			.transition(all 300ms ease-in-out);
 
 			overflow-x: hidden;
+
+			@media print {
+				max-width: initial !important;
+
+				margin: 0;
+				padding: 0;
+			}
 
 			@media (max-width: 1300px) {
 				max-width: 1000px;
 			}
 
 			@media (max-width: 750px) {
+				min-height: 100%;
+				
 				padding: 20px 0;
 
 				margin: 0 auto;
@@ -166,10 +200,18 @@
 				box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
 
 				cursor: pointer;
+
+				@media print {
+					max-width: 50%;
+				}
 			}
 
 			.fb-share-button {
 				margin-top: 20px;
+
+				@media print {
+					display: none;
+				}
 			}
 
 			.row {
@@ -185,10 +227,26 @@
 				color: #fff;
 
 				background-image: url('../img/header-back.gif');
+				background-color: @color-red;
 				background-position: center;
+
+				@media print {
+					margin: 55px 0 30px 0;
+					padding: 0;
+
+					color: #000;
+
+					background: none;
+
+					h2, a {
+						color: #000 !important;
+					}
+				}
 
 				h2 {
 					color: #fff;
+
+					margin-top: 0;
 				}
 
 				a {
@@ -222,12 +280,36 @@
 
 					.transform(translateY(-5px));
 
+					@media print {
+						display: none;
+					}
+
 					&:hover {
 						box-shadow: 0 1px 2px rgba(0, 0, 6px, 0.61);
 
 						background: rgba(255, 255, 255, 0.5);
 
 						.transform(translateY(-2px));
+
+						@media (max-width: 550px) {
+							background: @color-red-lighter;
+						}
+					}
+
+					@media (max-width: 550px) {
+						position: fixed;
+
+						top: auto;
+						bottom: 10px;
+						right: 20px;
+
+						padding: 10px 15px;
+
+						background: @color-red;
+
+						border-radius: 20px;
+
+						z-index: 600;
 					}
 				}
 			}
@@ -277,6 +359,8 @@
 
 .close-button {
 	display: block;
+
+	position: relative;
 
 	width: 20px;
 	height: 20px;

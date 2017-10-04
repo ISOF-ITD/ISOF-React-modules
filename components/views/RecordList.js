@@ -1,4 +1,6 @@
 import React from 'react';
+import { hashHistory } from 'react-router';
+
 import RecordsCollection from './../collections/RecordsCollection';
 import RecordListItem from './RecordListItem';
 
@@ -9,27 +11,37 @@ export default class RecordList extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.currentPage = 1;
-
 		this.state = {
-			records: []
+			records: [],
+			fetchingPage: false,
+			currentPage: 1
 		};
 
 		this.nextPage = this.nextPage.bind(this);
 		this.prevPage = this.prevPage.bind(this);
 
 		this.collections = new RecordsCollection(function(json) {
+			if (!json.data || json.data.length == 0) {
+				if (window.eventBus) {
+					window.eventBus.dispatch('popup-notification.notify', null, 'Inga sökträffar');
+				}
+			}
+
 			this.setState({
 				records: json.data,
 				total: json.metadata.total,
-				currentPage: this.currentPage
+				fetchingPage: false
 			});
 		}.bind(this));
 	}
 
 	componentDidMount() {
 		if (!this.props.disableAutoFetch) {
-			this.fetchData(this.props);
+			this.setState({
+				currentPage: this.props.page || 1
+			}, function() {
+				this.fetchData(this.props);
+			}.bind(this));
 		}
 	}
 
@@ -45,35 +57,47 @@ export default class RecordList extends React.Component {
 		}
 		
 		if (JSON.stringify(currentParams) !== JSON.stringify(params)) {
-			if (currentParams.type != params.type || 
+			/*
+			if (currentParams.search != params.search || 
+					currentParams.type != params.type || 
 					currentParams.category != params.category || 
 					currentParams.person != params.person || 
 					currentParams.recordPlace != params.recordPlace) {
-				this.currentPage = 1;
+				this.setState({
+					currentPage: 1
+				});
 			}
-			this.fetchData(params);
+			*/
+			this.setState({
+				currentPage: params.page || 1
+			}, function() {
+				this.fetchData(params);
+			}.bind(this));
 		}
 	}
 
 	nextPage() {
-		this.currentPage += 1;
-		this.fetchData(this.props);
+		hashHistory.push('/places'+routeHelper.createSearchRoute(this.props)+'/page/'+(Number(this.state.currentPage)+1));
 	}
 	
 	prevPage() {
-		this.currentPage -= 1;
-		this.fetchData(this.props);
+		hashHistory.push('/places'+routeHelper.createSearchRoute(this.props)+'/page/'+(Number(this.state.currentPage)-1));
 	}
 	
 	fetchData(params) {
+		this.setState({
+			fetchingPage: true
+		});
+
 		this.collections.fetch({
-			page: this.currentPage,
+			page: this.state.currentPage,
 			search: params.search || null,
 			search_field: params.search_field || null,
 			type: params.type || config.apiRecordsType,
 			category: params.category || null,
 			person: params.person || null,
-			record_place: params.recordPlace || null
+			record_place: params.recordPlace || null,
+			text_ids: params.text_ids || null
 		});
 	}
 
@@ -87,7 +111,7 @@ export default class RecordList extends React.Component {
 
 		if (this.state.records) {
 			return (
-				<div className={'table-wrapper list-container'+(this.state.records.length > 0 ? '' : ' loading')}>
+				<div className={'table-wrapper list-container'+(this.state.records.length == 0 ? ' loading' : this.state.fetchingPage ? ' loading-page' : '')}>
 
 					<table width="100%" className="table-responsive">
 						<thead>
@@ -108,7 +132,7 @@ export default class RecordList extends React.Component {
 						this.state.total > 50 &&
 						<div className="list-pagination">
 							<hr/>
-							<p className="page-info"><strong>{'Visar 50 av '+this.state.total}</strong></p><br/>
+							<p className="page-info"><strong>{'Visar '+((this.state.currentPage*50)-49)+'-'+(this.state.currentPage*50 > this.state.total ? this.state.total : this.state.currentPage*50)+' av '+this.state.total}</strong></p><br/>
 							<button disabled={this.state.currentPage == 1} className="button prev-button" onClick={this.prevPage}>Föregående</button>
 							<span> </span>
 							<button disabled={this.state.total <= this.state.currentPage*50} className="button next-button" onClick={this.nextPage}>Nästa</button>

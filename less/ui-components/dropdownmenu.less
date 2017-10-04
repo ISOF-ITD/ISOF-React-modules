@@ -56,8 +56,6 @@
 
 		&.dropdown-list {
 			&.has-header {
-				position: relative;
-
 				height: 350px;
 
 				overflow-y: visible;
@@ -67,7 +65,7 @@
 					box-shadow: none;
 				}
 
-				.list-container {
+				.list-container, .text-container {
 					position: absolute;
 
 					top: 66px;
@@ -108,9 +106,15 @@
 				background: #edeff1;
 			}
 
+			.text-container {
+				padding: 22px;
+			}
+
 			.list-container {
 				.item {
 					display: block;
+
+					position: relative;
 
 					padding: 10px 15px;
 
@@ -123,6 +127,10 @@
 
 					&:hover {
 						text-decoration: underline;
+
+						.close-button {
+							opacity: 1;
+						}
 					}
 
 					&.selected {
@@ -138,6 +146,16 @@
 
 					label {
 						margin-bottom: 0;
+					}
+
+					.close-button {
+						float: right;
+
+						margin-left: 10px;
+
+						opacity: 0.4;
+
+						.transform(scale(0.8));
 					}
 				}
 			}

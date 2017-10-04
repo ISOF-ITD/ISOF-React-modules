@@ -8,6 +8,8 @@ import ShareButtons from './../controls/ShareButtons';
 import SimpleMap from './SimpleMap';
 import ListPlayButton from './ListPlayButton';
 import FeedbackButton from './FeedbackButton';
+import TranscribeButton from './TranscribeButton';
+import ElementNotificationMessage from './../controls/ElementNotificationMessage';
 
 export default class RecordView extends React.Component {
 	constructor(props) {
@@ -38,7 +40,6 @@ export default class RecordView extends React.Component {
 	}
 
 	componentWillUnmount() {
-		console.log('componentWillUnmount')
 		if (window.eventBus) {
 			window.eventBus.dispatch('overlay.hide');
 		}
@@ -47,7 +48,8 @@ export default class RecordView extends React.Component {
 	toggleSaveRecord() {
 		var libraryItem = {
 			id: this.state.data.id,
-			title: this.state.data.title
+			title: this.state.data.title,
+			place: this.state.data.places && this.state.data.places.length > 0 ? this.state.data.places[0].name : null
 		};
 
 		if (!localLibrary.find(libraryItem)) {
@@ -55,6 +57,11 @@ export default class RecordView extends React.Component {
 			this.setState({
 				saved: true
 			});
+
+			if (window.eventBus) {
+				window.eventBus.dispatch('popup-notification.notify', null, '<strong>'+this.state.data.title+'</strong> har sparats till dina sägner.');
+			}
+
 		}
 		else {
 			localLibrary.remove(libraryItem);
@@ -100,7 +107,9 @@ export default class RecordView extends React.Component {
 				return dataItem.type == 'image';
 			});
 			imageItems = imageDataItems.map(function(mediaItem, index) {
-				return <img key={index} className="archive-image" data-image={mediaItem.source} onClick={this.mediaImageClickHandler} src={config.imageUrl+mediaItem.source} alt="" />;
+				if (mediaItem.source.indexOf('.pdf') == -1) {
+					return <img key={index} className="archive-image" data-image={mediaItem.source} onClick={this.mediaImageClickHandler} src={config.imageUrl+mediaItem.source} alt="" />;
+				}
 			}.bind(this));
 		}
 
@@ -139,12 +148,34 @@ export default class RecordView extends React.Component {
 			</tr>;
 		}) : [];
 
+		var textElement;
+
+		if (this.state.data.text && this.state.data.text.indexOf('transkriberad') > -1 && this.state.data.text.length < 25 && this.state.data.media.length > 0) {
+			textElement = <p><TranscribeButton 
+				className="button-primary" 
+				label="Transkribera" 
+				title={this.state.data.title} 
+				recordId={this.state.data.id} 
+				images={this.state.data.media} /></p>;
+		}
+		else {
+			textElement = <p dangerouslySetInnerHTML={{__html: this.state.data.text}} />;
+		}
+
 		return <div className={'container'+(this.state.data.id ? '' : ' loading')}>
 		
 				<div className="container-header">
 					<div className="row">
 						<div className="twelve columns">
-							<h2>{this.state.data.title} <button className={'save-button'+(this.state.saved ? ' saved' : '')} onClick={this.toggleSaveRecord}><span>Spara</span></button></h2>
+							<h2>{this.state.data.title} <ElementNotificationMessage 
+															placement="under" 
+															placementOffsetX="-1" 
+															messageId="saveLegendsNotification" 
+															forgetAfterClick={true} 
+															closeTrigger="click" 
+															autoHide={true} 
+															message="Klicka på stjärnan för att spara sägner till din egen lista.">
+								<button className={'save-button'+(this.state.saved ? ' saved' : '')} onClick={this.toggleSaveRecord}><span>Spara</span></button></ElementNotificationMessage></h2>
 							<p><strong>Materialtyp</strong>: {this.state.data.type}</p>
 						</div>
 					</div>
@@ -157,17 +188,19 @@ export default class RecordView extends React.Component {
 					{
 						this.state.data.text &&
 						<div className="eight columns">
-							<p dangerouslySetInnerHTML={{__html: this.state.data.text}} />
+							{
+								textElement
+							}
 
 							{
 								this.state.data.comment && this.state.data.comment != '' &&
-								<p><strong>Kommentarer:</strong><br/>{this.state.data.comment}</p>
+								<p className="text-small"><strong>Ordförklaringar och dylikt i upptekcningarna/utgåvorna:</strong><br/><span dangerouslySetInnerHTML={{__html: this.state.data.comment}} /></p>
 							}
 							{
 								this.state.data.printed_source && this.state.data.type == 'tryckt' &&
-								<p><em>{this.state.data.printed_source}</em></p>
+								<p className="text-small"><em>{this.state.data.printed_source}</em></p>
 							}
-							<ShareButtons path={'record/'+this.state.data.id} />
+							<ShareButtons path={config.siteUrl+'#/record/'+this.state.data.id} text={'"'+this.state.data.title+'"'} />
 						</div>
 					}
 					{
