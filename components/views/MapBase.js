@@ -7,23 +7,17 @@ import mapHelper from './../../utils/mapHelper';
 
 export default class MapBase extends React.Component {
 	componentDidMount() {
-		this.layers = mapHelper.createLayers();
-
-		this.nordicLegendsUpdateHandler = this.nordicLegendsUpdateHandler.bind(this);
+		var layers = mapHelper.createLayers();
 
 		if (this.props.disableSwedenMap) {
-			delete this.layers[mapHelper.tileLayers[0].label];
+			delete layers[mapHelper.tileLayers[0].label];
 		}
-
-		window.mapBase = this;
 
 		var mapOptions = {
 			center: [63.5, 16.7211], 
 			zoom: 4,
 			minZoom: 4,
 			maxZoom: 13,
-			layers: [this.layers[Object.keys(this.layers)[0]]],
-			scrollWheelZoom: this.props.scrollWheelZoom || false
 			layers: [layers[Object.keys(layers)[0]]],
 			scrollWheelZoom: this.props.scrollWheelZoom || false,
 			zoomControl: false
@@ -34,8 +28,6 @@ export default class MapBase extends React.Component {
 			mapOptions.zoom = 1;
 			mapOptions.minZoom = 1;
 		}
-
-		this.currentBaseLayer = mapHelper.tileLayers[0].label;
 
 		this.map = L.map(this.refs.mapView, mapOptions);
 
@@ -48,18 +40,6 @@ export default class MapBase extends React.Component {
 		}).addTo(this.map);
 
 		this.map.on('baselayerchange', this.mapBaseLayerChangeHandler.bind(this));
-
-		if (window.eventBus) {
-			window.eventBus.addEventListener('nordicLegendsUpdate', this.nordicLegendsUpdateHandler);
-		}
-	}
-
-	nordicLegendsUpdateHandler() {
-		if (window.applicationSettings.includeNordic && this.currentBaseLayer.indexOf('Lantmäteriet') > -1) {
-			console.log('change base layer');
-			this.map.removeLayer(this.layers[this.currentBaseLayer]);
-			this.map.addLayer(this.layers['Open Screet Map Mapnik']);
-		}
 	}
 
 	mapBaseLayerChangeHandler(event) {
