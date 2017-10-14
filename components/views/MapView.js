@@ -31,7 +31,7 @@ export default class MapView extends React.Component {
 		this.mapBaseLayerChangeHandler = this.mapBaseLayerChangeHandler.bind(this);
 
 		this.collections = new MapCollection(function(json) {
-			this.mapData = json.data || [];
+			this.mapData = json || [];
 			this.updateMap();
 
 			this.setState({
@@ -125,7 +125,7 @@ export default class MapView extends React.Component {
 				year_to: params.year_to || null,
 				person_relation: params.person_relation || null,
 				gender: params.gender || null,
-				text_ids: params.text_ids || null
+				record_ids: params.record_ids || null
 			});
 		}
 	}

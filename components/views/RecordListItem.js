@@ -16,11 +16,11 @@ export default class RecordListItem extends React.Component {
 					{this.props.item.title ? this.props.item.title : '(Utan titel'}
 				</a>
 			</td>
-			<td data-title="Kategori:">{this.props.item.taxonomy.name}</td>
+			<td data-title="Kategori:">{this.props.item.category ? this.props.item.category.name : ''}</td>
 			<td data-title="Socken, Landskap:">
 			{
-				this.props.item.places &&
-				<a target={config.embeddedApp ? '_parent' : '_self'} href={(config.embeddedApp ? config.siteUrl : '')+'#place/'+this.props.item.places[0].id}>{this.props.item.places[0].name+', '+this.props.item.places[0].landskap}</a>
+				this.props.item.places && this.props.item.places.length > 0 &&
+				<a target={config.embeddedApp ? '_parent' : '_self'} href={(config.embeddedApp ? config.siteUrl : '')+'#place/'+this.props.item.places[0].id}>{this.props.item.places[0].name+', '+this.props.item.places[0].harad.landskap}</a>
 			}
 			</td>
 			<td data-title="Uppteckningsår:">{this.props.item.year > 0 ? this.props.item.year : ''}</td>

@@ -10,27 +10,29 @@ export default class RecordsCollection {
 	}
 
 	fetch(params) {
-		var page = params.page ? (params.page-1)*50 : 0;
+		var page = params.page || 1;
 
 		var paramStrings = [];
 
+		paramStrings.push('page='+page);
+
 		for (var key in params) {
 			if (params[key] && key != 'page') {
-				paramStrings.push(key+'/'+params[key]);
+				paramStrings.push(key+'='+params[key]);
 			}
 		}
 
 		if (config.fetchOnlyCategories) {
-			paramStrings.push('only_categories/true');
+			paramStrings.push('only_categories=true');
 		}
 
 		if (!window.applicationSettings.includeNordic) {
-			paramStrings.push('country/'+config.country);
+			paramStrings.push('country='+config.country);
 		}
 
-		var paramString = paramStrings.join('/');
+		var paramString = paramStrings.join('&');
 
-		fetch(this.url+((page)+'/50/')+paramString)
+		fetch(this.url+'?'+paramString)
 			.then(function(response) {
 				return response.json()
 			}).then(function(json) {

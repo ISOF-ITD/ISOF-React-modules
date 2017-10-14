@@ -84,7 +84,7 @@ export default class LocalLibraryView extends React.Component {
 			return item.id;
 		}).join(';');
 
-		var shareLink = 'places/text_ids/'+legendIds;
+		var shareLink = 'places/record_ids/'+legendIds;
 
 		var footerContent = <div className="drowdown-footer">
 			{

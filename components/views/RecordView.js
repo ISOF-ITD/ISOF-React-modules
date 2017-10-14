@@ -23,7 +23,7 @@ export default class RecordView extends React.Component {
 			saved: false
 		};
 
-		this.url = config.apiUrl+'record/';
+		this.url = config.apiUrl+'records/';
 	}
 
 	componentDidMount() {
@@ -81,7 +81,7 @@ export default class RecordView extends React.Component {
 
 	fetchData(params) {
 		if (params.record_id) {
-			fetch(this.url+params.record_id)
+			fetch(this.url+params.record_id+'/')
 				.then(function(response) {
 					return response.json()
 				}).then(function(json) {
@@ -92,7 +92,7 @@ export default class RecordView extends React.Component {
 						})
 					});
 				}.bind(this)).catch(function(ex) {
-					console.log('parsing failed', ex)
+					console.log('parsing failed', ex);
 				})
 			;
 		}

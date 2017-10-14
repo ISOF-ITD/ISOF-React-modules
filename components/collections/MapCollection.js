@@ -22,8 +22,8 @@ export default class MapCollection {
 	fetch(params) {
 		var paramString;
 
-		if (params.text_ids) { // Hämtar bara platser för vissa sägner
-			paramString = 'text_ids/'+params.text_ids;
+		if (params.record_ids) { // Hämtar bara platser för vissa sägner
+			paramString = 'record_ids='+params.record_ids;
 		}
 		else {
 			var paramStrings = [];
@@ -31,23 +31,23 @@ export default class MapCollection {
 			params = this.cleanParams(params);
 
 			for (var key in params) {
-				paramStrings.push(key+'/'+params[key]);
+				paramStrings.push(key+'='+params[key]);
 			}
 
 			if (config.fetchOnlyCategories) {
-				paramStrings.push('only_categories/true');
+				paramStrings.push('only_categories=true');
 			}
 
-			paramString = paramStrings.join('/');
+			paramString = paramStrings.join('&');
 		}
 
 		if (!window.applicationSettings.includeNordic) {
-			paramStrings.push('country/'+config.country);
+			paramStrings.push('country='+config.country);
 		}
 
-		var paramString = paramStrings.join('/');
+		var paramString = paramStrings.join('&');
 
-		fetch(this.url+paramString)
+		fetch(this.url+'?'+paramString)
 			.then(function(response) {
 				return response.json()
 			}).then(function(json) {

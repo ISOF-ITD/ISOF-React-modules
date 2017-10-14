@@ -15,7 +15,7 @@ export default class PersonView extends React.Component {
 			personId: null
 		};
 
-		this.url = config.apiUrl+'person/';
+		this.url = config.apiUrl+'persons/';
 	}
 
 	componentDidMount() {
@@ -40,7 +40,7 @@ export default class PersonView extends React.Component {
 
 	fetchData(params) {
 		if (params.person_id) {
-			fetch(this.url+params.person_id)
+			fetch(this.url+params.person_id+'/')
 				.then(function(response) {
 					return response.json()
 				}).then(function(json) {

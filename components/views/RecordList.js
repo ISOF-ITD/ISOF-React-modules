@@ -21,15 +21,15 @@ export default class RecordList extends React.Component {
 		this.prevPage = this.prevPage.bind(this);
 
 		this.collections = new RecordsCollection(function(json) {
-			if (!json.data || json.data.length == 0) {
+			if (!json.results || json.results.length == 0) {
 				if (window.eventBus) {
 					window.eventBus.dispatch('popup-notification.notify', null, 'Inga sökträffar');
 				}
 			}
 
 			this.setState({
-				records: json.data,
-				total: json.metadata.total,
+				records: json.results,
+				total: json.count,
 				fetchingPage: false
 			});
 		}.bind(this));
@@ -93,11 +93,11 @@ export default class RecordList extends React.Component {
 			page: this.state.currentPage,
 			search: params.search || null,
 			search_field: params.search_field || null,
-			type: params.type || config.apiRecordsType,
+			type: config.apiRecordsType,
 			category: params.category || null,
 			person: params.person || null,
-			record_place: params.recordPlace || null,
-			text_ids: params.text_ids || null
+			place: params.recordPlace || null,
+			record_ids: params.record_ids || null
 		});
 	}
 

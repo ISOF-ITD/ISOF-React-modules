@@ -17,7 +17,7 @@ export default class PlaceView extends React.Component {
 			placeMarker: {}
 		};
 
-		this.url = config.apiUrl+'place/';
+		this.url = config.apiUrl+'locations/';
 	}
 
 	componentDidMount() {
@@ -26,9 +26,6 @@ export default class PlaceView extends React.Component {
 		var state = {};
 		if (this.props.params.category) {
 			state['category'] = this.props.params.category;
-		}
-		if (this.props.params.type) {
-			state['type'] = this.props.params.type;
 		}
 		if (this.props.params.place_id) {
 			state['recordPlace'] = this.props.params.place_id;
@@ -39,8 +36,8 @@ export default class PlaceView extends React.Component {
 		if (this.props.params.search_field) {
 			state['searchField'] = this.props.params.search_field;
 		}
-		if (this.props.params.text_ids) {
-			state['text_ids'] = this.props.params.text_ids;
+		if (this.props.params.record_ids) {
+			state['record_ids'] = this.props.params.record_ids;
 		}
 		this.setState(state);
 	}
@@ -53,7 +50,7 @@ export default class PlaceView extends React.Component {
 
 	fetchData(params) {
 		if (params.place_id) {
-			fetch(this.url+params.place_id+'/type/'+config.apiRecordsType+(config.fetchOnlyCategories ? '/only_categories/true' : ''))
+			fetch(this.url+params.place_id+'/')
 				.then(function(response) {
 					return response.json()
 				}).then(function(json) {
@@ -115,7 +112,9 @@ export default class PlaceView extends React.Component {
 								{
 									this.state.data.fylke ?
 									<span><strong>Fylke</strong>: {this.state.data.fylke}</span> :
-									<span><strong>Härad</strong>: {this.state.data.harad}, <strong>Län</strong>: {this.state.data.county}, <strong>Landskap</strong>: {this.state.data.landskap}</span>
+									this.state.data.harad ?
+									<span><strong>Härad</strong>: {this.state.data.harad.name}, <strong>Län</strong>: {this.state.data.harad.lan}, <strong>Landskap</strong>: {this.state.data.harad.landskap}</span>
+									: null
 								}
 							</p>
 						</div>
@@ -132,7 +131,7 @@ export default class PlaceView extends React.Component {
 				}
 
 				{
-					(this.state.text_ids || this.state.category || this.state.type || this.state.searchQuery || this.state.searchField) &&
+					(this.state.record_ids || this.state.category || this.state.searchQuery || this.state.searchField) &&
 					<div className="row search-results-container">
 						<div className="twelve columns">
 	
@@ -141,7 +140,7 @@ export default class PlaceView extends React.Component {
 								<h3>Sökträffar</h3>
 							}
 
-							<RecordList text_ids={this.state.text_ids} category={this.state.category} type={this.state.type} recordPlace={this.state.recordPlace} search={this.state.searchQuery} search_field={this.state.searchField} />
+							<RecordList record_ids={this.state.record_ids} category={this.state.category} recordPlace={this.state.recordPlace} search={this.state.searchQuery} search_field={this.state.searchField} />
 
 						</div>
 					</div>
@@ -157,28 +156,11 @@ export default class PlaceView extends React.Component {
 						}
 
 						{
-							this.state.data.records && this.state.data.records.length > 0 &&
-
 							<div className="row">
 								<div className="twelve columns">
 									<h3>Samtliga uppteckningar från orten</h3>
 
-									<div className="table-wrapper">
-										<table width="100%" className="table-responsive">
-											<thead>
-												<tr>
-													<th>Titel</th>
-													<th>Kategori</th>
-													<th>Socken, Landskap</th>
-													<th>Uppteckningsår</th>
-													<th>Materialtyp</th>
-												</tr>
-											</thead>
-											<tbody>
-												{recordsItems}
-											</tbody>
-										</table>
-									</div>
+									<RecordList recordPlace={this.state.recordPlace} />		
 								</div>
 							</div>
 
