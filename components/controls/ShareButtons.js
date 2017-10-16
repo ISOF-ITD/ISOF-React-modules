@@ -10,8 +10,6 @@ export default class RecordView extends React.Component {
 	}
 
 	initialize() {
-		console.log('Initialize');
-
 		if (this.initialized) {
 			return;
 		}

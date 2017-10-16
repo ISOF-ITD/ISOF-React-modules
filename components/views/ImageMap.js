@@ -16,7 +16,7 @@ export default class ImageMap extends React.Component {
 	componentDidMount() {
 		this.map = L.map(this.refs.mapView, {
 			minZoom: 0,
-			maxZoom: 3,
+			maxZoom: this.props.maxZoom || 3,
 			zoom: 0,
 			crs: L.CRS.Simple
 		});
