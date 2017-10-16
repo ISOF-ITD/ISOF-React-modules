@@ -129,15 +129,15 @@ export default class RecordView extends React.Component {
 
 		var personItems = this.state.data.persons && this.state.data.persons.length > 0 ? this.state.data.persons.map(function(person, index) {
 			return <tr key={index}>
-				<td data-title=""><a href={'#person/'+person.id}>{person.name ? person.name : ''}</a></td>
-				<td data-title="Födelseår">{person.birth_year && person.birth_year > 0 ? person.birth_year : ''}</td>
+				<td data-title=""><a href={'#person/'+person.person.id}>{person.person.name ? person.person.name : ''}</a></td>
+				<td data-title="Födelseår">{person.person.birth_year && person.person.birth_year > 0 ? person.person.birth_year : ''}</td>
 				<td data-title="Födelseort">
 					{
-						person.home && person.home.length > 0 &&
-						<a href={'#place/'+person.home.id}>{person.home.name+', '+person.home.harad}</a>
+						person.person.places && person.person.places.length > 0 &&
+						<a href={'#place/'+person.person.places[0].id}>{person.person.places[0].name+', '+person.person.places[0].harad.name}</a>
 					}
 				</td>
-				<td data-title="Roll">{person.relation == 'collector' ? 'Upptecknare' : person.relation == 'informant' ? 'Informant' : ''}</td>
+				<td data-title="Roll">{person.relation == 'c' ? 'Upptecknare' : person.relation == 'i' ? 'Informant' : ''}</td>
 			</tr>;
 		}) : [];
 
