@@ -6,11 +6,15 @@ body {
 }
 
 header {
+	visibility: hidden;
+
 	background: transparent !important;
 
 	pointer-events: none;
 
 	.logo {
+		visibility: visible;
+
 		position: absolute;
 
 		top: 5px;
@@ -46,7 +50,7 @@ header {
 		/*
 		Vi döljer menyn tills vi har flera kartor än bara sägenkartan
 		*/
-		display: none;
+		visibility: visible;
 
 		position: fixed;
 
@@ -102,6 +106,8 @@ header {
 	}
 
 	#Meny+ul {
+		visibility: visible;
+
 		position: fixed;
 
 		top: 20px;
@@ -177,7 +183,7 @@ header {
 	}
 
 	>* {
-		display: none !important;
+//		display: none !important;
 	}
 
 	&.mce-edit-focus {

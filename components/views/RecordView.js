@@ -10,10 +10,13 @@ import ListPlayButton from './ListPlayButton';
 import FeedbackButton from './FeedbackButton';
 import TranscribeButton from './TranscribeButton';
 import ElementNotificationMessage from './../controls/ElementNotificationMessage';
+import SitevisionContent from './../controls/SitevisionContent';
 
 export default class RecordView extends React.Component {
 	constructor(props) {
 		super(props);
+
+		console.log(props);
 
 		this.toggleSaveRecord = this.toggleSaveRecord.bind(this);
 		this.mediaImageClickHandler = this.mediaImageClickHandler.bind(this);
@@ -144,13 +147,20 @@ export default class RecordView extends React.Component {
 
 		var placeItems = this.state.data.places && this.state.data.places.length > 0 ? this.state.data.places.map(function(place, index) {
 			return <tr key={index}>
-				<td><a href={'#place/'+place.id}>{place.name+', '+(place.fylke ? place.fylke : place.harad)}</a></td>
+				<td><a href={'#place/'+place.id}>{place.name+', '+(place.fylke ? place.fylke : place.harad.name)}</a></td>
 			</tr>;
 		}) : [];
 
 		var textElement;
 
-		if (this.state.data.text && this.state.data.text.indexOf('transkriberad') > -1 && this.state.data.text.length < 25 && this.state.data.media.length > 0) {
+		var sitevisionUrl = _.find(this.state.data.metadata, function(item) {
+			return item.type == 'sitevision_url';
+		});
+
+		if (sitevisionUrl) {
+			textElement = <SitevisionContent url={sitevisionUrl.value} />
+		}
+		else if (this.state.data.text && this.state.data.text.indexOf('transkriberad') > -1 && this.state.data.text.length < 25 && this.state.data.media.length > 0) {
 			textElement = <p><TranscribeButton 
 				className="button-primary" 
 				label="Transkribera" 
@@ -186,8 +196,8 @@ export default class RecordView extends React.Component {
   				<div className="row">
 
 					{
-						this.state.data.text &&
-						<div className="eight columns">
+						(this.state.data.text || textElement) &&
+						<div className={(this.props.route.fullWidthContentArea ? 'twelve' : 'eight')+' columns'}>
 							{
 								textElement
 							}
