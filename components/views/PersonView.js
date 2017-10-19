@@ -15,7 +15,7 @@ export default class PersonView extends React.Component {
 			personId: null
 		};
 
-		this.url = config.apiUrl+'persons/';
+		this.url = config.djangoApiUrl+'persons/';
 	}
 
 	componentDidMount() {
@@ -81,11 +81,11 @@ export default class PersonView extends React.Component {
 							<p>
 							{
 								(this.state.data.birth_year && this.state.data.birth_year > 0 ? 'Föddes '+this.state.data.birth_year : '')+
-								(this.state.data.birth_year && this.state.data.birth_year > 0 && this.state.data.home ? ' i ' : '')
+								(this.state.data.birth_year && this.state.data.birth_year > 0 && this.state.data.places ? ' i ' : '')
 							}
 							{
-								this.state.data.home &&
-								<a href={'#place/'+this.state.data.home[0].id}>{this.state.data.home[0].name+', '+this.state.data.home[0].landskap}</a>
+								this.state.data.places &&
+								<a href={'#place/'+this.state.data.places[0].id}>{this.state.data.places[0].name+', '+this.state.data.places[0].landskap}</a>
 							}
 							</p>
 						</div>
@@ -95,10 +95,10 @@ export default class PersonView extends React.Component {
 				</div>
 
 				{
-					this.state.data.home && this.state.data.home.length > 0 && this.state.data.home[0].lat && this.state.data.home[0].lng &&
+					this.state.data.places && this.state.data.places.length > 0 && this.state.data.places[0].lat && this.state.data.places[0].lng &&
 					<div className="row">
 						<div className="twelve columns">
-							<SimpleMap marker={{lat: this.state.data.home[0].lat, lng: this.state.data.home[0].lng, label: this.state.data.home[0].name}} />
+							<SimpleMap marker={{lat: this.state.data.places[0].lat, lng: this.state.data.places[0].lng, label: this.state.data.places[0].name}} />
 						</div>
 					</div>
 				}
@@ -108,7 +108,7 @@ export default class PersonView extends React.Component {
 					<div className={(this.state.data.image ? 'eight' : 'twelve')+' columns'}>
 						{
 							this.state.data.biography &&
-							<p dangerouslySetInnerHTML={{__html: this.state.data.biography}} />
+							<p dangerouslySetInnerHTML={{__html: this.state.data.biography.replace(/(?:\r\n|\r|\n)/g, '<br />')}} />
 						}
 					</div>
 					{
@@ -127,7 +127,7 @@ export default class PersonView extends React.Component {
 					<div className="twelve columns">
 						<h3>Uppteckningar</h3>
 
-						<RecordList disableAutoFetch={true} person={this.state.personId} />
+						<RecordList disableRouterPagination={true} disableAutoFetch={true} person={this.state.personId} />
 
 					</div>
 				</div>

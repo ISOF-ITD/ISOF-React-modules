@@ -5,7 +5,7 @@ import config from './../../../scripts/config.js';
 
 export default class MapCollection {
 	constructor(onComplete) {
-		this.url = config.apiUrl+'locations/';
+		this.url = config.apiUrl+'socken/';
 		this.onComplete = onComplete;
 	}
 
@@ -29,6 +29,19 @@ export default class MapCollection {
 			var paramStrings = [];
 
 			params = this.cleanParams(params);
+
+			// Anpassa params till ES Djangi api
+			if (params.search) {
+				if (params.search_field == 'person') {
+					params.person = params.search;
+					delete params.search;
+				}
+				if (params.search_field == 'place') {
+					params.place = params.search;
+					delete params.search;
+				}
+				delete params.search_field;
+			}
 
 			for (var key in params) {
 				paramStrings.push(key+'='+params[key]);

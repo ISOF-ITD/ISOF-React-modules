@@ -16,8 +16,6 @@ export default class RecordView extends React.Component {
 	constructor(props) {
 		super(props);
 
-		console.log(props);
-
 		this.toggleSaveRecord = this.toggleSaveRecord.bind(this);
 		this.mediaImageClickHandler = this.mediaImageClickHandler.bind(this);
 
@@ -26,7 +24,7 @@ export default class RecordView extends React.Component {
 			saved: false
 		};
 
-		this.url = config.apiUrl+'records/';
+		this.url = config.apiUrl+'document/';
 	}
 
 	componentDidMount() {
@@ -89,9 +87,9 @@ export default class RecordView extends React.Component {
 					return response.json()
 				}).then(function(json) {
 					this.setState({
-						data: json,
+						data: json._source,
 						saved: localLibrary.find({
-							id: json.id
+							id: json._id
 						})
 					});
 				}.bind(this)).catch(function(ex) {
@@ -102,6 +100,8 @@ export default class RecordView extends React.Component {
 	}
 
 	render() {
+		console.log(this.state.data);
+
 		var imageItems = [];
 		var audioItems = [];
 
@@ -132,22 +132,22 @@ export default class RecordView extends React.Component {
 
 		var personItems = this.state.data.persons && this.state.data.persons.length > 0 ? this.state.data.persons.map(function(person, index) {
 			return <tr key={index}>
-				<td data-title=""><a href={'#person/'+person.person.id}>{person.person.name ? person.person.name : ''}</a></td>
-				<td data-title="Födelseår">{person.person.birth_year && person.person.birth_year > 0 ? person.person.birth_year : ''}</td>
+				<td data-title=""><a href={'#person/'+person.id}>{person.name ? person.name : ''}</a></td>
+				<td data-title="Födelseår">{person.birth_year && person.birth_year > 0 ? person.birth_year : ''}</td>
 				<td data-title="Födelseort">
 					{
-						person.person.places && person.person.places.length > 0 &&
-						<a href={'#place/'+person.person.places[0].id}>{person.person.places[0].name+', '+person.person.places[0].harad.name}</a>
+						person.places && person.places.length > 0 &&
+						<a href={'#place/'+person.places[0].id}>{person.places[0].name+', '+person.places[0].harad}</a>
 					}
 				</td>
-				<td data-title="Roll">{person.relation == 'c' ? 'Upptecknare' : person.relation == 'i' ? 'Informant' : ''}</td>
+				<td data-title="Roll">{person.relation == 'collector' ? 'Upptecknare' : person.relation == 'informant' ? 'Informant' : ''}</td>
 			</tr>;
 		}) : [];
 
 
 		var placeItems = this.state.data.places && this.state.data.places.length > 0 ? this.state.data.places.map(function(place, index) {
 			return <tr key={index}>
-				<td><a href={'#place/'+place.id}>{place.name+', '+(place.fylke ? place.fylke : place.harad.name)}</a></td>
+				<td><a href={'#place/'+place.id}>{place.name+', '+(place.fylke ? place.fylke : place.harad)}</a></td>
 			</tr>;
 		}) : [];
 
