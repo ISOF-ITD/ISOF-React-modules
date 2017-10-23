@@ -1,9 +1,10 @@
 import _ from 'underscore';
 
 export default {
-	getCategoryName(categoryLetter) {
+	getCategoryName(categoryLetter, advancedCategories) {
 		if (categoryLetter) {
-			var categoryObj = _.find(this.categories, function(item) {
+			var lookupObject = advancedCategories ? this.categories_advanced : this.categories;
+			var categoryObj = _.find(lookupObject, function(item) {
 				return item.letter.toLowerCase() == categoryLetter.toLowerCase();
 			}.bind(this));
 
@@ -87,98 +88,86 @@ export default {
 		}
 	],
 
-	categories_v1: [
+	categories_advanced: [
 		{
-			letter: 'a',
-			label: 'Döden och de döda'
+			"key": "A",
+			"name": "Döden och de döda"
 		},
 		{
-			letter: 'b',
-			label: 'Odens jakt'
+			"key": "B",
+			"name": "Den vilda jakten"
 		},
 		{
-			letter: 'c',
-			label: 'Skogsväsen'
+			"key": "C",
+			"name": "Skogsväsen"
 		},
 		{
-			letter: 'd',
-			label: 'Vattenväsen'
+			"key": "D",
+			"name": "Vattenväsen"
 		},
 		{
-			letter: 'e',
-			label: 'Bergväsen'
+			"key": "E",
+			"name": "Bergväsen"
 		},
 		{
-			letter: 'f',
-			label: 'Tomtar'
+			"key": "F",
+			"name": "Tomtar"
 		},
 		{
-			letter: 'g',
-			label: 'Jättar'
+			"key": "G",
+			"name": "De underjordiska"
 		},
 		{
-			letter: 'h',
-			label: 'Troll'
+			"key": "H",
+			"name": "Förvandlade"
 		},
 		{
-			letter: 'i',
-			label: 'Älvor, vittror och vättar'
+			"key": "I",
+			"name": "Spiritus"
 		},
 		{
-			letter: 'j',
-			label: 'Djävulen'
+			"key": "J",
+			"name": "Djävulen"
 		},
 		{
-			letter: 'k',
-			label: 'Kloka'
+			"key": "K",
+			"name": "Kloka"
 		},
 		{
-			letter: 'l',
-			label: 'Häxor och  trollkarlar'
+			"key": "L",
+			"name": "Häxor och trollkarlar"
 		},
 		{
-			letter: 'm',
-			label: 'Tjuvmjölkande väsen'
+			"key": "M",
+			"name": "Tjuvmjölkande väsen"
 		},
 		{
-			letter: 'n',
-			label: 'Spiritus, dragdocka och bodrag'
+			"key": "N",
+			"name": "Övernaturliga djur"
 		},
 		{
-			letter: 'o',
-			label: 'Förvandlade'
+			"key": "FL-14",
+			"name": "14. Mellan land och stad"
 		},
 		{
-			letter: 'p',
-			label: 'Djur och natur'
+			"key": "FL-20",
+			"name": "20. Naturen"
 		},
 		{
-			letter: 'q',
-			label: 'Farsoter'
+			"key": "FL-22",
+			"name": "22. Trädgården"
 		},
 		{
-			letter: 'r',
-			label: 'Kyrkor och kyrkklockor'
+			"key": "FL-27",
+			"name": "27. Skolavslutningar"
 		},
 		{
-			letter: 's',
-			label: 'Skatter'
+			"key": "FL-29",
+			"name": "29. Husdjur"
 		},
 		{
-			letter: 't',
-			label: 'Krig och fejder'
-		},
-		{
-			letter: 'u',
-			label: 'Brott och straff'
-		},
-		{
-			letter: 'v',
-			label: 'Kungar och herremän'
-		},
-		{
-			letter: 'w',
-			label: 'De ovanliga'
+			"key": "FL-31",
+			"name": "31. Årets fester  i skolan"
 		}
 	]
 }

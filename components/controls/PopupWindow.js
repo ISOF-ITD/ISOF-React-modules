@@ -45,7 +45,7 @@ export default class PopupWindow extends React.Component {
 		if (props.windowOpen && !this.state.windowOpen) {
 			this.openWindow();
 		}
-		else if (!pros.windowOpen && this.state.windowOpen) {
+		else if (!props.windowOpen && this.state.windowOpen) {
 			this.closeWindow();
 		}
 	}
