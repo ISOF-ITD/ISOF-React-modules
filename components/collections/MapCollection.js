@@ -20,10 +20,10 @@ export default class MapCollection {
 	}
 
 	fetch(params) {
-		var paramString;
+		var paramStrings = [];
 
 		if (params.record_ids) { // Hämtar bara platser för vissa sägner
-			paramString = 'record_ids='+params.record_ids;
+			paramStrings.push('documents='+params.record_ids);
 		}
 		else {
 			var paramStrings = [];
@@ -50,8 +50,6 @@ export default class MapCollection {
 			if (config.fetchOnlyCategories) {
 				paramStrings.push('only_categories=true');
 			}
-
-			paramString = paramStrings.join('&');
 		}
 
 		if (!window.applicationSettings.includeNordic) {
