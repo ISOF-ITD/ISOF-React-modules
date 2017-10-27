@@ -1,6 +1,7 @@
 import React from 'react';
 
 import RecordList from './RecordList';
+import PersonList from './PersonList';
 import SimpleMap from './SimpleMap';
 import ListPlayButton from './ListPlayButton';
 
@@ -17,7 +18,7 @@ export default class PlaceView extends React.Component {
 			placeMarker: {}
 		};
 
-		this.url = config.apiUrl+'locations/';
+		this.url = config.apiUrl+'get_socken/';
 	}
 
 	componentDidMount() {
@@ -55,7 +56,7 @@ export default class PlaceView extends React.Component {
 					return response.json()
 				}).then(function(json) {
 					this.setState({
-						data: json
+						data: json.data
 					});
 				}.bind(this)).catch(function(ex) {
 					console.log('parsing failed', ex)
@@ -101,6 +102,8 @@ export default class PlaceView extends React.Component {
 			</tr>;
 		}.bind(this)) : [];
 
+		console.log(this.state);
+
 		return (
 			<div className={'container'+(this.state.data.id ? '' : ' loading')}>
 		
@@ -113,7 +116,7 @@ export default class PlaceView extends React.Component {
 									this.state.data.fylke ?
 									<span><strong>Fylke</strong>: {this.state.data.fylke}</span> :
 									this.state.data.harad ?
-									<span><strong>Härad</strong>: {this.state.data.harad.name}, <strong>Län</strong>: {this.state.data.harad.lan}, <strong>Landskap</strong>: {this.state.data.harad.landskap}</span>
+									<span><strong>Härad</strong>: {this.state.data.harad}, <strong>Län</strong>: {this.state.data.lan}, <strong>Landskap</strong>: {this.state.data.landskap}</span>
 									: null
 								}
 							</p>
@@ -125,7 +128,7 @@ export default class PlaceView extends React.Component {
 					!this.props.route.hideMap &&
 					<div className="row">
 						<div className="twelve columns">
-							<SimpleMap marker={this.state.data.lat && this.state.data.lng ? {lat: this.state.data.lat, lng: this.state.data.lng, label: this.state.data.name} : null} />
+							<SimpleMap marker={this.state.data.location && this.state.data.location.length > 0 ? {lat: this.state.data.location[0], lng: this.state.data.location[1], label: this.state.data.name} : null} />
 						</div>
 					</div>
 				}
@@ -171,69 +174,44 @@ export default class PlaceView extends React.Component {
 
 				{
 					!this.props.route.hidePersons &&
-					<div>
+					<div className="row">
+						<div className="twelve columns">
+							<h3>Intervjuade personer</h3>
 
-						{
-							this.state.data.informants && this.state.data.informants.length > 0 &&
-							<hr/>
-						}
-
-						{
-							this.state.data.informants && this.state.data.informants.length > 0 &&
-
-							<div className="row">
-								<div className="twelve columns">
-									<h3>Intervjuade personer</h3>
-
-									<div className="table-wrapper">
-										<table width="100%">
-											<thead>
-												<tr>
-													<th>Namn</th>
-													<th>Födelseår</th>
-												</tr>
-											</thead>
-											<tbody>
-												{informantsItems}
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-
-						}
-
-						{
-							this.state.data.persons && this.state.data.persons.length > 0 &&
-							<hr/>
-						}
-
-						{
-							this.state.data.persons && this.state.data.persons.length > 0 &&
-
-							<div className="row">
-								<div className="twelve columns">
-									<h3>Personer födda i {this.state.data.name}</h3>
-
-									<div className="table-wrapper">
-										<table width="100%">
-											<thead>
-												<tr>
-													<th>Namn</th>
-													<th>Födelseår</th>
-												</tr>
-											</thead>
-											<tbody>
-												{personsItems}
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-
-						}
-
+							<PersonList personType="informants" place={this.state.recordPlace} />
+						</div>
 					</div>
+
+				}
+
+				{
+					this.state.data.persons && this.state.data.persons.length > 0 &&
+					<hr/>
+				}
+
+				{
+					this.state.data.persons && this.state.data.persons.length > 0 &&
+
+					<div className="row">
+						<div className="twelve columns">
+							<h3>Personer födda i {this.state.data.name}</h3>
+
+							<div className="table-wrapper">
+								<table width="100%">
+									<thead>
+										<tr>
+											<th>Namn</th>
+											<th>Födelseår</th>
+										</tr>
+									</thead>
+									<tbody>
+										{personsItems}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
 				}
 
 			</div>

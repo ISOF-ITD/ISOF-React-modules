@@ -21,15 +21,15 @@ export default class RecordList extends React.Component {
 		this.prevPage = this.prevPage.bind(this);
 
 		this.collections = new RecordsCollection(function(json) {
-			if (!json.results || json.results.length == 0) {
+			if (!json.data || json.data.length == 0) {
 				if (window.eventBus) {
 					window.eventBus.dispatch('popup-notification.notify', null, 'Inga sökträffar');
 				}
 			}
 
 			this.setState({
-				records: json.results,
-				total: json.count,
+				records: json.data,
+				total: json.metadata.total,
 				fetchingPage: false
 			});
 		}.bind(this));
@@ -77,11 +77,29 @@ export default class RecordList extends React.Component {
 	}
 
 	nextPage() {
-		hashHistory.push('/places'+routeHelper.createSearchRoute(this.props)+'/page/'+(Number(this.state.currentPage)+1));
+		if (this.props.disableRouterPagination) {
+			this.setState({
+				currentPage: this.state.currentPage+1
+			}, function() {
+				this.fetchData(this.props);
+			}.bind(this));
+		}
+		else {
+			hashHistory.push('/places'+routeHelper.createSearchRoute(this.props)+'/page/'+(Number(this.state.currentPage)+1));
+		}
 	}
 	
 	prevPage() {
-		hashHistory.push('/places'+routeHelper.createSearchRoute(this.props)+'/page/'+(Number(this.state.currentPage)-1));
+		if (this.props.disableRouterPagination) {
+			this.setState({
+				currentPage: this.state.currentPage-1
+			}, function() {
+				this.fetchData(this.props);
+			}.bind(this));
+		}
+		else {
+			hashHistory.push('/places'+routeHelper.createSearchRoute(this.props)+'/page/'+(Number(this.state.currentPage)-1));
+		}
 	}
 	
 	fetchData(params) {
@@ -90,13 +108,14 @@ export default class RecordList extends React.Component {
 		});
 
 		this.collections.fetch({
-			page: this.state.currentPage,
+			from: (this.state.currentPage-1)*50,
+			size: 50,
 			search: params.search || null,
 			search_field: params.search_field || null,
 			type: config.apiRecordsType,
 			category: params.category || null,
-			person: params.person || null,
-			place: params.recordPlace || null,
+			person_id: params.person || null,
+			socken_id: params.recordPlace || null,
 			record_ids: params.record_ids || null
 		});
 	}
@@ -105,7 +124,7 @@ export default class RecordList extends React.Component {
 		var searchRouteParams = routeHelper.createSearchRoute(this.props);
 
 		var items = this.state.records ? this.state.records.map(function(item, index) {
-			return <RecordListItem key={item.id} item={item} routeParams={searchRouteParams} />;
+			return <RecordListItem key={item._source.id} item={item} routeParams={searchRouteParams} />;
 
 		}.bind(this)) : [];
 

@@ -31,7 +31,7 @@ export default class MapView extends React.Component {
 		this.mapBaseLayerChangeHandler = this.mapBaseLayerChangeHandler.bind(this);
 
 		this.collections = new MapCollection(function(json) {
-			this.mapData = json || [];
+			this.mapData = json.data || [];
 			this.updateMap();
 
 			this.setState({
@@ -223,8 +223,8 @@ export default class MapView extends React.Component {
 				var bounds = [];
 				
 				_.each(this.mapData, function(mapItem) {
-					if (mapItem.lat && mapItem.lng) {
-						var marker = L.marker([Number(mapItem.lat), Number(mapItem.lng)], {
+					if (mapItem.location.length > 0) {
+						var marker = L.marker([Number(mapItem.location[0]), Number(mapItem.location[1])], {
 							title: mapItem.name,
 							icon: mapHelper.markerIcon
 						});
@@ -253,7 +253,7 @@ export default class MapView extends React.Component {
 
 						this.markers.addLayer(marker);
 
-						bounds.push([mapItem.lat, mapItem.lng]);
+						bounds.push(mapItem.location);
 					}
 				}.bind(this));
 
