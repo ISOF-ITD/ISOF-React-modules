@@ -13,30 +13,35 @@ export default class RecordsCollection {
 		var paramStrings = [];
 
 		// Anpassa params till ES Djangi api
-		if (params.search) {
-			if (params.search_field == 'person') {
-				params.person = params.search;
-				delete params.search;
-			}
-			if (params.search_field == 'place') {
-				params.place = params.search;
-				delete params.search;
-			}
-			delete params.search_field;
+		if (params.record_ids) { // Hämtar bara platser för vissa sägner
+			paramStrings.push('documents='+params.record_ids);
 		}
-
-		for (var key in params) {
-			if (params[key]) {
-				paramStrings.push(key+'='+params[key]);
+		else {
+			if (params.search) {
+				if (params.search_field == 'person') {
+					params.person = params.search;
+					delete params.search;
+				}
+				if (params.search_field == 'place') {
+					params.place = params.search;
+					delete params.search;
+				}
+				delete params.search_field;
 			}
-		}
 
-		if (config.fetchOnlyCategories) {
-			paramStrings.push('only_categories=true');
-		}
+			for (var key in params) {
+				if (params[key]) {
+					paramStrings.push(key+'='+params[key]);
+				}
+			}
 
-		if (!window.applicationSettings.includeNordic) {
-			paramStrings.push('country='+config.country);
+			if (config.fetchOnlyCategories) {
+				paramStrings.push('only_categories=true');
+			}
+
+			if (!window.applicationSettings.includeNordic) {
+				paramStrings.push('country='+config.country);
+			}
 		}
 
 		var paramString = paramStrings.join('&');

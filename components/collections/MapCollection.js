@@ -26,8 +26,6 @@ export default class MapCollection {
 			paramStrings.push('documents='+params.record_ids);
 		}
 		else {
-			var paramStrings = [];
-
 			params = this.cleanParams(params);
 
 			// Anpassa params till ES Djangi api
@@ -50,10 +48,10 @@ export default class MapCollection {
 			if (config.fetchOnlyCategories) {
 				paramStrings.push('only_categories=true');
 			}
-		}
 
-		if (!window.applicationSettings.includeNordic) {
-			paramStrings.push('country='+config.country);
+			if (!window.applicationSettings.includeNordic) {
+				paramStrings.push('country='+config.country);
+			}
 		}
 
 		var paramString = paramStrings.join('&');
