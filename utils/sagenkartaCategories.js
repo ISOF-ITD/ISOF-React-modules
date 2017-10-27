@@ -1,9 +1,10 @@
 import _ from 'underscore';
 
 export default {
-	getCategoryName(categoryLetter) {
+	getCategoryName(categoryLetter, advancedCategories) {
 		if (categoryLetter) {
-			var categoryObj = _.find(this.categories, function(item) {
+			var lookupObject = advancedCategories ? this.categories_advanced : this.categories;
+			var categoryObj = _.find(lookupObject, function(item) {
 				return item.letter.toLowerCase() == categoryLetter.toLowerCase();
 			}.bind(this));
 
@@ -87,98 +88,94 @@ export default {
 		}
 	],
 
-	categories_v1: [
+	categories_advanced: [
 		{
-			letter: 'a',
+			letter: 'A',
 			label: 'Döden och de döda'
 		},
 		{
-			letter: 'b',
-			label: 'Odens jakt'
+			letter: 'B',
+			label: 'Den vilda jakten'
 		},
 		{
-			letter: 'c',
+			letter: 'C',
 			label: 'Skogsväsen'
 		},
 		{
-			letter: 'd',
+			letter: 'D',
 			label: 'Vattenväsen'
 		},
 		{
-			letter: 'e',
+			letter: 'E',
 			label: 'Bergväsen'
 		},
 		{
-			letter: 'f',
+			letter: 'F',
 			label: 'Tomtar'
 		},
 		{
-			letter: 'g',
-			label: 'Jättar'
+			letter: 'G',
+			label: 'De underjordiska'
 		},
 		{
-			letter: 'h',
-			label: 'Troll'
-		},
-		{
-			letter: 'i',
-			label: 'Älvor, vittror och vättar'
-		},
-		{
-			letter: 'j',
-			label: 'Djävulen'
-		},
-		{
-			letter: 'k',
-			label: 'Kloka'
-		},
-		{
-			letter: 'l',
-			label: 'Häxor och  trollkarlar'
-		},
-		{
-			letter: 'm',
-			label: 'Tjuvmjölkande väsen'
-		},
-		{
-			letter: 'n',
-			label: 'Spiritus, dragdocka och bodrag'
-		},
-		{
-			letter: 'o',
+			letter: 'H',
 			label: 'Förvandlade'
 		},
 		{
-			letter: 'p',
-			label: 'Djur och natur'
+			letter: 'I',
+			label: 'Spiritus'
 		},
 		{
-			letter: 'q',
-			label: 'Farsoter'
+			letter: 'J',
+			label: 'Djävulen'
 		},
 		{
-			letter: 'r',
-			label: 'Kyrkor och kyrkklockor'
+			letter: 'K',
+			label: 'Kloka'
 		},
 		{
-			letter: 's',
-			label: 'Skatter'
+			letter: 'L',
+			label: 'Häxor och trollkarlar'
 		},
 		{
-			letter: 't',
-			label: 'Krig och fejder'
+			letter: 'M',
+			label: 'Tjuvmjölkande väsen'
 		},
 		{
-			letter: 'u',
-			label: 'Brott och straff'
+			letter: 'N',
+			label: 'Övernaturliga djur'
 		},
 		{
-			letter: 'v',
-			label: 'Kungar och herremän'
+			letter: 'FL-7',
+			label: '7. Vardagsliv under andra världskriget'
 		},
 		{
-			letter: 'w',
-			label: 'De ovanliga'
+			letter: 'FL-14',
+			label: '14. Mellan land och stad'
+		},
+		{
+			letter: 'FL-20',
+			label: '20. Naturen'
+		},
+		{
+			letter: 'FL-22',
+			label: '22. Trädgården'
+		},
+		{
+			letter: 'FL-27',
+			label: '27. Skolavslutningar'
+		},
+		{
+			letter: 'FL-29',
+			label: '29. Husdjur'
+		},
+		{
+			letter: 'FL-31',
+			label: '31. Årets fester  i skolan'
+		},
+		{
+			letter: 'FL-W1',
+			label:  'W1. Bilar och bilism'
 		}
 	]
 }
