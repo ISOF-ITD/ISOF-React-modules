@@ -90,84 +90,92 @@ export default {
 
 	categories_advanced: [
 		{
-			"key": "A",
-			"name": "Döden och de döda"
+			letter: 'A',
+			label: 'Döden och de döda'
 		},
 		{
-			"key": "B",
-			"name": "Den vilda jakten"
+			letter: 'B',
+			label: 'Den vilda jakten'
 		},
 		{
-			"key": "C",
-			"name": "Skogsväsen"
+			letter: 'C',
+			label: 'Skogsväsen'
 		},
 		{
-			"key": "D",
-			"name": "Vattenväsen"
+			letter: 'D',
+			label: 'Vattenväsen'
 		},
 		{
-			"key": "E",
-			"name": "Bergväsen"
+			letter: 'E',
+			label: 'Bergväsen'
 		},
 		{
-			"key": "F",
-			"name": "Tomtar"
+			letter: 'F',
+			label: 'Tomtar'
 		},
 		{
-			"key": "G",
-			"name": "De underjordiska"
+			letter: 'G',
+			label: 'De underjordiska'
 		},
 		{
-			"key": "H",
-			"name": "Förvandlade"
+			letter: 'H',
+			label: 'Förvandlade'
 		},
 		{
-			"key": "I",
-			"name": "Spiritus"
+			letter: 'I',
+			label: 'Spiritus'
 		},
 		{
-			"key": "J",
-			"name": "Djävulen"
+			letter: 'J',
+			label: 'Djävulen'
 		},
 		{
-			"key": "K",
-			"name": "Kloka"
+			letter: 'K',
+			label: 'Kloka'
 		},
 		{
-			"key": "L",
-			"name": "Häxor och trollkarlar"
+			letter: 'L',
+			label: 'Häxor och trollkarlar'
 		},
 		{
-			"key": "M",
-			"name": "Tjuvmjölkande väsen"
+			letter: 'M',
+			label: 'Tjuvmjölkande väsen'
 		},
 		{
-			"key": "N",
-			"name": "Övernaturliga djur"
+			letter: 'N',
+			label: 'Övernaturliga djur'
 		},
 		{
-			"key": "FL-14",
-			"name": "14. Mellan land och stad"
+			letter: 'FL-7',
+			label: '7. Vardagsliv under andra världskriget'
 		},
 		{
-			"key": "FL-20",
-			"name": "20. Naturen"
+			letter: 'FL-14',
+			label: '14. Mellan land och stad'
 		},
 		{
-			"key": "FL-22",
-			"name": "22. Trädgården"
+			letter: 'FL-20',
+			label: '20. Naturen'
 		},
 		{
-			"key": "FL-27",
-			"name": "27. Skolavslutningar"
+			letter: 'FL-22',
+			label: '22. Trädgården'
 		},
 		{
-			"key": "FL-29",
-			"name": "29. Husdjur"
+			letter: 'FL-27',
+			label: '27. Skolavslutningar'
 		},
 		{
-			"key": "FL-31",
-			"name": "31. Årets fester  i skolan"
+			letter: 'FL-29',
+			label: '29. Husdjur'
+		},
+		{
+			letter: 'FL-31',
+			label: '31. Årets fester  i skolan'
+		},
+		{
+			letter: 'FL-W1',
+			label:  'W1. Bilar och bilism'
 		}
 	]
 }
