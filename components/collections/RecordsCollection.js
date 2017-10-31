@@ -31,7 +31,6 @@ export default class RecordsCollection {
 			if (queryParams[key]) {
 				paramStrings.push(key+'='+queryParams[key]);
 			}
-		}
 
 		if (!window.applicationSettings.includeNordic) {
 			paramStrings.push('country='+config.country);
