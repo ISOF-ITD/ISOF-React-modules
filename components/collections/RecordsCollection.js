@@ -31,6 +31,7 @@ export default class RecordsCollection {
 			if (queryParams[key]) {
 				paramStrings.push(key+'='+queryParams[key]);
 			}
+		}
 
 		if (!window.applicationSettings.includeNordic) {
 			paramStrings.push('country='+config.country);
@@ -41,13 +42,14 @@ export default class RecordsCollection {
 		fetch(this.url+'?'+paramString)
 			.then(function(response) {
 				return response.json()
-			}).then(function(json) {
+			})
+			.then(function(json) {
 				if (this.onComplete) {
 					this.onComplete(json);
 				}
-			}.bind(this)).catch(function(ex) {
+			}.bind(this))
+			.catch(function(ex) {
 				console.log('parsing failed', ex)
-			})
-		;
+			});
 	}
 }
