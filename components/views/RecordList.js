@@ -112,7 +112,6 @@ export default class RecordList extends React.Component {
 			size: 50,
 			search: params.search || null,
 			search_field: params.search_field || null,
-			type: config.apiRecordsType,
 			category: params.category || null,
 			person_id: params.person || null,
 			socken_id: params.recordPlace || null,
@@ -124,13 +123,13 @@ export default class RecordList extends React.Component {
 		var searchRouteParams = routeHelper.createSearchRoute(this.props);
 
 		var items = this.state.records ? this.state.records.map(function(item, index) {
-			return <RecordListItem key={item._source.id} item={item} routeParams={searchRouteParams} />;
+			return <RecordListItem key={item._source.id} item={item} routeParams={searchRouteParams} highlightRecordsWithMetadataField={this.props.highlightRecordsWithMetadataField} />;
 
 		}.bind(this)) : [];
 
 		if (this.state.records) {
 			return (
-				<div className={'table-wrapper list-container'+(this.state.records.length == 0 ? ' loading' : this.state.fetchingPage ? ' loading-page' : '')}>
+				<div className={'table-wrapper records-list list-container'+(this.state.records.length == 0 ? ' loading' : this.state.fetchingPage ? ' loading-page' : '')}>
 
 					<table width="100%" className="table-responsive">
 						<thead>

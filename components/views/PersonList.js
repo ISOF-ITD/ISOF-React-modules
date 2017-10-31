@@ -45,7 +45,7 @@ export default class PersonList extends React.Component {
 			}
 		}
 
-		if (config.fetchOnlyCategories) {
+		if (config.requiredParams.only_categories) {
 			paramStrings.push('only_categories=true');
 		}
 
@@ -73,8 +73,6 @@ export default class PersonList extends React.Component {
 	}
 
 	render() {
-		console.log(this.state.persons);
-
 		var items = this.state.persons ? this.state.persons.map(function(person, index) {
 			return <tr key={index}>
 				<td><a href={'#person/'+person.id}>{person.name}</a></td>

@@ -22,6 +22,7 @@ export default class PlaceView extends React.Component {
 	}
 
 	componentDidMount() {
+		console.log(this.props)
 		this.fetchData(this.props.params);
 
 		var state = {};
@@ -102,8 +103,6 @@ export default class PlaceView extends React.Component {
 			</tr>;
 		}.bind(this)) : [];
 
-		console.log(this.state);
-
 		return (
 			<div className={'container'+(this.state.data.id ? '' : ' loading')}>
 		
@@ -143,7 +142,7 @@ export default class PlaceView extends React.Component {
 								<h3>Sökträffar</h3>
 							}
 
-							<RecordList record_ids={this.state.record_ids} category={this.state.category} recordPlace={this.state.recordPlace} search={this.state.searchQuery} search_field={this.state.searchField} />
+							<RecordList highlightRecordsWithMetadataField={this.props.route.highlightRecordsWithMetadataField} record_ids={this.state.record_ids} category={this.state.category} recordPlace={this.state.recordPlace} search={this.state.searchQuery} search_field={this.state.searchField} />
 
 						</div>
 					</div>
@@ -163,7 +162,7 @@ export default class PlaceView extends React.Component {
 								<div className="twelve columns">
 									<h3>Samtliga uppteckningar från orten</h3>
 
-									<RecordList recordPlace={this.state.recordPlace} />		
+									<RecordList highlightRecordsWithMetadataField={this.props.route.highlightRecordsWithMetadataField} recordPlace={this.state.recordPlace} />		
 								</div>
 							</div>
 

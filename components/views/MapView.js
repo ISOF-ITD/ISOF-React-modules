@@ -37,7 +37,7 @@ export default class MapView extends React.Component {
 			this.setState({
 				loading: false
 			});
-		}.bind(this), this.props.fetchOnlyCategories);
+		}.bind(this));
 	}
 
 	componentDidMount() {
@@ -119,7 +119,6 @@ export default class MapView extends React.Component {
 			this.collections.fetch({
 				search: params.search || null,
 				search_field: params.search_field || null,
-				type: params.type || config.apiRecordsType,
 				category: params.category,
 				year_from: params.year_from || null,
 				year_to: params.year_to || null,
@@ -226,7 +225,7 @@ export default class MapView extends React.Component {
 					if (mapItem.location.length > 0) {
 						var marker = L.marker([Number(mapItem.location[0]), Number(mapItem.location[1])], {
 							title: mapItem.name,
-							icon: mapHelper.markerIcon
+							icon: mapItem.has_metadata == true ? mapHelper.markerIconHighlighted : mapHelper.markerIcon
 						});
 /*
 						var template = _.template($("#markerPopupTemplate").html());

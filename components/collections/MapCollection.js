@@ -28,7 +28,7 @@ export default class MapCollection {
 		else {
 			var paramStrings = [];
 
-			params = this.cleanParams(params);
+			var params = Object.assign({}, config.requiredParams, this.cleanParams(params));
 
 			// Anpassa params till ES Djangi api
 			if (params.search) {
@@ -45,10 +45,6 @@ export default class MapCollection {
 
 			for (var key in params) {
 				paramStrings.push(key+'='+params[key]);
-			}
-
-			if (config.fetchOnlyCategories) {
-				paramStrings.push('only_categories=true');
 			}
 
 			paramString = paramStrings.join('&');

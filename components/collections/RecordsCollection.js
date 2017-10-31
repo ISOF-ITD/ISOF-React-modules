@@ -12,27 +12,25 @@ export default class RecordsCollection {
 	fetch(params) {
 		var paramStrings = [];
 
+		var queryParams = Object.assign({}, config.requiredParams, params);
+
 		// Anpassa params till ES Djangi api
-		if (params.search) {
-			if (params.search_field == 'person') {
-				params.person = params.search;
-				delete params.search;
+		if (queryParams.search) {
+			if (queryParams.search_field == 'person') {
+				queryParams.person = queryParams.search;
+				delete queryParams.search;
 			}
-			if (params.search_field == 'place') {
-				params.place = params.search;
-				delete params.search;
+			if (queryParams.search_field == 'place') {
+				queryParams.place = queryParams.search;
+				delete queryParams.search;
 			}
-			delete params.search_field;
+			delete queryParams.search_field;
 		}
 
-		for (var key in params) {
-			if (params[key]) {
-				paramStrings.push(key+'='+params[key]);
+		for (var key in queryParams) {
+			if (queryParams[key]) {
+				paramStrings.push(key+'='+queryParams[key]);
 			}
-		}
-
-		if (config.fetchOnlyCategories) {
-			paramStrings.push('only_categories=true');
 		}
 
 		if (!window.applicationSettings.includeNordic) {
