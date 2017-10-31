@@ -21,8 +21,7 @@ export default class PersonList extends React.Component {
 	componentDidMount() {
 		if (this.props.place) {		
 			this.fetchData({
-				socken_id: this.props.place,
-				type: config.apiRecordsType
+				socken_id: this.props.place
 			});
 		}
 	}
@@ -30,8 +29,7 @@ export default class PersonList extends React.Component {
 	componentWillReceiveProps(props) {
 		if (props.place && props.place != this.props.place) {		
 			this.fetchData({
-				socken_id: props.place,
-				type: config.apiRecordsType
+				socken_id: props.place
 			});
 		}
 	}
@@ -39,14 +37,12 @@ export default class PersonList extends React.Component {
 	fetchData(params) {
 		var paramStrings = [];
 
-		for (var key in params) {
-			if (params[key] && key != 'page') {
-				paramStrings.push(key+'='+params[key]);
-			}
-		}
+		var queryParams = Object.assign({}, config.requiredParams, params);
 
-		if (config.requiredParams.only_categories) {
-			paramStrings.push('only_categories=true');
+		for (var key in queryParams) {
+			if (queryParams[key] && key != 'page') {
+				paramStrings.push(key+'='+queryParams[key]);
+			}
 		}
 
 		if (!window.applicationSettings.includeNordic) {
