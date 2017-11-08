@@ -47,6 +47,7 @@ export default class ListPlayButton extends React.Component {
 	}
 
 	playButtonClickHandler() {
+		console.log('playButtonClickHandler');
 		if (window.eventBus) {
 			if (window.isofAudioPlayer && window.isofAudioPlayer.currentAudio && window.isofAudioPlayer.currentAudio.record == this.props.recordId && window.isofAudioPlayer.currentAudio.media == this.props.media.source && window.isofAudioPlayer.currentAudio.playing) {
 				window.eventBus.dispatch('audio.pauseaudio');

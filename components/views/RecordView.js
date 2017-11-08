@@ -75,7 +75,8 @@ export default class RecordView extends React.Component {
 	mediaImageClickHandler(event) {
 		if (window.eventBus) {
 			window.eventBus.dispatch('overlay.viewimage', {
-				imageUrl: event.target.dataset.image
+				imageUrl: event.currentTarget.dataset.image,
+				type: event.currentTarget.dataset.type
 			});
 		}
 	}
@@ -100,9 +101,8 @@ export default class RecordView extends React.Component {
 	}
 
 	render() {
-		console.log(this.state.data);
-
 		var imageItems = [];
+		var pdfItems = [];
 		var audioItems = [];
 
 		if (this.state.data.media && this.state.data.media.length > 0) {
@@ -111,23 +111,42 @@ export default class RecordView extends React.Component {
 			});
 			imageItems = imageDataItems.map(function(mediaItem, index) {
 				if (mediaItem.source.indexOf('.pdf') == -1) {
-					return <img key={index} className="archive-image" data-image={mediaItem.source} onClick={this.mediaImageClickHandler} src={config.imageUrl+mediaItem.source} alt="" />;
+					return <div data-type="image" data-image={mediaItem.source} onClick={this.mediaImageClickHandler} key={'image-'+index} className="archive-image">
+						<img src={config.imageUrl+mediaItem.source} alt="" />
+						{
+							mediaItem.title &&
+							<div className="media-title sv-portlet-image-caption">{mediaItem.title}</div>
+						}
+					</div>;
 				}
 			}.bind(this));
-		}
 
-		if (this.state.data.media && this.state.data.media.length > 0) {
 			var audioDataItems = _.filter(this.state.data.media, function(dataItem) {
 				return dataItem.type == 'audio';
 			});
 			audioItems = audioDataItems.map(function(mediaItem, index) {
 				return <tr key={index}>
-					<td data-title="Lyssna:">
+					<td data-title="Lyssna:" width="50px">
 						<ListPlayButton media={mediaItem} recordId={this.state.data.id} recordTitle={this.state.data.title} />
 					</td>
 					<td>{mediaItem.title}</td>
 				</tr>;
 			}.bind(this));
+
+			var pdfDataItems = _.filter(this.state.data.media, function(dataItem) {
+				return dataItem.type == 'pdf';
+			});
+			pdfItems = pdfDataItems.map(function(mediaItem, index) {
+				return <div data-type="pdf" data-image={mediaItem.source} onClick={this.mediaImageClickHandler} key={'pdf-'+index} className="archive-image">
+					<div className="pdf-icon" />
+					{
+						mediaItem.title &&
+						<div className="media-title sv-portlet-image-caption">{mediaItem.title}</div>
+					}
+				</div>;
+			}.bind(this));
+
+			imageItems = imageItems.concat(pdfItems);
 		}
 
 		var personItems = this.state.data.persons && this.state.data.persons.length > 0 ? this.state.data.persons.map(function(person, index) {
@@ -197,7 +216,7 @@ export default class RecordView extends React.Component {
 
 					{
 						(this.state.data.text || textElement) &&
-						<div className={(this.props.route.fullWidthContentArea ? 'twelve' : 'eight')+' columns'}>
+						<div className={(sitevisionUrl || imageItems.length == 0 ? 'twelve' : 'eight')+' columns'}>
 							{
 								textElement
 							}
@@ -210,12 +229,11 @@ export default class RecordView extends React.Component {
 								this.state.data.printed_source && this.state.data.type == 'tryckt' &&
 								<p className="text-small"><em>{this.state.data.printed_source}</em></p>
 							}
-							<ShareButtons path={config.siteUrl+'#/record/'+this.state.data.id} text={'"'+this.state.data.title+'"'} />
 						</div>
 					}
 					{
 						(imageItems.length > 0 || audioItems.length > 0) &&
-						<div className={'columns '+(this.state.data.text ? 'four u-pull-right' : 'twelve')}>
+						<div className={'columns '+(this.state.data.text && !sitevisionUrl ? 'four u-pull-right' : 'twelve')}>
 							{
 								imageItems
 							}
@@ -237,6 +255,8 @@ export default class RecordView extends React.Component {
 					}
 
 				</div>
+
+				<ShareButtons path={config.siteUrl+'#/record/'+this.state.data.id} text={'"'+this.state.data.title+'"'} />
 
 				<hr/>
 
@@ -297,8 +317,8 @@ export default class RecordView extends React.Component {
 
 						<div className="six columns">
 							{
-								this.state.data.places && this.state.data.places.length > 0 && this.state.data.places[0].lat && this.state.data.places[0].lng &&
-								<SimpleMap marker={{lat: this.state.data.places[0].lat, lng: this.state.data.places[0].lng, label: this.state.data.places[0].name}} />
+								this.state.data.places && this.state.data.places.length > 0 && this.state.data.places[0].location.lat && this.state.data.places[0].location.lon &&
+								<SimpleMap marker={{lat: this.state.data.places[0].location.lat, lng: this.state.data.places[0].location.lon, label: this.state.data.places[0].name}} />
 							}
 						</div>
 

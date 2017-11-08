@@ -34,7 +34,9 @@ export default class GlobalAudioPlayer extends React.Component {
 			playing: false,
 			paused: false,
 			audio: null,
-			record: null
+			record: null,
+			durationTime: '',
+			currentTime: ''
 		};
 
 		if (window.eventBus) {
@@ -47,6 +49,12 @@ export default class GlobalAudioPlayer extends React.Component {
 		}
 	}
 
+	msToTimeStr(ms) {
+		var minutes = Math.floor(ms / 60000);
+		var seconds = ((ms % 60000) / 1000).toFixed(0);
+		return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+	}
+
 	audioCanPlayHandler(event) {
 		this.setState({
 			loaded: true
@@ -54,9 +62,16 @@ export default class GlobalAudioPlayer extends React.Component {
 
 		if (window.eventBus) {
 			window.eventBus.dispatch('audio.playervisible');
-		}		
+		}
 
 		this.audio.play();
+
+		this.durationInterval = setInterval(function() {
+			this.setState({
+				currentTime: this.msToTimeStr(this.audio.currentTime*1000),
+				durationTime: this.msToTimeStr(this.audio.duration*1000)
+			});
+		}.bind(this), 1000);
 	}
 
 	audioEndedHandler(event) {
@@ -72,7 +87,9 @@ export default class GlobalAudioPlayer extends React.Component {
 		this.setState({
 			paused: false,
 			playing: false
-		})
+		});
+
+		clearInterval(this.durationInterval);
 	}
 
 	audioPlayHandler(event) {
@@ -150,6 +167,11 @@ export default class GlobalAudioPlayer extends React.Component {
 	render() {
 		return <div className={'global-audio-player-wrapper map-bottom-control'+(this.state.loaded ? ' visible' : '')}>
 			<div className={'global-audio-player'} disabled={!this.state.loaded}>
+
+				<div className="player-time">
+					{this.state.currentTime}
+				</div>
+
 				<div className="player-content">
 					{
 						this.state.record &&
@@ -160,7 +182,9 @@ export default class GlobalAudioPlayer extends React.Component {
 						<div className="player-label">{this.state.audio.title}</div>
 					}
 				</div>
+
 				<button className={'play-button large'+(this.state.playing ? ' playing' : '')} onClick={this.togglePlay}></button>
+
 			</div>
 		</div>;
 	}
