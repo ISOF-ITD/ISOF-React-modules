@@ -11,6 +11,7 @@ import FeedbackButton from './FeedbackButton';
 import TranscribeButton from './TranscribeButton';
 import ElementNotificationMessage from './../controls/ElementNotificationMessage';
 import SitevisionContent from './../controls/SitevisionContent';
+import PdfViewer from './../controls/PdfViewer';
 
 export default class RecordView extends React.Component {
 	constructor(props) {
@@ -151,7 +152,13 @@ export default class RecordView extends React.Component {
 
 		var personItems = this.state.data.persons && this.state.data.persons.length > 0 ? this.state.data.persons.map(function(person, index) {
 			return <tr key={index}>
-				<td data-title=""><a href={'#person/'+person.id}>{person.name ? person.name : ''}</a></td>
+				<td data-title="">
+					{
+						!config.siteOptions.disablePersonLinks == true ?
+						<a href={'#person/'+person.id}>{person.name ? person.name : ''}</a> :
+						person.name
+					}
+				</td>
 				<td data-title="Födelseår">{person.birth_year && person.birth_year > 0 ? person.birth_year : ''}</td>
 				<td data-title="Födelseort">
 					{
@@ -172,6 +179,8 @@ export default class RecordView extends React.Component {
 
 		var textElement;
 
+		var forceFullWidth  = false;
+
 		var sitevisionUrl = _.find(this.state.data.metadata, function(item) {
 			return item.type == 'sitevision_url';
 		});
@@ -187,9 +196,38 @@ export default class RecordView extends React.Component {
 				recordId={this.state.data.id} 
 				images={this.state.data.media} /></p>;
 		}
+		else if ((!this.state.data.text || this.state.data.text.length == 0) && _.find(this.state.data.media, function(item) {
+			return item.type == 'pdf';
+		})) {
+			var pdfObject = _.find(this.state.data.media, function(item) {
+				return item.type == 'pdf';
+			});
+
+			textElement = <PdfViewer height="800" url={config.imageUrl+pdfObject.source}/>;
+
+			forceFullWidth = true;
+		}
 		else {
 			textElement = <p dangerouslySetInnerHTML={{__html: this.state.data.text}} />;
 		}
+
+
+		var taxonomyElement;
+
+		if (this.state.data.taxonomy) {
+			if (this.state.data.taxonomy.name) {
+				taxonomyElement = <p><strong>Kategori</strong><br/>
+					<a href={'#/places/category/'+this.state.data.taxonomy.category.toLowerCase()}>{this.state.data.taxonomy.name}</a></p>;
+			}
+			else if (this.state.data.taxonomy.length > 0) {
+				taxonomyElement = <p><strong>Kategori</strong><br/>
+					<span dangerouslySetInnerHTML={{__html: _.map(this.state.data.taxonomy, function(taxonomyItem) {
+								return '<a href="#/places/category/'+taxonomyItem.category.toLowerCase()+'">'+taxonomyItem.name+'</a>'
+							}).join(', ')}} >
+					</span></p>;
+			}
+		}
+
 
 		return <div className={'container'+(this.state.data.id ? '' : ' loading')}>
 		
@@ -216,7 +254,7 @@ export default class RecordView extends React.Component {
 
 					{
 						(this.state.data.text || textElement) &&
-						<div className={(sitevisionUrl || imageItems.length == 0 ? 'twelve' : 'eight')+' columns'}>
+						<div className={(sitevisionUrl || imageItems.length == 0 || forceFullWidth ? 'twelve' : 'eight')+' columns'}>
 							{
 								textElement
 							}
@@ -233,7 +271,7 @@ export default class RecordView extends React.Component {
 					}
 					{
 						(imageItems.length > 0 || audioItems.length > 0) &&
-						<div className={'columns '+(this.state.data.text && !sitevisionUrl ? 'four u-pull-right' : 'twelve')}>
+						<div className={'columns '+(this.state.data.text && !sitevisionUrl && !forceFullWidth ? 'four u-pull-right' : 'twelve')}>
 							{
 								imageItems
 							}
@@ -246,10 +284,6 @@ export default class RecordView extends React.Component {
 										</tbody>
 									</table>
 								</div>
-							}
-							{
-								!this.state.data.text &&								
-								<ShareButtons path={'record/'+this.state.data.id} />
 							}
 						</div>
 					}
@@ -355,9 +389,7 @@ export default class RecordView extends React.Component {
 						}
 
 						{
-							this.state.data.taxonomy && this.state.data.taxonomy.name &&
-							<p><strong>Kategori</strong><br/>
-								<a href={'#/places/category/'+this.state.data.taxonomy.category.toLowerCase()}>{this.state.data.taxonomy.name}</a></p>
+							taxonomyElement
 						}
 					</div>
 

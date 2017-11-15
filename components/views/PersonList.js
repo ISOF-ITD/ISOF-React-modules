@@ -71,7 +71,13 @@ export default class PersonList extends React.Component {
 	render() {
 		var items = this.state.persons ? this.state.persons.map(function(person, index) {
 			return <tr key={index}>
-				<td><a href={'#person/'+person.id}>{person.name}</a></td>
+				<td>
+					{
+						!config.siteOptions.disablePersonLinks == true ?
+						<a href={'#person/'+person.id}>{person.name}</a> :
+						person.name
+					}
+				</td>
 				<td>{person.birth_year > 0 ? person.birth_year : ''}</td>
 			</tr>;
 

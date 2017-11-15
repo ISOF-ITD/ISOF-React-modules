@@ -14,18 +14,21 @@ export default class SitevisionContent extends React.Component {
 
 	componentDidMount() {
 		if (this.props.url) {
-			this.fetchContent();
+			this.fetchContent(this.props.url);
 		}
 	}
 
 	componentWillReceiveProps(props) {
+		if (props.url) {
+			this.fetchContent(props.url);
+		}
 	}
 
-	fetchContent() {
+	fetchContent(url) {
 		var headers = new Headers();
 		headers.append('Content-Type', 'text/html');
 
-		fetch(this.props.url, {
+		fetch(url, {
 			method: 'get',
 			headers: headers
 		}).then(function(response) {
