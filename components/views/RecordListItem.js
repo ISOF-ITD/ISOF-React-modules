@@ -57,7 +57,7 @@ export default class RecordListItem extends React.Component {
 			</td>
 			<td data-title="Uppteckningsår:">{this.props.item._source.year > 0 ? this.props.item._source.year : ''}</td>
 			{
-				!config.siteOptions.recordList.hideMaterialType == true &&
+				!config.siteOptions.recordList || config.siteOptions.recordList.hideMaterialType == true &&
 				<td data-title="Materialtyp:">{this.props.item._source.materialtype}</td>
 			}
 		</tr>;

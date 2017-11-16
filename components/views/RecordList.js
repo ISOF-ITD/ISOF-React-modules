@@ -139,7 +139,7 @@ export default class RecordList extends React.Component {
 								<th scope="col">Socken, Landskap</th>
 								<th scope="col">Uppteckningsår</th>
 								{
-									!config.siteOptions.recordList.hideMaterialType == true &&
+									!config.siteOptions.recordList || !config.siteOptions.recordList.hideMaterialType == true &&
 									<th scope="col">Materialtyp</th>
 								}
 							</tr>
