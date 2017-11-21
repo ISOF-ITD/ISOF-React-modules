@@ -17,15 +17,35 @@ export default class RecordListItem extends React.Component {
 
 		var taxonomyElement;
 		if (this.props.item._source.taxonomy) {
+			if (config.siteOptions.recordList && config.siteOptions.recordList.visibleCategories) {
+				var visibleCategories = config.siteOptions.recordList.visibleCategories;
+			}
+			console.log(visibleCategories);
 			if (this.props.item._source.taxonomy.name) {
-				taxonomyElement = <a href={'#/places/category/'+this.props.item._source.taxonomy.category.toLowerCase()}>{this.props.item._source.taxonomy.name}</a>;
+				if (visibleCategories) {
+					if (visibleCategories.indexOf(this.props.item._source.taxonomy.type.toLowerCase()) > -1) {
+						taxonomyElement = <a href={'#/places/category/'+this.props.item._source.taxonomy.category.toLowerCase()}>{this.props.item._source.taxonomy.name}</a>;
+					}
+				}
+				else {
+					taxonomyElement = <a href={'#/places/category/'+this.props.item._source.taxonomy.category.toLowerCase()}>{this.props.item._source.taxonomy.name}</a>;
+				}
 			}
 			else if (this.props.item._source.taxonomy.length > 0) {
-				taxonomyElement = <span dangerouslySetInnerHTML={{__html: _.map(this.props.item._source.taxonomy, function(taxonomyItem) {
-								if (taxonomyItem.category) {
+				taxonomyElement = <span dangerouslySetInnerHTML={{__html: _.compact(_.map(this.props.item._source.taxonomy, function(taxonomyItem) {
+							console.log(taxonomyItem);
+							if (taxonomyItem.category) {
+								if (visibleCategories) {
+									console.log('look for visibleCategories');
+									if (visibleCategories.indexOf(taxonomyItem.type.toLowerCase()) > -1) {
+										return '<a href="#/places/category/'+taxonomyItem.category.toLowerCase()+'">'+taxonomyItem.name+'</a>'
+									}
+								}
+								else {
 									return '<a href="#/places/category/'+taxonomyItem.category.toLowerCase()+'">'+taxonomyItem.name+'</a>'
 								}
-							}).join(', ')}} >
+							}
+						})).join(', ')}} >
 					</span>;
 			}
 		}
