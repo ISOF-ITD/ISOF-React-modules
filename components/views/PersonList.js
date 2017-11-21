@@ -54,7 +54,7 @@ export default class PersonList extends React.Component {
 		this.setState({
 			persons: []
 		}, function() {
-			fetch(this.url+'?'+paramStrings)
+			fetch(this.url+'?'+paramString)
 				.then(function(response) {
 					return response.json()
 				}).then(function(json) {
