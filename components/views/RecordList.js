@@ -115,7 +115,8 @@ export default class RecordList extends React.Component {
 			category: params.category || null,
 			person_id: params.person || null,
 			socken_id: params.recordPlace || null,
-			record_ids: params.record_ids || null
+			record_ids: params.record_ids || null,
+			has_metadata: params.has_metadata || null
 		});
 	}
 

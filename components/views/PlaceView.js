@@ -40,12 +40,36 @@ export default class PlaceView extends React.Component {
 		if (this.props.params.record_ids) {
 			state['record_ids'] = this.props.params.record_ids;
 		}
+		if (this.props.params.has_metadata) {
+			state['has_metadata'] = this.props.params.has_metadata;
+		}
 		this.setState(state);
 	}
 
 	componentWillReceiveProps(props) {
 		if (props.params.place_id != this.props.params.place_id) {
 			this.fetchData(props.params);
+
+			var state = {};
+			if (props.params.category) {
+				state['category'] = props.params.category;
+			}
+			if (props.params.place_id) {
+				state['recordPlace'] = props.params.place_id;
+			}
+			if (props.params.search) {
+				state['searchQuery'] = props.params.search;
+			}
+			if (props.params.search_field) {
+				state['searchField'] = props.params.search_field;
+			}
+			if (props.params.record_ids) {
+				state['record_ids'] = props.params.record_ids;
+			}
+			if (props.params.has_metadata) {
+				state['has_metadata'] = props.params.has_metadata;
+			}
+			this.setState(state);
 		}
 	}
 
@@ -141,7 +165,13 @@ export default class PlaceView extends React.Component {
 								<h3>Sökträffar</h3>
 							}
 
-							<RecordList highlightRecordsWithMetadataField={this.props.route.highlightRecordsWithMetadataField} record_ids={this.state.record_ids} category={this.state.category} recordPlace={this.state.recordPlace} search={this.state.searchQuery} search_field={this.state.searchField} />
+							<RecordList highlightRecordsWithMetadataField={this.props.route.highlightRecordsWithMetadataField} 
+								record_ids={this.state.record_ids} 
+								category={this.state.category} 
+								has_metadata={this.state.has_metadata} 
+								recordPlace={this.state.recordPlace} 
+								search={this.state.searchQuery} 
+								search_field={this.state.searchField} />
 
 						</div>
 					</div>
@@ -161,7 +191,9 @@ export default class PlaceView extends React.Component {
 								<div className="twelve columns">
 									<h3>Samtliga uppteckningar från orten</h3>
 
-									<RecordList highlightRecordsWithMetadataField={this.props.route.highlightRecordsWithMetadataField} recordPlace={this.state.recordPlace} />		
+									<RecordList highlightRecordsWithMetadataField={this.props.route.highlightRecordsWithMetadataField} 
+										has_metadata={this.state.has_metadata} 
+										recordPlace={this.state.recordPlace} />		
 								</div>
 							</div>
 

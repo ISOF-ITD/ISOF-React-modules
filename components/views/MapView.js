@@ -41,51 +41,6 @@ export default class MapView extends React.Component {
 	}
 
 	componentDidMount() {
-/*
-		this.vectorGridLayer = L.vectorGrid.protobuf('http://localhost:8084/geoserver/gwc/service/wmts?REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&LAYER=sverige_socken_sweref:se_socken_clipped&STYLE=&TILEMATRIX=EPSG:900913:{z}&TILEMATRIXSET=EPSG:900913&FORMAT=application/x-protobuf;type=mapbox-vector&TILECOL={x}&TILEROW={y}', {
-			interactive: true,
-			vectorTileLayerStyles: {
-				se_socken_clipped: function(properties, zoom) {
-					var showFeature = properties.DISTRNAMN == 'Borås' || 
-						properties.DISTRNAMN == 'Kinna' || 
-						properties.DISTRNAMN == 'Bollebygd' || 
-						properties.DISTRNAMN == 'Härrida' || 
-						properties.DISTRNAMN == 'Kinnarumma' || 
-						properties.DISTRNAMN == 'Fristad' || 
-						properties.DISTRNAMN == 'Rångedala' || 
-						properties.DISTRNAMN == 'Sätila' || 
-						properties.DISTRNAMN == 'Svenljunga'; 
-
-					showFeature = true;
-
-					return {
-						weight: showFeature ? 0.5 : 0,
-						fillOpacity: showFeature ? 0.5 : 0,
-						fill: showFeature,
-						fillColor: '#ff0000'
-					}
-				}
-			},
-			getFeatureId: function(feature) {
-				return feature.properties.OBJEKT_ID;
-			}
-		});
-
-		this.vectorGridLayer.on('click', function(event) {
-			window.feature = event.layer;
-
-			this.vectorGridLayer.setFeatureStyle(event.layer.properties.OBJEKT_ID, {
-				fill: true,
-				fillOpacity: 0.8
-			});
-		}.bind(this));
-
-		this.vectorGridLayer.on('mouseover', function(event) {
-
-		});
-
-		this.vectorGridLayer.addTo(this.refs.mapView.map);
-*/
 		this.fetchData(this.props.searchParams);
 	}
 
@@ -116,7 +71,7 @@ export default class MapView extends React.Component {
 		});
 
 		if (params) {
-			this.collections.fetch({
+			var fetchParams = {
 				search: params.search || null,
 				search_field: params.search_field || null,
 				category: params.category,
@@ -124,8 +79,11 @@ export default class MapView extends React.Component {
 				year_to: params.year_to || null,
 				person_relation: params.person_relation || null,
 				gender: params.gender || null,
-				record_ids: params.record_ids || null
-			});
+				record_ids: params.record_ids || null,
+				has_metadata: params.has_metadata || null
+			};
+
+			this.collections.fetch(fetchParams);
 		}
 	}
 
@@ -225,7 +183,7 @@ export default class MapView extends React.Component {
 					if (mapItem.location.length > 0) {
 						var marker = L.marker([Number(mapItem.location[0]), Number(mapItem.location[1])], {
 							title: mapItem.name,
-							icon: mapItem.has_metadata == true ? mapHelper.markerIconHighlighted : mapHelper.markerIcon
+							icon: mapItem.has_metadata == true ? (this.props.highlightedMarkerIcon || mapHelper.markerIconHighlighted) : (this.props.defaultMarkerIcon || mapHelper.markerIcon)
 						});
 /*
 						var template = _.template($("#markerPopupTemplate").html());
