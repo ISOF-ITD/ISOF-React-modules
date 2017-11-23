@@ -135,10 +135,10 @@ export default class RecordList extends React.Component {
 					<table width="100%" className="table-responsive">
 						<thead>
 							<tr>
-								<th scope="col">Titel</th>
-								<th scope="col">Kategori</th>
-								<th scope="col">Socken, Landskap</th>
-								<th scope="col">Uppteckningsår</th>
+								<th scope="col">{l('Titel')}</th>
+								<th scope="col">{l('Kategori')}</th>
+								<th scope="col">{l('Socken, Landskap')}</th>
+								<th scope="col">{l('Uppteckningsår')}</th>
 								{
 									!config.siteOptions.recordList || !config.siteOptions.recordList.hideMaterialType == true &&
 									<th scope="col">Materialtyp</th>

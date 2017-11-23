@@ -66,10 +66,10 @@ export default class RecordListItem extends React.Component {
 					taxonomyElement
 				}
 			</td>
-			<td data-title="Socken, Landskap:">
+			<td data-title={l('Socken, Landskap')+':'}>
 			{
 				this.props.item._source.places && this.props.item._source.places.length > 0 &&
-				<a target={config.embeddedApp ? '_parent' : '_self'} href={(config.embeddedApp ? config.siteUrl : '')+'#place/'+this.props.item._source.places[0].id}>{this.props.item._source.places[0].name+', '+this.props.item._source.places[0].landskap}</a>
+				<a target={config.embeddedApp ? '_parent' : '_self'} href={(config.embeddedApp ? config.siteUrl : '')+'#place/'+this.props.item._source.places[0].id}>{this.props.item._source.places[0].name+(this.props.item._source.places[0].landskap || this.props.item._source.places[0].fylke ? (this.props.item._source.places[0].landskap ? ', '+this.props.item._source.places[0].landskap : this.props.item._source.places[0].fylke ? this.props.item._source.places[0].fylke : '') : '')}</a>
 			}
 			</td>
 			<td data-title="Uppteckningsår:">{this.props.item._source.year > 0 ? this.props.item._source.year : ''}</td>

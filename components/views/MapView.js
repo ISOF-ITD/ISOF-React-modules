@@ -346,6 +346,8 @@ export default class MapView extends React.Component {
 					layersControlPosition={this.props.layersControlPosition || 'topleft'} 
 					zoomControlPosition={this.props.zoomControlPosition || 'topleft'} 
 					scrollWheelZoom={true} 
+					zoom={this.props.zoom}
+					center={this.props.center}
 					disableSwedenMap={this.props.disableSwedenMap} 
 					onBaseLayerChange={this.mapBaseLayerChangeHandler} />
 			</div>

@@ -14,8 +14,8 @@ export default class MapBase extends React.Component {
 		}
 
 		var mapOptions = {
-			center: [63.5, 16.7211], 
-			zoom: 4,
+			center: this.props.center || [63.5, 16.7211], 
+			zoom: this.props.zoom || 4,
 			minZoom: 4,
 			maxZoom: 13,
 			layers: [layers[Object.keys(layers)[0]]],
