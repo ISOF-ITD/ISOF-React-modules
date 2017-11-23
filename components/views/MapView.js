@@ -18,7 +18,6 @@ export default class MapView extends React.Component {
 		super(props);
 
 		window.mapView = this;
-		window.L = L;
 
 		this.state = {
 			viewMode: 'clusters',
@@ -42,6 +41,8 @@ export default class MapView extends React.Component {
 
 	componentDidMount() {
 		this.fetchData(this.props.searchParams);
+
+		this.mapBase = this.refs.mapView;
 	}
 
 	componentWillReceiveProps(props) {
@@ -176,47 +177,52 @@ export default class MapView extends React.Component {
 				this.createLayers();
 			}
 
+			// Lägger till alla prickar på kartan
 			if (this.mapData.length > 0) {
+				// Hämtar current bounds (minus 20%) av synliga kartan
+				var currentBounds = this.refs.mapView.map.getBounds().pad(-0.2);
+
+				// Samlar ihop latLng av alla prickar för att kunna senare zooma inn till dem
 				var bounds = [];
+				var markerWithinBounds = false;
 				
 				_.each(this.mapData, function(mapItem) {
 					if (mapItem.location.length > 0) {
+						// Skalar L.marker objekt och lägger till rätt icon
 						var marker = L.marker([Number(mapItem.location[0]), Number(mapItem.location[1])], {
 							title: mapItem.name,
+							// Om mapItem.has_metadata lägger vi till annan typ av ikon, används mest av matkartan för att visa kurerade postar
 							icon: mapItem.has_metadata == true ? (this.props.highlightedMarkerIcon || mapHelper.markerIconHighlighted) : (this.props.defaultMarkerIcon || mapHelper.markerIcon)
 						});
-/*
-						var template = _.template($("#markerPopupTemplate").html());
-						var popupHtml = template({
-							model: model
-						});
 
-						marker.bindPopup(popupHtml).on('popupopen', _.bind(function(event) {
-							_.each(this.$el.find('.place-view-link'), _.bind(function(linkEl) {
-								$(linkEl).click(_.bind(function(event) {
-									event.preventDefault();
-									this.trigger('viewPlace', {
-										placeId: mapItem.id')
-									});
-								}, this));
-							}, this));
-						}, this));
-*/
+						// Lägger till click event listener
 						marker.on('click', function(event) {
+							// Om onMarkerClick finns som property för MapView kallar vi den funktionen
 							if (this.props.onMarkerClick) {
 								this.props.onMarkerClick(mapItem.id);
 							}
 						}.bind(this));
 
+						// Lägger pricken till kartan
 						this.markers.addLayer(marker);
 
+						// Lägger latLng till bounds
 						bounds.push(mapItem.location);
+
+						// Checkar om punkten är synlig på visibella kartan på skärmen
+						if (currentBounds.contains(mapItem.location)) {
+							markerWithinBounds = true;
+						}
 					}
 				}.bind(this));
 
-				this.refs.mapView.map.fitBounds(bounds, {
-					maxZoom: 10
-				});
+				// Zooma in till alla nya punkena om ingen av dem finns inom synliga kartan
+				if (!markerWithinBounds) {
+					this.refs.mapView.map.fitBounds(bounds, {
+						maxZoom: 10,
+						padding: [50, 50]
+					});
+				}
 			}
 		}
 		if (this.state.viewMode == 'circles') {
