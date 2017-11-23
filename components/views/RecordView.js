@@ -162,11 +162,11 @@ export default class RecordView extends React.Component {
 				<td data-title="Födelseår">{person.birth_year && person.birth_year > 0 ? person.birth_year : ''}</td>
 				<td data-title="Födelseort">
 					{
-						person.places && person.places.length > 0 &&
-						<a href={'#place/'+person.places[0].id}>{person.places[0].name+', '+person.places[0].harad}</a>
+						person.home && person.home.length > 0 &&
+						<a href={'#place/'+person.home[0].id}>{person.home[0].name+', '+person.home[0].harad}</a>
 					}
 				</td>
-				<td data-title="Roll">{person.relation == 'collector' ? 'Upptecknare' : person.relation == 'informant' ? 'Informant' : ''}</td>
+				<td data-title="Roll">{person.relation == 'c' ? 'Upptecknare' : person.relation == 'i' ? 'Informant' : ''}</td>
 			</tr>;
 		}) : [];
 
