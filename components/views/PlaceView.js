@@ -21,55 +21,46 @@ export default class PlaceView extends React.Component {
 		this.url = config.apiUrl+'get_socken/';
 	}
 
-	componentDidMount() {
-		this.fetchData(this.props.params);
+	handleParams(params) {
+		var fetchParams = params;
+
+		if (params.nordic != 'true') {
+			fetchParams.country = config.country;
+		}
+		this.fetchData(fetchParams);
 
 		var state = {};
-		if (this.props.params.category) {
-			state['category'] = this.props.params.category;
+		if (params.category) {
+			state['category'] = params.category;
 		}
-		if (this.props.params.place_id) {
-			state['recordPlace'] = this.props.params.place_id;
+		if (params.place_id) {
+			state['recordPlace'] = params.place_id;
 		}
-		if (this.props.params.search) {
-			state['searchQuery'] = this.props.params.search;
+		if (params.search) {
+			state['searchQuery'] = params.search;
 		}
-		if (this.props.params.search_field) {
-			state['searchField'] = this.props.params.search_field;
+		if (params.search_field) {
+			state['searchField'] = params.search_field;
 		}
-		if (this.props.params.record_ids) {
-			state['record_ids'] = this.props.params.record_ids;
+		if (params.record_ids) {
+			state['record_ids'] = params.record_ids;
 		}
-		if (this.props.params.has_metadata) {
-			state['has_metadata'] = this.props.params.has_metadata;
+		if (params.has_metadata) {
+			state['has_metadata'] = params.has_metadata;
+		}
+		if (params.nordic) {
+			state['nordic'] = true;
 		}
 		this.setState(state);
 	}
 
+	componentDidMount() {
+		this.handleParams(this.props.params);
+	}
+
 	componentWillReceiveProps(props) {
 		if (props.params.place_id != this.props.params.place_id) {
-			this.fetchData(props.params);
-
-			var state = {};
-			if (props.params.category) {
-				state['category'] = props.params.category;
-			}
-			if (props.params.place_id) {
-				state['recordPlace'] = props.params.place_id;
-			}
-			if (props.params.search) {
-				state['searchQuery'] = props.params.search;
-			}
-			if (props.params.search_field) {
-				state['searchField'] = props.params.search_field;
-			}
-			if (props.params.record_ids) {
-				state['record_ids'] = props.params.record_ids;
-			}
-			if (props.params.has_metadata) {
-				state['has_metadata'] = props.params.has_metadata;
-			}
-			this.setState(state);
+			this.handleParams(props.params)
 		}
 	}
 
@@ -171,6 +162,7 @@ export default class PlaceView extends React.Component {
 								has_metadata={this.state.has_metadata} 
 								recordPlace={this.state.recordPlace} 
 								search={this.state.searchQuery} 
+								nordic={this.state.nordic}
 								search_field={this.state.searchField} />
 
 						</div>
@@ -193,6 +185,7 @@ export default class PlaceView extends React.Component {
 
 									<RecordList highlightRecordsWithMetadataField={this.props.route.highlightRecordsWithMetadataField} 
 										has_metadata={this.state.has_metadata} 
+										nordic={this.state.nordic}
 										recordPlace={this.state.recordPlace} />		
 								</div>
 							</div>
@@ -208,7 +201,9 @@ export default class PlaceView extends React.Component {
 						<div className="twelve columns">
 							<h3>Intervjuade personer</h3>
 
-							<PersonList personType="informants" place={this.state.recordPlace} />
+							<PersonList personType="informants" 
+								nordic={this.state.nordic}
+								place={this.state.recordPlace}  />
 						</div>
 					</div>
 

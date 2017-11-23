@@ -84,6 +84,10 @@ export default class MapView extends React.Component {
 				has_metadata: params.has_metadata || null
 			};
 
+			if (!params.nordic) {
+				fetchParams.country = config.country;
+			}
+
 			this.collections.fetch(fetchParams);
 		}
 	}

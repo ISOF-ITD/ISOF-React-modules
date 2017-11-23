@@ -107,7 +107,7 @@ export default class RecordList extends React.Component {
 			fetchingPage: true
 		});
 
-		this.collections.fetch({
+		var fetchParams = {
 			from: (this.state.currentPage-1)*50,
 			size: 50,
 			search: params.search || null,
@@ -117,14 +117,24 @@ export default class RecordList extends React.Component {
 			socken_id: params.recordPlace || null,
 			record_ids: params.record_ids || null,
 			has_metadata: params.has_metadata || null
-		});
+		};
+
+		if (!params.nordic) {
+			fetchParams.country = config.country;
+		}
+
+		this.collections.fetch(fetchParams);
 	}
 
 	render() {
+		console.log(this.props);
 		var searchRouteParams = routeHelper.createSearchRoute(this.props);
 
+
 		var items = this.state.records ? this.state.records.map(function(item, index) {
-			return <RecordListItem key={item._source.id} item={item} routeParams={searchRouteParams} highlightRecordsWithMetadataField={this.props.highlightRecordsWithMetadataField} />;
+			return <RecordListItem key={item._source.id} 
+				item={item} routeParams={searchRouteParams} 
+				highlightRecordsWithMetadataField={this.props.highlightRecordsWithMetadataField} />;
 
 		}.bind(this)) : [];
 

@@ -33,9 +33,9 @@ export default class RecordsCollection {
 			}
 		}
 
-		if (!window.applicationSettings.includeNordic) {
-			paramStrings.push('country='+config.country);
-		}
+//		if (!window.applicationSettings.includeNordic) {
+//			paramStrings.push('country='+config.country);
+//		}
 
 		var paramString = paramStrings.join('&');
 

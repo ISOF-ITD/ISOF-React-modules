@@ -47,9 +47,9 @@ export default class MapCollection {
 				paramStrings.push(key+'='+params[key]);
 			}
 
-			if (!window.applicationSettings.includeNordic) {
-				paramStrings.push('country='+config.country);
-			}
+//			if (!window.applicationSettings.includeNordic) {
+//				paramStrings.push('country='+config.country);
+//			}
 
 			paramString = paramStrings.join('&');
 		}
