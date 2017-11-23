@@ -319,9 +319,21 @@ export default class MapView extends React.Component {
 				{
 					!this.props.hideMapmodeMenu &&
 					<div className="map-viewmode-menu">
-						<a className={'icon-marker'+(this.state.viewMode == 'clusters' ? ' selected' : '')} data-viewmode="clusters" onClick={this.changeViewMode}><span>Cluster</span></a>
-						<a className={'icon-heatmap'+(this.state.viewMode == 'heatmap' ? ' selected' : '')} data-viewmode="heatmap" onClick={this.changeViewMode}><span>Heatmap</span></a>
-						<a className={'icon-circles'+(this.state.viewMode == 'circles' ? ' selected' : '')} data-viewmode="circles" onClick={this.changeViewMode}><span>Circles</span></a>
+						<a className={'icon-marker'+(this.state.viewMode == 'clusters' ? ' selected' : '')} 
+							data-viewmode="clusters" 
+							onClick={this.changeViewMode}>
+							<span>Cluster</span>
+						</a>
+						<a className={'icon-heatmap'+(this.state.viewMode == 'heatmap' ? ' selected' : '')} 
+							data-viewmode="heatmap" 
+							onClick={this.changeViewMode}>
+							<span>Heatmap</span>
+						</a>
+						<a className={'icon-circles'+(this.state.viewMode == 'circles' ? ' selected' : '')} 
+							data-viewmode="circles" 
+							onClick={this.changeViewMode}>
+							<span>Circles</span>
+						</a>
 					</div>
 				}
 
@@ -329,7 +341,13 @@ export default class MapView extends React.Component {
 					<div className="indicator"></div>
 				</div>
 
-				<MapBase ref="mapView" className="map-view" layersControlPosition={this.props.layersControlPosition || 'topleft'} zoomControlPosition={this.props.zoomControlPosition || 'topleft'} scrollWheelZoom={true} onBaseLayerChange={this.mapBaseLayerChangeHandler} />
+				<MapBase ref="mapView" 
+					className="map-view" 
+					layersControlPosition={this.props.layersControlPosition || 'topleft'} 
+					zoomControlPosition={this.props.zoomControlPosition || 'topleft'} 
+					scrollWheelZoom={true} 
+					disableSwedenMap={this.props.disableSwedenMap} 
+					onBaseLayerChange={this.mapBaseLayerChangeHandler} />
 			</div>
 		);
 	}

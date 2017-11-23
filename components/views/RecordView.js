@@ -221,7 +221,9 @@ export default class RecordView extends React.Component {
 			}
 			else if (this.state.data.taxonomy.length > 0) {
 				taxonomyElement = <p><strong>Kategori</strong><br/>
-					<span dangerouslySetInnerHTML={{__html: _.map(this.state.data.taxonomy, function(taxonomyItem) {
+					<span dangerouslySetInnerHTML={{__html: _.map(_.filter(this.state.data.taxonomy, function(taxonomyItem) {
+						return taxonomyItem.category;
+					}), function(taxonomyItem) {
 								return '<a href="#/places/category/'+taxonomyItem.category.toLowerCase()+'">'+taxonomyItem.name+'</a>'
 							}).join(', ')}} >
 					</span></p>;
