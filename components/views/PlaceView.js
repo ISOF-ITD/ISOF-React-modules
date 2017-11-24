@@ -113,7 +113,7 @@ export default class PlaceView extends React.Component {
 					}
 				</td>
 				<td data-title="Uppteckningsår">{record.year > 0 ? record.year : ''}</td>
-				<td data-title="Materialtyp">{record.type}</td>
+				<td data-title="Materialtyp">{record.materialtype}</td>
 			</tr>;
 		}.bind(this)) : [];
 

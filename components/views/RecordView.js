@@ -245,7 +245,7 @@ export default class RecordView extends React.Component {
 															autoHide={true} 
 															message="Klicka på stjärnan för att spara sägner till din egen lista.">
 								<button className={'save-button'+(this.state.saved ? ' saved' : '')} onClick={this.toggleSaveRecord}><span>Spara</span></button></ElementNotificationMessage></h2>
-							<p><strong>Materialtyp</strong>: {this.state.data.type}</p>
+							<p><strong>Materialtyp</strong>: {this.state.data.materialtype}</p>
 						</div>
 					</div>
 
@@ -266,7 +266,7 @@ export default class RecordView extends React.Component {
 								<p className="text-small"><strong>Ordförklaringar och dylikt i upptekcningarna/utgåvorna:</strong><br/><span dangerouslySetInnerHTML={{__html: this.state.data.comment}} /></p>
 							}
 							{
-								this.state.data.printed_source && this.state.data.type == 'tryckt' &&
+								this.state.data.printed_source && this.state.data.materialtype == 'tryckt' &&
 								<p className="text-small"><em>{this.state.data.printed_source}</em></p>
 							}
 						</div>
@@ -384,9 +384,9 @@ export default class RecordView extends React.Component {
 
 					<div className="four columns">
 						{
-							this.state.data.type &&
+							this.state.data.materialtype &&
 							<p><strong>Materialtyp</strong><br/>
-								{this.state.data.type ? this.state.data.type.charAt(0).toUpperCase() + this.state.data.type.slice(1) : ''}
+								{this.state.data.materialtype ? this.state.data.materialtype.charAt(0).toUpperCase() + this.state.data.materialtype.slice(1) : ''}
 							</p>
 						}
 
