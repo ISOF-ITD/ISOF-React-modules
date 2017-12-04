@@ -45,7 +45,8 @@ export default class MapBase extends React.Component {
 			},
 			markerStyle: {
 				weight: 2,
-				fillColor: '#ffffff'
+				fillColor: '#ffffff',
+				fillOpacity: 1
 			},
 			circleStyle: {
 				weight: 1,
