@@ -127,7 +127,6 @@ export default class RecordList extends React.Component {
 	}
 
 	render() {
-		console.log(this.props);
 		var searchRouteParams = routeHelper.createSearchRoute(this.props);
 
 

@@ -2,6 +2,7 @@ import React from 'react';
 
 import L from 'leaflet';
 import 'leaflet.markercluster';
+import 'leaflet.locatecontrol';
 
 import mapHelper from './../../utils/mapHelper';
 
@@ -33,6 +34,20 @@ export default class MapBase extends React.Component {
 
 		L.control.zoom({
 			position: this.props.zoomControlPosition || 'topright'
+		}).addTo(this.map);
+
+		L.control.locate({
+			showPopup: false,
+			icon: 'map-location-icon',
+			position: this.props.zoomControlPosition || 'topright',
+			markerStyle: {
+				weight: 2,
+				fillColor: '#ffffff'
+			},
+			circleStyle: {
+				weight: 1,
+				color: '#a6192e'
+			}
 		}).addTo(this.map);
 
 		L.control.layers(layers, null, {
