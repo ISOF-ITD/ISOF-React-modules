@@ -40,6 +40,9 @@ export default class MapBase extends React.Component {
 			showPopup: false,
 			icon: 'map-location-icon',
 			position: this.props.zoomControlPosition || 'topright',
+			locateOptions: {
+				maxZoom: 9
+			},
 			markerStyle: {
 				weight: 2,
 				fillColor: '#ffffff'
