@@ -21,32 +21,46 @@ export default class PlaceView extends React.Component {
 		this.url = config.apiUrl+'get_socken/';
 	}
 
-	componentDidMount() {
-		console.log(this.props)
-		this.fetchData(this.props.params);
+	handleParams(params) {
+		var fetchParams = params;
+
+		if (params.nordic != 'true') {
+			fetchParams.country = config.country;
+		}
+		this.fetchData(fetchParams);
 
 		var state = {};
-		if (this.props.params.category) {
-			state['category'] = this.props.params.category;
+		if (params.category) {
+			state['category'] = params.category;
 		}
-		if (this.props.params.place_id) {
-			state['recordPlace'] = this.props.params.place_id;
+		if (params.place_id) {
+			state['recordPlace'] = params.place_id;
 		}
-		if (this.props.params.search) {
-			state['searchQuery'] = this.props.params.search;
+		if (params.search) {
+			state['searchQuery'] = params.search;
 		}
-		if (this.props.params.search_field) {
-			state['searchField'] = this.props.params.search_field;
+		if (params.search_field) {
+			state['searchField'] = params.search_field;
 		}
-		if (this.props.params.record_ids) {
-			state['record_ids'] = this.props.params.record_ids;
+		if (params.record_ids) {
+			state['record_ids'] = params.record_ids;
+		}
+		if (params.has_metadata) {
+			state['has_metadata'] = params.has_metadata;
+		}
+		if (params.nordic) {
+			state['nordic'] = true;
 		}
 		this.setState(state);
 	}
 
+	componentDidMount() {
+		this.handleParams(this.props.params);
+	}
+
 	componentWillReceiveProps(props) {
 		if (props.params.place_id != this.props.params.place_id) {
-			this.fetchData(props.params);
+			this.handleParams(props.params)
 		}
 	}
 
@@ -99,7 +113,7 @@ export default class PlaceView extends React.Component {
 					}
 				</td>
 				<td data-title="Uppteckningsår">{record.year > 0 ? record.year : ''}</td>
-				<td data-title="Materialtyp">{record.type}</td>
+				<td data-title="Materialtyp">{record.materialtype}</td>
 			</tr>;
 		}.bind(this)) : [];
 
@@ -142,7 +156,14 @@ export default class PlaceView extends React.Component {
 								<h3>Sökträffar</h3>
 							}
 
-							<RecordList highlightRecordsWithMetadataField={this.props.route.highlightRecordsWithMetadataField} record_ids={this.state.record_ids} category={this.state.category} recordPlace={this.state.recordPlace} search={this.state.searchQuery} search_field={this.state.searchField} />
+							<RecordList highlightRecordsWithMetadataField={this.props.route.highlightRecordsWithMetadataField} 
+								record_ids={this.state.record_ids} 
+								category={this.state.category} 
+								has_metadata={this.state.has_metadata} 
+								recordPlace={this.state.recordPlace} 
+								search={this.state.searchQuery} 
+								nordic={this.state.nordic}
+								search_field={this.state.searchField} />
 
 						</div>
 					</div>
@@ -162,7 +183,10 @@ export default class PlaceView extends React.Component {
 								<div className="twelve columns">
 									<h3>Samtliga uppteckningar från orten</h3>
 
-									<RecordList highlightRecordsWithMetadataField={this.props.route.highlightRecordsWithMetadataField} recordPlace={this.state.recordPlace} />		
+									<RecordList highlightRecordsWithMetadataField={this.props.route.highlightRecordsWithMetadataField} 
+										has_metadata={this.state.has_metadata} 
+										nordic={this.state.nordic}
+										recordPlace={this.state.recordPlace} />		
 								</div>
 							</div>
 
@@ -177,7 +201,9 @@ export default class PlaceView extends React.Component {
 						<div className="twelve columns">
 							<h3>Intervjuade personer</h3>
 
-							<PersonList personType="informants" place={this.state.recordPlace} />
+							<PersonList personType="informants" 
+								nordic={this.state.nordic}
+								place={this.state.recordPlace}  />
 						</div>
 					</div>
 

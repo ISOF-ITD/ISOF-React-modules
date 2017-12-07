@@ -19,19 +19,27 @@ export default class PersonList extends React.Component {
 	}
 
 	componentDidMount() {
-		if (this.props.place) {		
-			this.fetchData({
-				socken_id: this.props.place
-			});
+		if (this.props.place) {
+			this.handleProps(this.props);
 		}
 	}
 
 	componentWillReceiveProps(props) {
 		if (props.place && props.place != this.props.place) {		
-			this.fetchData({
-				socken_id: props.place
-			});
+			this.handleProps(props);
 		}
+	}
+
+	handleProps(props) {
+		var fetchParams = {
+			socken_id: props.place
+		};
+
+		if (!props.includeNordic) {
+			fetchParams.country = config.country;
+		}
+
+		this.fetchData(fetchParams);
 	}
 	
 	fetchData(params) {
@@ -45,16 +53,12 @@ export default class PersonList extends React.Component {
 			}
 		}
 
-		if (!window.applicationSettings.includeNordic) {
-			paramStrings.push('country='+config.country);
-		}
-
 		var paramString = paramStrings.join('&');
 
 		this.setState({
 			persons: []
 		}, function() {
-			fetch(this.url+'?'+paramStrings)
+			fetch(this.url+'?'+paramString)
 				.then(function(response) {
 					return response.json()
 				}).then(function(json) {
@@ -71,7 +75,13 @@ export default class PersonList extends React.Component {
 	render() {
 		var items = this.state.persons ? this.state.persons.map(function(person, index) {
 			return <tr key={index}>
-				<td><a href={'#person/'+person.id}>{person.name}</a></td>
+				<td>
+					{
+						!config.siteOptions.disablePersonLinks == true ?
+						<a href={'#person/'+person.id}>{person.name}</a> :
+						person.name
+					}
+				</td>
 				<td>{person.birth_year > 0 ? person.birth_year : ''}</td>
 			</tr>;
 

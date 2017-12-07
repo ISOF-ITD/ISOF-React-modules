@@ -5,6 +5,8 @@ export default {
 		'Visa sökträffar som lista': 'Vis søkeresultater som liste',
 		'Sökträffar som lista': 'Søkeresultater som liste',
 
-		'Sök': 'Søke'
+		'Sök': 'Søke',
+
+		'Socken, Landskap': 'Sted/Socken?, Fylke'
 	}
 }

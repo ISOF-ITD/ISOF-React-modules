@@ -18,7 +18,6 @@ export default class MapView extends React.Component {
 		super(props);
 
 		window.mapView = this;
-		window.L = L;
 
 		this.state = {
 			viewMode: 'clusters',
@@ -41,52 +40,9 @@ export default class MapView extends React.Component {
 	}
 
 	componentDidMount() {
-/*
-		this.vectorGridLayer = L.vectorGrid.protobuf('http://localhost:8084/geoserver/gwc/service/wmts?REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&LAYER=sverige_socken_sweref:se_socken_clipped&STYLE=&TILEMATRIX=EPSG:900913:{z}&TILEMATRIXSET=EPSG:900913&FORMAT=application/x-protobuf;type=mapbox-vector&TILECOL={x}&TILEROW={y}', {
-			interactive: true,
-			vectorTileLayerStyles: {
-				se_socken_clipped: function(properties, zoom) {
-					var showFeature = properties.DISTRNAMN == 'Borås' || 
-						properties.DISTRNAMN == 'Kinna' || 
-						properties.DISTRNAMN == 'Bollebygd' || 
-						properties.DISTRNAMN == 'Härrida' || 
-						properties.DISTRNAMN == 'Kinnarumma' || 
-						properties.DISTRNAMN == 'Fristad' || 
-						properties.DISTRNAMN == 'Rångedala' || 
-						properties.DISTRNAMN == 'Sätila' || 
-						properties.DISTRNAMN == 'Svenljunga'; 
-
-					showFeature = true;
-
-					return {
-						weight: showFeature ? 0.5 : 0,
-						fillOpacity: showFeature ? 0.5 : 0,
-						fill: showFeature,
-						fillColor: '#ff0000'
-					}
-				}
-			},
-			getFeatureId: function(feature) {
-				return feature.properties.OBJEKT_ID;
-			}
-		});
-
-		this.vectorGridLayer.on('click', function(event) {
-			window.feature = event.layer;
-
-			this.vectorGridLayer.setFeatureStyle(event.layer.properties.OBJEKT_ID, {
-				fill: true,
-				fillOpacity: 0.8
-			});
-		}.bind(this));
-
-		this.vectorGridLayer.on('mouseover', function(event) {
-
-		});
-
-		this.vectorGridLayer.addTo(this.refs.mapView.map);
-*/
 		this.fetchData(this.props.searchParams);
+
+		this.mapBase = this.refs.mapView;
 	}
 
 	componentWillReceiveProps(props) {
@@ -116,7 +72,7 @@ export default class MapView extends React.Component {
 		});
 
 		if (params) {
-			this.collections.fetch({
+			var fetchParams = {
 				search: params.search || null,
 				search_field: params.search_field || null,
 				category: params.category,
@@ -124,8 +80,15 @@ export default class MapView extends React.Component {
 				year_to: params.year_to || null,
 				person_relation: params.person_relation || null,
 				gender: params.gender || null,
-				record_ids: params.record_ids || null
-			});
+				record_ids: params.record_ids || null,
+				has_metadata: params.has_metadata || null
+			};
+
+			if (!params.nordic) {
+				fetchParams.country = config.country;
+			}
+
+			this.collections.fetch(fetchParams);
 		}
 	}
 
@@ -218,47 +181,52 @@ export default class MapView extends React.Component {
 				this.createLayers();
 			}
 
+			// Lägger till alla prickar på kartan
 			if (this.mapData.length > 0) {
+				// Hämtar current bounds (minus 20%) av synliga kartan
+				var currentBounds = this.refs.mapView.map.getBounds().pad(-0.2);
+
+				// Samlar ihop latLng av alla prickar för att kunna senare zooma inn till dem
 				var bounds = [];
+				var markerWithinBounds = false;
 				
 				_.each(this.mapData, function(mapItem) {
 					if (mapItem.location.length > 0) {
+						// Skalar L.marker objekt och lägger till rätt icon
 						var marker = L.marker([Number(mapItem.location[0]), Number(mapItem.location[1])], {
 							title: mapItem.name,
-							icon: mapItem.has_metadata == true ? mapHelper.markerIconHighlighted : mapHelper.markerIcon
-						});
-/*
-						var template = _.template($("#markerPopupTemplate").html());
-						var popupHtml = template({
-							model: model
+							// Om mapItem.has_metadata lägger vi till annan typ av ikon, används mest av matkartan för att visa kurerade postar
+							icon: mapItem.has_metadata == true ? (this.props.highlightedMarkerIcon || mapHelper.markerIconHighlighted) : (this.props.defaultMarkerIcon || mapHelper.markerIcon)
 						});
 
-						marker.bindPopup(popupHtml).on('popupopen', _.bind(function(event) {
-							_.each(this.$el.find('.place-view-link'), _.bind(function(linkEl) {
-								$(linkEl).click(_.bind(function(event) {
-									event.preventDefault();
-									this.trigger('viewPlace', {
-										placeId: mapItem.id')
-									});
-								}, this));
-							}, this));
-						}, this));
-*/
+						// Lägger till click event listener
 						marker.on('click', function(event) {
+							// Om onMarkerClick finns som property för MapView kallar vi den funktionen
 							if (this.props.onMarkerClick) {
 								this.props.onMarkerClick(mapItem.id);
 							}
 						}.bind(this));
 
+						// Lägger pricken till kartan
 						this.markers.addLayer(marker);
 
+						// Lägger latLng till bounds
 						bounds.push(mapItem.location);
+
+						// Checkar om punkten är synlig på visibella kartan på skärmen
+						if (currentBounds.contains(mapItem.location)) {
+							markerWithinBounds = true;
+						}
 					}
 				}.bind(this));
 
-				this.refs.mapView.map.fitBounds(bounds, {
-					maxZoom: 10
-				});
+				// Zooma in till alla nya punkena om ingen av dem finns inom synliga kartan
+				if (!markerWithinBounds) {
+					this.refs.mapView.map.fitBounds(bounds, {
+						maxZoom: 10,
+						padding: [50, 50]
+					});
+				}
 			}
 		}
 		if (this.state.viewMode == 'circles') {
@@ -355,9 +323,21 @@ export default class MapView extends React.Component {
 				{
 					!this.props.hideMapmodeMenu &&
 					<div className="map-viewmode-menu">
-						<a className={'icon-marker'+(this.state.viewMode == 'clusters' ? ' selected' : '')} data-viewmode="clusters" onClick={this.changeViewMode}><span>Cluster</span></a>
-						<a className={'icon-heatmap'+(this.state.viewMode == 'heatmap' ? ' selected' : '')} data-viewmode="heatmap" onClick={this.changeViewMode}><span>Heatmap</span></a>
-						<a className={'icon-circles'+(this.state.viewMode == 'circles' ? ' selected' : '')} data-viewmode="circles" onClick={this.changeViewMode}><span>Circles</span></a>
+						<a className={'icon-marker'+(this.state.viewMode == 'clusters' ? ' selected' : '')} 
+							data-viewmode="clusters" 
+							onClick={this.changeViewMode}>
+							<span>Cluster</span>
+						</a>
+						<a className={'icon-heatmap'+(this.state.viewMode == 'heatmap' ? ' selected' : '')} 
+							data-viewmode="heatmap" 
+							onClick={this.changeViewMode}>
+							<span>Heatmap</span>
+						</a>
+						<a className={'icon-circles'+(this.state.viewMode == 'circles' ? ' selected' : '')} 
+							data-viewmode="circles" 
+							onClick={this.changeViewMode}>
+							<span>Circles</span>
+						</a>
 					</div>
 				}
 
@@ -365,7 +345,15 @@ export default class MapView extends React.Component {
 					<div className="indicator"></div>
 				</div>
 
-				<MapBase ref="mapView" className="map-view" layersControlPosition={this.props.layersControlPosition || 'topleft'} zoomControlPosition={this.props.zoomControlPosition || 'topleft'} scrollWheelZoom={true} onBaseLayerChange={this.mapBaseLayerChangeHandler} />
+				<MapBase ref="mapView" 
+					className="map-view" 
+					layersControlPosition={this.props.layersControlPosition || 'topleft'} 
+					zoomControlPosition={this.props.zoomControlPosition || 'topleft'} 
+					scrollWheelZoom={true} 
+					zoom={this.props.zoom}
+					center={this.props.center}
+					disableSwedenMap={this.props.disableSwedenMap} 
+					onBaseLayerChange={this.mapBaseLayerChangeHandler} />
 			</div>
 		);
 	}

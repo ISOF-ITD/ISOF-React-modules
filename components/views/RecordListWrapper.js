@@ -47,6 +47,8 @@ export default class RecordListWrapper extends React.Component {
 							person={this.props.params.person || null}
 							record_ids={this.props.params.record_ids || null}
 							page={this.props.params.page || null} 
+							has_metadata={this.props.params.has_metadata || null}
+							nordic={this.props.params.nordic}
 							highlightRecordsWithMetadataField={this.props.route.highlightRecordsWithMetadataField}
 						/>
 					</div>

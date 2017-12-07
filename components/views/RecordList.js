@@ -107,7 +107,7 @@ export default class RecordList extends React.Component {
 			fetchingPage: true
 		});
 
-		this.collections.fetch({
+		var fetchParams = {
 			from: (this.state.currentPage-1)*50,
 			size: 50,
 			search: params.search || null,
@@ -115,15 +115,25 @@ export default class RecordList extends React.Component {
 			category: params.category || null,
 			person_id: params.person || null,
 			socken_id: params.recordPlace || null,
-			record_ids: params.record_ids || null
-		});
+			record_ids: params.record_ids || null,
+			has_metadata: params.has_metadata || null
+		};
+
+		if (!params.nordic) {
+			fetchParams.country = config.country;
+		}
+
+		this.collections.fetch(fetchParams);
 	}
 
 	render() {
 		var searchRouteParams = routeHelper.createSearchRoute(this.props);
 
+
 		var items = this.state.records ? this.state.records.map(function(item, index) {
-			return <RecordListItem key={item._source.id} item={item} routeParams={searchRouteParams} highlightRecordsWithMetadataField={this.props.highlightRecordsWithMetadataField} />;
+			return <RecordListItem key={item._source.id} 
+				item={item} routeParams={searchRouteParams} 
+				highlightRecordsWithMetadataField={this.props.highlightRecordsWithMetadataField} />;
 
 		}.bind(this)) : [];
 
@@ -134,11 +144,14 @@ export default class RecordList extends React.Component {
 					<table width="100%" className="table-responsive">
 						<thead>
 							<tr>
-								<th scope="col">Titel</th>
-								<th scope="col">Kategori</th>
-								<th scope="col">Socken, Landskap</th>
-								<th scope="col">Uppteckningsår</th>
-								<th scope="col">Materialtyp</th>
+								<th scope="col">{l('Titel')}</th>
+								<th scope="col">{l('Kategori')}</th>
+								<th scope="col">{l('Socken, Landskap')}</th>
+								<th scope="col">{l('Uppteckningsår')}</th>
+								{
+									!config.siteOptions.recordList || !config.siteOptions.recordList.hideMaterialType == true &&
+									<th scope="col">Materialtyp</th>
+								}
 							</tr>
 						</thead>
 						<tbody>
