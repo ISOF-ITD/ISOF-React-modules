@@ -1,5 +1,12 @@
 .tabs-control {
 	.tabs {
+		.content-width& {
+			padding: 10px 10px 0 10px;
+			margin: 0 auto;
+			
+			max-width: 1200px;
+		}
+
 		a {
 			display: inline-block;
 
@@ -73,9 +80,15 @@
 		&.hidden {
 			position: absolute;
 
+			top: 0;
+
 			opacity: 0;
 
 			pointer-events: none;
+
+			& * {
+				pointer-events: none !important;
+			}
 		}
 
 		&.open {

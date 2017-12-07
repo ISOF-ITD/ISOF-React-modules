@@ -6,6 +6,8 @@
 
 	padding: 60px 0 0 0;
 
+	.transition(all 300ms ease-in-out);
+
 	.component-frame();
 
 	.map-container {
@@ -22,6 +24,49 @@
 		input, select, button {
 			margin-left: 10px;
 		}
+
+		a {
+			display: inline-block;
+			
+			height: 36px;
+			
+			margin: 0;
+			padding: 0 10px;
+			
+			box-sizing: border-box;
+			border-radius: 3px;
+			border: 1px solid #d1d1d1;
+			
+			background: #fff;
+
+			font-size: 0.85rem;
+			line-height: 36px;
+			
+			vertical-align: middle;
+
+			cursor: pointer;
+		}
+
+		input, select, button, a {
+			&:hover {
+				box-shadow: 0 1px 8px #00000047;
+			}
+		}
+	}
+
+	&.full-screen {
+		position: fixed;
+
+		top: 153px;
+		left: 0;
+		right: 0;
+		bottom: 0;
+
+		height: auto !important;
+
+		margin-bottom: 0;
+
+		z-index: 1000;
 	}
 }
 
@@ -61,5 +106,35 @@ path.leaflet-interactive {
 			font-size: 0.8rem;
 			line-height: 0;
 		}
+	}
+}
+
+.map-timeline-container {
+	position: absolute;
+	
+	left: 50%;
+	bottom: 20px;
+	
+	width: 90%;
+	max-width: 1200px;
+
+	padding: 5px 20px 0;
+	
+	background: #f8f8f8;
+	
+	border-radius: 3px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);	
+	box-sizing: border-box;
+	
+	.transform(translateX(-50%));
+	
+	z-index: 400;
+
+	.slider-container {
+		margin: -10px 4px 40px 4px;
+	}
+
+	.graph-wrapper {
+		padding: 0 5px;
 	}
 }

@@ -152,6 +152,26 @@
 		}
 	}
 
+	&.static {
+		position: relative;
+
+		height: 500px;
+
+		margin-bottom: 20px;
+
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+
+		.graph-container {
+			position: absolute;
+
+			top: 0;
+		}
+
+		.graph-toolbar {
+			top: 20px;
+		}
+	}
+
 	.links line {
 		stroke: #444;
 	}
@@ -169,17 +189,23 @@
 		pointer-events: none;
 	}
 
-	.graph-heading {
-		position: fixed;
+	.graph-toolbar {
+		position: absolute;
 	
 		top: 180px;
 		left: 20px;
-	
-		padding: 5px;
-	
-		background: rgba(255, 255, 255, 0.8);
 
+		width: 250px;
+	
+		padding: 20px 20px 0 20px;
+		
+		background: rgba(248, 248, 248, 0.97);
+		
 		color: #898989;
+		
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.13);
+		border: 1px solid #cbcbcb;
+		border-radius: 3px;
 	}
 
 	.loading-overlay {
@@ -265,6 +291,14 @@
 			overflow-x: auto;
 
 			.minimal-scrollbar();
+		}
+
+		.list-footer {
+			position: absolute;
+
+			bottom: 0;
+			left: 0;
+			right: 0;
 		}
 	}
 }

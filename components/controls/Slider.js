@@ -7,6 +7,7 @@ export default class Slider extends React.Component {
 		super(props);
 
 		this.sliderChangeHandler = this.sliderChangeHandler.bind(this);
+		this.sliderSlideHandler = this.sliderSlideHandler.bind(this);
 	}
 
 	componentDidMount() {
@@ -23,13 +24,20 @@ export default class Slider extends React.Component {
 					return Math.round(value);
 				}
 			},
-			range: this.props.range || {
+			range: this.props.rangeMin && this.props.rangeMax ? {
+				min: this.props.rangeMin,
+				max: this.props.rangeMax
+			} : {
 				min: 0,
 				max: 10
 			}
 		});
 
+		window.sliderObject = this.slider;
+
 		this.slider.on('change', this.sliderChangeHandler)
+		this.slider.on('set', this.sliderChangeHandler)
+		this.slider.on('slide', this.sliderSlideHandler)
 	}
 
 	componentWillReceiveProps(props) {
@@ -39,11 +47,34 @@ export default class Slider extends React.Component {
 		else {
 			this.refs.sliderContainer.setAttribute('disabled', true);
 		}
+
+		if ((!isNaN(props.rangeMin) && !isNaN(props.rangeMax)) && (props.rangeMin != this.slider.options.range.min || props.rangeMax != this.slider.options.range.max)) {
+			var range = {
+				min: Number(props.rangeMin),
+				max: Number(props.rangeMax)
+			};
+			this.slider.updateOptions({
+				range: range,
+				start: [range.min, range.max]
+			});
+		}
 	}
 
 	sliderChangeHandler(event) {
 		if (this.props.onChange) {
 			this.props.onChange({
+				target: {
+					name: this.props.inputName || '',
+					type: 'slider',
+					value: event
+				}
+			});
+		}
+	}
+
+	sliderSlideHandler(event) {
+		if (this.props.onSlide) {
+			this.props.onSlide({
 				target: {
 					name: this.props.inputName || '',
 					type: 'slider',

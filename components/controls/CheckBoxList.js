@@ -20,6 +20,8 @@ export default class CheckBoxList extends React.Component {
 	}
 
 	checkBoxChangeHandler(event) {
+		event.stopPropagation();
+
 		var value = event.target.value;
 		var selectedItems = this.state.selectedItems;
 
@@ -33,8 +35,8 @@ export default class CheckBoxList extends React.Component {
 		this.setState({
 			selectedItems: selectedItems
 		}, function() {
-			if (this.props.onChange) {
-				this.props.onChange(this.state.selectedItems);
+			if (this.props.onSelectionChange) {
+				this.props.onSelectionChange(this.state.selectedItems);
 			}
 		}.bind(this));
 	}
