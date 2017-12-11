@@ -3,7 +3,8 @@ import langData from './langData';
 const defaultLang = 'sv';
 
 export default {
-	collect: true,
+	collect: false,
+	
 	setCurrentLang: function(lang) {
 		window.currentLang = lang;
 
