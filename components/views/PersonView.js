@@ -15,7 +15,7 @@ export default class PersonView extends React.Component {
 			personId: null
 		};
 
-		this.url = config.djangoApiUrl+'persons/';
+		this.url = config.restApiUrl+'persons/';
 	}
 
 	componentDidMount() {
@@ -57,17 +57,17 @@ export default class PersonView extends React.Component {
 	render() {
 		var recordItems = this.state.data.records && this.state.data.records.length > 0 ? this.state.data.records.map(function(record, index) {
 			return <tr key={index}>
-				<td data-title=""><a href={'#record/'+record.id}>{record.title ? record.title : '(Utan titel)'}</a></td>
-				<td data-title="Kategori:">{record.taxonomy.name}</td>
-				<td data-title="Socken, Landskap:">
+				<td data-title=""><a href={'#record/'+record.id}>{record.title ? record.title : l('(Utan titel)')}</a></td>
+				<td data-title={l('Kategori')+':'}>{record.taxonomy.name}</td>
+				<td data-title={l('Socken, Landskap')+':'}>
 					{
 						record.places &&
 						<a href={'#place/'+record.places[0].id}>{record.places[0].name+', '+record.places[0].landskap}</a>
 					}
 				</td>
-				<td data-title="Roll:">{record.relation == 'c' ? 'Upptecknare' : record.relation == 'i' ? 'Informant' : ''}</td>
-				<td data-title="Uppteckningsår:">{record.year > 0 ? record.year : ''}</td>
-				<td data-title="Materialtyp:">{record.type}</td>
+				<td data-title={l('Roll')+':'}>{record.relation == 'c' ? l('Upptecknare') : record.relation == 'i' ? l('Informant') : ''}</td>
+				<td data-title={l('Uppteckningsår')+':'}>{record.year > 0 ? record.year : ''}</td>
+				<td data-title={l('Materialtyp')+':'}>{record.type}</td>
 			</tr>
 		}) : [];
 
@@ -80,7 +80,7 @@ export default class PersonView extends React.Component {
 							<h2>{this.state.data.name || ''}</h2>
 							<p>
 							{
-								(this.state.data.birth_year && this.state.data.birth_year > 0 ? 'Föddes '+this.state.data.birth_year : '')+
+								(this.state.data.birth_year && this.state.data.birth_year > 0 ? l('Föddes')+' '+this.state.data.birth_year : '')+
 								(this.state.data.birth_year && this.state.data.birth_year > 0 && this.state.data.places ? ' i ' : '')
 							}
 							{
@@ -125,7 +125,7 @@ export default class PersonView extends React.Component {
 				<div className="row">
 			
 					<div className="twelve columns">
-						<h3>Uppteckningar</h3>
+						<h3>{l('Uppteckningar')}</h3>
 
 						<RecordList disableRouterPagination={true} disableAutoFetch={true} person={this.state.personId} />
 

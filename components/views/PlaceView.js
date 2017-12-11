@@ -18,7 +18,7 @@ export default class PlaceView extends React.Component {
 			placeMarker: {}
 		};
 
-		this.url = config.apiUrl+'get_socken/';
+		this.url = config.restApiUrl+'locations/';
 	}
 
 	handleParams(params) {
@@ -71,7 +71,7 @@ export default class PlaceView extends React.Component {
 					return response.json()
 				}).then(function(json) {
 					this.setState({
-						data: json.data
+						data: json
 					});
 				}.bind(this)).catch(function(ex) {
 					console.log('parsing failed', ex)
@@ -106,14 +106,14 @@ export default class PlaceView extends React.Component {
 						{record.title ? record.title : '(Untitled)'}
 					</a>
 				</td>
-				<td data-title="Kategori">{record.taxonomy.name}</td>
-				<td data-title="Socken, Landskap">
+				<td data-title={l('Kategori')}>{record.taxonomy.name}</td>
+				<td data-title={l('Socken, Landskap')}>
 					{record.places &&
 						<span>{record.places[0].name+', '+record.places[0].landskap}</span>
 					}
 				</td>
-				<td data-title="Uppteckningsår">{record.year > 0 ? record.year : ''}</td>
-				<td data-title="Materialtyp">{record.materialtype}</td>
+				<td data-title={l('Uppteckningsår')}>{record.year > 0 ? record.year : ''}</td>
+				<td data-title={l('Materialtyp')}>{record.materialtype}</td>
 			</tr>;
 		}.bind(this)) : [];
 
@@ -127,9 +127,9 @@ export default class PlaceView extends React.Component {
 							<p>
 								{
 									this.state.data.fylke ?
-									<span><strong>Fylke</strong>: {this.state.data.fylke}</span> :
+									<span><strong>{l('Fylke')}</strong>: {this.state.data.fylke}</span> :
 									this.state.data.harad ?
-									<span><strong>Härad</strong>: {this.state.data.harad}, <strong>Län</strong>: {this.state.data.lan}, <strong>Landskap</strong>: {this.state.data.landskap}</span>
+									<span><strong>{l('Härad')}</strong>: {this.state.data.harad}, <strong>{l('Län')}</strong>: {this.state.data.lan}, <strong>{l('Landskap')}</strong>: {this.state.data.landskap}</span>
 									: null
 								}
 							</p>
@@ -141,7 +141,7 @@ export default class PlaceView extends React.Component {
 					!this.props.route.hideMap &&
 					<div className="row">
 						<div className="twelve columns">
-							<SimpleMap marker={this.state.data.location && this.state.data.location.length > 0 ? {lat: this.state.data.location[0], lng: this.state.data.location[1], label: this.state.data.name} : null} />
+							<SimpleMap marker={this.state.data.location && this.state.data.location.lat && this.state.data.location.lon ? {lat: this.state.data.location.lat, lng: this.state.data.location.lon, label: this.state.data.name} : null} />
 						</div>
 					</div>
 				}
@@ -153,7 +153,7 @@ export default class PlaceView extends React.Component {
 	
 							{
 								!this.props.route.showOnlyResults &&
-								<h3>Sökträffar</h3>
+								<h3>{l('Sökträffar')}</h3>
 							}
 
 							<RecordList highlightRecordsWithMetadataField={this.props.route.highlightRecordsWithMetadataField} 
@@ -181,7 +181,7 @@ export default class PlaceView extends React.Component {
 						{
 							<div className="row">
 								<div className="twelve columns">
-									<h3>Samtliga uppteckningar från orten</h3>
+									<h3>{l('Samtliga uppteckningar från orten')}</h3>
 
 									<RecordList highlightRecordsWithMetadataField={this.props.route.highlightRecordsWithMetadataField} 
 										has_metadata={this.state.has_metadata} 
@@ -199,7 +199,7 @@ export default class PlaceView extends React.Component {
 					!this.props.route.hidePersons &&
 					<div className="row">
 						<div className="twelve columns">
-							<h3>Intervjuade personer</h3>
+							<h3>{l('Intervjuade personer')}</h3>
 
 							<PersonList personType="informants" 
 								nordic={this.state.nordic}
@@ -219,14 +219,14 @@ export default class PlaceView extends React.Component {
 
 					<div className="row">
 						<div className="twelve columns">
-							<h3>Personer födda i {this.state.data.name}</h3>
+							<h3>{l('Personer födda i')} {this.state.data.name}</h3>
 
 							<div className="table-wrapper">
 								<table width="100%">
 									<thead>
 										<tr>
-											<th>Namn</th>
-											<th>Födelseår</th>
+											<th>{l('Namn')}</th>
+											<th>{l('Födelseår')}</th>
 										</tr>
 									</thead>
 									<tbody>

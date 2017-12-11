@@ -150,7 +150,7 @@ export default class RecordList extends React.Component {
 								<th scope="col">{l('Uppteckningsår')}</th>
 								{
 									!config.siteOptions.recordList || !config.siteOptions.recordList.hideMaterialType == true &&
-									<th scope="col">Materialtyp</th>
+									<th scope="col">{l('Materialtyp')}</th>
 								}
 							</tr>
 						</thead>
@@ -163,10 +163,10 @@ export default class RecordList extends React.Component {
 						this.state.total > 50 &&
 						<div className="list-pagination">
 							<hr/>
-							<p className="page-info"><strong>{'Visar '+((this.state.currentPage*50)-49)+'-'+(this.state.currentPage*50 > this.state.total ? this.state.total : this.state.currentPage*50)+' av '+this.state.total}</strong></p><br/>
-							<button disabled={this.state.currentPage == 1} className="button prev-button" onClick={this.prevPage}>Föregående</button>
+							<p className="page-info"><strong>{l('Visar')+' '+((this.state.currentPage*50)-49)+'-'+(this.state.currentPage*50 > this.state.total ? this.state.total : this.state.currentPage*50)+' '+l('av')+' '+this.state.total}</strong></p><br/>
+							<button disabled={this.state.currentPage == 1} className="button prev-button" onClick={this.prevPage}>{l('Föregående')}</button>
 							<span> </span>
-							<button disabled={this.state.total <= this.state.currentPage*50} className="button next-button" onClick={this.nextPage}>Nästa</button>
+							<button disabled={this.state.total <= this.state.currentPage*50} className="button next-button" onClick={this.nextPage}>{l('Nästa')}</button>
 						</div>
 					}
 				</div>
@@ -175,7 +175,7 @@ export default class RecordList extends React.Component {
 		else {
 			return (
 				<div className="table-wrapper list-container">
-					<h3>Inga sökträffar</h3>
+					<h3>{l('Inga sökträffar')}</h3>
 				</div>
 			);
 		}

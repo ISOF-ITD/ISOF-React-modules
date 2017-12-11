@@ -94,8 +94,8 @@ export default class PersonList extends React.Component {
 					<table width="100%" className="table-responsive">
 						<thead>
 							<tr>
-								<th>Namn</th>
-								<th>Födelseår</th>
+								<th>{l('Namn')}</th>
+								<th>{l('Födelseår')}</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -109,7 +109,7 @@ export default class PersonList extends React.Component {
 		else {
 			return (
 				<div className="table-wrapper list-container">
-					<h3>Inga sökträffar</h3>
+					<h3>{l('Inga sökträffar')}</h3>
 				</div>
 			);
 		}

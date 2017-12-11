@@ -61,7 +61,7 @@ export default class RecordListItem extends React.Component {
 					<div className="item-summary">{textSummary}</div>
 				}
 			</td>
-			<td data-title="Kategori:">
+			<td data-title={l('Kategori')+':'}>
 				{
 					taxonomyElement
 				}
@@ -69,13 +69,13 @@ export default class RecordListItem extends React.Component {
 			<td data-title={l('Socken, Landskap')+':'}>
 			{
 				this.props.item._source.places && this.props.item._source.places.length > 0 &&
-				<a target={config.embeddedApp ? '_parent' : '_self'} href={(config.embeddedApp ? config.siteUrl : '')+'#place/'+this.props.item._source.places[0].id}>{this.props.item._source.places[0].name+(this.props.item._source.places[0].landskap || this.props.item._source.places[0].fylke ? (this.props.item._source.places[0].landskap ? ', '+this.props.item._source.places[0].landskap : this.props.item._source.places[0].fylke ? this.props.item._source.places[0].fylke : '') : '')}</a>
+				<a target={config.embeddedApp ? '_parent' : '_self'} href={(config.embeddedApp ? config.siteUrl : '')+'#place/'+this.props.item._source.places[0].id}>{this.props.item._source.places[0].name+(this.props.item._source.places[0].landskap || this.props.item._source.places[0].fylke ? (this.props.item._source.places[0].landskap ? ', '+this.props.item._source.places[0].landskap : this.props.item._source.places[0].fylke ? ', '+this.props.item._source.places[0].fylke : '') : '')}</a>
 			}
 			</td>
-			<td data-title="Uppteckningsår:">{this.props.item._source.year > 0 ? this.props.item._source.year : ''}</td>
+			<td data-title={l('Uppteckningsår')+':'}>{this.props.item._source.year > 0 ? this.props.item._source.year : ''}</td>
 			{
 				!config.siteOptions.recordList || config.siteOptions.recordList.hideMaterialType == true &&
-				<td data-title="Materialtyp:">{this.props.item._source.materialtype}</td>
+				<td data-title={l('Materialtyp')+':'}>{this.props.item._source.materialtype}</td>
 			}
 		</tr>;
 	}

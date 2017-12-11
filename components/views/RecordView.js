@@ -231,11 +231,11 @@ export default class RecordView extends React.Component {
 
 			if (this.state.data.taxonomy) {
 				if (this.state.data.taxonomy.name) {
-					taxonomyElement = <p><strong>Kategori</strong><br/>
+					taxonomyElement = <p><strong>{l('Kategori')}</strong><br/>
 						<a href={'#/places/category/'+this.state.data.taxonomy.category.toLowerCase()}>{this.state.data.taxonomy.name}</a></p>;
 				}
 				else if (this.state.data.taxonomy.length > 0) {
-					taxonomyElement = <p><strong>Kategori</strong><br/>
+					taxonomyElement = <p><strong>{l('Kategori')}</strong><br/>
 						<span dangerouslySetInnerHTML={{__html: _.map(_.filter(this.state.data.taxonomy, function(taxonomyItem) {
 							return taxonomyItem.category;
 						}), function(taxonomyItem) {
@@ -258,8 +258,8 @@ export default class RecordView extends React.Component {
 																forgetAfterClick={true} 
 																closeTrigger="click" 
 																autoHide={true} 
-																message="Klicka på stjärnan för att spara sägner till din egen lista.">
-									<button className={'save-button'+(this.state.saved ? ' saved' : '')} onClick={this.toggleSaveRecord}><span>Spara</span></button></ElementNotificationMessage></h2>
+																message={l('Klicka på stjärnan för att spara sägner till din egen lista.')}>
+									<button className={'save-button'+(this.state.saved ? ' saved' : '')} onClick={this.toggleSaveRecord}><span>{l('Spara')}</span></button></ElementNotificationMessage></h2>
 								<p><strong>Materialtyp</strong>: {this.state.data.materialtype}</p>
 							</div>
 						</div>
@@ -278,7 +278,7 @@ export default class RecordView extends React.Component {
 
 								{
 									this.state.data.comment && this.state.data.comment != '' &&
-									<p className="text-small"><strong>Ordförklaringar och dylikt i upptekcningarna/utgåvorna:</strong><br/><span dangerouslySetInnerHTML={{__html: this.state.data.comment}} /></p>
+									<p className="text-small"><strong>{l('Ordförklaringar och dylikt i upptekcningarna/utgåvorna')+':'}</strong><br/><span dangerouslySetInnerHTML={{__html: this.state.data.comment}} /></p>
 								}
 								{
 									this.state.data.printed_source && this.state.data.materialtype == 'tryckt' &&
@@ -316,16 +316,16 @@ export default class RecordView extends React.Component {
 						<div className="row">
 
 							<div className="twelve columns">
-								<h3>Personer</h3>
+								<h3>{l('Personer')}</h3>
 
 								<div className="table-wrapper">
 									<table width="100%" className="table-responsive">
 										<thead>
 											<tr>
-												<th>Namn</th>
-												<th>Födelseår</th>
-												<th>Födelseort</th>
-												<th>Roll</th>
+												<th>{l('Namn')}</th>
+												<th>{l('Födelseår')}</th>
+												<th>{l('Födelseort')}</th>
+												<th>{l('Roll')}</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -347,14 +347,14 @@ export default class RecordView extends React.Component {
 						<div className="row">
 
 							<div className="six columns">
-								<h3>Platser</h3>
+								<h3>{l('Platser')}</h3>
 
 								<div className="table-wrapper">
 									<table width="100%">
 
 										<thead>
 											<tr>
-												<th>Namn</th>
+												<th>{l('Namn')}</th>
 											</tr>
 										</thead>
 
@@ -383,24 +383,24 @@ export default class RecordView extends React.Component {
 						<div className="four columns">
 							{
 								this.state.data.archive && this.state.data.archive.archive && this.state.data.archive.archive != 'null' &&
-								<p><strong>Arkiv</strong><br/>{this.state.data.archive.archive}</p>
+								<p><strong>{l('Arkiv')}</strong><br/>{this.state.data.archive.archive}</p>
 							}
 
 							{
 								this.state.data.archive && this.state.data.archive.archive && this.state.data.archive.archive_id != 'null' &&
-								<p><strong>Acc. nr</strong><br/>{this.state.data.archive.archive_id}</p>
+								<p><strong>{l('Acc. nr')}</strong><br/>{this.state.data.archive.archive_id}</p>
 							}
 
 							{
 								this.state.data.archive && this.state.data.archive.archive && this.state.data.archive.page != 'null' &&
-								<p><strong>Sid. nr</strong><br/>{this.state.data.archive.page}</p>
+								<p><strong>{l('Sid. nr')}</strong><br/>{this.state.data.archive.page}</p>
 							}
 						</div>
 
 						<div className="four columns">
 							{
 								this.state.data.materialtype &&
-								<p><strong>Materialtyp</strong><br/>
+								<p><strong>{l('Materialtyp')}</strong><br/>
 									{this.state.data.materialtype ? this.state.data.materialtype.charAt(0).toUpperCase() + this.state.data.materialtype.slice(1) : ''}
 								</p>
 							}
@@ -413,12 +413,12 @@ export default class RecordView extends React.Component {
 						<div className="four columns">
 							{
 								this.state.data.year && this.state.data.year > 0 &&
-								<p><strong>Uppteckningsår</strong><br/>{this.state.data.year > 0 ? this.state.data.year :''}</p>
+								<p><strong>{l('Uppteckningsår')}</strong><br/>{this.state.data.year > 0 ? this.state.data.year :''}</p>
 							}
 
 							{
 								this.state.data.printed_source &&
-								<p><strong>Tryckt i</strong><br/>{this.state.data.printed_source}</p>
+								<p><strong>{l('Tryckt i')}</strong><br/>{this.state.data.printed_source}</p>
 							}
 
 							{
@@ -436,7 +436,7 @@ export default class RecordView extends React.Component {
 					<div className="container-header">
 						<div className="row">
 							<div className="twelve columns">
-								<h2>Finns inte</h2>
+								<h2>{l('Finns inte')}</h2>
 							</div>
 						</div>
 					</div>
