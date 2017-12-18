@@ -1,4 +1,4 @@
-import langData from './langData';
+import langData from './../../scripts/lang/langData';
 
 const defaultLang = 'sv';
 
