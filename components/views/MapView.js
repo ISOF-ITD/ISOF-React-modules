@@ -298,7 +298,7 @@ export default class MapView extends React.Component {
 				radius: 18,
 				blur: 15,
 				max: maxCount,
-				maxZoom: 4
+				maxZoom: 0
 			});
 			this.markers.addTo(this.refs.mapView.map);
 
