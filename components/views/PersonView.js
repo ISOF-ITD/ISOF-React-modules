@@ -91,7 +91,10 @@ export default class PersonView extends React.Component {
 						</div>
 					</div>
 
-					<FeedbackButton title={this.state.data.name || ''} type="Person" />
+					{
+						!config.siteOptions.hideContactButton &&
+						<FeedbackButton title={this.state.data.name || ''} type="Person" />
+					}
 				</div>
 
 				{

@@ -1,12 +1,31 @@
 import React from 'react';
 
 import config from './../../../scripts/config.js';
+import clipboard from './../../utils/clipboard';
 
 export default class RecordView extends React.Component {
+	constructor(props) {
+		super(props);
+
+		this.linkClickHandler = this.linkClickHandler.bind(this);
+	}
+
 	componentDidMount() {
 		if (!this.props.manualInit) {
-			this.initialize();
+			setTimeout(function() {
+				this.initialize();
+			}.bind(this), 500);
 		}
+	}
+
+	linkClickHandler(event) {
+		event.preventDefault();
+
+		if (clipboard.copy(this.props.path)) {
+			if (window.eventBus) {
+				window.eventBus.dispatch('popup-notification.notify', null, l('Länk har kopierats.'));
+			}
+		}		
 	}
 
 	initialize() {
@@ -59,7 +78,11 @@ export default class RecordView extends React.Component {
 				data-href={this.props.path} 
 				data-layout="button_count"></div>
 			<a className="twitter-share-button"
-				href={'https://twitter.com/intent/tweet?text='+(this.props.text || '')+'&url='+this.props.path}><span style={{display: 'none'}}>Tweet</span></a>
+				href={'https://twitter.com/intent/tweet?text='+(this.props.text == undefined ? '' : this.props.text)+'&url='+this.props.path}><span style={{display: 'none'}}>Tweet</span></a>
+				{
+					!this.props.hideLink &&
+					<span><br/><br/><a className="text-smaller" href={this.props.path} onClick={this.linkClickHandler}>{this.props.path}</a></span>
+				}
 		</div>;
 	}
 }

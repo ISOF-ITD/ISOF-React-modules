@@ -55,10 +55,9 @@ export default class LocalLibraryView extends React.Component {
 	copyLinkClickHandler(event) {
 		if (clipboard.copy(event.currentTarget.dataset.url)) {
 			if (window.eventBus) {
-				window.eventBus.dispatch('popup-notification.notify', null, 'Länk till dina sägner har kopierats.');
+				window.eventBus.dispatch('popup-notification.notify', null, l('Länk till dina sägner har kopierats.'));
 			}
 		}
-
 	}
 
 	render() {
@@ -82,14 +81,14 @@ export default class LocalLibraryView extends React.Component {
 
 		var legendIds = this.savedRecords.map(function(item) {
 			return item.id;
-		}).join(';');
+		}).join(',');
 
 		var shareLink = 'places/record_ids/'+legendIds;
 
 		var footerContent = <div className="drowdown-footer">
 			{
 				this.state.dropdownOpen &&
-				<ShareButton ref="shareButtons" manualInit={true} path={config.siteUrl+'#/'+shareLink} text={l('Några intressanta sägner på sägenkartan: ')} />
+				<ShareButton ref="shareButtons" hideLink={true} manualInit={true} path={config.siteUrl+'#/'+shareLink} text={l('Några intressanta sägner på sägenkartan: ')} />
 			}
 			<a className="u-pull-right u-cursor-pointer" onClick={this.copyLinkClickHandler} data-url={config.siteUrl+'#/'+shareLink}>{l('Kopiera länk')}</a>
 		</div>;

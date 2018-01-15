@@ -50,8 +50,6 @@ export default class MapCollection {
 //			if (!window.applicationSettings.includeNordic) {
 //				paramStrings.push('country='+config.country);
 //			}
-
-			paramString = paramStrings.join('&');
 		}
 
 		var paramString = paramStrings.join('&');

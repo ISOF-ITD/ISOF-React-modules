@@ -12,30 +12,31 @@ export default class RecordsCollection {
 	fetch(params) {
 		var paramStrings = [];
 
-		var queryParams = Object.assign({}, config.requiredParams, params);
-
-		// Anpassa params till ES Djangi api
-		if (queryParams.search) {
-			if (queryParams.search_field == 'person') {
-				queryParams.person = queryParams.search;
-				delete queryParams.search;
-			}
-			if (queryParams.search_field == 'place') {
-				queryParams.place = queryParams.search;
-				delete queryParams.search;
-			}
-			delete queryParams.search_field;
+		if (params.record_ids) { // Hämtar bara vissa sägner
+			paramStrings.push('documents='+params.record_ids);
 		}
+		else {
+			var queryParams = Object.assign({}, config.requiredParams, params);
 
-		for (var key in queryParams) {
-			if (queryParams[key]) {
-				paramStrings.push(key+'='+queryParams[key]);
+			// Anpassa params till ES Djangi api
+			if (queryParams.search) {
+				if (queryParams.search_field == 'person') {
+					queryParams.person = queryParams.search;
+					delete queryParams.search;
+				}
+				if (queryParams.search_field == 'place') {
+					queryParams.place = queryParams.search;
+					delete queryParams.search;
+				}
+				delete queryParams.search_field;
+			}
+
+			for (var key in queryParams) {
+				if (queryParams[key]) {
+					paramStrings.push(key+'='+queryParams[key]);
+				}
 			}
 		}
-
-//		if (!window.applicationSettings.includeNordic) {
-//			paramStrings.push('country='+config.country);
-//		}
 
 		var paramString = paramStrings.join('&');
 

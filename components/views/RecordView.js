@@ -61,7 +61,7 @@ export default class RecordView extends React.Component {
 			});
 
 			if (window.eventBus) {
-				window.eventBus.dispatch('popup-notification.notify', null, '<strong>'+this.state.data.title+'</strong> har sparats till dina sägner.');
+				window.eventBus.dispatch('popup-notification.notify', null, '<strong>'+this.state.data.title+'</strong> '+l('har sparats till dina sägner')+'.');
 			}
 
 		}
@@ -232,14 +232,14 @@ export default class RecordView extends React.Component {
 			if (this.state.data.taxonomy) {
 				if (this.state.data.taxonomy.name) {
 					taxonomyElement = <p><strong>{l('Kategori')}</strong><br/>
-						<a href={'#/places/category/'+this.state.data.taxonomy.category.toLowerCase()}>{this.state.data.taxonomy.name}</a></p>;
+						<a href={'#/places/category/'+this.state.data.taxonomy.category.toLowerCase()}>{l(this.state.data.taxonomy.name)}</a></p>;
 				}
 				else if (this.state.data.taxonomy.length > 0) {
 					taxonomyElement = <p><strong>{l('Kategori')}</strong><br/>
 						<span dangerouslySetInnerHTML={{__html: _.map(_.filter(this.state.data.taxonomy, function(taxonomyItem) {
 							return taxonomyItem.category;
 						}), function(taxonomyItem) {
-									return '<a href="#/places/category/'+taxonomyItem.category.toLowerCase()+'">'+taxonomyItem.name+'</a>'
+									return '<a href="#/places/category/'+taxonomyItem.category.toLowerCase()+'">'+l(taxonomyItem.name)+'</a>'
 								}).join(', ')}} >
 						</span></p>;
 				}
@@ -264,7 +264,10 @@ export default class RecordView extends React.Component {
 							</div>
 						</div>
 
-						<FeedbackButton title={this.state.data.title} type="Sägen" />
+						{
+							!config.siteOptions.hideContactButton &&
+							<FeedbackButton title={this.state.data.title} type="Sägen" />
+						}
 					</div>
 
 					<div className="row">

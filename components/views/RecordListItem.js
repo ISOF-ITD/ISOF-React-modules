@@ -23,11 +23,11 @@ export default class RecordListItem extends React.Component {
 			if (this.props.item._source.taxonomy.name) {
 				if (visibleCategories) {
 					if (visibleCategories.indexOf(this.props.item._source.taxonomy.type.toLowerCase()) > -1) {
-						taxonomyElement = <a href={'#/places/category/'+this.props.item._source.taxonomy.category.toLowerCase()}>{this.props.item._source.taxonomy.name}</a>;
+						taxonomyElement = <a href={'#/places/category/'+this.props.item._source.taxonomy.category.toLowerCase()}>{l(this.props.item._source.taxonomy.name)}</a>;
 					}
 				}
 				else {
-					taxonomyElement = <a href={'#/places/category/'+this.props.item._source.taxonomy.category.toLowerCase()}>{this.props.item._source.taxonomy.name}</a>;
+					taxonomyElement = <a href={'#/places/category/'+this.props.item._source.taxonomy.category.toLowerCase()}>{l(this.props.item._source.taxonomy.name)}</a>;
 				}
 			}
 			else if (this.props.item._source.taxonomy.length > 0) {
@@ -35,11 +35,11 @@ export default class RecordListItem extends React.Component {
 							if (taxonomyItem.category) {
 								if (visibleCategories) {
 									if (visibleCategories.indexOf(taxonomyItem.type.toLowerCase()) > -1) {
-										return '<a href="#/places/category/'+taxonomyItem.category.toLowerCase()+'">'+taxonomyItem.name+'</a>'
+										return '<a href="#/places/category/'+taxonomyItem.category.toLowerCase()+'">'+l(taxonomyItem.name)+'</a>'
 									}
 								}
 								else {
-									return '<a href="#/places/category/'+taxonomyItem.category.toLowerCase()+'">'+taxonomyItem.name+'</a>'
+									return '<a href="#/places/category/'+taxonomyItem.category.toLowerCase()+'">'+l(taxonomyItem.name)+'</a>'
 								}
 							}
 						})).join(', ')}} >

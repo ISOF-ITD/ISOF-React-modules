@@ -16,6 +16,11 @@ export default class SitevisionContent extends React.Component {
 		if (this.props.url) {
 			this.fetchContent(this.props.url);
 		}
+		else if (this.props.htmlContent) {
+			this.setState({
+				htmlContent: this.props.htmlContent
+			});
+		}
 	}
 
 	componentWillReceiveProps(props) {
