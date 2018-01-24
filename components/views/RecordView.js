@@ -181,7 +181,7 @@ export default class RecordView extends React.Component {
 							<a href={'#place/'+person.home[0].id}>{person.home[0].name+', '+person.home[0].harad}</a>
 						}
 					</td>
-					<td data-title="Roll">{person.relation == 'c' ? 'Upptecknare' : person.relation == 'i' ? 'Informant' : ''}</td>
+					<td data-title="Roll">{person.relation == 'c' ? l('Upptecknare') : person.relation == 'i' ? l('Informant') : ''}</td>
 				</tr>;
 			}) : [];
 
@@ -310,7 +310,7 @@ export default class RecordView extends React.Component {
 
 					</div>
 
-					<ShareButtons path={config.siteUrl+'#/record/'+this.state.data.id} text={'"'+this.state.data.title+'"'} />
+					<ShareButtons path={config.siteUrl+'#/record/'+this.state.data.id} text={'"'+this.state.data.title+'"'} title={l('Dela sägen på sociala media')} />
 
 					<hr/>
 

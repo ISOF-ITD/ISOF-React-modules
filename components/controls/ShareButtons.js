@@ -74,6 +74,10 @@ export default class RecordView extends React.Component {
 
 	render() {
 		return <div className="share-buttons">
+			{
+				this.props.title && this.props.title != '' &&
+				<label>{this.props.title}</label>
+			}
 			<div className="fb-share-button u-cf" 
 				data-href={this.props.path} 
 				data-layout="button_count"></div>
@@ -81,7 +85,7 @@ export default class RecordView extends React.Component {
 				href={'https://twitter.com/intent/tweet?text='+(this.props.text == undefined ? '' : this.props.text)+'&url='+this.props.path}><span style={{display: 'none'}}>Tweet</span></a>
 				{
 					!this.props.hideLink &&
-					<span><br/><br/><a className="text-smaller" href={this.props.path} onClick={this.linkClickHandler}>{this.props.path}</a></span>
+					<span><br/><a className="text-smaller" href={this.props.path} onClick={this.linkClickHandler}>{this.props.path}</a></span>
 				}
 		</div>;
 	}

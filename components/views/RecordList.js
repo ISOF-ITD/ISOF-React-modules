@@ -23,7 +23,7 @@ export default class RecordList extends React.Component {
 		this.collections = new RecordsCollection(function(json) {
 			if (!json.data || json.data.length == 0) {
 				if (window.eventBus) {
-					window.eventBus.dispatch('popup-notification.notify', null, 'Inga sökträffar');
+					window.eventBus.dispatch('popup-notification.notify', null, l('Inga sökträffar'));
 				}
 			}
 
