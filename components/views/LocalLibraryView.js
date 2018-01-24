@@ -55,10 +55,9 @@ export default class LocalLibraryView extends React.Component {
 	copyLinkClickHandler(event) {
 		if (clipboard.copy(event.currentTarget.dataset.url)) {
 			if (window.eventBus) {
-				window.eventBus.dispatch('popup-notification.notify', null, 'Länk till dina sägner har kopierats.');
+				window.eventBus.dispatch('popup-notification.notify', null, l('Länk till dina sägner har kopierats.'));
 			}
 		}
-
 	}
 
 	render() {
@@ -78,20 +77,20 @@ export default class LocalLibraryView extends React.Component {
 					item.place && <span className="u-pull-right">{item.place}</span>
 				}
 			</a>
-		}.bind(this)) : <h3 className="text-center">Inga sparade sägner</h3>;
+		}.bind(this)) : <h3 className="text-center">{l('Inga sparade sägner')}</h3>;
 
 		var legendIds = this.savedRecords.map(function(item) {
 			return item.id;
-		}).join(';');
+		}).join(',');
 
 		var shareLink = 'places/record_ids/'+legendIds;
 
 		var footerContent = <div className="drowdown-footer">
 			{
 				this.state.dropdownOpen &&
-				<ShareButton ref="shareButtons" manualInit={true} path={config.siteUrl+'#/'+shareLink} text="Några intressanta sägner på sägenkartan: " />
+				<ShareButton ref="shareButtons" hideLink={true} manualInit={true} path={config.siteUrl+'#/'+shareLink} text={l('Några intressanta sägner på sägenkartan: ')} />
 			}
-			<a className="u-pull-right u-cursor-pointer" onClick={this.copyLinkClickHandler} data-url={config.siteUrl+'#/'+shareLink}>Kopiera länk</a>
+			<a className="u-pull-right u-cursor-pointer" onClick={this.copyLinkClickHandler} data-url={config.siteUrl+'#/'+shareLink}>{l('Kopiera länk')}</a>
 		</div>;
 
 		return (
@@ -106,7 +105,7 @@ export default class LocalLibraryView extends React.Component {
 					forgetAfterClick={true} 
 					manuallyOpen={true} 
 					closeTrigger="click" 
-					message="Klicka här för att visa lista över dina sparade sägner."
+					message={l('Klicka här för att visa lista över dina sparade sägner.')}
 				>
 					<DropdownMenu className={'map-floating-control map-floating-button visible library-open-button has-footer'+(this.savedRecords && this.savedRecords.length > 0 ? ' has-items' : '')} 
 						dropdownDirection="up" 

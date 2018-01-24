@@ -166,7 +166,8 @@ export default class MapView extends React.Component {
 				this.markers = L.heatLayer([], {
 					minOpacity: 0.35,
 					radius: 18,
-					blur: 15
+					blur: 15,
+					maxZoom: 4
 				});
 				this.markers.addTo(this.refs.mapView.map);
 		}
@@ -241,17 +242,17 @@ export default class MapView extends React.Component {
 				var bounds = [];
 				
 				var minValue = _.min(this.mapData, function(mapItem) {
-					return Number(mapItem.c);
-				}).c;
+					return Number(mapItem.doc_count);
+				}).doc_count;
 
 				var maxValue = _.max(this.mapData, function(mapItem) {
-					return Number(mapItem.c);
-				}).c;
+					return Number(mapItem.doc_count);
+				}).doc_count;
 
 				_.each(this.mapData, function(mapItem) {
-					if (mapItem.lat && mapItem.lng) {
-						var marker = L.circleMarker([mapItem.lat, mapItem.lng], {
-							radius: ((mapItem.c/maxValue)*20)+2,
+					if (mapItem.location.length > 0) {
+						var marker = L.circleMarker(mapItem.location, {
+							radius: ((mapItem.doc_count/maxValue)*20)+2,
 							fillColor: "#047bff",
 							fillOpacity: 0.4,
 							color: '#000',
@@ -281,7 +282,7 @@ export default class MapView extends React.Component {
 		}
 		if (this.state.viewMode == 'heatmap') {
 			var latLngs = _.map(this.mapData, function(mapItem) {
-				return [mapItem.lat, mapItem.lng, 0.5];
+				return [mapItem.location[0], mapItem.location[1], 0.5];
 			}.bind(this));
 			this.markers.setLatLngs(latLngs);
 		}
@@ -289,19 +290,20 @@ export default class MapView extends React.Component {
 			this.refs.mapView.map.removeLayer(this.markers);
 
 			var maxCount = _.max(this.mapData, function(mapItem) {
-				return Number(mapItem.c);
-			}).c;
+				return Number(mapItem.doc_count);
+			}).doc_count;
 
 			this.markers = L.heatLayer([], {
 				minOpacity: 0.35,
 				radius: 18,
 				blur: 15,
-				max: maxCount
+				max: maxCount,
+				maxZoom: 0
 			});
 			this.markers.addTo(this.refs.mapView.map);
 
 			var latLngs = _.map(this.mapData, function(mapItem) {
-				return [mapItem.lat, mapItem.lng, mapItem.c];
+				return [mapItem.location[0], mapItem.location[1], mapItem.doc_count];
 			}.bind(this));
 			this.markers.setLatLngs(latLngs);
 		}
@@ -328,8 +330,8 @@ export default class MapView extends React.Component {
 							onClick={this.changeViewMode}>
 							<span>Cluster</span>
 						</a>
-						<a className={'icon-heatmap'+(this.state.viewMode == 'heatmap' ? ' selected' : '')} 
-							data-viewmode="heatmap" 
+						<a className={'icon-heatmap'+(this.state.viewMode == 'heatmap-count' ? ' selected' : '')} 
+							data-viewmode="heatmap-count" 
 							onClick={this.changeViewMode}>
 							<span>Heatmap</span>
 						</a>

@@ -3,10 +3,19 @@ import React from 'react';
 import L from 'leaflet';
 import 'leaflet.markercluster';
 import 'leaflet.locatecontrol';
+import './../../lib/leaflet.active-layers';
 
 import mapHelper from './../../utils/mapHelper';
 
 export default class MapBase extends React.Component {
+	constructor(props) {
+		super(props);
+
+		this.nordicLegendsUpdateHandler = this.nordicLegendsUpdateHandler.bind(this);
+
+		this.state = {};
+	}
+
 	componentDidMount() {
 		var layers = mapHelper.createLayers();
 
@@ -54,14 +63,30 @@ export default class MapBase extends React.Component {
 			}
 		}).addTo(this.map);
 
-		L.control.layers(layers, null, {
+		this.layersControl = L.control.activeLayers(layers, null, {
 			position: this.props.layersControlPosition || 'topright'
 		}).addTo(this.map);
 
 		this.map.on('baselayerchange', this.mapBaseLayerChangeHandler.bind(this));
+
+		if (window.eventBus) {
+			// Om kartan inkluderar nordiskt material, byt kartan till OpenStreetMap för Lantmäteriets karta visar bara Sverige
+			window.eventBus.addEventListener('nordicLegendsUpdate', this.nordicLegendsUpdateHandler);
+		}
+	}
+
+	nordicLegendsUpdateHandler(event, data) {
+		// Byt karta till OpenStreetMap
+		if (!this.props.disableSwedenMap && data.includeNordic && this.layersControl.getActiveBaseLayer().name.indexOf('Lantmäteriet') > -1) {
+			mapView.mapBase.layersControl._layers[1].layer.addTo(mapView.mapBase.map);
+			mapView.mapBase.layersControl._onInputClick();
+		}
 	}
 
 	mapBaseLayerChangeHandler(event) {
+		console.log('mapBaseLayerChangeHandler');
+		console.log(event);
+
 		if (event.name.indexOf('Lantmäteriet') > -1 && this.map.options.crs.code != 'EPSG:3006') {
 			var mapCenter = this.map.getCenter();
 			var mapZoom = this.map.getZoom();
