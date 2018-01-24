@@ -16,6 +16,10 @@
 		margin-bottom: 0;
 	}
 
+	&.no-padding {
+		padding: 0;
+	}
+
 	.map-controls {
 		position: absolute;
 		top: 10px;
@@ -57,7 +61,7 @@
 	&.full-screen {
 		position: fixed;
 
-		top: 153px;
+		top: 0;
 		left: 0;
 		right: 0;
 		bottom: 0;
@@ -66,7 +70,23 @@
 
 		margin-bottom: 0;
 
-		z-index: 1000;
+		z-index: 1200;
+	}
+}
+
+path.letter-path {
+	stroke: #000;
+	stroke-width: 2px;
+	stroke-dasharray: 5px 8px;
+	animation: letter-travel 0.8s linear infinite;
+}
+
+@keyframes letter-travel {
+	0% {
+		stroke-dashoffset: 0;
+	}
+	100% {
+		stroke-dashoffset: -13;
 	}
 }
 
