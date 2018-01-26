@@ -75,10 +75,13 @@ export default class RecordView extends React.Component {
 	render() {
 		return <div className="share-buttons">
 			{
-				this.props.title && this.props.title != '' &&
-				<label>{this.props.title}</label>
+				this.props.title && this.props.title != '' && 
+				<div>
+					<label>{this.props.title}</label>
+					<div className="u-cf" />
+				</div>
 			}
-			<div className="fb-share-button u-cf" 
+			<div className="fb-share-button" 
 				data-href={this.props.path} 
 				data-layout="button_count"></div>
 			<a className="twitter-share-button"
