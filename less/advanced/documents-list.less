@@ -7,18 +7,18 @@
 		.dropdown-link {
 			padding: 5px;
 			margin-bottom: 0;
-			
+
 			color: #931123;
 			font-weight: bold;
-			
+
 			border: none;
 		}
 
 		.dropdown-container {
 			padding: 10px;
-			
+
 			background: #fcfcfc;
-			
+
 			box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
 
 			.list-container {
@@ -49,7 +49,7 @@
 
 	.list-heading {
 		padding: 15px;
-		
+
 		border-bottom: 1px solid #f0f2f3;
 
 		background: #fdfdfd;
@@ -60,10 +60,10 @@
 			padding: 5px;
 			margin-bottom: 0;
 			margin-right: 10px;
-			
+
 			border: none;
 			border-radius: 0;
-			
+
 			color: #931123;
 			font-weight: bold;
 			line-height: inherit;
@@ -100,6 +100,8 @@
 				padding: 15px;
 
 				font-weight: bold;
+
+				white-space: nowrap;
 			}
 
 			.highlight-content {
@@ -173,7 +175,7 @@
 
 				overflow: hidden;
 
-				&.trimmed {				
+				&.trimmed {
 					&:after {
 						content: " ";
 
@@ -203,7 +205,7 @@
 			.header {
 				border-top: 2px solid @color-red;
 			}
-	
+
 			.content {
 				max-height: 2000px;
 
@@ -215,7 +217,7 @@
 
 	.list-footer {
 		padding: 15px;
-		
+
 		border-top: 1px solid #f0f2f3;
 
 		background: #fdfdfd;
@@ -229,7 +231,7 @@
 
 	.highlight-table {
 		width: 100%;
-		
+
 		border-collapse: collapse;
 
 		tr {
@@ -244,8 +246,7 @@
 
 				white-space: nowrap;
 
-				&.highlight-cell {
-					text-align: center;
+				.highlight {
 					font-weight: bold;
 				}
 
@@ -253,8 +254,10 @@
 					text-align: right;
 				}
 
-				&:nth-child(n+4) {
-					display: none;
+				&::nth-child(2) {
+					.highlight {
+						display: block;
+					}
 				}
 			}
 		}

@@ -41,6 +41,10 @@ export default class PopulatedCheckBoxList extends React.Component {
 					state.currentFilter = state.filterOptions[0];
 				}
 
+				if (this.props.onFetch) {
+					this.props.onFetch(state.data);
+				}
+
 				this.setState(state);
 			}.bind(this))
 			.catch(function(ex) {
@@ -74,25 +78,25 @@ export default class PopulatedCheckBoxList extends React.Component {
 			return <div>
 				<select style={selectElementStyle} onChange={function(event) {this.setState({currentFilter: event.target.value})}.bind(this)} value={this.state.currentFilter}>
 					{
-						_.map(this.state.filterOptions, function(item) {
-							return <option key={item}>{item}</option>
+						_.map(this.state.filterOptions, function(item, index) {
+							return <option key={index}>{item}</option>
 						})
 					}
 				</select>
 				<CheckBoxList values={values}
-					valueField={this.props.valueField} 
-					labelField={this.props.labelField} 
-					labelFunction={this.props.labelFunction} 
-					selectedItems={this.state.selectedItems}  
+					valueField={this.props.valueField}
+					labelField={this.props.labelField}
+					labelFunction={this.props.labelFunction}
+					selectedItems={this.state.selectedItems}
 					onSelectionChange={this.checkBoxListChangeHandler} />
 			</div>;
 		}
 		else {
 			return <CheckBoxList values={this.state.data}
-				valueField={this.props.valueField} 
-				labelField={this.props.labelField} 
-				labelFunction={this.props.labelFunction} 
-				selectedItems={this.state.selectedItems}  
+				valueField={this.props.valueField}
+				labelField={this.props.labelField}
+				labelFunction={this.props.labelFunction}
+				selectedItems={this.state.selectedItems}
 				onSelectionChange={this.checkBoxListChangeHandler} />
 		}
 	}
