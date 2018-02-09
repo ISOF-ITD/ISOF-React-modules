@@ -4,11 +4,21 @@ import config from './../../scripts/config.js';
 
 export default {
 	_getList() {
-		return localStorage.getItem(config.localLibraryName) ? JSON.parse(localStorage.getItem(config.localLibraryName)) : [];
+		try {
+			return localStorage.getItem(config.localLibraryName) ? JSON.parse(localStorage.getItem(config.localLibraryName)) : [];
+		}
+		catch (e) {
+			return [];
+		}
 	},
 
 	_saveList(list) {
-		localStorage.setItem(config.localLibraryName, JSON.stringify(list));
+		try {
+			localStorage.setItem(config.localLibraryName, JSON.stringify(list));
+		}
+		catch (e) {
+			
+		}
 	},
 
 	add(item) {

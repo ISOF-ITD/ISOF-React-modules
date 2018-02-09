@@ -15,7 +15,7 @@
 	opacity: 0;
 
 	pointer-events: none;
-	
+
 	.transition(opacity 500ms ease-in-out);
 
 	&.light-modal {
@@ -66,7 +66,7 @@
 			height: 30px;
 
 			background: rgba(0, 0, 0, 0.45);
-			
+
 			border: 5px solid rgba(0, 0, 0, 0);
 			border-radius: 0;
 			box-sizing: border-box;
@@ -139,6 +139,10 @@
 
 		&.medium {
 			width: 800px;
+
+			@media (max-width: 800px) {
+				width: 100%;
+			}
 		}
 
 		&.large {
