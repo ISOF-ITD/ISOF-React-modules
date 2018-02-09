@@ -24,7 +24,7 @@ export default class MapBase extends React.Component {
 		}
 
 		var mapOptions = {
-			center: this.props.center || [63.5, 16.7211], 
+			center: this.props.center || [63.5, 16.7211],
 			zoom: this.props.zoom || 4,
 			minZoom: 4,
 			maxZoom: 13,
@@ -84,9 +84,6 @@ export default class MapBase extends React.Component {
 	}
 
 	mapBaseLayerChangeHandler(event) {
-		console.log('mapBaseLayerChangeHandler');
-		console.log(event);
-
 		if (event.name.indexOf('Lantmäteriet') > -1 && this.map.options.crs.code != 'EPSG:3006') {
 			var mapCenter = this.map.getCenter();
 			var mapZoom = this.map.getZoom();

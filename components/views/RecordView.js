@@ -127,7 +127,7 @@ export default class RecordView extends React.Component {
 				});
 				imageItems = imageDataItems.map(function(mediaItem, index) {
 					if (mediaItem.source.indexOf('.pdf') == -1) {
-						return <div data-type="image" data-image={mediaItem.source} onClick={this.mediaImageClickHandler} key={'image-'+index} className="archive-image">
+						return <div data-type="image" data-image={mediaItem.source} onClick={this.mediaImageClickHandler} key={'image-'+index} className={'archive-image'+(!this.state.data.text || this.state.data.text.length == 0 ? ' large' : '')}>
 							<img src={config.imageUrl+mediaItem.source} alt="" />
 							{
 								mediaItem.title &&
@@ -203,14 +203,16 @@ export default class RecordView extends React.Component {
 			if (sitevisionUrl) {
 				textElement = <SitevisionContent url={sitevisionUrl.value} />
 			}
+
 			else if (this.state.data.text && this.state.data.text.indexOf('transkriberad') > -1 && this.state.data.text.length < 25 && this.state.data.media.length > 0) {
-				textElement = <p><TranscribeButton 
-					className="button-primary" 
-					label="Transkribera" 
-					title={this.state.data.title} 
-					recordId={this.state.data.id} 
-					images={this.state.data.media} /></p>;
+				textElement = <div><p><strong>Den här uppteckningen är inte transkriberad.</strong><br/><br/>Vill du vara med och tillgängliggöra samlingarna för fler? Hjälp oss att skriva av berättelser!</p><TranscribeButton
+					className="button-primary"
+					label="Transkribera"
+					title={this.state.data.title}
+					recordId={this.state.data.id}
+					images={this.state.data.media} /></div>;
 			}
+
 			else if ((!this.state.data.text || this.state.data.text.length == 0) && _.find(this.state.data.media, function(item) {
 				return item.type == 'pdf';
 			})) {
@@ -247,17 +249,17 @@ export default class RecordView extends React.Component {
 
 
 			return <div className={'container'+(this.state.data.id ? '' : ' loading')}>
-			
+
 					<div className="container-header">
 						<div className="row">
 							<div className="twelve columns">
-								<h2>{this.state.data.title} <ElementNotificationMessage 
-																placement="under" 
-																placementOffsetX="-1" 
-																messageId="saveLegendsNotification" 
-																forgetAfterClick={true} 
-																closeTrigger="click" 
-																autoHide={true} 
+								<h2>{this.state.data.title} <ElementNotificationMessage
+																placement="under"
+																placementOffsetX="-1"
+																messageId="saveLegendsNotification"
+																forgetAfterClick={true}
+																closeTrigger="click"
+																autoHide={true}
 																message={l('Klicka på stjärnan för att spara sägner till din egen lista.')}>
 									<button className={'save-button'+(this.state.saved ? ' saved' : '')} onClick={this.toggleSaveRecord}><span>{l('Spara')}</span></button></ElementNotificationMessage></h2>
 								<p><strong>Materialtyp</strong>: {this.state.data.materialtype}</p>

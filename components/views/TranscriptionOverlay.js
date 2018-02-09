@@ -73,9 +73,12 @@ export default class TranscriptionOverlay extends React.Component {
 				this.state.messageInput
 		};
 
-		fetch(config.apiUrl+'transcribe', {
+		var formData = new FormData();
+		formData.append("json", JSON.stringify(data) );
+
+		fetch(config.restApiUrl+'feedback/', {
 			method: "POST",
-			body: JSON.stringify(data)
+			body: formData
 		})
 		.then(function(response) {
 			return response.json()
@@ -116,18 +119,19 @@ export default class TranscriptionOverlay extends React.Component {
 			var overlayContent = <div className="row">
 
 				<div className="four columns">
-					<p>Transkribera '<a href={this.state.url}>{this.state.title}</a>'.<br/><br/></p>
+					<p>Transkribera '<a href={this.state.url}>{this.state.title}</a>'.</p>
+					<p><a href="http://www.sprakochfolkminnen.se/om-oss/kartor/sagenkartan/transkribera.html"><strong>Lås mer om att transkribera.</strong></a><br/><br/></p>
 
 					<hr/>
 
-					<label>Ditt namn:</label>
-					<input name="nameInput" className="u-full-width" type="text" value={this.state.nameInput} onChange={this.inputChangeHandler} />
-
-					<label>Din e-post adress:</label>
-					<input name="emailInput" className="u-full-width" type="text" value={this.state.emailInput} onChange={this.inputChangeHandler} />
-
 					<label>Transkription:</label>
 					<textarea name="messageInput" className="u-full-width" value={this.state.messageInput} onChange={this.inputChangeHandler} style={{height: 380}}></textarea>
+
+					<label>Ditt namn (frivilligt):</label>
+					<input name="nameInput" className="u-full-width" type="text" value={this.state.nameInput} onChange={this.inputChangeHandler} />
+
+					<label>Din e-post adress (frivilligt):</label>
+					<input name="emailInput" className="u-full-width" type="text" value={this.state.emailInput} onChange={this.inputChangeHandler} />
 
 					<button className="button-primary" onClick={this.sendButtonClickHandler}>Skicka</button>
 				</div>
@@ -146,7 +150,7 @@ export default class TranscriptionOverlay extends React.Component {
 
 		return <div className={'overlay-container'+(this.state.visible ? ' visible' : '')}>
 			<div className="overlay-window large">
-				
+
 				<div className="overlay-header">
 					Transkribera
 					<button className="close-button white" onClick={this.closeButtonClickHandler}></button>
