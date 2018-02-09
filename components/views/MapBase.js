@@ -45,23 +45,25 @@ export default class MapBase extends React.Component {
 			position: this.props.zoomControlPosition || 'topright'
 		}).addTo(this.map);
 
-		L.control.locate({
-			showPopup: false,
-			icon: 'map-location-icon',
-			position: this.props.zoomControlPosition || 'topright',
-			locateOptions: {
-				maxZoom: 9
-			},
-			markerStyle: {
-				weight: 2,
-				fillColor: '#ffffff',
-				fillOpacity: 1
-			},
-			circleStyle: {
-				weight: 1,
-				color: '#a6192e'
-			}
-		}).addTo(this.map);
+		if (!this.props.disableLocateControl) {
+			L.control.locate({
+				showPopup: false,
+				icon: 'map-location-icon',
+				position: this.props.zoomControlPosition || 'topright',
+				locateOptions: {
+					maxZoom: 9
+				},
+				markerStyle: {
+					weight: 2,
+					fillColor: '#ffffff',
+					fillOpacity: 1
+				},
+				circleStyle: {
+					weight: 1,
+					color: '#a6192e'
+				}
+			}).addTo(this.map);
+		}
 
 		this.layersControl = L.control.activeLayers(layers, null, {
 			position: this.props.layersControlPosition || 'topright'

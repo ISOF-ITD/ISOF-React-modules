@@ -73,7 +73,7 @@ export default class PersonView extends React.Component {
 
 		return (
 			<div className={'container'+(this.state.data.id ? '' : ' loading')}>
-				
+
 				<div className="container-header">
 					<div className="row">
 						<div className="twelve columns">
@@ -126,11 +126,11 @@ export default class PersonView extends React.Component {
 				<hr/>
 
 				<div className="row">
-			
+
 					<div className="twelve columns">
 						<h3>{l('Uppteckningar')}</h3>
 
-						<RecordList disableRouterPagination={true} disableAutoFetch={true} person={this.state.personId} />
+						<RecordList nordic={true} disableRouterPagination={true} disableAutoFetch={true} person={this.state.personId} />
 
 					</div>
 				</div>
