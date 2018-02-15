@@ -30,7 +30,7 @@ export default class RecordListItem extends React.Component {
 					taxonomyElement = <a href={'#/places/category/'+this.props.item._source.taxonomy.category.toLowerCase()}>{l(this.props.item._source.taxonomy.name)}</a>;
 				}
 			}
-			else if (this.props.item._source.taxonomy.length > 0) {
+			else if (this.props.item._source.taxonomy.length > 0 && (!config.siteOptions.recordList || config.siteOptions.recordList.hideCategories == true)) {
 				taxonomyElement = <span dangerouslySetInnerHTML={{__html: _.compact(_.map(this.props.item._source.taxonomy, function(taxonomyItem) {
 							if (taxonomyItem.category) {
 								if (visibleCategories) {
@@ -61,20 +61,23 @@ export default class RecordListItem extends React.Component {
 					<div className="item-summary">{textSummary}</div>
 				}
 			</td>
-			<td data-title={l('Kategori')+':'}>
-				{
-					taxonomyElement
-				}
-			</td>
+			{
+				!config.siteOptions.recordList || !config.siteOptions.recordList.hideCategories == true &&
+				<td data-title={l('Kategori')+':'}>
+					{
+						taxonomyElement
+					}
+				</td>
+			}
 			<td data-title={l('Socken, Landskap')+':'}>
 			{
 				this.props.item._source.places && this.props.item._source.places.length > 0 &&
 				<a target={config.embeddedApp ? '_parent' : '_self'} href={(config.embeddedApp ? config.siteUrl : '')+'#place/'+this.props.item._source.places[0].id}>{this.props.item._source.places[0].name+(this.props.item._source.places[0].landskap || this.props.item._source.places[0].fylke ? (this.props.item._source.places[0].landskap ? ', '+this.props.item._source.places[0].landskap : this.props.item._source.places[0].fylke ? ', '+this.props.item._source.places[0].fylke : '') : '')}</a>
 			}
 			</td>
-			<td data-title={l('Uppteckningsår')+':'}>{this.props.item._source.year > 0 ? this.props.item._source.year : ''}</td>
+			<td data-title={l('Uppteckningsår')+':'}>{this.props.item._source.year ? this.props.item._source.year.split('-')[0] : ''}</td>
 			{
-				!config.siteOptions.recordList || config.siteOptions.recordList.hideMaterialType == true &&
+				!config.siteOptions.recordList || !config.siteOptions.recordList.hideMaterialType == true &&
 				<td data-title={l('Materialtyp')+':'}>{this.props.item._source.materialtype}</td>
 			}
 		</tr>;
