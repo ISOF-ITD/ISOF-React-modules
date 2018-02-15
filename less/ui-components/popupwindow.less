@@ -390,6 +390,44 @@
 				.transition(all 400ms ease-in-out);
 			}
 		}
+
+		.grid-items {
+			margin: 0 -20px;
+
+			.grid-item {
+				float: left;
+
+				width: 33%;
+				
+				padding: 0 20px 20px 20px;
+				
+				box-sizing: border-box;
+			}
+
+			.grid-divider-2 {
+				display: none;
+			}
+
+			@media (max-width: 900px) {
+				.grid-item {
+					width: 50%;
+				}
+
+				.grid-divider-3 {
+					display: none;
+				}
+
+				.grid-divider-2 {
+					display: block;
+				}
+			}
+
+			@media (max-width: 400px) {
+				.grid-item {
+					width: 100%;
+				}
+			}
+		}
 	}
 }
 

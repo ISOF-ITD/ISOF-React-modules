@@ -465,6 +465,7 @@
 				text-decoration: none;
 
 				border-bottom: 1px solid #ccc;
+				box-sizing: border-box;
 
 				cursor: pointer;
 
@@ -477,6 +478,30 @@
 
 					background-color: @color-red-lighter;
 				}
+			}
+
+			.grid-list {
+				.item {
+					float: left;
+
+					width: 50%;
+
+					&:nth-child(2n) {
+						border-left: 1px solid #ccc;
+					}
+				}
+			}
+
+			.list-subheading {
+				display: block;
+
+				padding: 10px 15px;
+
+				color: #333;
+				text-decoration: none;
+				font-weight: bold;
+
+				border-bottom: 1px solid #ccc;
 			}
 		}
 

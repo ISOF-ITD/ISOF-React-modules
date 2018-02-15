@@ -247,6 +247,35 @@ export default class RecordView extends React.Component {
 				}
 			}
 
+			var metadataItems = [];
+
+			var getMetadataTitle = function(item) {
+				return config.siteOptions.metadataLabels && config.siteOptions.metadataLabels[item] ? config.siteOptions.metadataLabels[item] : item;
+			};
+
+			if (this.state.data.metadata && this.state.data.metadata.length > 0 && config.siteOptions.recordView && config.siteOptions.recordView.visible_metadata_fields && config.siteOptions.recordView.visible_metadata_fields.length > 0) {
+				var itemCount = 0;
+				_.each(this.state.data.metadata, function(item, index) {
+					if (config.siteOptions.recordView.visible_metadata_fields.indexOf(item.type) > -1) {
+						itemCount++;
+						metadataItems.push(
+							<div className="grid-item" key={item.type}>
+								<p><strong>{getMetadataTitle(item.type)}</strong><br />
+								{item.value}</p>
+							</div>
+						);
+
+						if (itemCount % 3 === 0 ) {
+							metadataItems.push(<div className="grid-divider-3 u-cf" key={'cf-'+index} />);
+						}
+
+						if (itemCount % 2 === 0 ) {
+							metadataItems.push(<div className="grid-divider-2 u-cf" key={'cf-'+index} />);
+						}
+					}
+				});
+			}
+
 
 			return <div className={'container'+(this.state.data.id ? '' : ' loading')}>
 
@@ -276,7 +305,7 @@ export default class RecordView extends React.Component {
 
 						{
 							(this.state.data.text || textElement) &&
-							<div className={(sitevisionUrl || imageItems.length == 0 || forceFullWidth ? 'twelve' : 'eight')+' columns'}>
+							<div className={(sitevisionUrl || imageItems.length == 0 || forceFullWidth || (config.siteOptions.recordView && config.siteOptions.recordView.full_audio_player) ? 'twelve' : 'eight')+' columns'}>
 								{
 									textElement
 								}
@@ -293,14 +322,14 @@ export default class RecordView extends React.Component {
 						}
 						{
 							(imageItems.length > 0 || audioItems.length > 0) &&
-							<div className={'columns '+(this.state.data.text && !sitevisionUrl && !forceFullWidth ? 'four u-pull-right' : 'twelve')}>
+							<div className={'columns '+(this.state.data.text && !sitevisionUrl && !forceFullWidth && !(config.siteOptions.recordView && config.siteOptions.recordView.full_audio_player) ? 'four u-pull-right' : 'twelve')}>
 								{
 									imageItems
 								}
 								{
 									audioItems.length > 0 &&
 									<div className="table-wrapper">
-										<table width="100%" className="table-responsive">
+										<table width="100%">
 											<tbody>
 												{audioItems}
 											</tbody>
@@ -312,7 +341,18 @@ export default class RecordView extends React.Component {
 
 					</div>
 
-					<ShareButtons path={config.siteUrl+'#/record/'+this.state.data.id} text={'"'+this.state.data.title+'"'} title={l('Dela sägen på sociala media')} />
+					{
+						metadataItems.length > 0 &&
+						<div className="grid-items">
+
+							{metadataItems}
+
+							<div className="u-cf" />
+
+						</div>
+					}
+
+					<ShareButtons path={config.siteUrl+'#/record/'+this.state.data.id} text={'"'+this.state.data.title+'"'} title={l('Dela på sociala media')} />
 
 					<hr/>
 
@@ -374,7 +414,7 @@ export default class RecordView extends React.Component {
 							<div className="six columns">
 								{
 									this.state.data.places && this.state.data.places.length > 0 && this.state.data.places[0].location.lat && this.state.data.places[0].location.lon &&
-									<SimpleMap marker={{lat: this.state.data.places[0].location.lat, lng: this.state.data.places[0].location.lon, label: this.state.data.places[0].name}} />
+									<SimpleMap markers={this.state.data.places} />
 								}
 							</div>
 
@@ -387,17 +427,17 @@ export default class RecordView extends React.Component {
 
 						<div className="four columns">
 							{
-								this.state.data.archive && this.state.data.archive.archive && this.state.data.archive.archive != 'null' &&
+								this.state.data.archive && this.state.data.archive.archive &&
 								<p><strong>{l('Arkiv')}</strong><br/>{this.state.data.archive.archive}</p>
 							}
 
 							{
-								this.state.data.archive && this.state.data.archive.archive && this.state.data.archive.archive_id != 'null' &&
+								this.state.data.archive && this.state.data.archive.archive &&
 								<p><strong>{l('Acc. nr')}</strong><br/>{this.state.data.archive.archive_id}</p>
 							}
 
 							{
-								this.state.data.archive && this.state.data.archive.archive && this.state.data.archive.page != 'null' &&
+								this.state.data.archive && this.state.data.archive.archive &&
 								<p><strong>{l('Sid. nr')}</strong><br/>{this.state.data.archive.page}</p>
 							}
 						</div>

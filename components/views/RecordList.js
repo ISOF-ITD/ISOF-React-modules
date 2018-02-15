@@ -145,7 +145,10 @@ export default class RecordList extends React.Component {
 						<thead>
 							<tr>
 								<th scope="col">{l('Titel')}</th>
-								<th scope="col">{l('Kategori')}</th>
+								{
+									!config.siteOptions.recordList || !config.siteOptions.recordList.hideCategories == true &&
+									<th scope="col">{l('Kategori')}</th>
+								}
 								<th scope="col">{l('Socken, Landskap')}</th>
 								<th scope="col">{l('Uppteckningsår')}</th>
 								{
