@@ -323,9 +323,7 @@ export default class RecordView extends React.Component {
 						{
 							(imageItems.length > 0 || audioItems.length > 0) &&
 							<div className={'columns '+(this.state.data.text && !sitevisionUrl && !forceFullWidth && !(config.siteOptions.recordView && config.siteOptions.recordView.full_audio_player) ? 'four u-pull-right' : 'twelve')}>
-								{
-									imageItems
-								}
+
 								{
 									audioItems.length > 0 &&
 									<div className="table-wrapper">
@@ -336,6 +334,11 @@ export default class RecordView extends React.Component {
 										</table>
 									</div>
 								}
+
+								{
+									imageItems
+								}
+
 							</div>
 						}
 

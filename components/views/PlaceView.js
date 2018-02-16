@@ -199,9 +199,7 @@ export default class PlaceView extends React.Component {
 					!this.props.route.hidePersons &&
 					<div className="row">
 						<div className="twelve columns">
-							<h3>{l('Intervjuade personer')}</h3>
-
-							<PersonList personType="informants" 
+							<PersonList personType="informants" title={l('Intervjuade personer')} 
 								nordic={this.state.nordic}
 								place={this.state.recordPlace}  />
 						</div>

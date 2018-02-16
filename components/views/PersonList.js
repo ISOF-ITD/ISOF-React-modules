@@ -91,6 +91,11 @@ export default class PersonList extends React.Component {
 			return (
 				<div className={'table-wrapper list-container'+(this.state.persons.length == 0 ? ' loading' : '')}>
 
+					{
+						this.props.title &&
+						<h3>{this.props.title}</h3>
+					}
+
 					<table width="100%" className="table-responsive">
 						<thead>
 							<tr>
