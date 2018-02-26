@@ -153,7 +153,7 @@ export default class RecordView extends React.Component {
 					return dataItem.type == 'pdf';
 				});
 				pdfItems = pdfDataItems.map(function(mediaItem, index) {
-					return <div data-type="pdf" data-image={mediaItem.source} onClick={this.mediaImageClickHandler} key={'pdf-'+index} className="archive-image">
+					return <div data-type="pdf" data-image={mediaItem.source} onClick={this.mediaImageClickHandler} key={'pdf-'+index} className="archive-image pdf">
 						<div className="pdf-icon" />
 						{
 							mediaItem.title &&
@@ -282,7 +282,7 @@ export default class RecordView extends React.Component {
 					<div className="container-header">
 						<div className="row">
 							<div className="twelve columns">
-								<h2>{this.state.data.title} <ElementNotificationMessage
+								<h2>{this.state.data.title && this.state.data.title != '' ? this.state.data.title : l('(Utan titel)')} <ElementNotificationMessage
 																placement="under"
 																placementOffsetX="-1"
 																messageId="saveLegendsNotification"
