@@ -117,7 +117,7 @@ export default class PersonView extends React.Component {
 					{
 						this.state.data.image &&
 						<div className="four columns">
-							<img className="archive-image" src={'http://www4.sprakochfolkminnen.se/Folkminnen/Svenska_sagor_filer/'+this.state.data.image} alt="" />
+							<img className="archive-image" src={(config.personImageUrl || config.imageUrl)+this.state.data.image} alt="" />
 						</div>
 					}
 
