@@ -7,6 +7,14 @@ import config from './../../../scripts/config.js';
 
 export default class RecordListItem extends React.Component {
 	render() {
+		if (config.siteOptions.recordList && config.siteOptions.recordList.displayPlayButton) {
+			var audioItem = _.find(this.props.item._source.media, function(item) {
+				return item.type == 'audio';
+			});
+
+			console.log(audioItem);
+		}
+
 		var displayTextSummary = false;
 		if (this.props.highlightRecordsWithMetadataField) {
 			if (_.findWhere(this.props.item._source.metadata, {type: this.props.highlightRecordsWithMetadataField})) {
@@ -51,10 +59,10 @@ export default class RecordListItem extends React.Component {
 			<td className="text-larger">
 				<a className="item-title" target={config.embeddedApp ? '_parent' : '_self'} href={(config.embeddedApp ? config.siteUrl : '')+'#record/'+this.props.item._source.id+(this.props.routeParams ? this.props.routeParams : '')}>
 					{
-						this.props.item._source.materieltype == 'inspelning' &&
-						<ListPlayButton />
+						config.siteOptions.recordList && config.siteOptions.recordList.displayPlayButton && audioItem != undefined &&
+						<ListPlayButton media={audioItem} recordId={this.props.item._source.id} recordTitle={this.props.item._source.title && this.props.item._source.title != '' ? this.props.item._source.title : l('(Utan titel)')} />
 					}
-					{this.props.item._source.title ? this.props.item._source.title : '(Utan titel'}
+					{this.props.item._source.title && this.props.item._source.title != '' ? this.props.item._source.title : l('(Utan titel)')}
 				</a>
 				{
 					displayTextSummary &&
