@@ -145,7 +145,7 @@ export default class RecordView extends React.Component {
 						<td data-title="Lyssna:" width="50px">
 							<ListPlayButton media={mediaItem} recordId={this.state.data.id} recordTitle={this.state.data.title} />
 						</td>
-						<td>{mediaItem.title}</td>
+						<td>{mediaItem.title.length > 0 ? mediaItem.title : this.state.data.title}</td>
 					</tr>;
 				}.bind(this));
 

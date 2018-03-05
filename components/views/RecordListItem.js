@@ -11,8 +11,6 @@ export default class RecordListItem extends React.Component {
 			var audioItem = _.find(this.props.item._source.media, function(item) {
 				return item.type == 'audio';
 			});
-
-			console.log(audioItem);
 		}
 
 		var displayTextSummary = false;

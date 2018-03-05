@@ -27,6 +27,7 @@ export default class GlobalAudioPlayer extends React.Component {
 		this.audio.addEventListener('ended', this.audioEndedHandler);
 		this.audio.addEventListener('play', this.audioPlayHandler);
 		this.audio.addEventListener('pause', this.audioPauseHandler);
+		this.audio.addEventListener('error', this.audioErrorHandler);
 
 		this.state = {
 			audio: null,
@@ -122,6 +123,12 @@ export default class GlobalAudioPlayer extends React.Component {
 		});
 	}
 
+	audioErrorHandler(event) {
+		if (window.eventBus) {
+			window.eventBus.dispatch('popup-notification.notify', null, l('Kan inte spela den här ljudfilen'));
+		}
+	}
+
 	togglePlay() {
 		if (this.state.loaded) {
 			if (this.state.playing) {
@@ -170,6 +177,7 @@ export default class GlobalAudioPlayer extends React.Component {
 
 				<div className="player-time">
 					{this.state.currentTime}
+					<div class="duration">{this.state.durationTime}</div>
 				</div>
 
 				<div className="player-content">
