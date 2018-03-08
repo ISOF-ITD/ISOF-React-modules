@@ -177,7 +177,7 @@ export default class GlobalAudioPlayer extends React.Component {
 
 				<div className="player-time">
 					{this.state.currentTime}
-					<div class="duration">{this.state.durationTime}</div>
+					<div className="duration">{this.state.durationTime}</div>
 				</div>
 
 				<div className="player-content">
