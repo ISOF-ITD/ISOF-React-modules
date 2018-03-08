@@ -51,19 +51,21 @@ export default class SitevisionContent extends React.Component {
 		
 		var rubrik = document.getElementById('Rubrik');
 
-		var mainElement = rubrik.parentElement.parentElement;
+		var mainElement = document.getElementsByClassName('pagecontent')[0];
 
-		var htmlContent = mainElement.innerHTML;
+		if (mainElement) {
+			var htmlContent = mainElement.innerHTML;
 
-		var scripts = mainElement.getElementsByTagName('script');
+			var scripts = mainElement.getElementsByTagName('script');
 
-		this.setState({
-			htmlContent: htmlContent
-		}, function() {
-			if (!this.props.disableScriptExecution) {
-				this.executeScripts(scripts);
-			}
-		}.bind(this));
+			this.setState({
+				htmlContent: htmlContent
+			}, function() {
+				if (!this.props.disableScriptExecution) {
+					this.executeScripts(scripts);
+				}
+			}.bind(this));
+		}
 	}
 
 	executeScripts(scriptTags) {
