@@ -9,6 +9,12 @@ import MapBase from './MapBase';
 import MapCollection from './../collections/MapCollection';
 import mapHelper from './../../utils/mapHelper';
 
+// Main CSS: ui-components/map.less
+//           ui-components/map-ui.less
+
+// Leaflet CSS: leaflet.less
+//              MarkerCluster.Default.less
+
 export default class SimpleMap extends React.Component {
 
 	constructor(props) {

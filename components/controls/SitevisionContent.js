@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 
 import _ from 'underscore';
 
+// Main CSS: sitevision.less
+
 export default class SitevisionContent extends React.Component {
 	constructor(props) {
 		super(props);

@@ -2,6 +2,8 @@ import React from 'react';
 
 import config from './../../../scripts/config.js';
 
+// Main CSS: ui-components/element-notification.less
+
 export default class ElementNotificationMessage extends React.Component {
 	constructor(props) {
 		super(props);

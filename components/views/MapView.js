@@ -12,6 +12,12 @@ import MapCollection from './../collections/MapCollection';
 import mapHelper from './../../utils/mapHelper';
 import config from './../../../scripts/config.js';
 
+// Main CSS: ui-components/map.less
+//           ui-components/map-ui.less
+
+// Leaflet CSS: leaflet.less
+//              MarkerCluster.Default.less
+
 export default class MapView extends React.Component {
 
 	constructor(props) {
@@ -351,7 +357,7 @@ export default class MapView extends React.Component {
 					className="map-view"
 					layersControlPosition={this.props.layersControlPosition || 'topleft'}
 					zoomControlPosition={this.props.zoomControlPosition || 'topleft'} 
-					disableLocateControl={true}
+					disableLocateControl={true} // Inte visa locateControl knappen (som kan visa på kartan var användaren är)
 					scrollWheelZoom={true}
 					zoom={this.props.zoom}
 					center={this.props.center}

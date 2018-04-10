@@ -2,6 +2,8 @@ import React from 'react';
 import _ from 'underscore';
 import L from 'leaflet';
 
+// Main CSS: ui-components/image-map.less
+
 export default class ImageMap extends React.Component {
 	constructor(props) {
 		super(props);
