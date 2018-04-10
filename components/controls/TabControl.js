@@ -2,6 +2,8 @@ import React from 'react';
 import EventBus from 'eventbusjs';
 import _ from 'underscore';
 
+// Main CSS: ui-components/tabs.less
+
 export class TabsContainer extends React.Component {
 	constructor(props) {
 		super(props);

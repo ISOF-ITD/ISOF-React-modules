@@ -17,6 +17,9 @@ export default class RecordView extends React.Component {
 	constructor(props) {
 		super(props);
 
+		window.config = config;
+		window.recordView = this;
+
 		this.toggleSaveRecord = this.toggleSaveRecord.bind(this);
 		this.mediaImageClickHandler = this.mediaImageClickHandler.bind(this);
 
@@ -127,7 +130,7 @@ export default class RecordView extends React.Component {
 				});
 				imageItems = imageDataItems.map(function(mediaItem, index) {
 					if (mediaItem.source.indexOf('.pdf') == -1) {
-						return <div data-type="image" data-image={mediaItem.source} onClick={this.mediaImageClickHandler} key={'image-'+index} className={'archive-image'+(!this.state.data.text || this.state.data.text.length == 0 ? ' large' : '')}>
+						return <div data-type="image" data-image={mediaItem.source} onClick={this.mediaImageClickHandler} key={'image-'+index} className={'archive-image'}>
 							<img src={config.imageUrl+mediaItem.source} alt="" />
 							{
 								mediaItem.title &&
@@ -145,7 +148,7 @@ export default class RecordView extends React.Component {
 						<td data-title="Lyssna:" width="50px">
 							<ListPlayButton media={mediaItem} recordId={this.state.data.id} recordTitle={this.state.data.title} />
 						</td>
-						<td>{mediaItem.title}</td>
+						<td>{mediaItem.title.length > 0 ? mediaItem.title : this.state.data.title}</td>
 					</tr>;
 				}.bind(this));
 
@@ -153,7 +156,7 @@ export default class RecordView extends React.Component {
 					return dataItem.type == 'pdf';
 				});
 				pdfItems = pdfDataItems.map(function(mediaItem, index) {
-					return <div data-type="pdf" data-image={mediaItem.source} onClick={this.mediaImageClickHandler} key={'pdf-'+index} className="archive-image">
+					return <div data-type="pdf" data-image={mediaItem.source} onClick={this.mediaImageClickHandler} key={'pdf-'+index} className="archive-image pdf">
 						<div className="pdf-icon" />
 						{
 							mediaItem.title &&
@@ -162,7 +165,10 @@ export default class RecordView extends React.Component {
 					</div>;
 				}.bind(this));
 
-				imageItems = imageItems.concat(pdfItems);
+				if (config.siteOptions.recordView && config.siteOptions.recordView.imagePosition == config.siteOptions.recordView.pdfIconsPosition) {
+					imageItems = imageItems.concat(pdfItems);
+					pdfItems = [];
+				}
 			}
 
 			var personItems = this.state.data.persons && this.state.data.persons.length > 0 ? this.state.data.persons.map(function(person, index) {
@@ -213,9 +219,13 @@ export default class RecordView extends React.Component {
 					images={this.state.data.media} /></div>;
 			}
 
-			else if ((!this.state.data.text || this.state.data.text.length == 0) && _.find(this.state.data.media, function(item) {
+			else if ((!this.state.data.text || this.state.data.text.length == 0) && _.filter(this.state.data.media, function(item) {
 				return item.type == 'pdf';
-			})) {
+			}).length == 1 && _.filter(this.state.data.media, function(item) {
+				return item.type == 'image';
+			}).length == 0 && _.filter(this.state.data.media, function(item) {
+				return item.type == 'audio';
+			}).length == 0) {
 				var pdfObject = _.find(this.state.data.media, function(item) {
 					return item.type == 'pdf';
 				});
@@ -247,13 +257,41 @@ export default class RecordView extends React.Component {
 				}
 			}
 
+			var metadataItems = [];
+
+			var getMetadataTitle = function(item) {
+				return config.siteOptions.metadataLabels && config.siteOptions.metadataLabels[item] ? config.siteOptions.metadataLabels[item] : item;
+			};
+
+			if (this.state.data.metadata && this.state.data.metadata.length > 0 && config.siteOptions.recordView && config.siteOptions.recordView.visible_metadata_fields && config.siteOptions.recordView.visible_metadata_fields.length > 0) {
+				var itemCount = 0;
+				_.each(this.state.data.metadata, function(item, index) {
+					if (config.siteOptions.recordView.visible_metadata_fields.indexOf(item.type) > -1) {
+						itemCount++;
+						metadataItems.push(
+							<div className="grid-item" key={item.type}>
+								<p><strong>{getMetadataTitle(item.type)}</strong><br />
+								{item.value}</p>
+							</div>
+						);
+
+						if (itemCount % 3 === 0 ) {
+							metadataItems.push(<div className="grid-divider-3 u-cf" key={'cf-'+index} />);
+						}
+
+						if (itemCount % 2 === 0 ) {
+							metadataItems.push(<div className="grid-divider-2 u-cf" key={'cf-'+index} />);
+						}
+					}
+				});
+			}
 
 			return <div className={'container'+(this.state.data.id ? '' : ' loading')}>
 
 					<div className="container-header">
 						<div className="row">
 							<div className="twelve columns">
-								<h2>{this.state.data.title} <ElementNotificationMessage
+								<h2>{this.state.data.title && this.state.data.title != '' ? this.state.data.title : l('(Utan titel)')} <ElementNotificationMessage
 																placement="under"
 																placementOffsetX="-1"
 																messageId="saveLegendsNotification"
@@ -276,7 +314,7 @@ export default class RecordView extends React.Component {
 
 						{
 							(this.state.data.text || textElement) &&
-							<div className={(sitevisionUrl || imageItems.length == 0 || forceFullWidth ? 'twelve' : 'eight')+' columns'}>
+							<div className={(sitevisionUrl || imageItems.length == 0 || forceFullWidth || ((config.siteOptions.recordView && config.siteOptions.recordView.audioPlayerPosition == 'under') && (config.siteOptions.recordView && config.siteOptions.recordView.imagePosition == 'under') && (config.siteOptions.recordView && config.siteOptions.recordView.pdfIconsPosition == 'under')) ? 'twelve' : 'eight')+' columns'}>
 								{
 									textElement
 								}
@@ -289,30 +327,72 @@ export default class RecordView extends React.Component {
 									this.state.data.printed_source && this.state.data.materialtype == 'tryckt' &&
 									<p className="text-small"><em>{this.state.data.printed_source}</em></p>
 								}
-							</div>
-						}
-						{
-							(imageItems.length > 0 || audioItems.length > 0) &&
-							<div className={'columns '+(this.state.data.text && !sitevisionUrl && !forceFullWidth ? 'four u-pull-right' : 'twelve')}>
 								{
-									imageItems
-								}
-								{
-									audioItems.length > 0 &&
+									sitevisionUrl || forceFullWidth || (config.siteOptions.recordView && config.siteOptions.recordView.audioPlayerPosition == 'under' && audioItems.length > 0) &&
 									<div className="table-wrapper">
-										<table width="100%" className="table-responsive">
+										<table width="100%">
 											<tbody>
 												{audioItems}
 											</tbody>
 										</table>
 									</div>
 								}
+								{
+									sitevisionUrl || forceFullWidth || (config.siteOptions.recordView && config.siteOptions.recordView.imagePosition == 'under') && imageItems.length > 0 &&
+									<div>
+										{imageItems}
+									</div>
+								}
+								{
+									sitevisionUrl || forceFullWidth || (config.siteOptions.recordView && config.siteOptions.recordView.pdfIconsPosition == 'under') && pdfItems.length > 0 &&
+									<div>
+										{pdfItems}
+									</div>
+								}
+							</div>
+						}
+						{
+							!sitevisionUrl && !forceFullWidth && (!config.siteOptions.recordView || !config.siteOptions.recordView.imagePosition || config.siteOptions.recordView.imagePosition == 'right' || !config.siteOptions.recordView.pdfIconsPosition || config.siteOptions.recordView.pdfIconsPosition == 'right' || !config.siteOptions.recordView.audioPlayerPosition || config.siteOptions.recordView.audioPlayerPosition == 'right') && (imageItems.length > 0 || audioItems.length > 0 || pdfItems.length > 0) &&
+							<div className={'columns four u-pull-right'}>
+
+								{
+									(!config.siteOptions.recordView || !config.siteOptions.recordView.audioPlayerPosition || config.siteOptions.recordView.audioPlayerPosition == 'right') && audioItems.length > 0 &&
+									<div className="table-wrapper">
+										<table width="100%">
+											<tbody>
+												{audioItems}
+											</tbody>
+										</table>
+									</div>
+								}
+
+								{
+									(!config.siteOptions.recordView || !config.siteOptions.recordView.imagePosition || config.siteOptions.recordView.imagePosition == 'right') && imageItems.length > 0 &&
+									imageItems
+								}
+
+								{
+									(!config.siteOptions.recordView || !config.siteOptions.recordView.pdfIconsPosition || config.siteOptions.recordView.pdfIconsPosition == 'right') && pdfItems.length > 0 &&
+									pdfItems
+								}
+
 							</div>
 						}
 
 					</div>
 
-					<ShareButtons path={config.siteUrl+'#/record/'+this.state.data.id} text={'"'+this.state.data.title+'"'} title={l('Dela sägen på sociala media')} />
+					{
+						metadataItems.length > 0 &&
+						<div className="grid-items">
+
+							{metadataItems}
+
+							<div className="u-cf" />
+
+						</div>
+					}
+
+					<ShareButtons path={config.siteUrl+'#/record/'+this.state.data.id} text={'"'+this.state.data.title+'"'} title={l('Dela på sociala media')} />
 
 					<hr/>
 
@@ -374,7 +454,7 @@ export default class RecordView extends React.Component {
 							<div className="six columns">
 								{
 									this.state.data.places && this.state.data.places.length > 0 && this.state.data.places[0].location.lat && this.state.data.places[0].location.lon &&
-									<SimpleMap marker={{lat: this.state.data.places[0].location.lat, lng: this.state.data.places[0].location.lon, label: this.state.data.places[0].name}} />
+									<SimpleMap markers={this.state.data.places} />
 								}
 							</div>
 
@@ -387,17 +467,17 @@ export default class RecordView extends React.Component {
 
 						<div className="four columns">
 							{
-								this.state.data.archive && this.state.data.archive.archive && this.state.data.archive.archive != 'null' &&
+								this.state.data.archive && this.state.data.archive.archive &&
 								<p><strong>{l('Arkiv')}</strong><br/>{this.state.data.archive.archive}</p>
 							}
 
 							{
-								this.state.data.archive && this.state.data.archive.archive && this.state.data.archive.archive_id != 'null' &&
+								this.state.data.archive && this.state.data.archive.archive &&
 								<p><strong>{l('Acc. nr')}</strong><br/>{this.state.data.archive.archive_id}</p>
 							}
 
 							{
-								this.state.data.archive && this.state.data.archive.archive && this.state.data.archive.page != 'null' &&
+								this.state.data.archive && this.state.data.archive.archive &&
 								<p><strong>{l('Sid. nr')}</strong><br/>{this.state.data.archive.page}</p>
 							}
 						</div>

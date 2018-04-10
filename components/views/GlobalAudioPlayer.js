@@ -1,6 +1,8 @@
 import React from 'react';
 import config from './../../../scripts/config.js';
 
+// Main CSS: ui-components/audio-player.less
+
 export default class GlobalAudioPlayer extends React.Component {
 	constructor(props) {
 		super(props);
@@ -27,6 +29,7 @@ export default class GlobalAudioPlayer extends React.Component {
 		this.audio.addEventListener('ended', this.audioEndedHandler);
 		this.audio.addEventListener('play', this.audioPlayHandler);
 		this.audio.addEventListener('pause', this.audioPauseHandler);
+		this.audio.addEventListener('error', this.audioErrorHandler);
 
 		this.state = {
 			audio: null,
@@ -52,7 +55,7 @@ export default class GlobalAudioPlayer extends React.Component {
 	msToTimeStr(ms) {
 		var minutes = Math.floor(ms / 60000);
 		var seconds = ((ms % 60000) / 1000).toFixed(0);
-		return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+		return (minutes < 10 ? '0' : '')+minutes+":"+(seconds < 10 ? '0' : '')+seconds;
 	}
 
 	audioCanPlayHandler(event) {
@@ -122,6 +125,12 @@ export default class GlobalAudioPlayer extends React.Component {
 		});
 	}
 
+	audioErrorHandler(event) {
+		if (window.eventBus) {
+			window.eventBus.dispatch('popup-notification.notify', null, l('Kan inte spela den här ljudfilen'));
+		}
+	}
+
 	togglePlay() {
 		if (this.state.loaded) {
 			if (this.state.playing) {
@@ -170,6 +179,7 @@ export default class GlobalAudioPlayer extends React.Component {
 
 				<div className="player-time">
 					{this.state.currentTime}
+					<div className="duration">{this.state.durationTime}</div>
 				</div>
 
 				<div className="player-content">
@@ -179,7 +189,7 @@ export default class GlobalAudioPlayer extends React.Component {
 					}
 					{
 						this.state.audio &&
-						<div className="player-label">{this.state.audio.title}</div>
+						<div className="player-label">{this.state.record.title != this.state.audio.title ? this.state.audio.title : this.state.audio.source}</div>
 					}
 				</div>
 

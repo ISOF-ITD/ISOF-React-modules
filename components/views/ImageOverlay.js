@@ -2,6 +2,8 @@ import React from 'react';
 import config from './../../../scripts/config.js';
 import PdfViewer from './../controls/PdfViewer';
 
+// Main CSS: ui-components/overlay.less
+
 export default class ImageOverlay extends React.Component {
 	constructor(props) {
 		super(props);

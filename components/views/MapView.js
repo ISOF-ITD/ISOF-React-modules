@@ -12,6 +12,12 @@ import MapCollection from './../collections/MapCollection';
 import mapHelper from './../../utils/mapHelper';
 import config from './../../../scripts/config.js';
 
+// Main CSS: ui-components/map.less
+//           ui-components/map-ui.less
+
+// Leaflet CSS: leaflet.less
+//              MarkerCluster.Default.less
+
 export default class MapView extends React.Component {
 
 	constructor(props) {
@@ -190,7 +196,7 @@ export default class MapView extends React.Component {
 				// Samlar ihop latLng av alla prickar för att kunna senare zooma inn till dem
 				var bounds = [];
 				var markerWithinBounds = false;
-				
+
 				_.each(this.mapData, function(mapItem) {
 					if (mapItem.location.length > 0) {
 						// Skalar L.marker objekt och lägger till rätt icon
@@ -222,7 +228,7 @@ export default class MapView extends React.Component {
 				}.bind(this));
 
 				// Zooma in till alla nya punkena om ingen av dem finns inom synliga kartan
-				if (!markerWithinBounds) {
+				if (!markerWithinBounds || (config.siteOptions.mapView && config.siteOptions.mapView.alwaysUpdateViewport == true)) {
 					this.refs.mapView.map.fitBounds(bounds, {
 						maxZoom: 10,
 						padding: [50, 50]
@@ -240,7 +246,7 @@ export default class MapView extends React.Component {
 
 			if (this.mapData.length > 0) {
 				var bounds = [];
-				
+
 				var minValue = _.min(this.mapData, function(mapItem) {
 					return Number(mapItem.doc_count);
 				}).doc_count;
@@ -325,18 +331,18 @@ export default class MapView extends React.Component {
 				{
 					!this.props.hideMapmodeMenu &&
 					<div className="map-viewmode-menu">
-						<a className={'icon-marker'+(this.state.viewMode == 'clusters' ? ' selected' : '')} 
-							data-viewmode="clusters" 
+						<a className={'icon-marker'+(this.state.viewMode == 'clusters' ? ' selected' : '')}
+							data-viewmode="clusters"
 							onClick={this.changeViewMode}>
 							<span>Cluster</span>
 						</a>
-						<a className={'icon-heatmap'+(this.state.viewMode == 'heatmap-count' ? ' selected' : '')} 
-							data-viewmode="heatmap-count" 
+						<a className={'icon-heatmap'+(this.state.viewMode == 'heatmap-count' ? ' selected' : '')}
+							data-viewmode="heatmap-count"
 							onClick={this.changeViewMode}>
 							<span>Heatmap</span>
 						</a>
-						<a className={'icon-circles'+(this.state.viewMode == 'circles' ? ' selected' : '')} 
-							data-viewmode="circles" 
+						<a className={'icon-circles'+(this.state.viewMode == 'circles' ? ' selected' : '')}
+							data-viewmode="circles"
 							onClick={this.changeViewMode}>
 							<span>Circles</span>
 						</a>
@@ -347,14 +353,15 @@ export default class MapView extends React.Component {
 					<div className="indicator"></div>
 				</div>
 
-				<MapBase ref="mapView" 
-					className="map-view" 
-					layersControlPosition={this.props.layersControlPosition || 'topleft'} 
+				<MapBase ref="mapView"
+					className="map-view"
+					layersControlPosition={this.props.layersControlPosition || 'topleft'}
 					zoomControlPosition={this.props.zoomControlPosition || 'topleft'} 
-					scrollWheelZoom={true} 
+					disableLocateControl={true} // Inte visa locateControl knappen (som kan visa på kartan var användaren är)
+					scrollWheelZoom={true}
 					zoom={this.props.zoom}
 					center={this.props.center}
-					disableSwedenMap={this.props.disableSwedenMap} 
+					disableSwedenMap={this.props.disableSwedenMap}
 					onBaseLayerChange={this.mapBaseLayerChangeHandler} />
 			</div>
 		);

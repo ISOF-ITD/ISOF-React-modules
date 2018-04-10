@@ -87,9 +87,14 @@ export default class PersonList extends React.Component {
 
 		}.bind(this)) : [];
 
-		if (this.state.persons) {
+		if (this.state.persons && this.state.persons.length > 0) {
 			return (
 				<div className={'table-wrapper list-container'+(this.state.persons.length == 0 ? ' loading' : '')}>
+
+					{
+						this.props.title &&
+						<h3>{this.props.title}</h3>
+					}
 
 					<table width="100%" className="table-responsive">
 						<thead>
@@ -106,12 +111,15 @@ export default class PersonList extends React.Component {
 				</div>
 			);			
 		}
-		else {
+		else if (this.props.showNoResults) {
 			return (
 				<div className="table-wrapper list-container">
 					<h3>{l('Inga sökträffar')}</h3>
 				</div>
 			);
+		}
+		else {
+			return null;
 		}
 	}
 }

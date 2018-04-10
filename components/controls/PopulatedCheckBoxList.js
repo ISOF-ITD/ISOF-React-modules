@@ -2,6 +2,8 @@ import React from 'react';
 import CheckBoxList from './CheckBoxList';
 import _ from 'underscore';
 
+// Main CSS: ui-components/checkbox-list.less
+
 export default class PopulatedCheckBoxList extends React.Component {
 	constructor(props) {
 		super(props);
