@@ -17,6 +17,9 @@ export default class RecordView extends React.Component {
 	constructor(props) {
 		super(props);
 
+		window.config = config;
+		window.recordView = this;
+
 		this.toggleSaveRecord = this.toggleSaveRecord.bind(this);
 		this.mediaImageClickHandler = this.mediaImageClickHandler.bind(this);
 
@@ -127,7 +130,7 @@ export default class RecordView extends React.Component {
 				});
 				imageItems = imageDataItems.map(function(mediaItem, index) {
 					if (mediaItem.source.indexOf('.pdf') == -1) {
-						return <div data-type="image" data-image={mediaItem.source} onClick={this.mediaImageClickHandler} key={'image-'+index} className={'archive-image'+(!this.state.data.text || this.state.data.text.length == 0 ? ' large' : '')}>
+						return <div data-type="image" data-image={mediaItem.source} onClick={this.mediaImageClickHandler} key={'image-'+index} className={'archive-image'}>
 							<img src={config.imageUrl+mediaItem.source} alt="" />
 							{
 								mediaItem.title &&
@@ -145,7 +148,7 @@ export default class RecordView extends React.Component {
 						<td data-title="Lyssna:" width="50px">
 							<ListPlayButton media={mediaItem} recordId={this.state.data.id} recordTitle={this.state.data.title} />
 						</td>
-						<td>{mediaItem.title}</td>
+						<td>{mediaItem.title.length > 0 ? mediaItem.title : this.state.data.title}</td>
 					</tr>;
 				}.bind(this));
 
@@ -162,7 +165,10 @@ export default class RecordView extends React.Component {
 					</div>;
 				}.bind(this));
 
-				imageItems = imageItems.concat(pdfItems);
+				if (config.siteOptions.recordView && config.siteOptions.recordView.imagePosition == config.siteOptions.recordView.pdfIconsPosition) {
+					imageItems = imageItems.concat(pdfItems);
+					pdfItems = [];
+				}
 			}
 
 			var personItems = this.state.data.persons && this.state.data.persons.length > 0 ? this.state.data.persons.map(function(person, index) {
@@ -213,9 +219,13 @@ export default class RecordView extends React.Component {
 					images={this.state.data.media} /></div>;
 			}
 
-			else if ((!this.state.data.text || this.state.data.text.length == 0) && _.find(this.state.data.media, function(item) {
+			else if ((!this.state.data.text || this.state.data.text.length == 0) && _.filter(this.state.data.media, function(item) {
 				return item.type == 'pdf';
-			})) {
+			}).length == 1 && _.filter(this.state.data.media, function(item) {
+				return item.type == 'image';
+			}).length == 0 && _.filter(this.state.data.media, function(item) {
+				return item.type == 'audio';
+			}).length == 0) {
 				var pdfObject = _.find(this.state.data.media, function(item) {
 					return item.type == 'pdf';
 				});
@@ -276,7 +286,6 @@ export default class RecordView extends React.Component {
 				});
 			}
 
-
 			return <div className={'container'+(this.state.data.id ? '' : ' loading')}>
 
 					<div className="container-header">
@@ -305,7 +314,7 @@ export default class RecordView extends React.Component {
 
 						{
 							(this.state.data.text || textElement) &&
-							<div className={(sitevisionUrl || imageItems.length == 0 || forceFullWidth || (config.siteOptions.recordView && config.siteOptions.recordView.full_audio_player) ? 'twelve' : 'eight')+' columns'}>
+							<div className={(sitevisionUrl || imageItems.length == 0 || forceFullWidth || ((config.siteOptions.recordView && config.siteOptions.recordView.audioPlayerPosition == 'under') && (config.siteOptions.recordView && config.siteOptions.recordView.imagePosition == 'under') && (config.siteOptions.recordView && config.siteOptions.recordView.pdfIconsPosition == 'under')) ? 'twelve' : 'eight')+' columns'}>
 								{
 									textElement
 								}
@@ -318,14 +327,36 @@ export default class RecordView extends React.Component {
 									this.state.data.printed_source && this.state.data.materialtype == 'tryckt' &&
 									<p className="text-small"><em>{this.state.data.printed_source}</em></p>
 								}
+								{
+									sitevisionUrl || forceFullWidth || (config.siteOptions.recordView && config.siteOptions.recordView.audioPlayerPosition == 'under' && audioItems.length > 0) &&
+									<div className="table-wrapper">
+										<table width="100%">
+											<tbody>
+												{audioItems}
+											</tbody>
+										</table>
+									</div>
+								}
+								{
+									sitevisionUrl || forceFullWidth || (config.siteOptions.recordView && config.siteOptions.recordView.imagePosition == 'under') && imageItems.length > 0 &&
+									<div>
+										{imageItems}
+									</div>
+								}
+								{
+									sitevisionUrl || forceFullWidth || (config.siteOptions.recordView && config.siteOptions.recordView.pdfIconsPosition == 'under') && pdfItems.length > 0 &&
+									<div>
+										{pdfItems}
+									</div>
+								}
 							</div>
 						}
 						{
-							(imageItems.length > 0 || audioItems.length > 0) &&
-							<div className={'columns '+(this.state.data.text && !sitevisionUrl && !forceFullWidth && !(config.siteOptions.recordView && config.siteOptions.recordView.full_audio_player) ? 'four u-pull-right' : 'twelve')}>
+							!sitevisionUrl && !forceFullWidth && (!config.siteOptions.recordView || !config.siteOptions.recordView.imagePosition || config.siteOptions.recordView.imagePosition == 'right' || !config.siteOptions.recordView.pdfIconsPosition || config.siteOptions.recordView.pdfIconsPosition == 'right' || !config.siteOptions.recordView.audioPlayerPosition || config.siteOptions.recordView.audioPlayerPosition == 'right') && (imageItems.length > 0 || audioItems.length > 0 || pdfItems.length > 0) &&
+							<div className={'columns four u-pull-right'}>
 
 								{
-									audioItems.length > 0 &&
+									(!config.siteOptions.recordView || !config.siteOptions.recordView.audioPlayerPosition || config.siteOptions.recordView.audioPlayerPosition == 'right') && audioItems.length > 0 &&
 									<div className="table-wrapper">
 										<table width="100%">
 											<tbody>
@@ -336,7 +367,13 @@ export default class RecordView extends React.Component {
 								}
 
 								{
+									(!config.siteOptions.recordView || !config.siteOptions.recordView.imagePosition || config.siteOptions.recordView.imagePosition == 'right') && imageItems.length > 0 &&
 									imageItems
+								}
+
+								{
+									(!config.siteOptions.recordView || !config.siteOptions.recordView.pdfIconsPosition || config.siteOptions.recordView.pdfIconsPosition == 'right') && pdfItems.length > 0 &&
+									pdfItems
 								}
 
 							</div>

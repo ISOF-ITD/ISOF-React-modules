@@ -228,7 +228,7 @@ export default class MapView extends React.Component {
 				}.bind(this));
 
 				// Zooma in till alla nya punkena om ingen av dem finns inom synliga kartan
-				if (!markerWithinBounds) {
+				if (!markerWithinBounds || (config.siteOptions.mapView && config.siteOptions.mapView.alwaysUpdateViewport == true)) {
 					this.refs.mapView.map.fitBounds(bounds, {
 						maxZoom: 10,
 						padding: [50, 50]
