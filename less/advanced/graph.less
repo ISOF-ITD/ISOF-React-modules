@@ -40,6 +40,23 @@
 		padding-top: 10px;
 	}
 
+	&.full-screen {
+		position: fixed;
+	
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+	
+		height: auto !important;
+
+		padding: 60px 20px 20px;
+
+		background: #fff;
+
+		z-index: 1200;
+	}
+
 	.total-number {
 		position: absolute;
 
@@ -299,21 +316,19 @@
 }
 
 .graph-controls {
-	select {
-		float: right;
-
-		margin-left: 10px;
-	}
-
 	h3 {
+		position: absolute;
+
 		margin: 10px 5px;
 
 		color: #333;
 		font-size: 1rem;
 	}
 
-	input, select, button {
-		margin-left: 10px;
+	input, select, button, a {
+		float: right;
+
+		margin-right: 10px;
 	}
 
 	a {
