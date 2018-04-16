@@ -1,16 +1,16 @@
 
 .graph-tooltip {
 	display: none;
-	
+
 	position: absolute;
-	
+
 	min-width: 80px;
 	height: auto;
 
 	padding: 14px;
-	
+
 	background: none repeat scroll 0 0 #f2f2f2;
-	
+
 	border: 1px solid #cccccc;
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 
@@ -48,6 +48,12 @@
 
 		font-size: 0.9rem;
 		color: #737373;
+	}
+
+	.graph-container {
+		&.horizontal-scroll {
+			overflow-x: scroll;
+		}
 	}
 
 	.axis {
@@ -100,24 +106,11 @@
 	}
 
 	.graph-controls {
-		select {
-			position: absolute;
-			
-			top: 10px;
-			right: 10px;
-		}
+		position: absolute;
 
-		h3 {
-			position: absolute;
-
-			top: 10px;
-			left: 10px;
-
-			margin: 10px 5px;
-
-			color: #333;
-			font-size: 1rem;
-		}
+		top: 10px;
+		left: 10px;
+		right: 10px;
 	}
 
 	.graph-header {
@@ -134,7 +127,7 @@
 .network-graph-wrapper {
 	.graph-container {
 		position: fixed;
-	
+
 		top: 153px;
 		left: 0;
 		right: 0;
@@ -175,12 +168,12 @@
 	.links line {
 		stroke: #444;
 	}
-	
+
 	.nodes circle {
 		pointer-events: all;
 		stroke: none;
 	}
-	
+
 	.labels text {
 		fill: #333;
 		font-size: 14px;
@@ -191,18 +184,18 @@
 
 	.graph-toolbar {
 		position: absolute;
-	
+
 		top: 180px;
 		left: 20px;
 
 		width: 250px;
-	
+
 		padding: 20px 20px 0 20px;
-		
+
 		background: rgba(248, 248, 248, 0.97);
-		
+
 		color: #898989;
-		
+
 		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.13);
 		border: 1px solid #cbcbcb;
 		border-radius: 3px;
@@ -236,21 +229,23 @@
 }
 
 .legends {
-	padding: 0px 40px 10px 40px;
+	padding: 0px 40px 20px 40px;
 
 	.legend {
-		margin: 10px 0;
+		float: left;
+
+		margin: 10px 20px 0 0;
 
 		font-size: 0.9rem;
 
 		.color {
 			float: left;
-			
+
 			width: 15px;
 			height: 15px;
-			
+
 			margin-right: 10px;
-			
+
 			border-radius: 2px;
 		}
 	}
@@ -282,12 +277,12 @@
 
 		.items {
 			position: absolute;
-			
+
 			top: 56px;
 			bottom: 0;
 			left: 0;
 			right: 0;
-			
+
 			overflow-x: auto;
 
 			.minimal-scrollbar();
@@ -299,6 +294,53 @@
 			bottom: 0;
 			left: 0;
 			right: 0;
+		}
+	}
+}
+
+.graph-controls {
+	select {
+		float: right;
+
+		margin-left: 10px;
+	}
+
+	h3 {
+		margin: 10px 5px;
+
+		color: #333;
+		font-size: 1rem;
+	}
+
+	input, select, button {
+		margin-left: 10px;
+	}
+
+	a {
+		display: inline-block;
+		
+		height: 36px;
+		
+		margin: 0;
+		padding: 0 10px;
+		
+		box-sizing: border-box;
+		border-radius: 3px;
+		border: 1px solid #d1d1d1;
+		
+		background: #fff;
+
+		font-size: 0.85rem;
+		line-height: 36px;
+		
+		vertical-align: middle;
+
+		cursor: pointer;
+	}
+
+	input, select, button, a {
+		&:hover {
+			box-shadow: 0 1px 8px #00000047;
 		}
 	}
 }

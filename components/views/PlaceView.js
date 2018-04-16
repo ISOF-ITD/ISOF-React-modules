@@ -156,7 +156,7 @@ export default class PlaceView extends React.Component {
 								<h3>{l('Sökträffar')}</h3>
 							}
 
-							<RecordList highlightRecordsWithMetadataField={this.props.route.highlightRecordsWithMetadataField} 
+							<RecordList disableRouterPagination={true} highlightRecordsWithMetadataField={this.props.route.highlightRecordsWithMetadataField} 
 								record_ids={this.state.record_ids} 
 								category={this.state.category} 
 								has_metadata={this.state.has_metadata} 
@@ -183,7 +183,7 @@ export default class PlaceView extends React.Component {
 								<div className="twelve columns">
 									<h3>{l('Samtliga uppteckningar från orten')}</h3>
 
-									<RecordList highlightRecordsWithMetadataField={this.props.route.highlightRecordsWithMetadataField} 
+									<RecordList disableRouterPagination={true} highlightRecordsWithMetadataField={this.props.route.highlightRecordsWithMetadataField} 
 										has_metadata={this.state.has_metadata} 
 										nordic={this.state.nordic}
 										recordPlace={this.state.recordPlace} />		
@@ -199,9 +199,7 @@ export default class PlaceView extends React.Component {
 					!this.props.route.hidePersons &&
 					<div className="row">
 						<div className="twelve columns">
-							<h3>{l('Intervjuade personer')}</h3>
-
-							<PersonList personType="informants" 
+							<PersonList personType="informants" title={l('Intervjuade personer')} 
 								nordic={this.state.nordic}
 								place={this.state.recordPlace}  />
 						</div>

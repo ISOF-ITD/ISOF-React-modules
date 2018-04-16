@@ -1,6 +1,8 @@
 import React from 'react';
 import config from './../../../scripts/config.js';
 
+// Main CSS: ui-components/overlay.less
+
 export default class FeedbackOverlay extends React.Component {
 	constructor(props) {
 		super(props);
@@ -73,9 +75,12 @@ export default class FeedbackOverlay extends React.Component {
 				this.state.messageInputValue
 		};
 
-		fetch(config.apiUrl+'feedback', {
+		var formData = new FormData();
+		formData.append("json", JSON.stringify(data) );
+
+		fetch(config.restApiUrl+'feedback/', {
 			method: "POST",
-			body: JSON.stringify(data)
+			body: formData
 		})
 		.then(function(response) {
 			return response.json()

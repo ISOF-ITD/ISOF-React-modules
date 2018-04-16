@@ -1,5 +1,7 @@
 import React from 'react';
 
+// Main CSS: ui-components/checkbox-list.less
+
 export default class CheckBoxList extends React.Component {
 	constructor(props) {
 		super(props);

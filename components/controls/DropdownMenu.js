@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import _ from 'underscore';
 
+// Main CSS: ui-components/dropdownmenu.less
+
 export default class DropdownMenu extends React.Component {
 	constructor(props) {
 		super(props);

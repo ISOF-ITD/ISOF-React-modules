@@ -1,5 +1,8 @@
 import React from 'react';
 import CheckBoxList from './CheckBoxList';
+import _ from 'underscore';
+
+// Main CSS: ui-components/checkbox-list.less
 
 export default class PopulatedCheckBoxList extends React.Component {
 	constructor(props) {
@@ -31,9 +34,20 @@ export default class PopulatedCheckBoxList extends React.Component {
 				return response.json()
 			})
 			.then(function(json) {
-				this.setState({
+				var state = {
 					data: json.data || json.results
-				});
+				};
+
+				if (this.props.filteredBy) {
+					state.filterOptions = _.uniq(_.pluck(json.data || json.results, this.props.filteredBy));
+					state.currentFilter = state.filterOptions[0];
+				}
+
+				if (this.props.onFetch) {
+					this.props.onFetch(state.data);
+				}
+
+				this.setState(state);
 			}.bind(this))
 			.catch(function(ex) {
 				console.log('parsing failed', ex)
@@ -52,13 +66,40 @@ export default class PopulatedCheckBoxList extends React.Component {
 	}
 
 	render() {
-		return (
-			<CheckBoxList values={this.state.data}
-				valueField={this.props.valueField} 
-				labelField={this.props.labelField} 
-				labelFunction={this.props.labelFunction} 
-				selectedItems={this.state.selectedItems}  
+		if (this.props.filteredBy && this.state.filterOptions) {
+			var values = _.filter(this.state.data, function(item) {
+				return item[this.props.filteredBy] == this.state.currentFilter;
+			}.bind(this));
+
+			var selectElementStyle = {
+				float: 'right',
+				marginTop: '-40px',
+				marginBottom: 0
+			};
+
+			return <div>
+				<select style={selectElementStyle} onChange={function(event) {this.setState({currentFilter: event.target.value})}.bind(this)} value={this.state.currentFilter}>
+					{
+						_.map(this.state.filterOptions, function(item, index) {
+							return <option key={index}>{item}</option>
+						})
+					}
+				</select>
+				<CheckBoxList values={values}
+					valueField={this.props.valueField}
+					labelField={this.props.labelField}
+					labelFunction={this.props.labelFunction}
+					selectedItems={this.state.selectedItems}
+					onSelectionChange={this.checkBoxListChangeHandler} />
+			</div>;
+		}
+		else {
+			return <CheckBoxList values={this.state.data}
+				valueField={this.props.valueField}
+				labelField={this.props.labelField}
+				labelFunction={this.props.labelFunction}
+				selectedItems={this.state.selectedItems}
 				onSelectionChange={this.checkBoxListChangeHandler} />
-		);
+		}
 	}
 }

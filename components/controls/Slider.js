@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import noUiSlider from 'nouislider';
 
+// Main CSS: ui-components/slider.less
+// Slider CSS: nouislider.min.less
+
 export default class Slider extends React.Component {
 	constructor(props) {
 		super(props);
@@ -12,7 +15,7 @@ export default class Slider extends React.Component {
 
 	componentDidMount() {
 		this.slider = noUiSlider.create(this.refs.sliderContainer, {
-			start: this.props.start || [0, 10],
+			start: this.props.start ? this.props.start : this.props.rangeMin && this.props.rangeMax ? [this.props.rangeMin, this.props.rangeMax] : [0, 10],
 			behaviour: 'drag',
 			connect: true,
 			tooltips: true,
@@ -24,7 +27,7 @@ export default class Slider extends React.Component {
 					return Math.round(value);
 				}
 			},
-			range: this.props.rangeMin && this.props.rangeMax ? {
+			range: this.props.rangeMin != undefined && this.props.rangeMax != undefined ? {
 				min: this.props.rangeMin,
 				max: this.props.rangeMax
 			} : {
@@ -32,8 +35,6 @@ export default class Slider extends React.Component {
 				max: 10
 			}
 		});
-
-		window.sliderObject = this.slider;
 
 		this.slider.on('change', this.sliderChangeHandler)
 		this.slider.on('set', this.sliderChangeHandler)
@@ -44,7 +45,7 @@ export default class Slider extends React.Component {
 		if (props.enabled && props.enabled == true) {
 			this.refs.sliderContainer.removeAttribute('disabled');
 		}
-		else {
+		else if (props.enabled == false) {
 			this.refs.sliderContainer.setAttribute('disabled', true);
 		}
 
@@ -55,7 +56,7 @@ export default class Slider extends React.Component {
 			};
 			this.slider.updateOptions({
 				range: range,
-				start: [range.min, range.max]
+				start: props.start || [range.min, range.max]
 			});
 		}
 	}

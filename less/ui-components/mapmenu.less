@@ -42,6 +42,14 @@
 		opacity: 0;
 		.transform(translateY(50px));
 
+		@media (max-width: 550px) {
+			position: fixed;
+
+			top: 0;
+			left: 0;
+			right: 0;
+		}
+
 		.app-initialized & {
 			opacity: 1;
 
@@ -82,8 +90,7 @@
 	.search-box {
 		position: absolute;
 
-		top: 42px; // Nordic switch
-//		top: 0;
+		top: 82px;
 		right: 0;
 		left: 0;
 
@@ -97,6 +104,10 @@
 
 		.transition(all 400ms ease-in-out);
 		.transition-delay(0ms);
+
+		@media (max-width: 550px) {
+			top: 0;
+		}
 
 		.app-initialized & {
 			opacity: 1;
@@ -453,6 +464,7 @@
 				text-decoration: none;
 
 				border-bottom: 1px solid #ccc;
+				box-sizing: border-box;
 
 				cursor: pointer;
 
@@ -465,6 +477,30 @@
 
 					background-color: @color-red-lighter;
 				}
+			}
+
+			.grid-list {
+				.item {
+					float: left;
+
+					width: 50%;
+
+					&:nth-child(2n) {
+						border-left: 1px solid #ccc;
+					}
+				}
+			}
+
+			.list-subheading {
+				display: block;
+
+				padding: 10px 15px;
+
+				color: #333;
+				text-decoration: none;
+				font-weight: bold;
+
+				border-bottom: 1px solid #ccc;
 			}
 		}
 
@@ -498,6 +534,83 @@
 
 				pointer-events: none;
 			}
+		}
+	}
+}
+
+.point-type-options {
+	position: absolute;
+
+	width: 350px;
+	height: 72px;
+
+	padding: 0;
+
+	z-index: 1450;
+
+	.option-item {
+		display: inline-block;
+
+		width: 50%;
+		height: 72px;
+
+		font-size: 1.2rem;
+		text-align: center;
+		line-height: 72px;
+
+		box-sizing: border-box;
+
+		cursor: pointer;
+
+		&:first-child {
+			border-right: 1px solid #e8e8e8;
+		}
+
+		.icon {
+			display: inline-block;
+
+			width: 19px;
+			height: 24px;
+
+			margin-right: 10px;
+
+			background-position: center;
+			background-repeat: no-repeat;
+
+			vertical-align: middle;
+
+			&.icon-marker-normal {
+				background-image: url('../img/icon-marker-normal.png');
+			}
+
+			&.icon-marker-curated {
+				background-image: url('../img/icon-marker-curated.png');
+			}
+		}
+
+		.label {
+			display: inline-block;
+		}
+	}
+
+	.selected-line {
+		display: block;
+		
+		position: absolute;
+		
+		left: 25%;
+		bottom: 14px;
+		
+		height: 2px;
+		width: 35%;
+		
+		background: @color-red;
+		
+		.transform(translateX(-50%));
+		.transition(all 300ms ease-in-out);
+
+		.option-2& {
+			left: 75%;
 		}
 	}
 }
