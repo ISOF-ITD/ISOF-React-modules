@@ -58,7 +58,7 @@ export default class RecordListItem extends React.Component {
 				<a className="item-title" target={config.embeddedApp ? '_parent' : '_self'} href={(config.embeddedApp ? config.siteUrl : '')+'#record/'+this.props.item._source.id+(this.props.routeParams ? this.props.routeParams : '')}>
 					{
 						config.siteOptions.recordList && config.siteOptions.recordList.displayPlayButton && audioItem != undefined &&
-						<ListPlayButton media={audioItem} recordId={this.props.item._source.id} recordTitle={this.props.item._source.title && this.props.item._source.title != '' ? this.props.item._source.title : l('(Utan titel)')} />
+						<ListPlayButton disablePlayback={true} media={audioItem} recordId={this.props.item._source.id} recordTitle={this.props.item._source.title && this.props.item._source.title != '' ? this.props.item._source.title : l('(Utan titel)')} />
 					}
 					{this.props.item._source.title && this.props.item._source.title != '' ? this.props.item._source.title : l('(Utan titel)')}
 				</a>
