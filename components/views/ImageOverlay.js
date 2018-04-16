@@ -16,7 +16,7 @@ export default class ImageOverlay extends React.Component {
 		};
 
 		if (window.eventBus) {
-
+			// Lyssnar efter overlay.viewimage meddelande från RecordView
 			window.eventBus.addEventListener('overlay.viewimage', function(event) {
 				this.setState({
 					imageUrl: event.target.imageUrl,

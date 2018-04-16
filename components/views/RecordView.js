@@ -50,6 +50,7 @@ export default class RecordView extends React.Component {
 		}
 	}
 
+	// Sparar posten till localLibrary
 	toggleSaveRecord() {
 		var libraryItem = {
 			id: this.state.data.id,
@@ -78,6 +79,7 @@ export default class RecordView extends React.Component {
 
 	mediaImageClickHandler(event) {
 		if (window.eventBus) {
+			// Skickar overlay.viewimage till eventBus, ImageOverlay modulen lyssnar på det och visar bilden
 			window.eventBus.dispatch('overlay.viewimage', {
 				imageUrl: event.currentTarget.dataset.image,
 				type: event.currentTarget.dataset.type
@@ -123,7 +125,7 @@ export default class RecordView extends React.Component {
 		var audioItems = [];
 
 		if (this.state.data) {
-
+			// Förberedar visuella media objekt
 			if (this.state.data.media && this.state.data.media.length > 0) {
 				var imageDataItems = _.filter(this.state.data.media, function(dataItem) {
 					return dataItem.type == 'image';
@@ -171,6 +173,7 @@ export default class RecordView extends React.Component {
 				}
 			}
 
+			// Förberedar lista över personer
 			var personItems = this.state.data.persons && this.state.data.persons.length > 0 ? this.state.data.persons.map(function(person, index) {
 				return <tr key={index}>
 					<td data-title="">
@@ -191,7 +194,7 @@ export default class RecordView extends React.Component {
 				</tr>;
 			}) : [];
 
-
+			// Förberedar lista över socknar
 			var placeItems = this.state.data.places && this.state.data.places.length > 0 ? this.state.data.places.map(function(place, index) {
 				return <tr key={index}>
 					<td><a href={'#place/'+place.id}>{place.name+', '+(place.fylke ? place.fylke : place.harad)}</a></td>
@@ -206,10 +209,11 @@ export default class RecordView extends React.Component {
 				return item.type == 'sitevision_url';
 			});
 
+			// Om vi har sitevisionUrl definerad använder vi SitevisionContent modulen för att visa sidans innehåll
 			if (sitevisionUrl) {
 				textElement = <SitevisionContent url={sitevisionUrl.value} />
 			}
-
+			// Om "transkriberad" finns i texten lägger vi till transkriberings knappen istället för att visa textan
 			else if (this.state.data.text && this.state.data.text.indexOf('transkriberad') > -1 && this.state.data.text.length < 25 && this.state.data.media.length > 0) {
 				textElement = <div><p><strong>Den här uppteckningen är inte transkriberad.</strong><br/><br/>Vill du vara med och tillgängliggöra samlingarna för fler? Hjälp oss att skriva av berättelser!</p><TranscribeButton
 					className="button-primary"
@@ -218,7 +222,7 @@ export default class RecordView extends React.Component {
 					recordId={this.state.data.id}
 					images={this.state.data.media} /></div>;
 			}
-
+			// Om posten inte innehåller bara en pdf fil (ingen text, inte ljudfiler och inte bilder), då visar vi pdf filen direkt
 			else if ((!this.state.data.text || this.state.data.text.length == 0) && _.filter(this.state.data.media, function(item) {
 				return item.type == 'pdf';
 			}).length == 1 && _.filter(this.state.data.media, function(item) {
@@ -234,11 +238,12 @@ export default class RecordView extends React.Component {
 
 				forceFullWidth = true;
 			}
+			// Annars visar vi texten som vanligt
 			else {
 				textElement = <p dangerouslySetInnerHTML={{__html: this.state.data.text}} />;
 			}
 
-
+			// Förbereder kategori länk
 			var taxonomyElement;
 
 			if (this.state.data.taxonomy) {
@@ -257,6 +262,7 @@ export default class RecordView extends React.Component {
 				}
 			}
 
+			// Förbereder metadata items. siteOptions i config bestämmer vilken typ av metadata ska synas
 			var metadataItems = [];
 
 			var getMetadataTitle = function(item) {
