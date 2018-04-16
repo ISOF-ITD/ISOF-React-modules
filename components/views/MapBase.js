@@ -73,7 +73,8 @@ export default class MapBase extends React.Component {
 		}
 
 		this.layersControl = L.control.activeLayers(layers, null, {
-			position: this.props.layersControlPosition || 'topright'
+			position: this.props.layersControlPosition || 'topright',
+			collapsed: !this.props.layersControlStayOpen
 		}).addTo(this.map);
 
 		this.map.on('baselayerchange', this.mapBaseLayerChangeHandler.bind(this));

@@ -22,6 +22,7 @@ export default class RecordList extends React.Component {
 
 		this.collections = new RecordsCollection(function(json) {
 			if (!json.data || json.data.length == 0) {
+				// Om vi hittade inga postar skickar vi visuell meddelande till användaren
 				if (window.eventBus) {
 					window.eventBus.dispatch('popup-notification.notify', null, l('Inga sökträffar'));
 				}
@@ -36,6 +37,11 @@ export default class RecordList extends React.Component {
 	}
 
 	componentDidMount() {
+		/*
+			Om RecordList läggs till PersonView (för att hämta postar relaterad till speciell person), då
+			använder vi disableAutoFetch={true}
+			Då hämtar den modulen inte lista över huvudpostar utan att ta emot parametrar (componentWillReceiveProps)
+		*/
 		if (!this.props.disableAutoFetch) {
 			this.setState({
 				currentPage: this.props.page || 1
@@ -46,6 +52,7 @@ export default class RecordList extends React.Component {
 	}
 
 	componentWillReceiveProps(props) {
+		console.log(props);
 		var currentParams = JSON.parse(JSON.stringify(this.props));
 		if (currentParams.place_id) {
 			delete currentParams.place_id;
@@ -77,6 +84,11 @@ export default class RecordList extends React.Component {
 	}
 
 	nextPage() {
+		/*
+			På vanliga sättet använder vi routern för att säga till vilken sida vi hämtar,
+			i moduler som innehåller RecordList (PlaceView, PersonView) lägger vi till disableRouterPagination={true}
+			till RecordList, då hämtar vi ny sida direkt utan att använda routern
+		*/
 		if (this.props.disableRouterPagination) {
 			this.setState({
 				currentPage: this.state.currentPage+1
@@ -85,11 +97,17 @@ export default class RecordList extends React.Component {
 			}.bind(this));
 		}
 		else {
+			// Skapar ny router adress via routeHelper, den är baserad på nuvarande params och lägger till ny siffra i 'page'
 			hashHistory.push('/places'+routeHelper.createSearchRoute(this.props)+'/page/'+(Number(this.state.currentPage)+1));
 		}
 	}
 	
 	prevPage() {
+		/*
+			På vanliga sättet använder vi routern för att säga till vilken sida vi hämtar,
+			i moduler som innehåller RecordList (PlaceView, PersonView) lägger vi till disableRouterPagination={true}
+			till RecordList, då hämtar vi ny sida direkt utan att använda routern
+		*/
 		if (this.props.disableRouterPagination) {
 			this.setState({
 				currentPage: this.state.currentPage-1
@@ -98,6 +116,7 @@ export default class RecordList extends React.Component {
 			}.bind(this));
 		}
 		else {
+			// Skapar ny router adress via routeHelper, den är baserad på nuvarande params och lägger till ny siffra i 'page'
 			hashHistory.push('/places'+routeHelper.createSearchRoute(this.props)+'/page/'+(Number(this.state.currentPage)-1));
 		}
 	}
@@ -115,6 +134,8 @@ export default class RecordList extends React.Component {
 			category: params.category || null,
 			person_id: params.person || null,
 			socken_id: params.recordPlace || null,
+			gender: params.gender && params.person_relation ? params.person_relation+':'+params.gender : null,
+			birth_years: params.birth_years ? (params.person_relation ? params.person_relation+':'+(params.gender ? params.gender+':' : '')+params.birth_years : params.birth_years) : null,
 			record_ids: params.record_ids || null,
 			has_metadata: params.has_metadata || null
 		};
@@ -128,7 +149,6 @@ export default class RecordList extends React.Component {
 
 	render() {
 		var searchRouteParams = routeHelper.createSearchRoute(this.props);
-
 
 		var items = this.state.records ? this.state.records.map(function(item, index) {
 			return <RecordListItem key={item._source.id} 
