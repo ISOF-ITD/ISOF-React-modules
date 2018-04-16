@@ -3,6 +3,8 @@ import React from 'react';
 import config from './../../../scripts/config.js';
 import clipboard from './../../utils/clipboard';
 
+// Main CSS: ui-components/share-buttons.less
+
 export default class RecordView extends React.Component {
 	constructor(props) {
 		super(props);

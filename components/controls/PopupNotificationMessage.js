@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+// Main CSS: ui-components/popup-notification-message.less
+
 export default class PopupNotificationMessage extends React.Component {
 	constructor(props) {
 		super(props);

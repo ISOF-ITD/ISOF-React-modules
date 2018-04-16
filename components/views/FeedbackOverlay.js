@@ -1,6 +1,8 @@
 import React from 'react';
 import config from './../../../scripts/config.js';
 
+// Main CSS: ui-components/overlay.less
+
 export default class FeedbackOverlay extends React.Component {
 	constructor(props) {
 		super(props);

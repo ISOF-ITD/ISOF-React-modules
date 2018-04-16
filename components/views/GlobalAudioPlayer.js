@@ -1,6 +1,8 @@
 import React from 'react';
 import config from './../../../scripts/config.js';
 
+// Main CSS: ui-components/audio-player.less
+
 export default class GlobalAudioPlayer extends React.Component {
 	constructor(props) {
 		super(props);

@@ -1,5 +1,7 @@
 import React from 'react';
 
+// Main CSS: ui-components/overlay.less
+
 export default class OverlayWindow extends React.Component {
 	constructor(props) {
 		super(props);

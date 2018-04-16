@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+// Main CSS: ui-components/autocomplete-input.less
+
 export default class AutocompleteInput extends React.Component {
 	constructor(props) {
 		super(props);

@@ -1,6 +1,8 @@
 import React from 'react';
 import { hashHistory } from 'react-router';
 
+// Main CSS: ui-components/poupwindow.less
+
 export default class PopupWindow extends React.Component {
 	constructor(props) {
 		super(props);

@@ -2,6 +2,9 @@ import React from 'react';
 import config from './../../../scripts/config.js';
 import ImageMap from './ImageMap';
 
+// Main CSS: ui-components/overlay.less
+// ImageMap CSS: ui-components/image-map.less
+
 export default class TranscriptionOverlay extends React.Component {
 	constructor(props) {
 		super(props);

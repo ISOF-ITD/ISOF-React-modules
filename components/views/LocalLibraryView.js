@@ -11,6 +11,8 @@ import localLibrary from './../../utils/localLibrary.js';
 
 import clipboard from './../../utils/clipboard';
 
+// Main CSS: ui-components/local-library.less
+
 export default class LocalLibraryView extends React.Component {
 	constructor(props) {
 		super(props);

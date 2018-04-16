@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import noUiSlider from 'nouislider';
 
+// Main CSS: ui-components/slider.less
+// Slider CSS: nouislider.min.less
+
 export default class Slider extends React.Component {
 	constructor(props) {
 		super(props);
