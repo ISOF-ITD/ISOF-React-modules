@@ -46,6 +46,9 @@ export default class RecordListWrapper extends React.Component {
 							category={this.props.params.category || null} 
 							person={this.props.params.person || null}
 							record_ids={this.props.params.record_ids || null}
+							person_relation={this.props.params.person_relation || null}
+							gender={this.props.params.gender || null}
+							birth_years={this.props.params.birth_years || null}
 							page={this.props.params.page || null} 
 							has_metadata={this.props.params.has_metadata || null}
 							nordic={this.props.params.nordic}
