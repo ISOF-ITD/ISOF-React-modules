@@ -7,6 +7,12 @@ import './../../lib/leaflet.active-layers';
 
 import mapHelper from './../../utils/mapHelper';
 
+// Main CSS: ui-components/map.less
+//           ui-components/map-ui.less
+
+// Leaflet CSS: leaflet.less
+//              MarkerCluster.Default.less
+
 export default class MapBase extends React.Component {
 	constructor(props) {
 		super(props);
@@ -45,6 +51,7 @@ export default class MapBase extends React.Component {
 			position: this.props.zoomControlPosition || 'topright'
 		}).addTo(this.map);
 
+		// Dölja locateControl knappen (som visar var användaren är på kartan)
 		if (!this.props.disableLocateControl) {
 			L.control.locate({
 				showPopup: false,
@@ -66,7 +73,8 @@ export default class MapBase extends React.Component {
 		}
 
 		this.layersControl = L.control.activeLayers(layers, null, {
-			position: this.props.layersControlPosition || 'topright'
+			position: this.props.layersControlPosition || 'topright',
+			collapsed: !this.props.layersControlStayOpen
 		}).addTo(this.map);
 
 		this.map.on('baselayerchange', this.mapBaseLayerChangeHandler.bind(this));

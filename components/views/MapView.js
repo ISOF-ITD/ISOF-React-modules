@@ -12,6 +12,12 @@ import MapCollection from './../collections/MapCollection';
 import mapHelper from './../../utils/mapHelper';
 import config from './../../../scripts/config.js';
 
+// Main CSS: ui-components/map.less
+//           ui-components/map-ui.less
+
+// Leaflet CSS: leaflet.less
+//              MarkerCluster.Default.less
+
 export default class MapView extends React.Component {
 
 	constructor(props) {
@@ -71,6 +77,8 @@ export default class MapView extends React.Component {
 			loading: true
 		});
 
+		console.log(params);
+
 		if (params) {
 			var fetchParams = {
 				search: params.search || null,
@@ -79,8 +87,8 @@ export default class MapView extends React.Component {
 				category: params.category,
 				year_from: params.year_from || null,
 				year_to: params.year_to || null,
-				person_relation: params.person_relation || null,
-				gender: params.gender || null,
+				gender: params.gender && params.person_relation ? params.person_relation+':'+params.gender : null,
+				birth_years: params.birth_years ? (params.person_relation ? params.person_relation+':'+(params.gender ? params.gender+':' : '')+params.birth_years : params.birth_years) : null,
 				record_ids: params.record_ids || null,
 				has_metadata: params.has_metadata || null
 			};
@@ -352,7 +360,7 @@ export default class MapView extends React.Component {
 					className="map-view"
 					layersControlPosition={this.props.layersControlPosition || 'topleft'}
 					zoomControlPosition={this.props.zoomControlPosition || 'topleft'} 
-					disableLocateControl={true}
+					disableLocateControl={true} // Inte visa locateControl knappen (som kan visa på kartan var användaren är)
 					scrollWheelZoom={true}
 					zoom={this.props.zoom}
 					center={this.props.center}

@@ -17,6 +17,9 @@ export default class RecordView extends React.Component {
 	constructor(props) {
 		super(props);
 
+		window.config = config;
+		window.recordView = this;
+
 		this.toggleSaveRecord = this.toggleSaveRecord.bind(this);
 		this.mediaImageClickHandler = this.mediaImageClickHandler.bind(this);
 
@@ -47,6 +50,7 @@ export default class RecordView extends React.Component {
 		}
 	}
 
+	// Sparar posten till localLibrary
 	toggleSaveRecord() {
 		var libraryItem = {
 			id: this.state.data.id,
@@ -75,6 +79,7 @@ export default class RecordView extends React.Component {
 
 	mediaImageClickHandler(event) {
 		if (window.eventBus) {
+			// Skickar overlay.viewimage till eventBus, ImageOverlay modulen lyssnar på det och visar bilden
 			window.eventBus.dispatch('overlay.viewimage', {
 				imageUrl: event.currentTarget.dataset.image,
 				type: event.currentTarget.dataset.type
@@ -120,14 +125,14 @@ export default class RecordView extends React.Component {
 		var audioItems = [];
 
 		if (this.state.data) {
-
+			// Förberedar visuella media objekt
 			if (this.state.data.media && this.state.data.media.length > 0) {
 				var imageDataItems = _.filter(this.state.data.media, function(dataItem) {
 					return dataItem.type == 'image';
 				});
 				imageItems = imageDataItems.map(function(mediaItem, index) {
 					if (mediaItem.source.indexOf('.pdf') == -1) {
-						return <div data-type="image" data-image={mediaItem.source} onClick={this.mediaImageClickHandler} key={'image-'+index} className={'archive-image'+(!this.state.data.text || this.state.data.text.length == 0 ? ' large' : '')}>
+						return <div data-type="image" data-image={mediaItem.source} onClick={this.mediaImageClickHandler} key={'image-'+index} className={'archive-image'}>
 							<img src={config.imageUrl+mediaItem.source} alt="" />
 							{
 								mediaItem.title &&
@@ -162,9 +167,13 @@ export default class RecordView extends React.Component {
 					</div>;
 				}.bind(this));
 
-				imageItems = imageItems.concat(pdfItems);
+				if (config.siteOptions.recordView && config.siteOptions.recordView.imagePosition == config.siteOptions.recordView.pdfIconsPosition) {
+					imageItems = imageItems.concat(pdfItems);
+					pdfItems = [];
+				}
 			}
 
+			// Förberedar lista över personer
 			var personItems = this.state.data.persons && this.state.data.persons.length > 0 ? this.state.data.persons.map(function(person, index) {
 				return <tr key={index}>
 					<td data-title="">
@@ -185,7 +194,7 @@ export default class RecordView extends React.Component {
 				</tr>;
 			}) : [];
 
-
+			// Förberedar lista över socknar
 			var placeItems = this.state.data.places && this.state.data.places.length > 0 ? this.state.data.places.map(function(place, index) {
 				return <tr key={index}>
 					<td><a href={'#place/'+place.id}>{place.name+', '+(place.fylke ? place.fylke : place.harad)}</a></td>
@@ -200,10 +209,11 @@ export default class RecordView extends React.Component {
 				return item.type == 'sitevision_url';
 			});
 
+			// Om vi har sitevisionUrl definerad använder vi SitevisionContent modulen för att visa sidans innehåll
 			if (sitevisionUrl) {
 				textElement = <SitevisionContent url={sitevisionUrl.value} />
 			}
-
+			// Om "transkriberad" finns i texten lägger vi till transkriberings knappen istället för att visa textan
 			else if (this.state.data.text && this.state.data.text.indexOf('transkriberad') > -1 && this.state.data.text.length < 25 && this.state.data.media.length > 0) {
 				textElement = <div><p><strong>Den här uppteckningen är inte transkriberad.</strong><br/><br/>Vill du vara med och tillgängliggöra samlingarna för fler? Hjälp oss att skriva av berättelser!</p><TranscribeButton
 					className="button-primary"
@@ -212,10 +222,14 @@ export default class RecordView extends React.Component {
 					recordId={this.state.data.id}
 					images={this.state.data.media} /></div>;
 			}
-
-			else if ((!this.state.data.text || this.state.data.text.length == 0) && _.find(this.state.data.media, function(item) {
+			// Om posten inte innehåller bara en pdf fil (ingen text, inte ljudfiler och inte bilder), då visar vi pdf filen direkt
+			else if ((!this.state.data.text || this.state.data.text.length == 0) && _.filter(this.state.data.media, function(item) {
 				return item.type == 'pdf';
-			})) {
+			}).length == 1 && _.filter(this.state.data.media, function(item) {
+				return item.type == 'image';
+			}).length == 0 && _.filter(this.state.data.media, function(item) {
+				return item.type == 'audio';
+			}).length == 0) {
 				var pdfObject = _.find(this.state.data.media, function(item) {
 					return item.type == 'pdf';
 				});
@@ -224,11 +238,12 @@ export default class RecordView extends React.Component {
 
 				forceFullWidth = true;
 			}
+			// Annars visar vi texten som vanligt
 			else {
 				textElement = <p dangerouslySetInnerHTML={{__html: this.state.data.text}} />;
 			}
 
-
+			// Förbereder kategori länk
 			var taxonomyElement;
 
 			if (this.state.data.taxonomy) {
@@ -247,6 +262,7 @@ export default class RecordView extends React.Component {
 				}
 			}
 
+			// Förbereder metadata items. siteOptions i config bestämmer vilken typ av metadata ska synas
 			var metadataItems = [];
 
 			var getMetadataTitle = function(item) {
@@ -276,7 +292,6 @@ export default class RecordView extends React.Component {
 				});
 			}
 
-
 			return <div className={'container'+(this.state.data.id ? '' : ' loading')}>
 
 					<div className="container-header">
@@ -305,7 +320,7 @@ export default class RecordView extends React.Component {
 
 						{
 							(this.state.data.text || textElement) &&
-							<div className={(sitevisionUrl || imageItems.length == 0 || forceFullWidth || (config.siteOptions.recordView && config.siteOptions.recordView.full_audio_player) ? 'twelve' : 'eight')+' columns'}>
+							<div className={(sitevisionUrl || imageItems.length == 0 || forceFullWidth || ((config.siteOptions.recordView && config.siteOptions.recordView.audioPlayerPosition == 'under') && (config.siteOptions.recordView && config.siteOptions.recordView.imagePosition == 'under') && (config.siteOptions.recordView && config.siteOptions.recordView.pdfIconsPosition == 'under')) ? 'twelve' : 'eight')+' columns'}>
 								{
 									textElement
 								}
@@ -314,18 +329,47 @@ export default class RecordView extends React.Component {
 									this.state.data.comment && this.state.data.comment != '' &&
 									<p className="text-small"><strong>{l('Ordförklaringar och dylikt i upptekcningarna/utgåvorna')+':'}</strong><br/><span dangerouslySetInnerHTML={{__html: this.state.data.comment}} /></p>
 								}
+
 								{
 									this.state.data.printed_source && this.state.data.materialtype == 'tryckt' &&
 									<p className="text-small"><em>{this.state.data.printed_source}</em></p>
 								}
-							</div>
-						}
-						{
-							(imageItems.length > 0 || audioItems.length > 0) &&
-							<div className={'columns '+(this.state.data.text && !sitevisionUrl && !forceFullWidth && !(config.siteOptions.recordView && config.siteOptions.recordView.full_audio_player) ? 'four u-pull-right' : 'twelve')}>
 
 								{
-									audioItems.length > 0 &&
+									audioItems.length > 0 && (sitevisionUrl || forceFullWidth || (config.siteOptions.recordView && config.siteOptions.recordView.audioPlayerPosition == 'under')) &&
+									<div className="table-wrapper">
+										<h1>audioItems</h1>
+										<table width="100%">
+											<tbody>
+												{audioItems}
+											</tbody>
+										</table>
+									</div>
+								}
+
+								{
+									imageItems.length > 0 && (sitevisionUrl || forceFullWidth || (config.siteOptions.recordView && config.siteOptions.recordView.imagePosition == 'under')) &&
+									<div>
+										{imageItems}
+									</div>
+								}
+
+								{
+									pdfItems.length > 0 && (sitevisionUrl || forceFullWidth || (config.siteOptions.recordView && config.siteOptions.recordView.pdfIconsPosition == 'under')) &&
+									<div>
+										{pdfItems}
+									</div>
+								}
+								
+							</div>
+						}
+
+						{
+							!sitevisionUrl && !forceFullWidth && (!config.siteOptions.recordView || !config.siteOptions.recordView.imagePosition || config.siteOptions.recordView.imagePosition == 'right' || !config.siteOptions.recordView.pdfIconsPosition || config.siteOptions.recordView.pdfIconsPosition == 'right' || !config.siteOptions.recordView.audioPlayerPosition || config.siteOptions.recordView.audioPlayerPosition == 'right') && (imageItems.length > 0 || audioItems.length > 0 || pdfItems.length > 0) &&
+							<div className={'columns four u-pull-right'}>
+
+								{
+									(!config.siteOptions.recordView || !config.siteOptions.recordView.audioPlayerPosition || config.siteOptions.recordView.audioPlayerPosition == 'right') && audioItems.length > 0 &&
 									<div className="table-wrapper">
 										<table width="100%">
 											<tbody>
@@ -336,14 +380,19 @@ export default class RecordView extends React.Component {
 								}
 
 								{
+									(!config.siteOptions.recordView || !config.siteOptions.recordView.imagePosition || config.siteOptions.recordView.imagePosition == 'right') && imageItems.length > 0 &&
 									imageItems
+								}
+
+								{
+									(!config.siteOptions.recordView || !config.siteOptions.recordView.pdfIconsPosition || config.siteOptions.recordView.pdfIconsPosition == 'right') && pdfItems.length > 0 &&
+									pdfItems
 								}
 
 							</div>
 						}
 
 					</div>
-
 					{
 						metadataItems.length > 0 &&
 						<div className="grid-items">

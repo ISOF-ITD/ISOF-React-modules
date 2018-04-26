@@ -1,6 +1,8 @@
 import React from 'react';
 import config from './../../../scripts/config.js';
 
+// Main CSS: ui-components/audio-player.less
+
 export default class ListPlayButton extends React.Component {
 	constructor(props) {
 		super(props);
@@ -32,7 +34,7 @@ export default class ListPlayButton extends React.Component {
 			window.eventBus.addEventListener('audio.stop', this.audioPlayerStopHandler);
 		}
 
-		if (window.isofAudioPlayer && window.isofAudioPlayer.currentAudio && window.isofAudioPlayer.currentAudio.record == this.props.recordId && window.isofAudioPlayer.currentAudio.media == this.props.media.source && window.isofAudioPlayer.currentAudio.playing) {
+		if (window.isofAudioPlayer && window.isofAudioPlayer.currentAudio && window.isofAudioPlayer.currentAudio.record == this.props.recordId && (this.props.media && window.isofAudioPlayer.currentAudio.media == this.props.media.source) && window.isofAudioPlayer.currentAudio.playing) {
 			this.setState({
 				isPlaying: true
 			});
@@ -47,21 +49,26 @@ export default class ListPlayButton extends React.Component {
 	}
 
 	playButtonClickHandler(event) {
-		event.stopPropagation();
-		event.preventDefault();
+		if (this.props.disablePlayback) {
+			return;
+		}
+		else {
+			event.stopPropagation();
+			event.preventDefault();
 
-		if (window.eventBus) {
-			if (window.isofAudioPlayer && window.isofAudioPlayer.currentAudio && window.isofAudioPlayer.currentAudio.record == this.props.recordId && window.isofAudioPlayer.currentAudio.media == this.props.media.source && window.isofAudioPlayer.currentAudio.playing) {
-				window.eventBus.dispatch('audio.pauseaudio');
-			}
-			else {
-				window.eventBus.dispatch('audio.playaudio', {
-					record: {
-						id: this.props.recordId,
-						title: this.props.recordTitle,
-					},
-					audio: this.props.media
-				});
+			if (window.eventBus) {
+				if (window.isofAudioPlayer && window.isofAudioPlayer.currentAudio && window.isofAudioPlayer.currentAudio.record == this.props.recordId && window.isofAudioPlayer.currentAudio.media == this.props.media.source && window.isofAudioPlayer.currentAudio.playing) {
+					window.eventBus.dispatch('audio.pauseaudio');
+				}
+				else {
+					window.eventBus.dispatch('audio.playaudio', {
+						record: {
+							id: this.props.recordId,
+							title: this.props.recordTitle,
+						},
+						audio: this.props.media
+					});
+				}
 			}
 		}
 	}
