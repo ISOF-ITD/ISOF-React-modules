@@ -112,6 +112,7 @@ export default class RecordList extends React.Component {
 			size: 50,
 			search: params.search || null,
 			search_field: params.search_field || null,
+			type: params.type || null,
 			category: params.category || null,
 			person_id: params.person || null,
 			socken_id: params.recordPlace || null,

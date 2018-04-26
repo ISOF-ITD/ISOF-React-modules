@@ -75,6 +75,7 @@ export default class MapView extends React.Component {
 			var fetchParams = {
 				search: params.search || null,
 				search_field: params.search_field || null,
+				type: params.type,
 				category: params.category,
 				year_from: params.year_from || null,
 				year_to: params.year_to || null,
