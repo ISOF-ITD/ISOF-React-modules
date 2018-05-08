@@ -329,13 +329,16 @@ export default class RecordView extends React.Component {
 									this.state.data.comment && this.state.data.comment != '' &&
 									<p className="text-small"><strong>{l('Ordförklaringar och dylikt i upptekcningarna/utgåvorna')+':'}</strong><br/><span dangerouslySetInnerHTML={{__html: this.state.data.comment}} /></p>
 								}
+
 								{
 									this.state.data.printed_source && this.state.data.materialtype == 'tryckt' &&
 									<p className="text-small"><em>{this.state.data.printed_source}</em></p>
 								}
+
 								{
-									sitevisionUrl || forceFullWidth || (config.siteOptions.recordView && config.siteOptions.recordView.audioPlayerPosition == 'under' && audioItems.length > 0) &&
+									audioItems.length > 0 && (sitevisionUrl || forceFullWidth || (config.siteOptions.recordView && config.siteOptions.recordView.audioPlayerPosition == 'under')) &&
 									<div className="table-wrapper">
+										<h1>audioItems</h1>
 										<table width="100%">
 											<tbody>
 												{audioItems}
@@ -343,20 +346,24 @@ export default class RecordView extends React.Component {
 										</table>
 									</div>
 								}
+
 								{
-									sitevisionUrl || forceFullWidth || (config.siteOptions.recordView && config.siteOptions.recordView.imagePosition == 'under') && imageItems.length > 0 &&
+									imageItems.length > 0 && (sitevisionUrl || forceFullWidth || (config.siteOptions.recordView && config.siteOptions.recordView.imagePosition == 'under')) &&
 									<div>
 										{imageItems}
 									</div>
 								}
+
 								{
-									sitevisionUrl || forceFullWidth || (config.siteOptions.recordView && config.siteOptions.recordView.pdfIconsPosition == 'under') && pdfItems.length > 0 &&
+									pdfItems.length > 0 && (sitevisionUrl || forceFullWidth || (config.siteOptions.recordView && config.siteOptions.recordView.pdfIconsPosition == 'under')) &&
 									<div>
 										{pdfItems}
 									</div>
 								}
+								
 							</div>
 						}
+
 						{
 							!sitevisionUrl && !forceFullWidth && (!config.siteOptions.recordView || !config.siteOptions.recordView.imagePosition || config.siteOptions.recordView.imagePosition == 'right' || !config.siteOptions.recordView.pdfIconsPosition || config.siteOptions.recordView.pdfIconsPosition == 'right' || !config.siteOptions.recordView.audioPlayerPosition || config.siteOptions.recordView.audioPlayerPosition == 'right') && (imageItems.length > 0 || audioItems.length > 0 || pdfItems.length > 0) &&
 							<div className={'columns four u-pull-right'}>
@@ -386,7 +393,6 @@ export default class RecordView extends React.Component {
 						}
 
 					</div>
-
 					{
 						metadataItems.length > 0 &&
 						<div className="grid-items">

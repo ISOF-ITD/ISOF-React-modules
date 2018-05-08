@@ -30,6 +30,9 @@ export default class PlaceView extends React.Component {
 		this.fetchData(fetchParams);
 
 		var state = {};
+		if (params.type) {
+			state['type'] = params.type;
+		}
 		if (params.category) {
 			state['category'] = params.category;
 		}
@@ -147,7 +150,6 @@ export default class PlaceView extends React.Component {
 				}
 
 				{
-					(this.state.record_ids || this.state.category || this.state.searchQuery || this.state.searchField) &&
 					<div className="row search-results-container">
 						<div className="twelve columns">
 	
@@ -158,6 +160,7 @@ export default class PlaceView extends React.Component {
 
 							<RecordList disableRouterPagination={true} highlightRecordsWithMetadataField={this.props.route.highlightRecordsWithMetadataField} 
 								record_ids={this.state.record_ids} 
+								type={this.state.type} 
 								category={this.state.category} 
 								has_metadata={this.state.has_metadata} 
 								recordPlace={this.state.recordPlace} 
