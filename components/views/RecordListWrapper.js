@@ -43,6 +43,7 @@ export default class RecordListWrapper extends React.Component {
 							search={this.props.params.search || null} 
 							search_field={this.props.params.search_field || null} 
 							type={this.props.params.type || null} 
+							type={this.props.params.type || null} 
 							category={this.props.params.category || null} 
 							person={this.props.params.person || null}
 							record_ids={this.props.params.record_ids || null}
