@@ -36,7 +36,7 @@ export default class RecordListItem extends React.Component {
 					taxonomyElement = <a href={'#/places/category/'+this.props.item._source.taxonomy.category.toLowerCase()}>{l(this.props.item._source.taxonomy.name)}</a>;
 				}
 			}
-			else if (this.props.item._source.taxonomy.length > 0 && (!config.siteOptions.recordList || config.siteOptions.recordList.hideCategories == true)) {
+			else if (this.props.item._source.taxonomy.length > 0 && (!config.siteOptions.recordList || !config.siteOptions.recordList.hideCategories == true)) {
 				taxonomyElement = <span dangerouslySetInnerHTML={{__html: _.compact(_.map(this.props.item._source.taxonomy, function(taxonomyItem) {
 							if (taxonomyItem.category) {
 								if (visibleCategories) {
