@@ -35,6 +35,6 @@ export default {
 			}
 		}
 
-		return !langData[window.currentLang][phrase] ? phrase : langData[window.currentLang][phrase];
+		return !langData[window.currentLang] || !langData[window.currentLang][phrase] ? phrase : langData[window.currentLang][phrase];
 	}
 };

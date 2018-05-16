@@ -341,7 +341,6 @@ export default class RecordView extends React.Component {
 								{
 									audioItems.length > 0 && (sitevisionUrl || forceFullWidth || (config.siteOptions.recordView && config.siteOptions.recordView.audioPlayerPosition == 'under')) &&
 									<div className="table-wrapper">
-										<h1>audioItems</h1>
 										<table width="100%">
 											<tbody>
 												{audioItems}
