@@ -37,19 +37,18 @@ export default class RecordListItem extends React.Component {
 				}
 			}
 			else if (this.props.item._source.taxonomy.length > 0 && (!config.siteOptions.recordList || !config.siteOptions.recordList.hideCategories == true)) {
-				taxonomyElement = <span dangerouslySetInnerHTML={{__html: _.compact(_.map(this.props.item._source.taxonomy, function(taxonomyItem) {
-							if (taxonomyItem.category) {
-								if (visibleCategories) {
-									if (visibleCategories.indexOf(taxonomyItem.type.toLowerCase()) > -1) {
-										return '<a href="#/places/category/'+taxonomyItem.category.toLowerCase()+'">'+l(taxonomyItem.name)+'</a>'
-									}
-								}
-								else {
-									return '<a href="#/places/category/'+taxonomyItem.category.toLowerCase()+'">'+l(taxonomyItem.name)+'</a>'
-								}
+				taxonomyElement = _.compact(_.map(this.props.item._source.taxonomy, function(taxonomyItem) {
+					if (taxonomyItem.category) {
+						if (visibleCategories) {
+							if (visibleCategories.indexOf(taxonomyItem.type.toLowerCase()) > -1) {
+								return <a href={'#/places/category/'+taxonomyItem.category.toLowerCase()}>{l(taxonomyItem.name)}</a>;
 							}
-						})).join(', ')}} >
-					</span>;
+						}
+						else {
+							return <a href={'#/places/category/'+taxonomyItem.category.toLowerCase()}>{l(taxonomyItem.name)}</a>;
+						}
+					}
+				}));
 			}
 		}
 
@@ -69,13 +68,13 @@ export default class RecordListItem extends React.Component {
 			</td>
 			{
 				!config.siteOptions.recordList || !config.siteOptions.recordList.hideCategories == true &&
-				<td data-title={l('Kategori')+':'}>
+				<td className="table-buttons" data-title={l('Kategori')+':'}>
 					{
 						taxonomyElement
 					}
 				</td>
 			}
-			<td data-title={l('Socken, Landskap')+':'}>
+			<td className="table-buttons" data-title={l('Socken, Landskap')+':'}>
 			{
 				this.props.item._source.places && this.props.item._source.places.length > 0 &&
 				<a target={config.embeddedApp ? '_parent' : '_self'} href={(config.embeddedApp ? (window.applicationSettings && window.applicationSettings.landingPage ? window.applicationSettings.landingPage : config.siteUrl) : '')+'#place/'+this.props.item._source.places[0].id}>{this.props.item._source.places[0].name+(this.props.item._source.places[0].landskap || this.props.item._source.places[0].fylke ? (this.props.item._source.places[0].landskap ? ', '+this.props.item._source.places[0].landskap : this.props.item._source.places[0].fylke ? ', '+this.props.item._source.places[0].fylke : '') : '')}</a>

@@ -116,7 +116,7 @@ export default class RecordView extends React.Component {
 		archiveLogos['NFS'] = 'img/archive-logo-ikos.png';
 		archiveLogos['DFU'] = 'img/archive-logo-isof.png';
 
-		return archiveLogos[archive] || null;
+		return config.appUrl+archiveLogos[archive] || null;
 	}
 
 	render() {
@@ -306,7 +306,10 @@ export default class RecordView extends React.Component {
 																autoHide={true}
 																message={l('Klicka på stjärnan för att spara sägner till din egen lista.')}>
 									<button className={'save-button'+(this.state.saved ? ' saved' : '')} onClick={this.toggleSaveRecord}><span>{l('Spara')}</span></button></ElementNotificationMessage></h2>
-								<p><strong>Materialtyp</strong>: {this.state.data.materialtype}</p>
+								{
+									(!config.siteOptions.recordView || !config.siteOptions.recordView.hideMaterialType) &&
+									<p><strong>Materialtyp</strong>: {this.state.data.materialtype}</p>
+								}
 							</div>
 						</div>
 
