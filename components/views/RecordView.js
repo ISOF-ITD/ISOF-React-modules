@@ -107,7 +107,7 @@ export default class RecordView extends React.Component {
 	}
 
 	getArchiveLogo(archive) {
-		var archiveLogos = [];
+		var archiveLogos = {};
 
 		archiveLogos['Dialekt-, namn- och folkminnesarkivet i Göteborg'] = 'img/archive-logo-isof.png';
 		archiveLogos['Dialekt- och folkminnesarkivet i Uppsala'] = 'img/archive-logo-isof.png';
@@ -116,7 +116,7 @@ export default class RecordView extends React.Component {
 		archiveLogos['NFS'] = 'img/archive-logo-ikos.png';
 		archiveLogos['DFU'] = 'img/archive-logo-isof.png';
 
-		return config.appUrl+archiveLogos[archive] || null;
+		return archiveLogos[archive] ? config.appUrl+archiveLogos[archive] : config.appUrl+archiveLogos['DAG'];
 	}
 
 	render() {
