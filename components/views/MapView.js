@@ -332,21 +332,30 @@ export default class MapView extends React.Component {
 				{
 					!this.props.hideMapmodeMenu &&
 					<div className="map-viewmode-menu">
-						<a className={'icon-marker'+(this.state.viewMode == 'clusters' ? ' selected' : '')}
-							data-viewmode="clusters"
-							onClick={this.changeViewMode}>
-							<span>Cluster</span>
-						</a>
-						<a className={'icon-heatmap'+(this.state.viewMode == 'heatmap-count' ? ' selected' : '')}
-							data-viewmode="heatmap-count"
-							onClick={this.changeViewMode}>
-							<span>Heatmap</span>
-						</a>
-						<a className={'icon-circles'+(this.state.viewMode == 'circles' ? ' selected' : '')}
-							data-viewmode="circles"
-							onClick={this.changeViewMode}>
-							<span>Circles</span>
-						</a>
+						{
+							!this.props.disableClustersMode &&
+							<a className={'icon-marker'+(this.state.viewMode == 'clusters' ? ' selected' : '')}
+								data-viewmode="clusters"
+								onClick={this.changeViewMode}>
+								<span>Cluster</span>
+							</a>
+						}
+						{
+							!this.props.disableHeatmapMode &&
+							<a className={'icon-heatmap'+(this.state.viewMode == 'heatmap-count' ? ' selected' : '')}
+								data-viewmode="heatmap-count"
+								onClick={this.changeViewMode}>
+								<span>Heatmap</span>
+							</a>
+						}
+						{
+							!this.props.disableCirclesMode &&
+							<a className={'icon-circles'+(this.state.viewMode == 'circles' ? ' selected' : '')}
+								data-viewmode="circles"
+								onClick={this.changeViewMode}>
+								<span>Circles</span>
+							</a>
+						}
 					</div>
 				}
 
