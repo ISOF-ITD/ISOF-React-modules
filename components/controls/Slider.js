@@ -14,9 +14,11 @@ export default class Slider extends React.Component {
 	}
 
 	componentDidMount() {
+		var sliderStart = !isNaN(this.props.start) ? this.props.start : this.props.rangeMin && this.props.rangeMax ? [this.props.rangeMin, this.props.rangeMax] : [0, 10];
+
 		this.slider = noUiSlider.create(this.refs.sliderContainer, {
-			start: this.props.start ? this.props.start : this.props.rangeMin && this.props.rangeMax ? [this.props.rangeMin, this.props.rangeMax] : [0, 10],
-			behaviour: 'drag',
+			start: sliderStart,
+			behaviour: this.props.behaviour || 'drag',
 			connect: true,
 			tooltips: true,
 			format: {
@@ -27,7 +29,7 @@ export default class Slider extends React.Component {
 					return Math.round(value);
 				}
 			},
-			range: this.props.rangeMin != undefined && this.props.rangeMax != undefined ? {
+			range: !isNaN(this.props.rangeMin) && !isNaN(this.props.rangeMax) && this.props.rangeMin < this.props.rangeMax ? {
 				min: this.props.rangeMin,
 				max: this.props.rangeMax
 			} : {
@@ -49,7 +51,7 @@ export default class Slider extends React.Component {
 			this.refs.sliderContainer.setAttribute('disabled', true);
 		}
 
-		if ((!isNaN(props.rangeMin) && !isNaN(props.rangeMax)) && (props.rangeMin != this.slider.options.range.min || props.rangeMax != this.slider.options.range.max)) {
+		if ((!isNaN(props.rangeMin) && !isNaN(props.rangeMax)) && (props.rangeMin != this.slider.options.range.min || props.rangeMax != this.slider.options.range.max) && props.rangeMin < props.rangeMax) {
 			var range = {
 				min: Number(props.rangeMin),
 				max: Number(props.rangeMax)
@@ -62,6 +64,8 @@ export default class Slider extends React.Component {
 	}
 
 	sliderChangeHandler(event) {
+		this.value = event;
+
 		if (this.props.onChange) {
 			this.props.onChange({
 				target: {
@@ -71,6 +75,10 @@ export default class Slider extends React.Component {
 				}
 			});
 		}
+	}
+
+	set(value) {
+		this.slider.set(value, false);
 	}
 
 	sliderSlideHandler(event) {
@@ -86,7 +94,7 @@ export default class Slider extends React.Component {
 	}
 
 	render() {
-		return <div className="slider-container">
+		return <div className={'slider-container'+(this.props.className ? ' '+this.props.className : '')}>
 			<div ref="sliderContainer"></div>
 		</div>;
 	}

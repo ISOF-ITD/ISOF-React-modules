@@ -18,8 +18,6 @@ export default class RecordsCollection {
 		else {
 			var queryParams = _.defaults(params, config.requiredParams);
 
-			console.log(queryParams);
-
 			// Anpassa params till ES Djangi api
 			if (queryParams.search) {
 				if (queryParams.search_field == 'person') {
