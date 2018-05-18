@@ -52,7 +52,7 @@ export default class RecordListItem extends React.Component {
 			}
 		}
 
-		return <tr className={'list-item'+(displayTextSummary ? ' highlighted' : '')}>
+		return <tr key={this.props.item._source.id} className={'list-item'+(displayTextSummary ? ' highlighted' : '')}>
 			<td className="text-larger">
 				<a className="item-title" target={config.embeddedApp ? '_parent' : '_self'} href={(config.embeddedApp ? (window.applicationSettings && window.applicationSettings.landingPage ? window.applicationSettings.landingPage : config.siteUrl) : '')+'#record/'+this.props.item._source.id+(this.props.routeParams ? this.props.routeParams : '')}>
 					{
