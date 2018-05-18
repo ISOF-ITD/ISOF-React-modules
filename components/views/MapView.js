@@ -332,14 +332,11 @@ export default class MapView extends React.Component {
 				{
 					!this.props.hideMapmodeMenu &&
 					<div className="map-viewmode-menu">
-						{
-							!this.props.disableClustersMode &&
-							<a className={'icon-marker'+(this.state.viewMode == 'clusters' ? ' selected' : '')}
-								data-viewmode="clusters"
-								onClick={this.changeViewMode}>
-								<span>Cluster</span>
-							</a>
-						}
+						<a className={'icon-marker'+(this.state.viewMode == 'clusters' ? ' selected' : '')}
+							data-viewmode="clusters"
+							onClick={this.changeViewMode}>
+							<span>Cluster</span>
+						</a>
 						{
 							!this.props.disableHeatmapMode &&
 							<a className={'icon-heatmap'+(this.state.viewMode == 'heatmap-count' ? ' selected' : '')}

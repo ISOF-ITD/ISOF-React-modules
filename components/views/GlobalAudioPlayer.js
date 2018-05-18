@@ -1,5 +1,6 @@
 import React from 'react';
 import config from './../../../scripts/config.js';
+import Slider from './../controls/Slider.js';
 
 // Main CSS: ui-components/audio-player.less
 
@@ -21,6 +22,7 @@ export default class GlobalAudioPlayer extends React.Component {
 		this.audioEndedHandler = this.audioEndedHandler.bind(this);
 		this.audioPlayHandler = this.audioPlayHandler.bind(this);
 		this.audioPauseHandler = this.audioPauseHandler.bind(this);
+		this.durationSliderChangeHandler = this.durationSliderChangeHandler.bind(this);
 		this.togglePlay = this.togglePlay.bind(this);
 
 		this.audio = new Audio();
@@ -38,8 +40,8 @@ export default class GlobalAudioPlayer extends React.Component {
 			paused: false,
 			audio: null,
 			record: null,
-			durationTime: '',
-			currentTime: ''
+			durationTime: 0,
+			currentTime: 0
 		};
 
 		if (window.eventBus) {
@@ -53,6 +55,7 @@ export default class GlobalAudioPlayer extends React.Component {
 	}
 
 	msToTimeStr(ms) {
+		ms = ms*1000;
 		var minutes = Math.floor(ms / 60000);
 		var seconds = ((ms % 60000) / 1000).toFixed(0);
 		return (minutes < 10 ? '0' : '')+minutes+":"+(seconds < 10 ? '0' : '')+seconds;
@@ -71,9 +74,10 @@ export default class GlobalAudioPlayer extends React.Component {
 
 		this.durationInterval = setInterval(function() {
 			this.setState({
-				currentTime: this.msToTimeStr(this.audio.currentTime*1000),
-				durationTime: this.msToTimeStr(this.audio.duration*1000)
+				currentTime: this.audio.currentTime,
+				durationTime: this.audio.duration
 			});
+			this.refs.slider.set(this.audio.currentTime);
 		}.bind(this), 1000);
 	}
 
@@ -154,6 +158,10 @@ export default class GlobalAudioPlayer extends React.Component {
 		}
 	}
 
+	durationSliderChangeHandler(event) {
+		this.audio.currentTime = event.target.value[0];
+	}
+
 	playAudio(data) {
 		if (isofAudioPlayer.currentAudio.record == data.record.id && isofAudioPlayer.currentAudio.media == data.audio.source && this.state.paused) {
 			this.resumeAudio();
@@ -178,8 +186,8 @@ export default class GlobalAudioPlayer extends React.Component {
 			<div className={'global-audio-player'} disabled={!this.state.loaded}>
 
 				<div className="player-time">
-					{this.state.currentTime}
-					<div className="duration">{this.state.durationTime}</div>
+					{this.msToTimeStr(this.state.currentTime)}
+					<div className="duration">{this.msToTimeStr(this.state.durationTime)}</div>
 				</div>
 
 				<div className="player-content">
@@ -188,9 +196,12 @@ export default class GlobalAudioPlayer extends React.Component {
 						<div className="player-label"><a href={'#record/'+this.state.record.id}>{this.state.record.title}</a></div>
 					}
 					{
+						/*
 						this.state.audio &&
 						<div className="player-label">{this.state.record.title != this.state.audio.title ? this.state.audio.title : this.state.audio.source}</div>
+						*/
 					}
+					<Slider className="audio-seek-slider" ref="slider" behaviour="tap-drag" start={0} rangeMin={0} rangeMax={this.state.durationTime} onChange={this.durationSliderChangeHandler} />
 				</div>
 
 				<button className={'play-button large'+(this.state.playing ? ' playing' : '')} onClick={this.togglePlay}></button>

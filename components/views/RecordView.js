@@ -174,12 +174,18 @@ export default class RecordView extends React.Component {
 			}
 
 			// Förberedar lista över personer
+			console.log('disablePersonLinks: '+config.siteOptions.disablePersonLinks)
+			console.log('disableInformantLinks: '+config.siteOptions.disableInformantLinks)
 			var personItems = this.state.data.persons && this.state.data.persons.length > 0 ? this.state.data.persons.map(function(person, index) {
 				return <tr key={index}>
 					<td data-title="">
 						{
 							!config.siteOptions.disablePersonLinks == true ?
-							<a href={'#person/'+person.id}>{person.name ? person.name : ''}</a> :
+							(
+								config.siteOptions.disableInformantLinks == true && person.relation == 'i' ?
+								person.name :
+								<a href={'#person/'+person.id}>{person.name ? person.name : ''}</a>
+							) :
 							person.name
 						}
 					</td>

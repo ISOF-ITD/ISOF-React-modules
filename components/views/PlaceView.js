@@ -93,7 +93,17 @@ export default class PlaceView extends React.Component {
 
 		var personsItems = this.state.data.persons && this.state.data.persons.length > 0 ? this.state.data.persons.map(function(person, index) {
 			return <tr key={index}>
-				<td><a href={'#person/'+person.id}>{person.name}</a></td>
+				<td>
+					{
+						!config.siteOptions.disablePersonLinks == true ?
+						(
+							config.siteOptions.disableInformantLinks == true && person.relation == 'i' ?
+							person.name :
+							<a href={'#person/'+person.id}>{person.name ? person.name : ''}</a>
+						) :
+						person.name
+					}
+				</td>
 				<td>{person.birth_year > 0 ? person.birth_year : ''}</td>
 			</tr>;
 		}.bind(this)) : [];
@@ -205,36 +215,6 @@ export default class PlaceView extends React.Component {
 							<PersonList personType="informants" title={l('Intervjuade personer')} 
 								nordic={this.state.nordic}
 								place={this.state.recordPlace}  />
-						</div>
-					</div>
-
-				}
-
-				{
-					this.state.data.persons && this.state.data.persons.length > 0 &&
-					<hr/>
-				}
-
-				{
-					this.state.data.persons && this.state.data.persons.length > 0 &&
-
-					<div className="row">
-						<div className="twelve columns">
-							<h3>{l('Personer födda i')} {this.state.data.name}</h3>
-
-							<div className="table-wrapper">
-								<table width="100%">
-									<thead>
-										<tr>
-											<th>{l('Namn')}</th>
-											<th>{l('Födelseår')}</th>
-										</tr>
-									</thead>
-									<tbody>
-										{personsItems}
-									</tbody>
-								</table>
-							</div>
 						</div>
 					</div>
 
