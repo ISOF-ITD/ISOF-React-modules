@@ -35,6 +35,7 @@ export default class MapView extends React.Component {
 		this.changeViewMode = this.changeViewMode.bind(this);
 		this.mapBaseLayerChangeHandler = this.mapBaseLayerChangeHandler.bind(this);
 
+		// Förberedar MapCollection som kommer ta hand om att hämta data från api
 		this.collections = new MapCollection(function(json) {
 			this.mapData = json.data || [];
 			this.updateMap();
@@ -69,6 +70,7 @@ export default class MapView extends React.Component {
 	}
 
 	mapBaseLayerChangeHandler(event) {
+		// Uppdaterar kartan om underlagret ändras
 		this.updateMap();
 	}
 
@@ -117,6 +119,17 @@ export default class MapView extends React.Component {
 				}.bind(this), 50);
 			}
 		}
+	}
+
+	// Lägger till filter till kartan, filter gör att bara viss "type" av socken relation syns på kartan
+	// Typ kan vara place_collected, dispatch_place, destination_place, related_person_place eller något annat
+	// Används för folkmusikkartan för att byta mellan visning av alla socknar eller bara related_person_place socknar (socken som kan vara födelsesocken av personer)
+	setMapFilter(filter) {
+		this.setState({
+			mapFilter: filter
+		}, function() {
+			this.updateMap();
+		}.bind(this));
 	}
 
 	createLayers() {
@@ -181,6 +194,15 @@ export default class MapView extends React.Component {
 	}
 
 	updateMap() {
+		// Om det finns mapFilter (som kan filtrera ut vissa relatontyper av platser), då filterar vi state.mapData innan vi placerar data på kartan
+		console.log(this.state.mapFilter)
+		var mapData = this.state.mapFilter ? _.filter(this.mapData, function(item) {
+			console.log(item)
+			return item.relation_type.indexOf(this.state.mapFilter) > -1;
+		}.bind(this)) : this.mapData;
+
+		console.log(mapData);
+
 		if (this.state.viewMode == 'markers' || this.state.viewMode == 'clusters') {
 			if (this.markers) {
 				this.markers.clearLayers();
@@ -190,7 +212,7 @@ export default class MapView extends React.Component {
 			}
 
 			// Lägger till alla prickar på kartan
-			if (this.mapData.length > 0) {
+			if (mapData.length > 0) {
 				// Hämtar current bounds (minus 20%) av synliga kartan
 				var currentBounds = this.refs.mapView.map.getBounds().pad(-0.2);
 
@@ -198,7 +220,7 @@ export default class MapView extends React.Component {
 				var bounds = [];
 				var markerWithinBounds = false;
 
-				_.each(this.mapData, function(mapItem) {
+				_.each(mapData, function(mapItem) {
 					if (mapItem.location.length > 0) {
 						// Skalar L.marker objekt och lägger till rätt icon
 						var marker = L.marker([Number(mapItem.location[0]), Number(mapItem.location[1])], {
@@ -245,18 +267,18 @@ export default class MapView extends React.Component {
 				this.createLayers();
 			}
 
-			if (this.mapData.length > 0) {
+			if (mapData.length > 0) {
 				var bounds = [];
 
-				var minValue = _.min(this.mapData, function(mapItem) {
+				var minValue = _.min(mapData, function(mapItem) {
 					return Number(mapItem.doc_count);
 				}).doc_count;
 
-				var maxValue = _.max(this.mapData, function(mapItem) {
+				var maxValue = _.max(mapData, function(mapItem) {
 					return Number(mapItem.doc_count);
 				}).doc_count;
 
-				_.each(this.mapData, function(mapItem) {
+				_.each(mapData, function(mapItem) {
 					if (mapItem.location.length > 0) {
 						var marker = L.circleMarker(mapItem.location, {
 							radius: ((mapItem.doc_count/maxValue)*20)+2,
@@ -288,7 +310,7 @@ export default class MapView extends React.Component {
 			}
 		}
 		if (this.state.viewMode == 'heatmap') {
-			var latLngs = _.map(this.mapData, function(mapItem) {
+			var latLngs = _.map(mapData, function(mapItem) {
 				return [mapItem.location[0], mapItem.location[1], 0.5];
 			}.bind(this));
 			this.markers.setLatLngs(latLngs);
@@ -296,7 +318,7 @@ export default class MapView extends React.Component {
 		if (this.state.viewMode == 'heatmap-count') {
 			this.refs.mapView.map.removeLayer(this.markers);
 
-			var maxCount = _.max(this.mapData, function(mapItem) {
+			var maxCount = _.max(mapData, function(mapItem) {
 				return Number(mapItem.doc_count);
 			}).doc_count;
 
@@ -309,7 +331,7 @@ export default class MapView extends React.Component {
 			});
 			this.markers.addTo(this.refs.mapView.map);
 
-			var latLngs = _.map(this.mapData, function(mapItem) {
+			var latLngs = _.map(mapData, function(mapItem) {
 				return [mapItem.location[0], mapItem.location[1], mapItem.doc_count];
 			}.bind(this));
 			this.markers.setLatLngs(latLngs);
