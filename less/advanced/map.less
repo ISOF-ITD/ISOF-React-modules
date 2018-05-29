@@ -105,6 +105,7 @@ path.leaflet-interactive {
 	
 	width: 90%;
 	max-width: 1200px;
+	max-height: 500px;
 
 	padding: 5px 20px 0;
 	
@@ -113,10 +114,17 @@ path.leaflet-interactive {
 	border-radius: 3px;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);	
 	box-sizing: border-box;
+
+	overflow: hidden;
 	
 	.transform(translateX(-50%));
+	.transition(all 300ms ease-in-out);
 	
 	z-index: 400;
+
+	&.minimized {
+		max-height: 45px;
+	}
 
 	.slider-container {
 		margin: -10px 4px 40px 4px;
