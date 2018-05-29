@@ -75,6 +75,10 @@ export default class FeedbackOverlay extends React.Component {
 				this.state.messageInputValue
 		};
 
+		if (config.siteOptions.feedbackEmail) {
+			data.send_to = config.siteOptions.feedbackEmail;
+		}
+
 		var formData = new FormData();
 		formData.append("json", JSON.stringify(data) );
 
@@ -111,7 +115,7 @@ export default class FeedbackOverlay extends React.Component {
 		}
 		else {
 			var overlayContent = <div>
-				<p>Har du hittat några fel i Sägenkartan? Har du kompletterande information om berättelserna eller personerna som omnämns? Eller vill du hjälpa till med att skriva rent uppteckningar som vi kan lägga ut på Sägenkartan? Kontakta oss gärna!</p>
+				<p>{config.siteOptions.feedbackText || 'Har du hittat några fel i Sägenkartan? Har du kompletterande information om berättelserna eller personerna som omnämns? Eller vill du hjälpa till med att skriva rent uppteckningar som vi kan lägga ut på Sägenkartan? Kontakta oss gärna!'}</p>
 				<p>Du är nu på sidan '<a href={this.state.url}>{this.state.title}</a>' men kan också använda formuläret för mer generella förslag och synpunkter.<br/><br/></p>
 
 				<hr/>

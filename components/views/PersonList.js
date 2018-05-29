@@ -78,7 +78,11 @@ export default class PersonList extends React.Component {
 				<td>
 					{
 						!config.siteOptions.disablePersonLinks == true ?
-						<a href={'#person/'+person.id}>{person.name}</a> :
+						(
+							config.siteOptions.disableInformantLinks == true && person.relation == 'i' ?
+							person.name :
+							<a href={'#person/'+person.id}>{person.name ? person.name : ''}</a>
+						) :
 						person.name
 					}
 				</td>

@@ -52,7 +52,6 @@ export default class RecordList extends React.Component {
 	}
 
 	componentWillReceiveProps(props) {
-		console.log(props);
 		var currentParams = JSON.parse(JSON.stringify(this.props));
 		if (currentParams.place_id) {
 			delete currentParams.place_id;
@@ -129,16 +128,16 @@ export default class RecordList extends React.Component {
 		var fetchParams = {
 			from: (this.state.currentPage-1)*50,
 			size: 50,
-			search: params.search || null,
-			search_field: params.search_field || null,
-			type: params.type || null,
-			category: params.category || null,
-			person_id: params.person || null,
-			socken_id: params.recordPlace || null,
-			gender: params.gender && params.person_relation ? params.person_relation+':'+params.gender : null,
-			birth_years: params.birth_years ? (params.person_relation ? params.person_relation+':'+(params.gender ? params.gender+':' : '')+params.birth_years : params.birth_years) : null,
-			record_ids: params.record_ids || null,
-			has_metadata: params.has_metadata || null
+			search: params.search || undefined,
+			search_field: params.search_field || undefined,
+			type: params.type || undefined,
+			category: params.category || undefined,
+			person_id: params.person || undefined,
+			socken_id: params.recordPlace || undefined,
+			gender: params.gender && params.person_relation ? params.person_relation+':'+params.gender : undefined,
+			birth_years: params.birth_years ? (params.person_relation ? params.person_relation+':'+(params.gender ? params.gender+':' : '')+params.birth_years : params.birth_years) : undefined,
+			record_ids: params.record_ids || undefined,
+			has_metadata: params.has_metadata || undefined
 		};
 
 		if (!params.nordic) {

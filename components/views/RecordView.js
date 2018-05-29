@@ -107,7 +107,7 @@ export default class RecordView extends React.Component {
 	}
 
 	getArchiveLogo(archive) {
-		var archiveLogos = [];
+		var archiveLogos = {};
 
 		archiveLogos['Dialekt-, namn- och folkminnesarkivet i Göteborg'] = 'img/archive-logo-isof.png';
 		archiveLogos['Dialekt- och folkminnesarkivet i Uppsala'] = 'img/archive-logo-isof.png';
@@ -116,7 +116,7 @@ export default class RecordView extends React.Component {
 		archiveLogos['NFS'] = 'img/archive-logo-ikos.png';
 		archiveLogos['DFU'] = 'img/archive-logo-isof.png';
 
-		return archiveLogos[archive] || null;
+		return archiveLogos[archive] ? config.appUrl+archiveLogos[archive] : config.appUrl+archiveLogos['DAG'];
 	}
 
 	render() {
@@ -174,12 +174,18 @@ export default class RecordView extends React.Component {
 			}
 
 			// Förberedar lista över personer
+			console.log('disablePersonLinks: '+config.siteOptions.disablePersonLinks)
+			console.log('disableInformantLinks: '+config.siteOptions.disableInformantLinks)
 			var personItems = this.state.data.persons && this.state.data.persons.length > 0 ? this.state.data.persons.map(function(person, index) {
 				return <tr key={index}>
 					<td data-title="">
 						{
 							!config.siteOptions.disablePersonLinks == true ?
-							<a href={'#person/'+person.id}>{person.name ? person.name : ''}</a> :
+							(
+								config.siteOptions.disableInformantLinks == true && person.relation == 'i' ?
+								person.name :
+								<a href={'#person/'+person.id}>{person.name ? person.name : ''}</a>
+							) :
 							person.name
 						}
 					</td>
@@ -306,7 +312,10 @@ export default class RecordView extends React.Component {
 																autoHide={true}
 																message={l('Klicka på stjärnan för att spara sägner till din egen lista.')}>
 									<button className={'save-button'+(this.state.saved ? ' saved' : '')} onClick={this.toggleSaveRecord}><span>{l('Spara')}</span></button></ElementNotificationMessage></h2>
-								<p><strong>Materialtyp</strong>: {this.state.data.materialtype}</p>
+								{
+									(!config.siteOptions.recordView || !config.siteOptions.recordView.hideMaterialType) &&
+									<p><strong>Materialtyp</strong>: {this.state.data.materialtype}</p>
+								}
 							</div>
 						</div>
 
@@ -338,7 +347,6 @@ export default class RecordView extends React.Component {
 								{
 									audioItems.length > 0 && (sitevisionUrl || forceFullWidth || (config.siteOptions.recordView && config.siteOptions.recordView.audioPlayerPosition == 'under')) &&
 									<div className="table-wrapper">
-										<h1>audioItems</h1>
 										<table width="100%">
 											<tbody>
 												{audioItems}
@@ -404,7 +412,21 @@ export default class RecordView extends React.Component {
 						</div>
 					}
 
-					<ShareButtons path={config.siteUrl+'#/record/'+this.state.data.id} text={'"'+this.state.data.title+'"'} title={l('Dela på sociala media')} />
+
+					<div className="row">
+
+						<div className="six columns">
+							<ShareButtons path={config.siteUrl+'#/record/'+this.state.data.id} text={'"'+this.state.data.title+'"'} title={l('Dela på sociala media')} />
+						</div>
+
+						{
+							config.siteOptions && config.siteOptions.copyrightContent &&
+							<div className="six columns">
+								<div className="copyright" dangerouslySetInnerHTML={{__html: config.siteOptions.copyrightContent}}></div>
+							</div>
+						}
+
+					</div>
 
 					<hr/>
 

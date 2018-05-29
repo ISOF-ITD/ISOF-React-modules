@@ -16,7 +16,7 @@ export default class RecordsCollection {
 			paramStrings.push('documents='+params.record_ids);
 		}
 		else {
-			var queryParams = Object.assign({}, config.requiredParams, params);
+			var queryParams = _.defaults(params, config.requiredParams);
 
 			// Anpassa params till ES Djangi api
 			if (queryParams.search) {

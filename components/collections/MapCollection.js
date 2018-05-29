@@ -28,7 +28,7 @@ export default class MapCollection {
 		else {
 			var paramStrings = [];
 
-			var params = Object.assign({}, config.requiredParams, this.cleanParams(params));
+			var params = _.defaults(this.cleanParams(params), config.requiredParams);
 
 			// Anpassa params till ES Djangi api
 			if (params.search) {

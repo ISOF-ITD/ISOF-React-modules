@@ -77,20 +77,18 @@ export default class MapView extends React.Component {
 			loading: true
 		});
 
-		console.log(params);
-
 		if (params) {
 			var fetchParams = {
-				search: params.search || null,
-				search_field: params.search_field || null,
+				search: params.search || undefined,
+				search_field: params.search_field || undefined,
 				type: params.type,
 				category: params.category,
-				year_from: params.year_from || null,
-				year_to: params.year_to || null,
-				gender: params.gender && params.person_relation ? params.person_relation+':'+params.gender : null,
-				birth_years: params.birth_years ? (params.person_relation ? params.person_relation+':'+(params.gender ? params.gender+':' : '')+params.birth_years : params.birth_years) : null,
-				record_ids: params.record_ids || null,
-				has_metadata: params.has_metadata || null
+				year_from: params.year_from || undefined,
+				year_to: params.year_to || undefined,
+				gender: params.gender && params.person_relation ? params.person_relation+':'+params.gender : undefined,
+				birth_years: params.birth_years ? (params.person_relation ? params.person_relation+':'+(params.gender ? params.gender+':' : '')+params.birth_years : params.birth_years) : undefined,
+				record_ids: params.record_ids || undefined,
+				has_metadata: params.has_metadata || undefined
 			};
 
 			if (!params.nordic) {
@@ -339,16 +337,22 @@ export default class MapView extends React.Component {
 							onClick={this.changeViewMode}>
 							<span>Cluster</span>
 						</a>
-						<a className={'icon-heatmap'+(this.state.viewMode == 'heatmap-count' ? ' selected' : '')}
-							data-viewmode="heatmap-count"
-							onClick={this.changeViewMode}>
-							<span>Heatmap</span>
-						</a>
-						<a className={'icon-circles'+(this.state.viewMode == 'circles' ? ' selected' : '')}
-							data-viewmode="circles"
-							onClick={this.changeViewMode}>
-							<span>Circles</span>
-						</a>
+						{
+							!this.props.disableHeatmapMode &&
+							<a className={'icon-heatmap'+(this.state.viewMode == 'heatmap-count' ? ' selected' : '')}
+								data-viewmode="heatmap-count"
+								onClick={this.changeViewMode}>
+								<span>Heatmap</span>
+							</a>
+						}
+						{
+							!this.props.disableCirclesMode &&
+							<a className={'icon-circles'+(this.state.viewMode == 'circles' ? ' selected' : '')}
+								data-viewmode="circles"
+								onClick={this.changeViewMode}>
+								<span>Circles</span>
+							</a>
+						}
 					</div>
 				}
 
