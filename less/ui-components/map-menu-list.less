@@ -147,6 +147,8 @@
 			}
 
 			.grid-list {
+				border-bottom: 1px solid #ccc;
+
 				.item {
 					float: left;
 
@@ -154,6 +156,10 @@
 
 					&:nth-child(2n) {
 						border-left: 1px solid #ccc;
+					}
+
+					&:nth-last-child(-n+2) {
+						border-bottom: 0;
 					}
 				}
 			}

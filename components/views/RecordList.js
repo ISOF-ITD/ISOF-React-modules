@@ -52,7 +52,6 @@ export default class RecordList extends React.Component {
 	}
 
 	componentWillReceiveProps(props) {
-		console.log(props);
 		var currentParams = JSON.parse(JSON.stringify(this.props));
 		if (currentParams.place_id) {
 			delete currentParams.place_id;
