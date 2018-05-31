@@ -135,7 +135,7 @@ export default class RecordList extends React.Component {
 			category: params.category || undefined,
 			person_id: params.person || undefined,
 			socken_id: params.recordPlace || undefined,
-			gender: params.gender && params.person_relation ? params.person_relation+':'+params.gender : undefined,
+			gender: params.gender && params.person_relation ? params.person_relation+':'+params.gender : params.gender ? params.gender : undefined,
 			birth_years: params.birth_years ? (params.person_relation ? params.person_relation+':'+(params.gender ? params.gender+':' : '')+params.birth_years : params.birth_years) : undefined,
 			record_ids: params.record_ids || undefined,
 			has_metadata: params.has_metadata || undefined

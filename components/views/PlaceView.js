@@ -51,6 +51,12 @@ export default class PlaceView extends React.Component {
 		if (params.has_metadata) {
 			state['has_metadata'] = params.has_metadata;
 		}
+		if (params.gender) {
+			state['gender'] = params.gender;
+		}
+		if (params.birth_years) {
+			state['birth_years'] = params.birth_years;
+		}
 		if (params.nordic) {
 			state['nordic'] = true;
 		}
@@ -175,6 +181,8 @@ export default class PlaceView extends React.Component {
 								has_metadata={this.state.has_metadata} 
 								recordPlace={this.state.recordPlace} 
 								search={this.state.searchQuery} 
+								gender={this.state.gender}
+								birth_years={this.state.birth_years}
 								nordic={this.state.nordic}
 								search_field={this.state.searchField} />
 

@@ -130,7 +130,7 @@ export default class PersonView extends React.Component {
 					<div className="twelve columns">
 						<h3>{l('Uppteckningar')}</h3>
 
-						<RecordList nordic={true} disableRouterPagination={true} disableAutoFetch={true} person={this.state.personId} />
+						<RecordList nordic={window.applicationSettings.includeNordic} disableRouterPagination={true} disableAutoFetch={true} person={this.state.personId} />
 
 					</div>
 				</div>
