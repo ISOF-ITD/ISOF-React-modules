@@ -340,8 +340,8 @@ export default class RecordView extends React.Component {
 								}
 
 								{
-									this.state.data.printed_source && this.state.data.materialtype == 'tryckt' &&
-									<p className="text-small"><em>{this.state.data.printed_source}</em></p>
+									this.state.data.source && this.state.data.materialtype == 'tryckt' &&
+									<p className="text-small"><em>{this.state.data.source}</em></p>
 								}
 
 								{
@@ -536,8 +536,8 @@ export default class RecordView extends React.Component {
 							}
 
 							{
-								this.state.data.printed_source &&
-								<p><strong>{l('Tryckt i')}</strong><br/>{this.state.data.printed_source}</p>
+								this.state.data.source &&
+								<p><strong>{l('Tryckt i')}</strong><br/>{this.state.data.source}</p>
 							}
 
 							{
