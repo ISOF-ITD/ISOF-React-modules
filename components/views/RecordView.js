@@ -340,8 +340,8 @@ export default class RecordView extends React.Component {
 								}
 
 								{
-									this.state.data.printed_source && this.state.data.materialtype == 'tryckt' &&
-									<p className="text-small"><em>{this.state.data.printed_source}</em></p>
+									this.state.data.source && this.state.data.materialtype == 'tryckt' &&
+									<p className="text-small"><em>{this.state.data.source}</em></p>
 								}
 
 								{
@@ -412,7 +412,21 @@ export default class RecordView extends React.Component {
 						</div>
 					}
 
-					<ShareButtons path={config.siteUrl+'#/record/'+this.state.data.id} text={'"'+this.state.data.title+'"'} title={l('Dela på sociala media')} />
+
+					<div className="row">
+
+						<div className="six columns">
+							<ShareButtons path={config.siteUrl+'#/record/'+this.state.data.id} text={'"'+this.state.data.title+'"'} title={l('Dela på sociala media')} />
+						</div>
+
+						{
+							config.siteOptions && config.siteOptions.copyrightContent &&
+							<div className="six columns">
+								<div className="copyright" dangerouslySetInnerHTML={{__html: config.siteOptions.copyrightContent}}></div>
+							</div>
+						}
+
+					</div>
 
 					<hr/>
 
@@ -517,13 +531,13 @@ export default class RecordView extends React.Component {
 
 						<div className="four columns">
 							{
-								this.state.data.year && this.state.data.year > 0 &&
-								<p><strong>{l('Uppteckningsår')}</strong><br/>{this.state.data.year > 0 ? this.state.data.year :''}</p>
+								this.state.data.year &&
+								<p><strong>{l('Uppteckningsår')}</strong><br/>{this.state.data.year.substring(0,4)}</p>
 							}
 
 							{
-								this.state.data.printed_source &&
-								<p><strong>{l('Tryckt i')}</strong><br/>{this.state.data.printed_source}</p>
+								this.state.data.source &&
+								<p><strong>{l('Tryckt i')}</strong><br/>{this.state.data.source}</p>
 							}
 
 							{
