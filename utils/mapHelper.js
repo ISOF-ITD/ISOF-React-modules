@@ -59,7 +59,7 @@ export default {
 			}
 		},
 		{
-			label: 'Open Screet Map Mapnik',
+			label: 'Open Street Map Mapnik',
 			url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 			options: {
 				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
