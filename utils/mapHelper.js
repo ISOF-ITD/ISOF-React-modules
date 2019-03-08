@@ -54,15 +54,15 @@ export default {
 			label: 'Lantmäteriet topografisk karta',
 			url: 'https://frigg.sprakochfolkminnen.se/sagendatabas/api/lm_proxy/{z}/{y}/{x}.png',
 			options: {
-				attribution: '&copy; <a href="http://www.lantmateriet.se/en/">Lantmäteriet</a> Topografisk Webbkarta Visning',
+				attribution: '&copy; <a href="https://www.lantmateriet.se/en/">Lantmäteriet</a> Topografisk Webbkarta Visning',
 				crossOrigin: true,
 			}
 		},
 		{
 			label: 'Open Street Map Mapnik',
-			url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+			url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 			options: {
-				attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 			}
 		},
 		/*
@@ -72,28 +72,28 @@ export default {
 			options: {
 				maxZoom: 9,
 				minZoom: 0,
-				attribution: '&copy; <a href="http://www.lantmateriet.se/en/">Lantmäteriet</a> Topografisk Webbkarta Visning'
+				attribution: '&copy; <a href="https://www.lantmateriet.se/en/">Lantmäteriet</a> Topografisk Webbkarta Visning'
 			}
 		},
 		*/
 
 		{
 			label: 'Open Map Surfer',
-			url: 'http://korona.geog.uni-heidelberg.de/tiles/roads/x={x}&y={y}&z={z}',
+			url: 'https://korona.geog.uni-heidelberg.de/tiles/roads/x={x}&y={y}&z={z}',
 			options: {
-				attribution: 'Imagery from <a href="http://giscience.uni-hd.de/">GIScience Research Group @ University of Heidelberg</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+				attribution: 'Imagery from <a href="https://giscience.uni-hd.de/">GIScience Research Group @ University of Heidelberg</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 			}
 		},
 		{
 			label: 'ESRI World Imagery',
-			url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+			url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
 			options: {
 				attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 			}
 		},
 		{
 			label: 'ESRI Gray',
-			url: 'http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+			url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
 			options: {
 				attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ'
 			}
