@@ -29,7 +29,8 @@ export default class FeedbackOverlay extends React.Component {
 					visible: true,
 					type: event.target.type,
 					title: event.target.title,
-					url: event.target.url
+					url: event.target.url,
+					appUrl: event.target.appUrl,
 				});
 			}.bind(this));
 			window.eventBus.addEventListener('overlay.hide', function(event) {
@@ -65,10 +66,11 @@ export default class FeedbackOverlay extends React.Component {
 	}
 
 	sendButtonClickHandler() {
+			// subject: this.state.url.split(/[/]+/).pop()+": Felanmälning",
 		var data = {
 			from_email: this.state.emailInputValue,
 			from_name: this.state.nameInputValue,
-			subject: "Sägenkarta: Felanmälning",
+			subject: this.state.appUrl.split(/[/]+/).pop()+": Felanmälning",
 			message: this.state.type+': '+this.state.title+'\n'+
 				this.state.url+'\n\n'+
 				'Från: '+this.state.nameInputValue+' ('+this.state.emailInputValue+')\n\n'+

@@ -15,7 +15,8 @@ export default class FeedbackButton extends React.Component {
 			window.eventBus.dispatch('overlay.feedback', {
 				url: config.siteUrl+'#'+hashHistory.getCurrentLocation().pathname,
 				title: this.props.title,
-				type: this.props.type
+				type: this.props.type,
+				appUrl: config.appUrl,
 			});
 		}
 	}
