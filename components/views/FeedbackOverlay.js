@@ -67,10 +67,12 @@ export default class FeedbackOverlay extends React.Component {
 
 	sendButtonClickHandler() {
 			// subject: this.state.url.split(/[/]+/).pop()+": Felanmälning",
+		var subject = this.state.appUrl;
+		if (subject.charAt(subject.length - 1) == "/") subject = subject.substr(0, subject.length - 1);
 		var data = {
 			from_email: this.state.emailInputValue,
 			from_name: this.state.nameInputValue,
-			subject: this.state.appUrl.split(/[/]+/).pop()+": Felanmälning",
+			subject: subject.split(/[/]+/).pop()+": Felanmälning",
 			message: this.state.type+': '+this.state.title+'\n'+
 				this.state.url+'\n\n'+
 				'Från: '+this.state.nameInputValue+' ('+this.state.emailInputValue+')\n\n'+
