@@ -9,15 +9,18 @@ export default class OverlayWindow extends React.Component {
 
 		this.closeButtonClickHandler = this.closeButtonClickHandler.bind(this);
 
-		let showClose = true;
-		if (this.props.showClose) {
-			let showClose = this.props.showClose;
+		//Default behavior:
+		let showCloseButton = true;
+		if (this.props.showClose === undefined) {
+			showCloseButton = true;
+		} else {
+			showCloseButton = this.props.showClose;
 		}
 
 		this.state = {
 			visible: false,
 			title: this.props.title,
-			showClose: showClose,
+			showClose: showCloseButton,
 			htmlContent: this.props.htmlContent
 		};
 		//console.log('OverlayWindow constructor this.state.showClose:' + this.state.showClose);
@@ -25,7 +28,7 @@ export default class OverlayWindow extends React.Component {
 
 	componentDidMount() {
 		//console.log('OverlayWindow didMount');
-		window.eventBus.addEventListener('overlay.intro', function(event, data) {
+		window.eventBus.addEventListener('overlay.intro', function(event, data) {		
 			this.setState({
 				visible: true,
 				title: data && data.title ? data.title : this.state.title
@@ -70,7 +73,10 @@ export default class OverlayWindow extends React.Component {
 				
 				<div className="overlay-header">
 					{this.state.title}
-					{(this.state.showClose ? '<button className="close-button white" onClick='+(this.closeButtonClickHandler)+'></button> ' : '')} 
+					{
+						this.state.showClose &&
+						<button className="close-button white" onClick={(this.closeButtonClickHandler)}></button>
+					} 
 				</div>
 
 				<div>
