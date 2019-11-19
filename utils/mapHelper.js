@@ -76,7 +76,9 @@ export default {
 			}
 		},
 		*/
-
+		/*
+			Token now needed for API:
+			https://wiki.openstreetmap.org/wiki/OpenMapSurfer
 		{
 			label: 'Open Map Surfer',
 			url: 'https://korona.geog.uni-heidelberg.de/tiles/roads/x={x}&y={y}&z={z}',
@@ -84,6 +86,7 @@ export default {
 				attribution: 'Imagery from <a href="https://giscience.uni-hd.de/">GIScience Research Group @ University of Heidelberg</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 			}
 		},
+		*/
 		{
 			label: 'ESRI World Imagery',
 			url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
