@@ -123,7 +123,7 @@ export default class TranscriptionOverlay extends React.Component {
 
 				<div className="four columns">
 					<p>Transkribera '<a href={this.state.url}>{this.state.title}</a>'.</p>
-					<p><a href="https://www.sprakochfolkminnen.se/om-oss/kartor/sagenkartan/transkribera.html"><strong>Läs mer om att transkribera.</strong></a><br/><br/></p>
+					<p><a href="https://www.isof.se/om-oss/kartor/sagenkartan/transkribera.html"><strong>Läs mer om att transkribera.</strong></a><br/><br/></p>
 
 					<hr/>
 
