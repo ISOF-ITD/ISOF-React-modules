@@ -32,6 +32,9 @@ export default class SitevisionContent extends React.Component {
 	}
 
 	fetchContent(url) {
+		console.log(url);
+		url = url.replace('http://','https://')
+		console.log(url);
 		var headers = new Headers();
 		headers.append('Content-Type', 'text/html');
 
@@ -40,14 +43,18 @@ export default class SitevisionContent extends React.Component {
 			headers: headers
 		}).then(function(response) {
 			response.text().then(function(text) {
+				console.log(text);
 				this.parseHtml(text);
+				console.log('after parseHtml');
 			}.bind(this))
 		}.bind(this)).catch(function(err) {
+			console.log('fetch error');
 			console.log(err);
 		});
 	}
 
 	parseHtml(html) {
+		console.log(html);
 		var parser = new DOMParser();
 		var document = parser.parseFromString(html, 'text/html');
 		
@@ -57,7 +64,9 @@ export default class SitevisionContent extends React.Component {
 
 		if (mainElement) {
 			var htmlContent = mainElement.innerHTML;
-
+			console.log(htmlContent);
+			htmlContent = htmlContent.replace('http://','https://')
+			console.log(htmlContent);
 			var scripts = mainElement.getElementsByTagName('script');
 
 			this.setState({
