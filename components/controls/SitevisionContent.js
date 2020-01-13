@@ -32,9 +32,9 @@ export default class SitevisionContent extends React.Component {
 	}
 
 	fetchContent(url) {
-		console.log(url);
-		url = url.replace('http://','https://')
-		console.log(url);
+		//console.log(url);
+		url = url.replace('http://www.isof.se/','https://frigg.isof.se/sagendatabas/api/isofhomepage/')
+		//console.log(url);
 		var headers = new Headers();
 		headers.append('Content-Type', 'text/html');
 
@@ -64,9 +64,12 @@ export default class SitevisionContent extends React.Component {
 
 		if (mainElement) {
 			var htmlContent = mainElement.innerHTML;
-			console.log(htmlContent);
-			htmlContent = htmlContent.replace('http://','https://')
-			console.log(htmlContent);
+			//console.log(htmlContent);
+			htmlContent = htmlContent.replace('src="/images/','src="https://frigg.isof.se/sagendatabas/api/isofhomepage/images/')
+			htmlContent = htmlContent.replace('srcset="/images/','srcset="https://frigg.isof.se/sagendatabas/api/isofhomepage/images/')
+			htmlContent = htmlContent.replace(', /images/',', https://frigg.isof.se/sagendatabas/api/isofhomepage/images/')
+			htmlContent = htmlContent.replace(', /images/',', https://frigg.isof.se/sagendatabas/api/isofhomepage/images/')
+			//console.log(htmlContent);
 			var scripts = mainElement.getElementsByTagName('script');
 
 			this.setState({
