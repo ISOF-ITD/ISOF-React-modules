@@ -33,7 +33,9 @@ export default class SitevisionContent extends React.Component {
 
 	fetchContent(url) {
 		//console.log(url);
-		url = url.replace('http://www.isof.se/','https://frigg.isof.se/sagendatabas/api/isofhomepage/')
+		//url = url.replace('http://www.isof.se/','https://frigg.isof.se/sagendatabas/api/isofhomepage/')
+		url = url.replace('http://www.isof.se/','https://www.isof.se/')
+		url = url.replace('https://www.isof.se/',config.isofHomepageUrl)
 		//console.log(url);
 		var headers = new Headers();
 		headers.append('Content-Type', 'text/html');
@@ -65,10 +67,11 @@ export default class SitevisionContent extends React.Component {
 		if (mainElement) {
 			var htmlContent = mainElement.innerHTML;
 			//console.log(htmlContent);
-			htmlContent = htmlContent.replace('src="/images/','src="https://frigg.isof.se/sagendatabas/api/isofhomepage/images/')
-			htmlContent = htmlContent.replace('srcset="/images/','srcset="https://frigg.isof.se/sagendatabas/api/isofhomepage/images/')
-			htmlContent = htmlContent.replace(', /images/',', https://frigg.isof.se/sagendatabas/api/isofhomepage/images/')
-			htmlContent = htmlContent.replace(', /images/',', https://frigg.isof.se/sagendatabas/api/isofhomepage/images/')
+			htmlContent = htmlContent.replace('src="/images/','src="' + config.isofHomepageUrl + 'images/')
+			htmlContent = htmlContent.replace('srcset="/images/','srcset="' + config.isofHomepageUrl + 'images/')
+			htmlContent = htmlContent.replace(', /images/',', ' + config.isofHomepageUrl + 'images/')
+			// Extra replace as js string.replace removes first item only:
+			htmlContent = htmlContent.replace(', /images/',', ' + config.isofHomepageUrl + 'images/')
 			//console.log(htmlContent);
 			var scripts = mainElement.getElementsByTagName('script');
 
