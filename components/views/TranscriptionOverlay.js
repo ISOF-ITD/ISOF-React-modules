@@ -32,6 +32,7 @@ export default class TranscriptionOverlay extends React.Component {
 					visible: true,
 					type: event.target.type,
 					title: event.target.title,
+					id: event.target.id,
 					url: event.target.url,
 					images: event.target.images,
 					imageIndex: 0
@@ -67,19 +68,28 @@ export default class TranscriptionOverlay extends React.Component {
 		console.log(this.state);
 
 		var data = {
+			url: this.state.url,
+			recordid: this.state.id,
+			recordtitle: this.state.title,
 			from_email: this.state.emailInput,
 			from_name: this.state.nameInput,
-			subject: "Sägenkarta: Transkribering",
-			message: this.state.title+'\n'+
+			subject: "Crowdsource: Transkribering",
+			informantName: this.state.informantNameInput,
+			informantBirthDate: this.state.informantBirthDateInput,
+			informantBirthPlace: this.state.informantBirthPlaceInput,
+			informantInformation: this.state.informantInformationInput,
+			message: this.state.messageInput,
+			messageComment: this.state.messageCommentInput,
+/*			message: this.state.title+'\n'+
 				this.state.url+'\n\n'+
 				'Från: '+this.state.nameInput+' ('+this.state.emailInput+')\n\n'+
 				this.state.messageInput
-		};
+*/		};
 
 		var formData = new FormData();
 		formData.append("json", JSON.stringify(data) );
 
-		fetch(config.restApiUrl+'feedback/', {
+		fetch(config.restApiUrl+'transcribe/', {
 			method: "POST",
 			body: formData
 		})
@@ -127,8 +137,28 @@ export default class TranscriptionOverlay extends React.Component {
 
 					<hr/>
 
-					<label>Transkription:</label>
+					<div class="row">
+					<label className="six columns">Berättat av:</label>
+					<label className="two columns">Född år:</label>
+					<label className="four columns">Född i:</label>
+					</div>
+
+					<div class="row">
+					<input name="informantNameInput" className="six columns" type="text" value={this.state.informantNameInput} onChange={this.inputChangeHandler} />
+
+					<input name="informantBirthDateInput" className="two columns" type="text" value={this.state.informantBirthDateInput} onChange={this.inputChangeHandler} />
+
+					<input name="informantBirthPlaceInput" className="four columns" type="text" value={this.state.informantBirthPlaceInput} onChange={this.inputChangeHandler} />
+					</div>
+
+					<label className="u-full-width">Övrig information om informanten:</label>
+					<input name="informantInformationInput" className="u-full-width" type="text" value={this.state.informantInformationInput} onChange={this.inputChangeHandler} />
+
+					<label className="u-full-width">Transkription:</label>
 					<textarea name="messageInput" className="u-full-width" value={this.state.messageInput} onChange={this.inputChangeHandler} style={{height: 380}}></textarea>
+
+					<label className="u-full-width">Kommentar till transkription:</label>
+					<input name="messageCommentInput" className="u-full-width" type="text" value={this.state.messageCommentInput} onChange={this.inputChangeHandler} />
 
 					<label>Ditt namn (frivilligt):</label>
 					<input name="nameInput" className="u-full-width" type="text" value={this.state.nameInput} onChange={this.inputChangeHandler} />
