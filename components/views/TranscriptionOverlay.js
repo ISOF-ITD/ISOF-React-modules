@@ -37,6 +37,7 @@ export default class TranscriptionOverlay extends React.Component {
 					images: event.target.images,
 					imageIndex: 0
 				});
+				this.transcribeStart(event.target.id);
 			}.bind(this));
 			window.eventBus.addEventListener('overlay.hide', function(event) {
 				this.setState({
@@ -44,6 +45,32 @@ export default class TranscriptionOverlay extends React.Component {
 				});
 			}.bind(this));
 		}
+	}
+
+	transcribeStart(recordid) {
+		console.log(this.state);
+		console.log('transcribeStart' + recordid);
+
+		var data = {
+			recordid: recordid,
+		};
+
+		var formData = new FormData();
+		formData.append("json", JSON.stringify(data) );
+
+		fetch(config.restApiUrl+'transcribestart/', {
+			method: "POST",
+			body: formData
+		})
+		.then(function(response) {
+			return response.json()
+		}).then(function(json) {
+			if (json.success) {
+				this.setState({
+					messageSent: true
+				})
+			}
+		}.bind(this));
 	}
 
 	closeButtonClickHandler() {
