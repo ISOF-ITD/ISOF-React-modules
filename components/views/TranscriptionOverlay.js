@@ -67,7 +67,8 @@ export default class TranscriptionOverlay extends React.Component {
 		}).then(function(json) {
 			if (json.success) {
 				this.setState({
-					messageSent: true
+					// Do not show any message:
+					messageSent: false
 				})
 			}
 		}.bind(this));
@@ -125,6 +126,7 @@ export default class TranscriptionOverlay extends React.Component {
 		}).then(function(json) {
 			if (json.success) {
 				this.setState({
+					// Show thank you message:
 					messageSent: true
 				})
 			}
