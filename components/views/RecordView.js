@@ -219,8 +219,10 @@ export default class RecordView extends React.Component {
 			if (sitevisionUrl) {
 				textElement = <SitevisionContent url={sitevisionUrl.value} />
 			}
-			// Om "transkriberad" finns i texten lägger vi till transkriberings knappen istället för att visa textan
-			else if (this.state.data.text && this.state.data.text.indexOf('transkriberad') > -1 && this.state.data.text.length < 25 && this.state.data.media.length > 0) {
+			// Gammal regel: Om "transkriberad" finns i texten lägger vi till transkriberings knappen istället för att visa textan
+			// else if (this.state.data.text && this.state.data.text.indexOf('transkriberad') > -1 && this.state.data.text.length < 25 && this.state.data.media.length > 0) {
+			// Ny regel Om transcriptionstatus = readytotranscribe lägger vi till transkriberings knappen istället för att visa textan
+			else if (this.state.data.text && this.state.data.transcriptionstatus == 'readytotranscribe' && this.state.data.text.length < 25 && this.state.data.media.length > 0) {
 				textElement = <div><p><strong>Den här uppteckningen är inte transkriberad.</strong><br/><br/>Vill du vara med och tillgängliggöra samlingarna för fler? Hjälp oss att skriva av berättelser!</p><TranscribeButton
 					className="button-primary"
 					label="Transkribera"
