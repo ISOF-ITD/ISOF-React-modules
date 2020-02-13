@@ -221,6 +221,7 @@ export default class MapView extends React.Component {
 				var markerWithinBounds = false;
 
 				_.each(mapData, function(mapItem) {
+					// console.log(mapItem);
 					if (mapItem.location.length > 0) {
 						// Skalar L.marker objekt och lägger till rätt icon
 						var marker = L.marker([Number(mapItem.location[0]), Number(mapItem.location[1])], {

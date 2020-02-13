@@ -116,6 +116,7 @@ export default class TranscriptionOverlay extends React.Component {
 
 		var formData = new FormData();
 		formData.append("json", JSON.stringify(data) );
+		// console.log('formData' + formData);
 
 		fetch(config.restApiUrl+'transcribe/', {
 			method: "POST",
