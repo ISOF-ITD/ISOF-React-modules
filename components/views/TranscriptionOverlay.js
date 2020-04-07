@@ -167,13 +167,13 @@ export default class TranscriptionOverlay extends React.Component {
 
 					<hr/>
 
-					<div class="row">
+					<div className="row">
 					<label className="six columns">Berättat av:</label>
 					<label className="two columns">Född år:</label>
 					<label className="four columns">Född i:</label>
 					</div>
 
-					<div class="row">
+					<div className="row">
 					<input name="informantNameInput" className="six columns" type="text" value={this.state.informantNameInput} onChange={this.inputChangeHandler} />
 
 					<input name="informantBirthDateInput" className="two columns" type="text" value={this.state.informantBirthDateInput} onChange={this.inputChangeHandler} />
