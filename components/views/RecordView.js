@@ -534,7 +534,7 @@ export default class RecordView extends React.Component {
 						<div className="four columns">
 							{
 								this.state.data.year &&
-								<p><strong>{l('Uppteckningsår')}</strong><br/>{this.state.data.year.substring(0,4)}</p>
+								<p><strong>{l('Insamlingsår')}</strong><br/>{this.state.data.year.substring(0,4)}</p>
 							}
 
 							{

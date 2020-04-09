@@ -66,7 +66,7 @@ export default class PersonView extends React.Component {
 					}
 				</td>
 				<td data-title={l('Roll')+':'}>{record.relation == 'c' ? l('Upptecknare') : record.relation == 'i' ? l('Informant') : ''}</td>
-				<td data-title={l('Uppteckningsår')+':'}>{record.year > 0 ? record.year : ''}</td>
+				<td data-title={l('Insamlingsår')+':'}>{record.year > 0 ? record.year : ''}</td>
 				<td data-title={l('Materialtyp')+':'}>{record.type}</td>
 			</tr>
 		}) : [];

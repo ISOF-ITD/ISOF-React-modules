@@ -80,7 +80,7 @@ export default class RecordListItem extends React.Component {
 				<a target={config.embeddedApp ? '_parent' : '_self'} href={(config.embeddedApp ? (window.applicationSettings && window.applicationSettings.landingPage ? window.applicationSettings.landingPage : config.siteUrl) : '')+'#place/'+this.props.item._source.places[0].id}>{this.props.item._source.places[0].name+(this.props.item._source.places[0].landskap || this.props.item._source.places[0].fylke ? (this.props.item._source.places[0].landskap ? ', '+this.props.item._source.places[0].landskap : this.props.item._source.places[0].fylke ? ', '+this.props.item._source.places[0].fylke : '') : '')}</a>
 			}
 			</td>
-			<td data-title={l('Uppteckningsår')+':'}>{this.props.item._source.year ? this.props.item._source.year.split('-')[0] : ''}</td>
+			<td data-title={l('Insamlingsår')+':'}>{this.props.item._source.year ? this.props.item._source.year.split('-')[0] : ''}</td>
 			{
 				!config.siteOptions.recordList || !config.siteOptions.recordList.hideMaterialType == true &&
 				<td data-title={l('Materialtyp')+':'}>{this.props.item._source.materialtype}</td>
