@@ -162,7 +162,6 @@ export default class TranscriptionOverlay extends React.Component {
 			var overlayContent = <div className="row">
 
 				<div className="four columns">
-					<p>Transkribera '<a href={this.state.url}>{this.state.title}</a>'.</p>
 					<p><a href="https://www.isof.se/om-oss/kartor/sagenkartan/transkribera.html"><strong>Läs mer om att transkribera.</strong></a><br/><br/></p>
 
 					<hr/>
@@ -184,7 +183,7 @@ export default class TranscriptionOverlay extends React.Component {
 					<label className="u-full-width">Övrig information om informanten:</label>
 					<input name="informantInformationInput" className="u-full-width" type="text" value={this.state.informantInformationInput} onChange={this.inputChangeHandler} />
 
-					<label className="u-full-width">Transkription:</label>
+					<label className="u-full-width">Text:</label>
 					<textarea name="messageInput" className="u-full-width" value={this.state.messageInput} onChange={this.inputChangeHandler} style={{height: 380}}></textarea>
 
 					<label className="u-full-width">Kommentar till transkription:</label>
@@ -215,7 +214,7 @@ export default class TranscriptionOverlay extends React.Component {
 			<div className="overlay-window large">
 
 				<div className="overlay-header">
-					Transkribera
+					Transkribera {this.state.title}
 					<button className="close-button white" onClick={this.closeButtonClickHandler}></button>
 				</div>
 

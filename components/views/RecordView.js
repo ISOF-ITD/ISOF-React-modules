@@ -338,7 +338,7 @@ export default class RecordView extends React.Component {
 
 								{
 									this.state.data.comment && this.state.data.comment != '' &&
-									<p className="text-small"><strong>{l('Ordförklaringar och dylikt i upptekcningarna/utgåvorna')+':'}</strong><br/><span dangerouslySetInnerHTML={{__html: this.state.data.comment}} /></p>
+									<p className="text-small"><strong>{l('Kommentarer')+':'}</strong><br/><span dangerouslySetInnerHTML={{__html: this.state.data.comment}} /></p>
 								}
 
 								{

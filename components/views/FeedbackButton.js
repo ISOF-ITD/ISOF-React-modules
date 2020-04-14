@@ -22,6 +22,6 @@ export default class FeedbackButton extends React.Component {
 	}
 
 	render() {
-		return <button className="feedback-button" onClick={this.feedbackButtonClick}>Kontakt</button>;
+		return <button className="feedback-button" onClick={this.feedbackButtonClick}>{l('Frågor och synpunkter')}</button>;
 	}
 }
