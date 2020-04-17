@@ -8,10 +8,12 @@ export default class FeedbackButton extends React.Component {
 		super(props);
 
 		this.feedbackButtonClick = this.feedbackButtonClick.bind(this);
+		//console.log('FeedbackButton');
 	}
 
 	feedbackButtonClick() {
 		if (window.eventBus) {
+			//console.log('FeedbackButton click');
 			window.eventBus.dispatch('overlay.feedback', {
 				url: config.siteUrl+'#'+hashHistory.getCurrentLocation().pathname,
 				title: this.props.title,

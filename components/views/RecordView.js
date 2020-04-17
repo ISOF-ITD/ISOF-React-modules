@@ -7,7 +7,11 @@ import localLibrary from './../../utils/localLibrary.js';
 import ShareButtons from './../controls/ShareButtons';
 import SimpleMap from './SimpleMap';
 import ListPlayButton from './ListPlayButton';
+
+import HelpButton from './HelpButton';
+import ContributeinfoButton from './ContributeinfoButton';
 import FeedbackButton from './FeedbackButton';
+
 import TranscribeButton from './TranscribeButton';
 import ElementNotificationMessage from './../controls/ElementNotificationMessage';
 import SitevisionContent from './../controls/SitevisionContent';
@@ -174,8 +178,8 @@ export default class RecordView extends React.Component {
 			}
 
 			// Förberedar lista över personer
-			console.log('disablePersonLinks: '+config.siteOptions.disablePersonLinks)
-			console.log('disableInformantLinks: '+config.siteOptions.disableInformantLinks)
+			//console.log('disablePersonLinks: '+config.siteOptions.disablePersonLinks)
+			//console.log('disableInformantLinks: '+config.siteOptions.disableInformantLinks)
 			var personItems = this.state.data.persons && this.state.data.persons.length > 0 ? this.state.data.persons.map(function(person, index) {
 				return <tr key={index}>
 					<td data-title="">
@@ -324,6 +328,14 @@ export default class RecordView extends React.Component {
 						{
 							!config.siteOptions.hideContactButton &&
 							<FeedbackButton title={this.state.data.title} type="Sägen" />
+						}
+						{
+							!config.siteOptions.hideContactButton &&
+							<HelpButton title={this.state.data.title} type="Sägen" />
+						}
+						{
+							!config.siteOptions.hideContactButton &&
+							<ContributeinfoButton title={this.state.data.title} type="Sägen" />
 						}
 					</div>
 

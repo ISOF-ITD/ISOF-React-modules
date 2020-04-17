@@ -3,9 +3,10 @@ import config from './../../../scripts/config.js';
 
 // Main CSS: ui-components/overlay.less
 
-export default class FeedbackOverlay extends React.Component {
+export default class ContributeinfoOverlay extends React.Component {
 	constructor(props) {
-		//console.log('FeedbackOverlay');
+		//console.log('ContributeinfoOverlay');
+		debugger;
 		super(props);
 
 		this.closeButtonClickHandler = this.closeButtonClickHandler.bind(this);
@@ -25,8 +26,8 @@ export default class FeedbackOverlay extends React.Component {
 		};
 
 		if (window.eventBus) {
-			window.eventBus.addEventListener('overlay.feedback', function(event) {
-				//console.log('FeedbackOverlay feedback');
+			window.eventBus.addEventListener('overlay.contributeinfo', function(event) {
+				//console.log('ContributeinfoOverlay contributeinfo');
 				this.setState({
 					visible: true,
 					type: event.target.type,
@@ -74,7 +75,7 @@ export default class FeedbackOverlay extends React.Component {
 		var data = {
 			from_email: this.state.emailInputValue,
 			from_name: this.state.nameInputValue,
-			subject: subject.split(/[/]+/).pop()+": Feedback",
+			subject: subject.split(/[/]+/).pop()+": ContributeInfo",
 			message: this.state.type+': '+this.state.title+'\n'+
 				this.state.url+'\n\n'+
 				'Från: '+this.state.nameInputValue+' ('+this.state.emailInputValue+')\n\n'+
@@ -121,7 +122,7 @@ export default class FeedbackOverlay extends React.Component {
 		}
 		else {
 			var overlayContent = <div>
-				<p>{config.siteOptions.feedbackText || 'Har du hittat några fel i Sägenkartan? Har du kompletterande information om berättelserna eller personerna som omnämns? Eller vill du hjälpa till med att skriva rent uppteckningar som vi kan lägga ut på Sägenkartan? Kontakta oss gärna!'}</p>
+				<p>{config.siteOptions.contributeInfoText || 'Har du hittat några fel i Sägenkartan? Har du kompletterande information om berättelserna eller personerna som omnämns? Eller vill du hjälpa till med att skriva rent uppteckningar som vi kan lägga ut på Sägenkartan? Kontakta oss gärna!'}</p>
 				<p>Du är nu på sidan '<a href={this.state.url}>{this.state.title}</a>' men kan också använda formuläret för mer generella förslag och synpunkter.<br/><br/></p>
 
 				<hr/>
@@ -143,7 +144,7 @@ export default class FeedbackOverlay extends React.Component {
 			<div className="overlay-window">
 				
 				<div className="overlay-header">
-					{l('Frågor och synpunkter')}
+					{l('Vet du mer?')}
 					<button className="close-button white" onClick={this.closeButtonClickHandler}></button>
 				</div>
 
