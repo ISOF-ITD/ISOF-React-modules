@@ -221,7 +221,6 @@ export default class TranscriptionOverlay extends React.Component {
 
 				<div className="overlay-header">
 					Transkribera {this.state.title}
-					<a href="https://www.isof.se/om-oss/kartor/sagenkartan/transkribera.html"><strong>Läs mer om att transkribera.</strong></a><br/><br/>
 					<button className="close-button white" onClick={this.closeButtonClickHandler}></button>
 					{
 						!config.siteOptions.hideContactButton &&
