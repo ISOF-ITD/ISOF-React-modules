@@ -119,7 +119,9 @@ export default class RecordView extends React.Component {
 		archiveLogos['DAG'] = 'img/archive-logo-isof.png';
 		archiveLogos['NFS'] = 'img/archive-logo-ikos.png';
 		archiveLogos['DFU'] = 'img/archive-logo-isof.png';
-
+		archiveLogos['SLS'] = 'img/SLS-logga.svg';
+		archiveLogos['Svenska litteratursällskapet i Finland (SLS)'] = 'img/SLS-logga.svg';
+		
 		return archiveLogos[archive] ? config.appUrl+archiveLogos[archive] : config.appUrl+archiveLogos['DAG'];
 	}
 
