@@ -6,7 +6,7 @@ import config from './../../../scripts/config.js';
 export default class ContributeinfoOverlay extends React.Component {
 	constructor(props) {
 		//console.log('ContributeinfoOverlay');
-		debugger;
+		//debugger;
 		super(props);
 
 		this.closeButtonClickHandler = this.closeButtonClickHandler.bind(this);
@@ -140,7 +140,7 @@ export default class ContributeinfoOverlay extends React.Component {
 			</div>;
 		}
 
-		return <div className={'overlay-container'+(this.state.visible ? ' visible' : '')}>
+		return <div className={'overlay-container feedback-overlay-container'+(this.state.visible ? ' visible' : '')}>
 			<div className="overlay-window">
 				
 				<div className="overlay-header">

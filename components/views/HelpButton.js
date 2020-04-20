@@ -24,6 +24,6 @@ export default class HelpButton extends React.Component {
 	}
 
 	render() {
-		return <button className="help-button" onClick={this.helpButtonClick}>{l('Hjälp')}</button>;
+		return <button className="feedback-button help-button" onClick={this.helpButtonClick}>{l('Hjälp')}</button>;
 	}
 }

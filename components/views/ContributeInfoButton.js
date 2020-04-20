@@ -24,6 +24,6 @@ export default class ContributeinfoButton extends React.Component {
 	}
 
 	render() {
-		return <button className="contributeinfo-button" onClick={this.contributeinfoButtonClick}>{l('Vet du mer?')}</button>;
+		return <button className="feedback-button contributeinfo-button" onClick={this.contributeinfoButtonClick}>{l('Vet du mer?')}</button>;
 	}
 }

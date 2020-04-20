@@ -2,6 +2,9 @@ import React from 'react';
 import config from './../../../scripts/config.js';
 import ImageMap from './ImageMap';
 
+import HelpButton from './HelpButton';
+import ContributeinfoButton from './ContributeinfoButton';
+import FeedbackButton from './FeedbackButton';
 // Main CSS: ui-components/overlay.less
 // ImageMap CSS: ui-components/image-map.less
 
@@ -48,8 +51,8 @@ export default class TranscriptionOverlay extends React.Component {
 	}
 
 	transcribeStart(recordid) {
-		console.log(this.state);
-		console.log('transcribeStart' + recordid);
+		//console.log(this.state);
+		//console.log('transcribeStart' + recordid);
 
 		var data = {
 			recordid: recordid,
@@ -93,7 +96,7 @@ export default class TranscriptionOverlay extends React.Component {
 	}
 
 	sendButtonClickHandler() {
-		console.log(this.state);
+		//console.log(this.state);
 
 		var data = {
 			url: this.state.url,
@@ -162,9 +165,12 @@ export default class TranscriptionOverlay extends React.Component {
 			var overlayContent = <div className="row">
 
 				<div className="four columns">
+					{/*
 					<p><a href="https://www.isof.se/om-oss/kartor/sagenkartan/transkribera.html"><strong>Läs mer om att transkribera.</strong></a><br/><br/></p>
 
 					<hr/>
+
+					*/}
 
 					<div className="row">
 					<label className="six columns">Berättat av:</label>
@@ -215,7 +221,21 @@ export default class TranscriptionOverlay extends React.Component {
 
 				<div className="overlay-header">
 					Transkribera {this.state.title}
+					<a href="https://www.isof.se/om-oss/kartor/sagenkartan/transkribera.html"><strong>Läs mer om att transkribera.</strong></a><br/><br/>
 					<button className="close-button white" onClick={this.closeButtonClickHandler}></button>
+					{
+						!config.siteOptions.hideContactButton &&
+						<FeedbackButton title={this.state.title} type="Sägen" />
+					}
+					{
+						!config.siteOptions.hideContactButton &&
+						<HelpButton title={this.state.title} type="Sägen" />
+					}
+					{
+						!config.siteOptions.hideContactButton &&
+						<ContributeinfoButton title={this.state.title} type="Sägen" />
+						//<ContributeinfoButton title={this.state.data.title} type="Sägen" />
+					}
 				</div>
 
 				{overlayContent}

@@ -139,7 +139,7 @@ export default class FeedbackOverlay extends React.Component {
 			</div>;
 		}
 
-		return <div className={'overlay-container'+(this.state.visible ? ' visible' : '')}>
+		return <div className={'overlay-container feedback-overlay-container'+(this.state.visible ? ' visible' : '')}>
 			<div className="overlay-window">
 				
 				<div className="overlay-header">
