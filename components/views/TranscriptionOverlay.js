@@ -3,7 +3,7 @@ import config from './../../../scripts/config.js';
 import ImageMap from './ImageMap';
 
 import HelpButton from './HelpButton';
-import ContributeinfoButton from './ContributeinfoButton';
+import ContributeInfoButton from './ContributeInfoButton';
 import FeedbackButton from './FeedbackButton';
 // Main CSS: ui-components/overlay.less
 // ImageMap CSS: ui-components/image-map.less
@@ -232,8 +232,8 @@ export default class TranscriptionOverlay extends React.Component {
 					}
 					{
 						!config.siteOptions.hideContactButton &&
-						<ContributeinfoButton title={this.state.title} type="Sägen" />
-						//<ContributeinfoButton title={this.state.data.title} type="Sägen" />
+						<ContributeInfoButton title={this.state.title} type="Sägen" />
+						//<ContributeInfoButton title={this.state.data.title} type="Sägen" />
 					}
 				</div>
 

@@ -9,7 +9,7 @@ import SimpleMap from './SimpleMap';
 import ListPlayButton from './ListPlayButton';
 
 import HelpButton from './HelpButton';
-import ContributeinfoButton from './ContributeinfoButton';
+import ContributeInfoButton from './ContributeInfoButton';
 import FeedbackButton from './FeedbackButton';
 
 import TranscribeButton from './TranscribeButton';
@@ -337,7 +337,7 @@ export default class RecordView extends React.Component {
 						}
 						{
 							!config.siteOptions.hideContactButton &&
-							<ContributeinfoButton title={this.state.data.title} type="Sägen" />
+							<ContributeInfoButton title={this.state.data.title} type="Sägen" />
 						}
 					</div>
 

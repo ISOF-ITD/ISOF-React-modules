@@ -3,17 +3,17 @@ import { hashHistory } from 'react-router';
 
 import config from './../../../scripts/config.js';
 
-export default class ContributeinfoButton extends React.Component {
+export default class ContributeInfoButton extends React.Component {
 	constructor(props) {
 		super(props);
 
 		this.contributeinfoButtonClick = this.contributeinfoButtonClick.bind(this);
-		//console.log('ContributeinfoButton');
+		//console.log('ContributeInfoButton');
 	}
 
 	contributeinfoButtonClick() {
 		if (window.eventBus) {
-			//console.log('ContributeinfoButton Click');
+			//console.log('ContributeInfoButton Click');
 			window.eventBus.dispatch('overlay.contributeinfo', {
 				url: config.siteUrl+'#'+hashHistory.getCurrentLocation().pathname,
 				title: this.props.title,
