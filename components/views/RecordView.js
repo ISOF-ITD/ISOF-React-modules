@@ -117,6 +117,9 @@ export default class RecordView extends React.Component {
 		archiveLogos['Dialekt- och folkminnesarkivet i Uppsala'] = 'img/archive-logo-isof.png';
 		archiveLogos['Dialekt och folkminnesarkivet i Uppsala'] = 'img/archive-logo-isof.png';
 		archiveLogos['DAG'] = 'img/archive-logo-isof.png';
+		//Needs to be shrinked. By css?
+		//archiveLogos['Norsk folkeminnesamling'] = 'img/UiO_Segl_A.png';
+		archiveLogos['Norsk folkeminnesamling'] = 'img/archive-logo-ikos.png';
 		archiveLogos['NFS'] = 'img/archive-logo-ikos.png';
 		archiveLogos['DFU'] = 'img/archive-logo-isof.png';
 		archiveLogos['SLS'] = 'img/SLS-logga.svg';
