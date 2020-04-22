@@ -2,7 +2,6 @@ import React from 'react';
 import config from './../../../scripts/config.js';
 import ImageMap from './ImageMap';
 
-import HelpButton from './HelpButton';
 import ContributeInfoButton from './ContributeInfoButton';
 import FeedbackButton from './FeedbackButton';
 // Main CSS: ui-components/overlay.less
@@ -225,10 +224,6 @@ export default class TranscriptionOverlay extends React.Component {
 					{
 						!config.siteOptions.hideContactButton &&
 						<FeedbackButton title={this.state.title} type="Sägen" />
-					}
-					{
-						!config.siteOptions.hideContactButton &&
-						<HelpButton title={this.state.title} type="Sägen" />
 					}
 					{
 						!config.siteOptions.hideContactButton &&

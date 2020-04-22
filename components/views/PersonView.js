@@ -2,6 +2,7 @@ import React from 'react';
 
 import SimpleMap from './SimpleMap';
 import RecordList from './RecordList';
+import ContributeInfoButton from './ContributeInfoButton';
 import FeedbackButton from './FeedbackButton';
 
 import config from './../../../scripts/config.js';
@@ -94,6 +95,10 @@ export default class PersonView extends React.Component {
 					{
 						!config.siteOptions.hideContactButton &&
 						<FeedbackButton title={this.state.data.name || ''} type="Person" />
+					}
+					{
+						!config.siteOptions.hideContactButton &&
+						<ContributeInfoButton title={this.state.data.name || ''} type="Person" />
 					}
 				</div>
 

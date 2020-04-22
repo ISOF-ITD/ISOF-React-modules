@@ -8,7 +8,6 @@ import ShareButtons from './../controls/ShareButtons';
 import SimpleMap from './SimpleMap';
 import ListPlayButton from './ListPlayButton';
 
-import HelpButton from './HelpButton';
 import ContributeInfoButton from './ContributeInfoButton';
 import FeedbackButton from './FeedbackButton';
 
@@ -332,15 +331,11 @@ export default class RecordView extends React.Component {
 
 						{
 							!config.siteOptions.hideContactButton &&
-							<FeedbackButton title={this.state.data.title} type="Sägen" />
+							<FeedbackButton title={this.state.data.title} type="Uppteckning" />
 						}
 						{
 							!config.siteOptions.hideContactButton &&
-							<HelpButton title={this.state.data.title} type="Sägen" />
-						}
-						{
-							!config.siteOptions.hideContactButton &&
-							<ContributeInfoButton title={this.state.data.title} type="Sägen" />
+							<ContributeInfoButton title={this.state.data.title} type="Uppteckning" />
 						}
 					</div>
 
