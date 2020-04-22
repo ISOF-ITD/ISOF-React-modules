@@ -231,9 +231,9 @@ export default class RecordView extends React.Component {
 			// else if (this.state.data.text && this.state.data.text.indexOf('transkriberad') > -1 && this.state.data.text.length < 25 && this.state.data.media.length > 0) {
 			// Ny regel Om transcriptionstatus = readytotranscribe lägger vi till transkriberings knappen istället för att visa texten
 			else if (this.state.data.transcriptionstatus == 'readytotranscribe' && this.state.data.media.length > 0) {
-				textElement = <div><p><strong>Den här uppteckningen är inte transkriberad.</strong><br/><br/>Vill du vara med och tillgängliggöra samlingarna för fler? Hjälp oss att skriva av berättelser!</p><TranscribeButton
+				textElement = <div><p><strong>{l('Den här uppteckningen är inte avskriven.')}</strong><br/><br/>{l('Vill du vara med och tillgängliggöra samlingarna för fler? Hjälp oss att skriva av berättelser!')}</p><TranscribeButton
 					className="button-primary"
-					label="Transkribera"
+					label={l('Skriv av')}
 					title={this.state.data.title}
 					recordId={this.state.data.id}
 					images={this.state.data.media} /></div>;

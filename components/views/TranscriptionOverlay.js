@@ -165,7 +165,7 @@ export default class TranscriptionOverlay extends React.Component {
 
 				<div className="four columns">
 					{/*
-					<p><a href="https://www.isof.se/om-oss/kartor/sagenkartan/transkribera.html"><strong>Läs mer om att transkribera.</strong></a><br/><br/></p>
+					<p><a href="https://www.isof.se/om-oss/kartor/sagenkartan/transkribera.html"><strong>{l('Läs mer om att skriva av.')}</strong></a><br/><br/></p>
 
 					<hr/>
 
@@ -191,7 +191,7 @@ export default class TranscriptionOverlay extends React.Component {
 					<label className="u-full-width">Text:</label>
 					<textarea name="messageInput" className="u-full-width" value={this.state.messageInput} onChange={this.inputChangeHandler} style={{height: 380}}></textarea>
 
-					<label className="u-full-width">Kommentar till transkription:</label>
+					<label className="u-full-width">{l('Kommentar till avskriften:')}</label>
 					<input name="messageCommentInput" className="u-full-width" type="text" value={this.state.messageCommentInput} onChange={this.inputChangeHandler} />
 
 					<label>Ditt namn (frivilligt):</label>
@@ -219,15 +219,15 @@ export default class TranscriptionOverlay extends React.Component {
 			<div className="overlay-window large">
 
 				<div className="overlay-header">
-					Transkribera {this.state.title}
+					{l('Skriv av')} {this.state.title}
 					<button className="close-button white" onClick={this.closeButtonClickHandler}></button>
 					{
 						!config.siteOptions.hideContactButton &&
-						<FeedbackButton title={this.state.title} type="Sägen" />
+						<FeedbackButton title={this.state.title} type="Uppteckning" />
 					}
 					{
 						!config.siteOptions.hideContactButton &&
-						<ContributeInfoButton title={this.state.title} type="Sägen" />
+						<ContributeInfoButton title={this.state.title} type="Uppteckning" />
 						//<ContributeInfoButton title={this.state.data.title} type="Sägen" />
 					}
 				</div>

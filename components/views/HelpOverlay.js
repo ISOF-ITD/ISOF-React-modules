@@ -53,7 +53,7 @@ export default class HelpOverlay extends React.Component {
 		else {
 			var overlayContent = <div>
 				<p>{config.siteOptions.helpText || 'Har du hittat några fel i Sägenkartan? Har du kompletterande information om berättelserna eller personerna som omnämns? Eller vill du hjälpa till med att skriva rent uppteckningar som vi kan lägga ut på Sägenkartan? Kontakta oss gärna!'}</p>
-				<p><a href="https://www.isof.se/om-oss/kartor/sagenkartan/transkribera.html"><strong>Läs mer om att transkribera.</strong></a><br/><br/></p>
+				<p><a href="https://www.isof.se/om-oss/kartor/sagenkartan/transkribera.html"><strong>{l('Läs mer om att skriva av.')}</strong></a><br/><br/></p>
 
 			</div>;
 		}
