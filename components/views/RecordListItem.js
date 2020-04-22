@@ -52,6 +52,14 @@ export default class RecordListItem extends React.Component {
 			}
 		}
 
+		var transcriptionStatusArr = {'untranscribed':'Ej transkribera', 'readytotranscribe':'Ej avskriven', 'transcribed':'Under granskning', 'reviewing':'Under granskning', 'approved':'Avskriven','published':'Avskriven'};
+		var transcriptionStatusElement = '';
+		if (this.props.item._source.transcriptionstatus) {
+			var transcriptionstatus;
+			transcriptionstatus = this.props.item._source.transcriptionstatus;
+			transcriptionStatusElement = transcriptionstatus.replace(transcriptionstatus, transcriptionStatusArr[transcriptionstatus]);
+		}
+
 		return <tr className={'list-item'+(displayTextSummary ? ' highlighted' : '')}>
 			<td className="text-larger">
 				<a className="item-title" target={config.embeddedApp ? '_parent' : '_self'} href={(config.embeddedApp ? (window.applicationSettings && window.applicationSettings.landingPage ? window.applicationSettings.landingPage : config.siteUrl) : '')+'#record/'+this.props.item._source.id+(this.props.routeParams ? this.props.routeParams : '')}>
@@ -84,7 +92,11 @@ export default class RecordListItem extends React.Component {
 			{
 				!config.siteOptions.recordList || !config.siteOptions.recordList.hideMaterialType == true &&
 				<td data-title={l('Materialtyp')+':'}>{this.props.item._source.materialtype}</td>
+				//<td data-title={l('Avskriftstatus')+':'}>{this.props.item._source.transcriptionstatus ? this.props.item._source.transcriptionstatus : ''}</td>
 			}
+			<td data-title={l('Avskriftstatus')+':'}>{
+				transcriptionStatusElement
+			}</td>
 		</tr>;
 	}
 }
