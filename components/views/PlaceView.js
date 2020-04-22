@@ -145,8 +145,12 @@ export default class PlaceView extends React.Component {
 							<h2>{this.state.data.name}</h2>
 							<p>
 								{
+									// Test: Each country handled different (Not yet working)
+									//this.state.data.archive ? this.state.data.archive.country == 'Finland' &&
+									//this.state.data.fylke ?
+									//<span><strong>{l('Landskap')}</strong>: {this.state.data.fylke}</span> :
 									this.state.data.fylke ?
-									<span><strong>{l('Fylke')}</strong>: {this.state.data.fylke}</span> :
+									<span><strong>{l('Fylke')}</strong> {this.state.data.fylke}</span> :
 									this.state.data.harad ?
 									<span><strong>{l('Härad')}</strong>: {this.state.data.harad}, <strong>{l('Län')}</strong>: {this.state.data.lan}, <strong>{l('Landskap')}</strong>: {this.state.data.landskap}</span>
 									: null
