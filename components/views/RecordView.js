@@ -355,7 +355,7 @@ export default class RecordView extends React.Component {
 
 								{
 									this.state.data.source && this.state.data.materialtype == 'tryckt' &&
-									<p className="text-small"><em>{this.state.data.source}</em></p>
+									<p className="text-small"><strong>{l('Tryckt källa') + ': '}</strong><em>{this.state.data.source}</em></p>
 								}
 
 								{
@@ -551,7 +551,7 @@ export default class RecordView extends React.Component {
 
 							{
 								this.state.data.source &&
-								<p><strong>{l('Tryckt i')}</strong><br/>{this.state.data.source}</p>
+								<p><strong>{l('Tryckt källa')}</strong><br/>{this.state.data.source}</p>
 							}
 
 							{
