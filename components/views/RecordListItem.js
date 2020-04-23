@@ -52,7 +52,8 @@ export default class RecordListItem extends React.Component {
 			}
 		}
 
-		var transcriptionStatusArr = {'untranscribed':'Ej transkribera', 'readytotranscribe':'Ej avskriven', 'transcribed':'Under granskning', 'reviewing':'Under granskning', 'approved':'Avskriven','published':'Avskriven'};
+		//var transcriptionStatusArr = {'untranscribed':'Ej transkribera', 'readytotranscribe':'<span style="color:red"> Ej avskriven <span style="color:red">', 'transcribed':'Under granskning', 'reviewing':'Under granskning', 'approved':'Avskriven','published':'Avskriven'};
+		var transcriptionStatusArr = {'untranscribed':'Ej transkribera', 'readytotranscribe':'Nej', 'transcribed':'Granskas', 'reviewing':'Granskas', 'approved':'Granskas','published':'Ja'};
 		var transcriptionStatusElement = '';
 		if (this.props.item._source.transcriptionstatus) {
 			var transcriptionstatus;

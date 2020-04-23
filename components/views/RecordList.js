@@ -177,7 +177,7 @@ export default class RecordList extends React.Component {
 								}
 								{
 									!config.siteOptions.recordList || !config.siteOptions.recordList.hideTranscriptionStatus == true &&
-									<th scope="col">{l('Avskriftstatus')}</th>
+									<th scope="col">{l('Avskriven')}</th>
 								}
 							</tr>
 						</thead>
