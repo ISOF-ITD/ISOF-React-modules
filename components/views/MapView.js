@@ -84,7 +84,7 @@ export default class MapView extends React.Component {
 				search: params.search || undefined,
 				search_field: params.search_field || undefined,
 				type: params.type,
-				category: params.category,
+				category: params.category && params.category + `${params.subcategory ? ',' + params.subcategory : ''}`, // subcategory for matkartan
 				year_from: params.year_from || undefined,
 				year_to: params.year_to || undefined,
 				gender: params.gender && params.person_relation ? params.person_relation+':'+params.gender : undefined,

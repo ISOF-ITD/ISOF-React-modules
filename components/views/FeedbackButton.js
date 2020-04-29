@@ -1,5 +1,4 @@
 import React from 'react';
-import { hashHistory } from 'react-router';
 
 import config from './../../../scripts/config.js';
 
@@ -15,7 +14,7 @@ export default class FeedbackButton extends React.Component {
 		if (window.eventBus) {
 			//console.log('FeedbackButton click');
 			window.eventBus.dispatch('overlay.feedback', {
-				url: config.siteUrl+'#'+hashHistory.getCurrentLocation().pathname,
+				url: config.siteUrl+'#'+this.props.location.pathname,
 				title: this.props.title,
 				type: this.props.type,
 				appUrl: config.appUrl,

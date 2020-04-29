@@ -1,9 +1,8 @@
 import React from 'react';
-import { hashHistory } from 'react-router';
 
 // Main CSS: ui-components/poupwindow.less
 
-export default class PopupWindow extends React.Component {
+export default class RoutePopupWindow extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -19,7 +18,7 @@ export default class PopupWindow extends React.Component {
 	}
 
 	closeButtonClick() {
-		if (this.props.children.props.route.manuallyOpenPopup) {
+		if (this.props.children.props.manuallyOpenPopup) {
 			this.setState({
 				windowOpen: false,
 				manualOpen: false
@@ -47,15 +46,15 @@ export default class PopupWindow extends React.Component {
 		if (window.eventBus) {
 			window.eventBus.addEventListener('Lang.setCurrentLang', this.languageChangedHandler)
 		}
-
+		
 		this.setState({
-			windowOpen: Boolean(this.props.children) && !this.props.children.props.route.manuallyOpenPopup
+			windowOpen: Boolean(this.props.children) && !this.props.children.props.manuallyOpenPopup
 		});
 	}
 
 	componentWillReceiveProps(props) {
 		this.setState({
-			windowOpen: Boolean(props.children) && !props.children.props.route.manuallyOpenPopup
+			windowOpen: Boolean(props.children) && !props.children.props.manuallyOpenPopup
 		});
 
 		if (!props.children == this.props.children && !this.props.disableAutoScrolling) {
@@ -103,8 +102,8 @@ export default class PopupWindow extends React.Component {
 		return (
 			<div className={'popup-wrapper'+(this.state.windowOpen || this.state.manualOpen ? ' visible' : '')}>
 				{
-					this.props.children && this.props.children.props.route.manuallyOpenPopup &&
-					<a className="popup-open-button map-floating-control map-bottom-control visible" onClick={this.openButtonClickHandler}><strong>{l(this.props.children.props.route.openButtonLabel)}</strong></a>
+					this.props.children && this.props.children.props.manuallyOpenPopup &&
+					<a className="popup-open-button map-floating-control map-bottom-control visible" onClick={this.openButtonClickHandler}><strong>{l(this.props.children.props.openButtonLabel)}</strong></a>
 				}
 				<div ref="contentWrapper" className={'popup-content-wrapper'}>
 					<div className="page-content">

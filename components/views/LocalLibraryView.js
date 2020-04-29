@@ -1,5 +1,4 @@
 import React from 'react';
-import { hashHistory } from 'react-router';
 
 import config from './../../../scripts/config.js';
 
@@ -31,7 +30,7 @@ export default class LocalLibraryView extends React.Component {
 	}
 
 	itemClickHandler(event) {
-		hashHistory.push('/record/'+event.currentTarget.dataset.id);
+		this.props.history.push('/record/'+event.currentTarget.dataset.id);
 	}
 
 	libraryButtonClickHandler() {

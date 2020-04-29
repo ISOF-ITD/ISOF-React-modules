@@ -1,5 +1,4 @@
 import React from 'react';
-import { hashHistory } from 'react-router';
 
 import config from './../../../scripts/config.js';
 
@@ -15,7 +14,7 @@ export default class HelpButton extends React.Component {
 		if (window.eventBus) {
 			//console.log('HelpButton click');
 			window.eventBus.dispatch('overlay.help', {
-				url: config.siteUrl+'#'+hashHistory.getCurrentLocation().pathname,
+				url: config.siteUrl+'#'+this.props.location.pathname,
 				title: this.props.title,
 				type: this.props.type,
 				appUrl: config.appUrl,

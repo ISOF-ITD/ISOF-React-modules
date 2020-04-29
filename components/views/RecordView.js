@@ -35,12 +35,12 @@ export default class RecordView extends React.Component {
 	}
 
 	componentDidMount() {
-		this.fetchData(this.props.params);
+		this.fetchData(this.props.match.params);
 	}
 
 	componentWillReceiveProps(props) {
-		if (props.params.record_id != this.props.params.record_id) {
-			this.fetchData(props.params);
+		if (props.match.params.record_id != this.props.match.params.record_id) {
+			this.fetchData(props.match.params);
 			if (window.eventBus) {
 				window.eventBus.dispatch('overlay.hide');
 			}
@@ -131,6 +131,7 @@ export default class RecordView extends React.Component {
 		var imageItems = [];
 		var pdfItems = [];
 		var audioItems = [];
+		let _props = this.props;
 
 		if (this.state.data) {
 			// Förberedar visuella media objekt
@@ -201,7 +202,7 @@ export default class RecordView extends React.Component {
 					<td data-title="Födelseort">
 						{
 							person.home && person.home.length > 0 &&
-							<a href={'#place/'+person.home[0].id}>{person.home[0].name+', '+person.home[0].harad}</a>
+							<a href={'#places/'+person.home[0].id}>{person.home[0].name+', '+person.home[0].harad}</a>
 						}
 					</td>
 					<td data-title="Roll">{person.relation == 'c' ? l('Upptecknare') : person.relation == 'i' ? l('Informant') : ''}</td>
@@ -211,7 +212,7 @@ export default class RecordView extends React.Component {
 			// Förberedar lista över socknar
 			var placeItems = this.state.data.places && this.state.data.places.length > 0 ? this.state.data.places.map(function(place, index) {
 				return <tr key={index}>
-					<td><a href={'#place/'+place.id}>{place.name+', '+(place.fylke ? place.fylke : place.harad)}</a></td>
+					<td><a href={'#places/'+place.id}>{place.name+', '+(place.fylke ? place.fylke : place.harad)}</a></td>
 				</tr>;
 			}) : [];
 
@@ -331,11 +332,11 @@ export default class RecordView extends React.Component {
 
 						{
 							!config.siteOptions.hideContactButton &&
-							<FeedbackButton title={this.state.data.title} type="Uppteckning" />
+							<FeedbackButton title={this.state.data.title} type="Uppteckning" {..._props}/>
 						}
 						{
 							!config.siteOptions.hideContactButton &&
-							<ContributeInfoButton title={this.state.data.title} type="Uppteckning" />
+							<ContributeInfoButton title={this.state.data.title} type="Uppteckning" {..._props}/>
 						}
 					</div>
 
@@ -575,7 +576,7 @@ export default class RecordView extends React.Component {
 					</div>
 
 					<div className="row">
-						<p>{'Post '+this.props.params.record_id+ ' finns inte.'}</p>
+						<p>{'Post '+this.props.match.params.record_id+ ' finns inte.'}</p>
 					</div>
 				</div>
 		}

@@ -1,5 +1,4 @@
 import React from 'react';
-import { hashHistory } from 'react-router';
 
 // Main CSS: ui-components/popupwindow.less
 

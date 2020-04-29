@@ -1,11 +1,6 @@
 import React from 'react';
-import { hashHistory } from 'react-router';
-
-import RecordsCollection from './../collections/RecordsCollection';
-import RecordListItem from './RecordListItem';
 
 import config from './../../../scripts/config.js';
-import routeHelper from './../../../scripts/utils/routeHelper';
 
 export default class PersonList extends React.Component {
 	constructor(props) {

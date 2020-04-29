@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 // Main CSS: ui-components/popup-notification-message.less
 

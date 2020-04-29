@@ -1,5 +1,4 @@
 import React from 'react';
-import { hashHistory } from 'react-router';
 
 import RecordsCollection from './../collections/RecordsCollection';
 import RecordListItem from './RecordListItem';
@@ -97,7 +96,7 @@ export default class RecordList extends React.Component {
 		}
 		else {
 			// Skapar ny router adress via routeHelper, den är baserad på nuvarande params och lägger till ny siffra i 'page'
-			hashHistory.push('/places'+routeHelper.createSearchRoute(this.props)+'/page/'+(Number(this.state.currentPage)+1));
+			this.props.history.push('/places'+routeHelper.createSearchRoute(this.props)+'/page/'+(Number(this.state.currentPage)+1));
 		}
 	}
 	
@@ -116,7 +115,7 @@ export default class RecordList extends React.Component {
 		}
 		else {
 			// Skapar ny router adress via routeHelper, den är baserad på nuvarande params och lägger till ny siffra i 'page'
-			hashHistory.push('/places'+routeHelper.createSearchRoute(this.props)+'/page/'+(Number(this.state.currentPage)-1));
+			this.props.history.push('/places'+routeHelper.createSearchRoute(this.props)+'/page/'+(Number(this.state.currentPage)-1));
 		}
 	}
 	
@@ -151,7 +150,7 @@ export default class RecordList extends React.Component {
 		var searchRouteParams = routeHelper.createSearchRoute(this.props);
 
 		var items = this.state.records ? this.state.records.map(function(item, index) {
-			return <RecordListItem key={item._source.id} 
+			return <RecordListItem key={item._source.id} id={item._source.id}
 				item={item} routeParams={searchRouteParams} 
 				highlightRecordsWithMetadataField={this.props.highlightRecordsWithMetadataField} />;
 

@@ -20,21 +20,21 @@ export default class PersonView extends React.Component {
 	}
 
 	componentDidMount() {
-		this.fetchData(this.props.params);
+		this.fetchData(this.props.match.params);
 
-		if (this.props.params.person_id) {
+		if (this.props.match.params.person_id) {
 			this.setState({
-				personId: this.props.params.person_id
+				personId: this.props.match.params.person_id
 			});
 		}
 	}
 
 	componentWillReceiveProps(props) {
-		if (props.params.person_id != this.props.params.person_id) {
-			this.fetchData(props.params);
+		if (props.match.params.person_id != this.props.match.params.person_id) {
+			this.fetchData(props.match.params);
 
 			this.setState({
-				personId: props.params.person_id
+				personId: props.match.params.person_id
 			});
 		}
 	}
@@ -56,6 +56,8 @@ export default class PersonView extends React.Component {
 	}
 
 	render() {
+		let _props = this.props;
+
 		var recordItems = this.state.data.records && this.state.data.records.length > 0 ? this.state.data.records.map(function(record, index) {
 			return <tr key={index}>
 				<td data-title=""><a href={'#record/'+record.id}>{record.title ? record.title : l('(Utan titel)')}</a></td>
@@ -63,7 +65,7 @@ export default class PersonView extends React.Component {
 				<td data-title={l('Socken, Landskap')+':'}>
 					{
 						record.places &&
-						<a href={'#place/'+record.places[0].id}>{record.places[0].name+', '+record.places[0].landskap}</a>
+						<a href={'#places/'+record.places[0].id}>{record.places[0].name+', '+record.places[0].landskap}</a>
 					}
 				</td>
 				<td data-title={l('Roll')+':'}>{record.relation == 'c' ? l('Upptecknare') : record.relation == 'i' ? l('Informant') : ''}</td>
@@ -86,7 +88,7 @@ export default class PersonView extends React.Component {
 							}
 							{
 								this.state.data.places && this.state.data.places.length > 0 &&
-								<a href={'#place/'+this.state.data.places[0].id}>{this.state.data.places[0].name+', '+this.state.data.places[0].landskap}</a>
+								<a href={'#places/'+this.state.data.places[0].id}>{this.state.data.places[0].name+', '+this.state.data.places[0].landskap}</a>
 							}
 							</p>
 						</div>
@@ -94,7 +96,7 @@ export default class PersonView extends React.Component {
 
 					{
 						!config.siteOptions.hideContactButton &&
-						<FeedbackButton title={this.state.data.name || ''} type="Person" />
+						<FeedbackButton title={this.state.data.name || ''} type="Person" {..._props} />
 					}
 					{
 						!config.siteOptions.hideContactButton &&
@@ -135,7 +137,7 @@ export default class PersonView extends React.Component {
 					<div className="twelve columns">
 						<h3>{l('Uppteckningar')}</h3>
 
-						<RecordList nordic={window.applicationSettings.includeNordic} disableRouterPagination={true} disableAutoFetch={true} person={this.state.personId} />
+						<RecordList nordic={window.applicationSettings.includeNordic} disableRouterPagination={true} disableAutoFetch={true} person={this.state.personId} {..._props} />
 
 					</div>
 				</div>

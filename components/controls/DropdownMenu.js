@@ -35,7 +35,7 @@ export default class DropdownMenu extends React.Component {
 	windowClickHandler(event) {
 		var componentEl = ReactDOM.findDOMNode(this.refs.container);
 
-		if (componentEl && !componentEl.contains(event.target)) {
+		if (!!componentEl && !componentEl.contains(event.target)) {
 			this.closeMenu();
 		}
 	}

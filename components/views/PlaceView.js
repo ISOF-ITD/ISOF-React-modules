@@ -64,12 +64,12 @@ export default class PlaceView extends React.Component {
 	}
 
 	componentDidMount() {
-		this.handleParams(this.props.params);
+		this.handleParams(this.props.match.params);
 	}
 
 	componentWillReceiveProps(props) {
-		if (props.params.place_id != this.props.params.place_id) {
-			this.handleParams(props.params)
+		if (props.match.params.place_id !== this.props.match.params.place_id) {
+			this.handleParams(props.match.params)
 		}
 	}
 
@@ -90,6 +90,7 @@ export default class PlaceView extends React.Component {
 	}
 
 	render() {
+		let _props = this.props;
 		var informantsItems = this.state.data.informants && this.state.data.informants.length > 0 ? this.state.data.informants.map(function(informant, index) {
 			return <tr key={index}>
 				<td><a href={'#person/'+informant.id}>{informant.name}</a></td>
@@ -161,7 +162,7 @@ export default class PlaceView extends React.Component {
 				</div>
 
 				{
-					!this.props.route.hideMap &&
+					!_props.hideMap &&
 					<div className="row">
 						<div className="twelve columns">
 							<SimpleMap marker={this.state.data.location && this.state.data.location.lat && this.state.data.location.lon ? {lat: this.state.data.location.lat, lng: this.state.data.location.lon, label: this.state.data.name} : null} />
@@ -174,11 +175,13 @@ export default class PlaceView extends React.Component {
 						<div className="twelve columns">
 	
 							{
-								!this.props.route.showOnlyResults &&
+								!this.props.showOnlyResults &&
 								<h3>{l('Sökträffar')}</h3>
 							}
 
-							<RecordList disableRouterPagination={true} highlightRecordsWithMetadataField={this.props.route.highlightRecordsWithMetadataField} 
+							<RecordList 
+								disableRouterPagination={true}
+								highlightRecordsWithMetadataField={this.props.highlightRecordsWithMetadataField} 
 								record_ids={this.state.record_ids} 
 								type={this.state.type} 
 								category={this.state.category} 
@@ -188,14 +191,16 @@ export default class PlaceView extends React.Component {
 								gender={this.state.gender}
 								birth_years={this.state.birth_years}
 								nordic={this.state.nordic}
-								search_field={this.state.searchField} />
+								search_field={this.state.searchField} 
+								{..._props}
+								/>
 
 						</div>
 					</div>
 				}
 
 				{
-					!this.props.route.showOnlyResults &&
+					!this.props.showOnlyResults &&
 					<div>
 
 						{
@@ -208,7 +213,7 @@ export default class PlaceView extends React.Component {
 								<div className="twelve columns">
 									<h3>{l('Samtliga uppteckningar från orten')}</h3>
 
-									<RecordList disableRouterPagination={true} highlightRecordsWithMetadataField={this.props.route.highlightRecordsWithMetadataField} 
+									<RecordList disableRouterPagination={true} highlightRecordsWithMetadataField={this.props.highlightRecordsWithMetadataField} 
 										has_metadata={this.state.has_metadata} 
 										nordic={this.state.nordic}
 										recordPlace={this.state.recordPlace} />		
@@ -221,7 +226,7 @@ export default class PlaceView extends React.Component {
 				}
 
 				{
-					!this.props.route.hidePersons &&
+					!this.props.hidePersons &&
 					<div className="row">
 						<div className="twelve columns">
 							<PersonList personType="informants" title={l('Intervjuade personer')} 
