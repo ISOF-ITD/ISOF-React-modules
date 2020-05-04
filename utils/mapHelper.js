@@ -1,4 +1,4 @@
-import turfInside from 'turf-inside';
+import turfInside from '@turf/boolean-point-in-polygon';
 
 import L from 'leaflet';
 import Proj from 'proj4leaflet';
