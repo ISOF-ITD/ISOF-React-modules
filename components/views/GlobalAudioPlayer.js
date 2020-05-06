@@ -193,7 +193,7 @@ export default class GlobalAudioPlayer extends React.Component {
 				<div className="player-content">
 					{
 						this.state.record &&
-						<div className="player-label"><a href={'#record/'+this.state.record.id}>{this.state.record.title}</a></div>
+						<div className="player-label"><a href={'#records/'+this.state.record.id}>{this.state.record.title}</a></div>
 					}
 					{
 						/*

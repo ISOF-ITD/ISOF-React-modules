@@ -60,7 +60,7 @@ export default class PersonView extends React.Component {
 
 		var recordItems = this.state.data.records && this.state.data.records.length > 0 ? this.state.data.records.map(function(record, index) {
 			return <tr key={index}>
-				<td data-title=""><a href={'#record/'+record.id}>{record.title ? record.title : l('(Utan titel)')}</a></td>
+				<td data-title=""><a href={'#records/'+record.id}>{record.title ? record.title : l('(Utan titel)')}</a></td>
 				<td data-title={l('Kategori')+':'}>{record.taxonomy.name}</td>
 				<td data-title={l('Socken, Landskap')+':'}>
 					{

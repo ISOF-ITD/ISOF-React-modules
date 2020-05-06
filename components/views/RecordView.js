@@ -431,7 +431,7 @@ export default class RecordView extends React.Component {
 					<div className="row">
 
 						<div className="six columns">
-							<ShareButtons path={config.siteUrl+'#/record/'+this.state.data.id} text={'"'+this.state.data.title+'"'} title={l('Dela på sociala media')} />
+							<ShareButtons path={config.siteUrl+'#/records/'+this.state.data.id} text={'"'+this.state.data.title+'"'} title={l('Dela på sociala media')} />
 						</div>
 
 						{
