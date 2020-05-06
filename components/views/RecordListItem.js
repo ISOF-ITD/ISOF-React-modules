@@ -64,7 +64,7 @@ export default class RecordListItem extends React.Component {
 
 		return <tr className={'list-item'+(displayTextSummary ? ' highlighted' : '')}>
 			<td className="text-larger">
-				<a className="item-title" target={config.embeddedApp ? '_parent' : '_self'} href={(config.embeddedApp ? (window.applicationSettings && window.applicationSettings.landingPage ? window.applicationSettings.landingPage : config.siteUrl) : '')+'#record/'+this.props.item._source.id+(this.props.routeParams ? this.props.routeParams : '')}>
+				<a className="item-title" target={config.embeddedApp ? '_parent' : '_self'} href={(config.embeddedApp ? (window.applicationSettings && window.applicationSettings.landingPage ? window.applicationSettings.landingPage : config.siteUrl) : '')+'#records/'+this.props.item._source.id+(this.props.routeParams ? this.props.routeParams : '')}>
 					{
 						config.siteOptions.recordList && config.siteOptions.recordList.displayPlayButton && audioItem != undefined &&
 						<ListPlayButton disablePlayback={true} media={audioItem} recordId={this.props.item._source.id} recordTitle={this.props.item._source.title && this.props.item._source.title != '' ? this.props.item._source.title : l('(Utan titel)')} />

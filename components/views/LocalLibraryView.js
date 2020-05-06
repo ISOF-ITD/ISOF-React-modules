@@ -30,7 +30,7 @@ export default class LocalLibraryView extends React.Component {
 	}
 
 	itemClickHandler(event) {
-		this.props.history.push('/record/'+event.currentTarget.dataset.id);
+		this.props.history.push('/records/'+event.currentTarget.dataset.id);
 	}
 
 	libraryButtonClickHandler() {

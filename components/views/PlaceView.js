@@ -121,7 +121,7 @@ export default class PlaceView extends React.Component {
 		var recordsItems = this.state.data.records && this.state.data.records.length > 0 ? this.state.data.records.map(function(record, index) {
 			return <tr key={index}>
 				<td data-title="">
-					<a href={'#record/'+record.id}>
+					<a href={'#records/'+record.id}>
 						{
 							record.type == 'inspelning' &&
 							<ListPlayButton />
