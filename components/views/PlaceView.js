@@ -24,6 +24,8 @@ export default class PlaceView extends React.Component {
 	handleParams(params) {
 		var fetchParams = params;
 
+		// TODO: Is 'nordic' needed in this component? Is it for filter on country in placeview or to hand over to subcomponent as RecordList? (or inconsistency if placeid not in current country of map?)
+		// country is also set in RecordList! 
 		if (params.nordic != 'true') {
 			fetchParams.country = config.country;
 		}
@@ -57,9 +59,10 @@ export default class PlaceView extends React.Component {
 		if (params.birth_years) {
 			state['birth_years'] = params.birth_years;
 		}
+		// TODO: Is 'nordic' needed in this component? Is it for filter on country in placeview or to hand over to subcomponent as RecordList? (or inconsistency if placeid not in current country of map?)
 		if (params.nordic) {
 			state['nordic'] = true;
-		}
+		}	
 		this.setState(state);
 	}
 

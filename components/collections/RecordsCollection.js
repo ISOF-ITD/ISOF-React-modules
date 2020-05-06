@@ -10,7 +10,6 @@ export default class RecordsCollection {
 	}
 
 	fetch(params) {
-		console.log(params)
 		var paramStrings = [];
 
 		if (params.record_ids) { // Hämtar bara vissa sägner
