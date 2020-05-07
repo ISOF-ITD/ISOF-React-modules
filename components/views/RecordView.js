@@ -15,6 +15,7 @@ import TranscribeButton from './TranscribeButton';
 import ElementNotificationMessage from './../controls/ElementNotificationMessage';
 import SitevisionContent from './../controls/SitevisionContent';
 import PdfViewer from './../controls/PdfViewer';
+import routeHelper from './../../../scripts/utils/routeHelper';
 
 export default class RecordView extends React.Component {
 	constructor(props) {
@@ -133,6 +134,9 @@ export default class RecordView extends React.Component {
 		var audioItems = [];
 		let _props = this.props;
 
+		var routeParams = routeHelper.createSearchRoute(_props);
+		console.log(routeParams)
+
 		if (this.state.data) {
 			// Förberedar visuella media objekt
 			if (this.state.data.media && this.state.data.media.length > 0) {
@@ -193,7 +197,7 @@ export default class RecordView extends React.Component {
 							(
 								config.siteOptions.disableInformantLinks == true && person.relation == 'i' ?
 								person.name :
-								<a href={'#person/'+person.id}>{person.name ? person.name : ''}</a>
+								<a href={'#person/'+person.id}>{person.name ? person.name : ''+(routeParams ? routeParams : '')}</a>
 							) :
 							person.name
 						}
@@ -202,7 +206,7 @@ export default class RecordView extends React.Component {
 					<td data-title="Födelseort">
 						{
 							person.home && person.home.length > 0 &&
-							<a href={'#places/'+person.home[0].id}>{person.home[0].name+', '+person.home[0].harad}</a>
+							<a href={'#places/'+person.home[0].id+(routeParams ? routeParams : '')}>{person.home[0].name+', '+person.home[0].harad}</a>
 						}
 					</td>
 					<td data-title="Roll">{person.relation == 'c' ? l('Upptecknare') : person.relation == 'i' ? l('Informant') : ''}</td>
@@ -212,7 +216,7 @@ export default class RecordView extends React.Component {
 			// Förberedar lista över socknar
 			var placeItems = this.state.data.places && this.state.data.places.length > 0 ? this.state.data.places.map(function(place, index) {
 				return <tr key={index}>
-					<td><a href={'#places/'+place.id}>{place.name+', '+(place.fylke ? place.fylke : place.harad)}</a></td>
+					<td><a href={'#places/'+place.id+(routeParams ? routeParams : '')}>{place.name+', '+(place.fylke ? place.fylke : place.harad)}</a></td>
 				</tr>;
 			}) : [];
 
@@ -266,14 +270,14 @@ export default class RecordView extends React.Component {
 			if (this.state.data.taxonomy) {
 				if (this.state.data.taxonomy.name) {
 					taxonomyElement = <p><strong>{l('Kategori')}</strong><br/>
-						<a href={'#/places/category/'+this.state.data.taxonomy.category.toLowerCase()}>{l(this.state.data.taxonomy.name)}</a></p>;
+						<a href={'#/places/category/'+this.state.data.taxonomy.category.toLowerCase()+(routeParams ? routeParams : '')}>{l(this.state.data.taxonomy.name)}</a></p>;
 				}
 				else if (this.state.data.taxonomy.length > 0) {
 					taxonomyElement = <p><strong>{l('Kategori')}</strong><br/>
 						<span dangerouslySetInnerHTML={{__html: _.map(_.filter(this.state.data.taxonomy, function(taxonomyItem) {
 							return taxonomyItem.category;
 						}), function(taxonomyItem) {
-									return '<a href="#/places/category/'+taxonomyItem.category.toLowerCase()+'">'+l(taxonomyItem.name)+'</a>'
+									return '<a href="#/places/category/'+taxonomyItem.category.toLowerCase()+(routeParams ? routeParams : '')+'">'+l(taxonomyItem.name)+'</a>'
 								}).join(', ')}} >
 						</span></p>;
 				}
