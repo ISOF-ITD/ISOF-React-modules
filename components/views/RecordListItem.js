@@ -29,11 +29,11 @@ export default class RecordListItem extends React.Component {
 			if (this.props.item._source.taxonomy.name) {
 				if (visibleCategories) {
 					if (visibleCategories.indexOf(this.props.item._source.taxonomy.type.toLowerCase()) > -1) {
-						taxonomyElement = <a href={'#/places/category/'+this.props.item._source.taxonomy.category.toLowerCase()}>{l(this.props.item._source.taxonomy.name)}</a>;
+						taxonomyElement = <a href={'#/places/category/'+this.props.item._source.taxonomy.category.toLowerCase()+(this.props.routeParams ? this.props.routeParams : '')}>{l(this.props.item._source.taxonomy.name)}</a>;
 					}
 				}
 				else {
-					taxonomyElement = <a href={'#/places/category/'+this.props.item._source.taxonomy.category.toLowerCase()}>{l(this.props.item._source.taxonomy.name)}</a>;
+					taxonomyElement = <a href={'#/places/category/'+this.props.item._source.taxonomy.category.toLowerCase()+(this.props.routeParams ? this.props.routeParams : '')}>{l(this.props.item._source.taxonomy.name)}</a>;
 				}
 			}
 			else if (this.props.item._source.taxonomy.length > 0 && (!config.siteOptions.recordList || !config.siteOptions.recordList.hideCategories == true)) {
@@ -42,11 +42,11 @@ export default class RecordListItem extends React.Component {
 					if (taxonomyItem.category) {
 						if (visibleCategories) {
 							if (visibleCategories.indexOf(taxonomyItem.type.toLowerCase()) > -1) {
-								return <a href={'#/places/category/'+taxonomyItem.category.toLowerCase()} key={`record-list-item-${_props.id}-${i}`}>{l(taxonomyItem.name)}</a>;
+								return <a href={'#/places/category/'+taxonomyItem.category.toLowerCase()+(_props.routeParams ? _props.routeParams : '')} key={`record-list-item-${_props.id}-${i}`}>{l(taxonomyItem.name)}</a>;
 							}
 						}
 						else {
-							return <a href={'#/places/category/'+taxonomyItem.category.toLowerCase()}>{l(taxonomyItem.name)}</a>;
+							return <a href={'#/places/category/'+taxonomyItem.category.toLowerCase()+(_props.routeParams ? _props.routeParams : '')}>{l(taxonomyItem.name)}</a>;
 						}
 					}
 				}));
@@ -87,7 +87,7 @@ export default class RecordListItem extends React.Component {
 			<td className="table-buttons" data-title={l('Socken, Landskap')+':'}>
 			{
 				this.props.item._source.places && this.props.item._source.places.length > 0 &&
-				<a target={config.embeddedApp ? '_parent' : '_self'} href={(config.embeddedApp ? (window.applicationSettings && window.applicationSettings.landingPage ? window.applicationSettings.landingPage : config.siteUrl) : '')+'#places/'+this.props.item._source.places[0].id}>{this.props.item._source.places[0].name+(this.props.item._source.places[0].landskap || this.props.item._source.places[0].fylke ? (this.props.item._source.places[0].landskap ? ', '+this.props.item._source.places[0].landskap : this.props.item._source.places[0].fylke ? ', '+this.props.item._source.places[0].fylke : '') : '')}</a>
+				<a target={config.embeddedApp ? '_parent' : '_self'} href={(config.embeddedApp ? (window.applicationSettings && window.applicationSettings.landingPage ? window.applicationSettings.landingPage : config.siteUrl) : '')+'#places/'+this.props.item._source.places[0].id+(this.props.routeParams ? this.props.routeParams : '')}>{this.props.item._source.places[0].name+(this.props.item._source.places[0].landskap || this.props.item._source.places[0].fylke ? (this.props.item._source.places[0].landskap ? ', '+this.props.item._source.places[0].landskap : this.props.item._source.places[0].fylke ? ', '+this.props.item._source.places[0].fylke : '') : '')}</a>
 			}
 			</td>
 			<td data-title={l('Insamlingsår')+':'}>{this.props.item._source.year ? this.props.item._source.year.split('-')[0] : ''}</td>
