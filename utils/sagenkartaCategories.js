@@ -79,12 +79,12 @@ export default {
 		{
 			letter: 'm',
 			label: 'Tjuvmjölkande väsen',
-			label_no: ''
+			label_no: 'Tyvmelkende vesen'
 		},
 		{
 			letter: 'n',
 			label: 'Övernaturliga djur',
-			label_no: ''
+			label_no: 'Overnaturlige dyr'
 		}
 	],
 
