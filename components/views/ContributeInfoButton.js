@@ -12,7 +12,6 @@ export default class ContributeInfoButton extends React.Component {
 
 	contributeinfoButtonClick() {
 		if (window.eventBus) {
-			//console.log('ContributeInfoButton Click');
 			window.eventBus.dispatch('overlay.contributeinfo', {
 				url: config.siteUrl+'#'+this.props.location.pathname,
 				title: this.props.title,

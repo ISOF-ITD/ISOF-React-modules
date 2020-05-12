@@ -27,7 +27,6 @@ export default class ContributeinfoOverlay extends React.Component {
 
 		if (window.eventBus) {
 			window.eventBus.addEventListener('overlay.contributeinfo', function(event) {
-				//console.log('ContributeinfoOverlay contributeinfo');
 				this.setState({
 					visible: true,
 					type: event.target.type,
