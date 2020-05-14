@@ -29,11 +29,11 @@ export default class RecordListItem extends React.Component {
 			if (this.props.item._source.taxonomy.name) {
 				if (visibleCategories) {
 					if (visibleCategories.indexOf(this.props.item._source.taxonomy.type.toLowerCase()) > -1) {
-						taxonomyElement = <a href={'#/places/category/'+this.props.item._source.taxonomy.category.toLowerCase()+(this.props.routeParams ? this.props.routeParams : '')}>{l(this.props.item._source.taxonomy.name)}</a>;
+						taxonomyElement = <a href={'#/places/category/'+this.props.item._source.taxonomy.category.toLowerCase()+(this.props.routeParams ? this.props.routeParams.replace(/category\/[^/]+/g, '') : '')}>{l(this.props.item._source.taxonomy.name)}</a>;
 					}
 				}
 				else {
-					taxonomyElement = <a href={'#/places/category/'+this.props.item._source.taxonomy.category.toLowerCase()+(this.props.routeParams ? this.props.routeParams : '')}>{l(this.props.item._source.taxonomy.name)}</a>;
+					taxonomyElement = <a href={'#/places/category/'+this.props.item._source.taxonomy.category.toLowerCase()+(this.props.routeParams ? this.props.routeParams.replace(/category\/[^/]+/g, '') : '')}>{l(this.props.item._source.taxonomy.name)}</a>;
 				}
 			}
 			else if (this.props.item._source.taxonomy.length > 0 && (!config.siteOptions.recordList || !config.siteOptions.recordList.hideCategories == true)) {
@@ -42,11 +42,11 @@ export default class RecordListItem extends React.Component {
 					if (taxonomyItem.category) {
 						if (visibleCategories) {
 							if (visibleCategories.indexOf(taxonomyItem.type.toLowerCase()) > -1) {
-								return <a href={'#/places/category/'+taxonomyItem.category.toLowerCase()+(_props.routeParams ? _props.routeParams : '')} key={`record-list-item-${_props.id}-${i}`}>{l(taxonomyItem.name)}</a>;
+								return <a href={'#/places/category/'+taxonomyItem.category.toLowerCase()+(_props.routeParams ? _props.routeParams.replace(/category\/[^/]+/g, '') : '')} key={`record-list-item-${_props.id}-${i}`}>{l(taxonomyItem.name)}</a>;
 							}
 						}
 						else {
-							return <a href={'#/places/category/'+taxonomyItem.category.toLowerCase()+(_props.routeParams ? _props.routeParams : '')}>{l(taxonomyItem.name)}</a>;
+							return <a href={'#/places/category/'+taxonomyItem.category.toLowerCase()+(_props.routeParams ? _props.routeParams.replace(/category\/[^/]+/g, '') : '')}>{l(taxonomyItem.name)}</a>;
 						}
 					}
 				}));
