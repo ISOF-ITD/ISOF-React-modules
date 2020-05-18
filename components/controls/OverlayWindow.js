@@ -44,7 +44,7 @@ export default class OverlayWindow extends React.Component {
 		//console.log('OverlayWindow didMount end');
 	}
 
-	componentWillReceiveProps(props) {
+	UNSAFE_componentWillReceiveProps(props) {
 		this.setState({
 			title: props.title,
 			htmlContent: props.htmlContent

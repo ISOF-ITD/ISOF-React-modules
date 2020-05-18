@@ -25,7 +25,7 @@ export default class SitevisionContent extends React.Component {
 		}
 	}
 
-	componentWillReceiveProps(props) {
+	UNSAFE_componentWillReceiveProps(props) {
 		if (props.url) {
 			this.fetchContent(props.url);
 		}

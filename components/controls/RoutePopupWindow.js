@@ -52,7 +52,7 @@ export default class RoutePopupWindow extends React.Component {
 		});
 	}
 
-	componentWillReceiveProps(props) {
+	UNSAFE_componentWillReceiveProps(props) {
 		this.setState({
 			windowOpen: Boolean(props.children) && !props.children.props.manuallyOpenPopup
 		});

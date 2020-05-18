@@ -28,7 +28,7 @@ export default class ImageMap extends React.Component {
 		}
 	}
 
-	componentWillReceiveProps(props) {
+	UNSAFE_componentWillReceiveProps(props) {
 		if (props.image && props.image != this.props.image) {
 			this.loadImage(props.image);
 		}

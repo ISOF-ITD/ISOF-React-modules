@@ -70,7 +70,7 @@ export default class PlaceView extends React.Component {
 		this.handleParams(this.props.match.params);
 	}
 
-	componentWillReceiveProps(props) {
+	UNSAFE_componentWillReceiveProps(props) {
 		if (props.match.params.place_id !== this.props.match.params.place_id) {
 			this.handleParams(props.match.params)
 		}

@@ -29,7 +29,7 @@ export default class PersonView extends React.Component {
 		}
 	}
 
-	componentWillReceiveProps(props) {
+	UNSAFE_componentWillReceiveProps(props) {
 		if (props.match.params.person_id != this.props.match.params.person_id) {
 			this.fetchData(props.match.params);
 

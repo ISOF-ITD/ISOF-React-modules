@@ -19,7 +19,7 @@ export default class PersonList extends React.Component {
 		}
 	}
 
-	componentWillReceiveProps(props) {
+	UNSAFE_componentWillReceiveProps(props) {
 		if (props.place && props.place != this.props.place) {		
 			this.handleProps(props);
 		}

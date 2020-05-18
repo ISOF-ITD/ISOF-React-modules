@@ -39,7 +39,7 @@ export default class RecordList extends React.Component {
 		/*
 			Om RecordList läggs till PersonView (för att hämta postar relaterad till speciell person), då
 			använder vi disableAutoFetch={true}
-			Då hämtar den modulen inte lista över huvudpostar utan att ta emot parametrar (componentWillReceiveProps)
+			Då hämtar den modulen inte lista över huvudpostar utan att ta emot parametrar (UNSAFE_componentWillReceiveProps)
 		*/
 		if (!this.props.disableAutoFetch) {
 			this.setState({
@@ -50,7 +50,7 @@ export default class RecordList extends React.Component {
 		}
 	}
 
-	componentWillReceiveProps(props) {
+	UNSAFE_componentWillReceiveProps(props) {
 		var currentParams = JSON.parse(JSON.stringify(this.props));
 		if (currentParams.place_id) {
 			delete currentParams.place_id;

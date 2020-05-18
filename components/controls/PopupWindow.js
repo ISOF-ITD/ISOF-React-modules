@@ -42,7 +42,7 @@ export default class PopupWindow extends React.Component {
 		});
 	}
 
-	componentWillReceiveProps(props) {
+	UNSAFE_componentWillReceiveProps(props) {
 		if (props.windowOpen && !this.state.windowOpen) {
 			this.openWindow();
 		}

@@ -136,7 +136,7 @@ export default class TranscriptionOverlay extends React.Component {
 		}.bind(this));
 	}
 
-	componentWillReceiveProps() {
+	UNSAFE_componentWillReceiveProps() {
 		this.setState({
 			messageSent: false,
 			emailInputValue: '',

@@ -18,7 +18,7 @@ export default class AutocompleteInput extends React.Component {
 		};
 	}
 
-	componentWillReceiveProps(props) {
+	UNSAFE_componentWillReceiveProps(props) {
 		if (props.value != this.state.inputValue) {
 			this.setState({
 				inputValue: props.value

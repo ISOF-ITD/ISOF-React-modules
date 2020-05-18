@@ -52,7 +52,7 @@ export default class MapView extends React.Component {
 		this.mapBase = this.refs.mapView;
 	}
 
-	componentWillReceiveProps(props) {
+	UNSAFE_componentWillReceiveProps(props) {
 		var currentSearchParams = JSON.parse(JSON.stringify(this.props.searchParams));
 
 		if (currentSearchParams.place_id) {

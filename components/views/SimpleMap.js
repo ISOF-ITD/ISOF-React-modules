@@ -30,7 +30,7 @@ export default class SimpleMap extends React.Component {
 		}
 	}
 
-	componentWillReceiveProps(props) {
+	UNSAFE_componentWillReceiveProps(props) {
 		if (props.marker) {
 			this.addMarker(props.marker);
 		}

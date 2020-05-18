@@ -133,7 +133,7 @@ export default class MapBase extends React.Component {
 		}
 	}
 
-	componentWillReceiveProps(props) {
+	UNSAFE_componentWillReceiveProps(props) {
 		if (props.marker) {
 			this.addMarker(props.marker);
 		}

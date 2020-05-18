@@ -39,7 +39,7 @@ export default class RecordView extends React.Component {
 		this.fetchData(this.props.match.params);
 	}
 
-	componentWillReceiveProps(props) {
+	UNSAFE_componentWillReceiveProps(props) {
 		if (props.match.params.record_id != this.props.match.params.record_id) {
 			this.fetchData(props.match.params);
 			if (window.eventBus) {

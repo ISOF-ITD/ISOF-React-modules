@@ -103,7 +103,7 @@ export default class ContributeinfoOverlay extends React.Component {
 		}.bind(this));
 	}
 
-	componentWillReceiveProps() {
+	UNSAFE_componentWillReceiveProps() {
 		this.setState({
 			messageSent: false,
 			emailInputValue: '',

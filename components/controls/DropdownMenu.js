@@ -46,7 +46,7 @@ export default class DropdownMenu extends React.Component {
 		}
 	}
 
-	componentWillReceiveProps(props) {
+	UNSAFE_componentWillReceiveProps(props) {
 	}
 
 	render() {

@@ -43,7 +43,7 @@ export default class Slider extends React.Component {
 		this.slider.on('slide', this.sliderSlideHandler)
 	}
 
-	componentWillReceiveProps(props) {
+	UNSAFE_componentWillReceiveProps(props) {
 		if (props.enabled && props.enabled == true) {
 			this.refs.sliderContainer.removeAttribute('disabled');
 		}

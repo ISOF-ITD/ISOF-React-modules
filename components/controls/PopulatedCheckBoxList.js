@@ -16,7 +16,7 @@ export default class PopulatedCheckBoxList extends React.Component {
 		};
 	}
 
-	componentWillReceiveProps(props) {
+	UNSAFE_componentWillReceiveProps(props) {
 		if (props.selectedItems) {
 			this.setState({
 				selectedItems: props.selectedItems
