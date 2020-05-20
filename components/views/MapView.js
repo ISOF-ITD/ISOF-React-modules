@@ -195,13 +195,12 @@ export default class MapView extends React.Component {
 
 	updateMap() {
 		// Om det finns mapFilter (som kan filtrera ut vissa relatontyper av platser), då filterar vi state.mapData innan vi placerar data på kartan
-		console.log(this.state.mapFilter)
+		//console.log(this.state.mapFilter)
 		var mapData = this.state.mapFilter ? _.filter(this.mapData, function(item) {
-			console.log(item)
 			return item.relation_type.indexOf(this.state.mapFilter) > -1;
 		}.bind(this)) : this.mapData;
 
-		console.log(mapData);
+		//console.log(mapData);
 
 		if (this.state.viewMode == 'markers' || this.state.viewMode == 'clusters') {
 			if (this.markers) {

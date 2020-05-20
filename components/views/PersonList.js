@@ -1,6 +1,7 @@
 import React from 'react';
 
 import config from './../../../scripts/config.js';
+import routeHelper from './../../../scripts/utils/routeHelper';
 
 export default class PersonList extends React.Component {
 	constructor(props) {
@@ -68,6 +69,10 @@ export default class PersonList extends React.Component {
 	}
 
 	render() {
+		let _props = this.props;
+
+		var routeParams = routeHelper.createSearchRoute(_props);
+
 		var items = this.state.persons ? this.state.persons.map(function(person, index) {
 			return <tr key={index}>
 				<td>
@@ -76,7 +81,7 @@ export default class PersonList extends React.Component {
 						(
 							config.siteOptions.disableInformantLinks == true && person.relation == 'i' ?
 							person.name :
-							<a href={'#person/'+person.id}>{person.name ? person.name : ''}</a>
+							<a href={'#person/'+person.id +(routeParams ? routeParams : '')}>{person.name ? person.name : ''}</a>
 						) :
 						person.name
 					}

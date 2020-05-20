@@ -134,8 +134,9 @@ export default class RecordView extends React.Component {
 		var audioItems = [];
 		let _props = this.props;
 
-		var routeParams = routeHelper.createSearchRoute(_props);
-		console.log(routeParams)
+		//var routeParams = routeHelper.createSearchRoute(_props);
+		var routeParams = routeHelper.createSearchRoute(_props.match.params);
+		//console.log(routeParams)
 
 		if (this.state.data) {
 			// Förberedar visuella media objekt
@@ -197,7 +198,7 @@ export default class RecordView extends React.Component {
 							(
 								config.siteOptions.disableInformantLinks == true && person.relation == 'i' ?
 								person.name :
-								<a href={'#person/'+person.id}>{person.name ? person.name : ''+(routeParams ? routeParams : '')}</a>
+								<a href={'#person/'+person.id +(routeParams ? routeParams : '')}>{person.name ? person.name : ''}</a>
 							) :
 							person.name
 						}
