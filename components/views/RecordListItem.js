@@ -40,13 +40,15 @@ export default class RecordListItem extends React.Component {
 				let _props = this.props;
 				taxonomyElement = _.compact(_.map(_props.item._source.taxonomy, function(taxonomyItem, i) {
 					if (taxonomyItem.category) {
+						// when clicking on category, reset all routeParams, except for has_metadata
+						let href = '#/places/category/'+taxonomyItem.category.toLowerCase()+(_props.routeParams ? _props.routeParams.replace(/(text_ids\/?|search_field\/?|category\/?|search\/?)[^/]+\/?/g, '') : '')
 						if (visibleCategories) {
 							if (visibleCategories.indexOf(taxonomyItem.type.toLowerCase()) > -1) {
-								return <a href={'#/places/category/'+taxonomyItem.category.toLowerCase()+(_props.routeParams ? _props.routeParams.replace(/category\/[^/]+/g, '') : '')} key={`record-list-item-${_props.id}-${i}`}>{l(taxonomyItem.name)}</a>;
+							return <a href={href} key={`record-list-item-${_props.id}-${i}`}><small>{_props.routeParams}</small><br/>=&gt;<br/><small>{href}</small><br/>{l(taxonomyItem.name)}</a>;
 							}
 						}
 						else {
-							return <a href={'#/places/category/'+taxonomyItem.category.toLowerCase()+(_props.routeParams ? _props.routeParams.replace(/category\/[^/]+/g, '') : '')}>{l(taxonomyItem.name)}</a>;
+							return <a href={href}>{l(taxonomyItem.name)}</a>;
 						}
 					}
 				}));
