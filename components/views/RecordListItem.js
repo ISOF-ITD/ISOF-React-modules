@@ -44,7 +44,7 @@ export default class RecordListItem extends React.Component {
 						let href = '#/places/category/'+taxonomyItem.category.toLowerCase()+(_props.routeParams ? _props.routeParams.replace(/(text_ids\/?|search_field\/?|category\/?|search\/?)[^/]+\/?/g, '') : '')
 						if (visibleCategories) {
 							if (visibleCategories.indexOf(taxonomyItem.type.toLowerCase()) > -1) {
-							return <a href={href} key={`record-list-item-${_props.id}-${i}`}><small>{_props.routeParams}</small><br/>=&gt;<br/><small>{href}</small><br/>{l(taxonomyItem.name)}</a>;
+							return <a href={href} key={`record-list-item-${_props.id}-${i}`}>{l(taxonomyItem.name)}</a>;
 							}
 						}
 						else {
