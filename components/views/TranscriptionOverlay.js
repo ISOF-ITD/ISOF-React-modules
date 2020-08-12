@@ -148,7 +148,7 @@ export default class TranscriptionOverlay extends React.Component {
 	render() {
 		if (this.state.messageSent) {
 			var overlayContent = <div>
-				<p>Meddelande skickat. Tack.</p>
+				<p>{l('Tack för din avskrift som nu skickats till Institutet för språk och folkminnen. Inom kort kommer den att publiceras på TradArk.')}</p>
 				<p><br/><button className="button-primary" onClick={this.closeButtonClickHandler}>Stäng</button></p>
 			</div>;
 		}
@@ -193,10 +193,10 @@ export default class TranscriptionOverlay extends React.Component {
 
 					<label className="u-full-width">{l('Kommentar till avskriften:')}</label>
 					<input name="messageCommentInput" className="u-full-width" type="text" value={this.state.messageCommentInput} onChange={this.inputChangeHandler} />
+					<p>{l('Vill du att vi på TradArk anger att det är du som har skrivit av uppteckningen? Ange i så fall ditt namn och din e-postadress nedan. Vi hanterar personuppgifter enligt dataskyddsförordningen. ')}<a href="https://www.isof.se/om-oss/behandling-av-personuppgifter.html"><strong>{l('Läs mer.')}</strong></a></p>
 
 					<label>Ditt namn (frivilligt):</label>
 					<input name="nameInput" className="u-full-width" type="text" value={this.state.nameInput} onChange={this.inputChangeHandler} />
-
 					<label>Din e-post adress (frivilligt):</label>
 					<input name="emailInput" className="u-full-width" type="text" value={this.state.emailInput} onChange={this.inputChangeHandler} />
 
