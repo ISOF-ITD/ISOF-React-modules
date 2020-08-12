@@ -18,67 +18,67 @@ export default {
 	// Categories with type tradark
 	categories: [
 		{
-            letter: 'Trad1',
+            letter: 'trad1',
             label: 'Bebyggelse och bosättning',
         },
         {
-            letter: 'Trad2',
+            letter: 'trad2',
             label: 'Yrken, näringar och hushållning',
         },
         {
-            letter: 'Trad3',
+            letter: 'trad3',
             label: 'Kommunikation och handel',
         },
         {
-            letter: 'Trad4',
+            letter: 'trad4',
             label: 'Samhället',
         },
         {
-            letter: 'Trad5',
+            letter: 'trad5',
             label: 'Livets högtider',
         },
         {
-            letter: 'Trad6',
+            letter: 'trad6',
             label: 'Spöken och gastar',
         },
         {
-            letter: 'Trad7',
+            letter: 'trad7',
             label: 'Naturen',
         },
         {
-            letter: 'Trad8',
+            letter: 'trad8',
             label: 'Läkekonst',
         },
         {
-            letter: 'Trad9',
+            letter: 'trad9',
             label: 'Årets fester',
         },
         {
-            letter: 'Trad10',
+            letter: 'trad10',
             label: 'Klokskap och svartkonst',
         },
         {
-            letter: 'Trad11',
+            letter: 'trad11',
             label: 'Övernaturliga väsen',
         },
         {
-            letter: 'Trad12',
+            letter: 'trad12',
             label: 'Historisk tradition',
         },
         {
-            letter: 'Trad13',
+            letter: 'trad13',
             label: 'Sagor, gåtor och ordspråk',
         },
         {
-            letter: 'Trad14',
+            letter: 'trad14',
             label: 'Visor och musik',
         },
         {
-            letter: 'Trad15',
+            letter: 'trad15',
             label: 'Idrott, lek och spel',
         },
         {
-            letter: 'Trad16',
+            letter: 'trad16',
             label: 'Ej kategoriserat',
         }
 	]
