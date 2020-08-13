@@ -61,6 +61,31 @@ export default class ImageMap extends React.Component {
 		this.imageOverlay = L.imageOverlay(this.imageEl.src, bounds);
 		this.imageOverlay.addTo(this.map);
 
+		/*		
+		Test with leaflet geojson rectangle overlay on image
+		OBS: So far no rectangle is shown! Wrong layer config, coordinates, layer order, z-index ..?
+
+		console.log(bounds);
+		var geojsonFeature = [{
+		    "type": "LineString",
+		    "coordinates": [[10, 10], [10, 40], [20, 40], [20, 10]]
+		}, {
+		    "type": "LineString",
+		    "coordinates": [[10, 10], [10, 40], [20, 40], [20, 10]]
+		}];
+
+		var myStyle = {
+		    "color": "#ff7800",
+		    "weight": 5,
+		    "opacity": 0.65
+		};
+
+		var myLayer = L.geoJSON().addTo(this.map);
+		myLayer.addData(geojsonFeature);
+		myLayer.setStyle(myStyle);
+		console.log('geojson')
+		*/		
+
 		this.map.setMaxBounds(bounds);
 
 		this.map.setView([imageHeight, 0], 0);
