@@ -2,7 +2,7 @@ import React from 'react';
 
 import config from './../../../scripts/config.js';
 
-export default class TranscritionHelpButton extends React.Component {
+export default class TranscriptionHelpButton extends React.Component {
 	constructor(props) {
 		super(props);
 
