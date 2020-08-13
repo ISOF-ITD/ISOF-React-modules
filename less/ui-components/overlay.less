@@ -210,8 +210,43 @@
 }
 
 /* 
-Test with css hover over activated circles
+Show instuction image with css hover over
+
+	<div className="mark-informant-img">
+	<input name="informantNameInput" className="six columns" type="text" value={this.state.informantNameInput} onChange={this.inputChangeHandler} />
+	<figure>
+	    <img src="img/ifgh-card-upperpart-name.png" width="400" height="100" alt="photo"></img> 
+		<img src="http://localhost:8080/PublikUtforska-GUI/www/img/ifgh-card-upperpart-birthplace.png" width="400" height="100" 	</figure>
+	</div>
+	<figure>
+	</figure>
+
+*/
+.mark-informant-img img {
+  display: block;
+  border-radius: 0.8em;
+  max-width: 100%;
+  height: auto;
+}
+
+.mark-informant-img:hover figure {
+  display: block;
+}
+
+.mark-informant-img figure {
+  display: none;
+  position: absolute;
+  top: 15em;
+  left: 2em;
+  z-index: 4000;
+}
+
+/* 
+Show instuction "image" with css hover over
+
+Test with css hover over: show activated circles
 Fixed circle coordinates does not work well with changing screen size and image zoom!
+Even left position in percentage is difficult!
 
 jsx/html example:
 	<div className="mark-informant-name">
@@ -220,7 +255,8 @@ jsx/html example:
 		<div id="circle"></div>
 	</figure>
 	</div>
-*/
+
+
 #circle {
     background: transparent;
     width: 16em;
@@ -249,7 +285,7 @@ jsx/html example:
   display: none;
   position: absolute;
   top: 11em;
-  left: 38em;
+  left: 40%;
   z-index: 4000;
 }
 
@@ -280,3 +316,4 @@ jsx/html example:
 .mark-informant-birthplace:hover figure {
   display: block;
 }
+*/

@@ -178,11 +178,27 @@ export default class TranscriptionOverlay extends React.Component {
 					</div>
 
 					<div className="row">
-					<input name="informantNameInput" className="six columns" type="text" value={this.state.informantNameInput} onChange={this.inputChangeHandler} />
+						<div className="mark-informant-img">
+						<input name="informantNameInput" className="six columns" type="text" value={this.state.informantNameInput} onChange={this.inputChangeHandler} />
+						<figure>
+						    <img src="img/ifgh-card-upperpart-name.png" width="400" height="100" alt="photo"></img>
+						</figure>
+						</div>
 
-					<input name="informantBirthDateInput" className="two columns" type="text" value={this.state.informantBirthDateInput} onChange={this.inputChangeHandler} />
+						<div className="mark-informant-img">
+						<input name="informantBirthDateInput" className="two columns" type="text" value={this.state.informantBirthDateInput} onChange={this.inputChangeHandler} />
+						<figure>
+						    <img src="img/ifgh-card-upperpart-birthyear.png" width="400" height="100" alt="photo"></img>
+						</figure>
+						</div>
 
-					<input name="informantBirthPlaceInput" className="four columns" type="text" value={this.state.informantBirthPlaceInput} onChange={this.inputChangeHandler} />
+						<div className="mark-informant-img mark-informant-birthplace">
+						<input name="informantBirthPlaceInput" className="four columns" type="text" value={this.state.informantBirthPlaceInput} onChange={this.inputChangeHandler} />
+						<figure>
+						    <img src="img/ifgh-card-upperpart-birthplace.png" width="400" height="100" alt="photo"></img>
+							<div id="circle3"></div>
+						</figure>
+						</div>
 					</div>
 
 					<label className="u-full-width">Övrig information om informanten:</label>
