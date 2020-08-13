@@ -4,6 +4,7 @@ import ImageMap from './ImageMap';
 
 import ContributeInfoButton from './ContributeInfoButton';
 import FeedbackButton from './FeedbackButton';
+import TranscriptionHelpButton from './TranscriptionHelpButton';
 // Main CSS: ui-components/overlay.less
 // ImageMap CSS: ui-components/image-map.less
 
@@ -29,6 +30,7 @@ export default class TranscriptionOverlay extends React.Component {
 		};
 
 		if (window.eventBus) {
+			//console.log('TranscriptionOverlay window.eventBus');
 			window.eventBus.addEventListener('overlay.transcribe', function(event) {
 				this.setState({
 					visible: true,
@@ -146,6 +148,8 @@ export default class TranscriptionOverlay extends React.Component {
 	}
 
 	render() {
+		let _props = this.props;
+
 		if (this.state.messageSent) {
 			var overlayContent = <div>
 				<p>{l('Tack för din avskrift som nu skickats till Institutet för språk och folkminnen. Inom kort kommer den att publiceras på TradArk.')}</p>
@@ -239,12 +243,16 @@ export default class TranscriptionOverlay extends React.Component {
 					<button className="close-button white" onClick={this.closeButtonClickHandler}></button>
 					{
 						!config.siteOptions.hideContactButton &&
-						<FeedbackButton title={this.state.title} type="Uppteckning" />
+						<FeedbackButton title={this.state.title} type="Uppteckning" {..._props}/>
 					}
 					{
 						!config.siteOptions.hideContactButton &&
-						<ContributeInfoButton title={this.state.title} type="Uppteckning" />
+						<ContributeInfoButton title={this.state.title} type="Uppteckning" {..._props}/>
 						//<ContributeInfoButton title={this.state.data.title} type="Sägen" />
+					}
+					{
+						!config.siteOptions.hideContactButton &&
+						<TranscriptionHelpButton title={this.state.title} type="Uppteckning" {..._props}/>
 					}
 				</div>
 
