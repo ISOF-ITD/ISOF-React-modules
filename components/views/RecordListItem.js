@@ -28,12 +28,12 @@ export default class RecordListItem extends React.Component {
 			}
 			if (this.props.item._source.taxonomy.name) {
 				if (visibleCategories) {
-					if (visibleCategories.indexOf(this.props.item._source.taxonomy.type.toLowerCase()) > -1) {
-						taxonomyElement = <a href={'#/places/category/'+this.props.item._source.taxonomy.category.toLowerCase()+(this.props.routeParams ? this.props.routeParams.replace(/category\/[^/]+/g, '') : '')}>{l(this.props.item._source.taxonomy.name)}</a>;
+					if (visibleCategories.indexOf(this.props.item._source.taxonomy.type) > -1) {
+						taxonomyElement = <a href={'#/places/category/'+this.props.item._source.taxonomy.category+(this.props.routeParams ? this.props.routeParams.replace(/category\/[^/]+/g, '') : '')}>{l(this.props.item._source.taxonomy.name)}</a>;
 					}
 				}
 				else {
-					taxonomyElement = <a href={'#/places/category/'+this.props.item._source.taxonomy.category.toLowerCase()+(this.props.routeParams ? this.props.routeParams.replace(/category\/[^/]+/g, '') : '')}>{l(this.props.item._source.taxonomy.name)}</a>;
+					taxonomyElement = <a href={'#/places/category/'+this.props.item._source.taxonomy.category+(this.props.routeParams ? this.props.routeParams.replace(/category\/[^/]+/g, '') : '')}>{l(this.props.item._source.taxonomy.name)}</a>;
 				}
 			}
 			else if (this.props.item._source.taxonomy.length > 0 && (!config.siteOptions.recordList || !config.siteOptions.recordList.hideCategories == true)) {
@@ -41,9 +41,9 @@ export default class RecordListItem extends React.Component {
 				taxonomyElement = _.compact(_.map(_props.item._source.taxonomy, function(taxonomyItem, i) {
 					if (taxonomyItem.category) {
 						// when clicking on category, reset all routeParams, except for has_metadata
-						let href = '#/places/category/'+taxonomyItem.category.toLowerCase()+(_props.routeParams ? _props.routeParams.replace(/(text_ids\/?|search_field\/?|category\/?|search\/?)[^/]+\/?/g, '') : '')
+						let href = '#/places/category/'+taxonomyItem.category+(_props.routeParams ? _props.routeParams.replace(/(text_ids\/?|search_field\/?|category\/?|search\/?)[^/]+\/?/g, '') : '')
 						if (visibleCategories) {
-							if (visibleCategories.indexOf(taxonomyItem.type.toLowerCase()) > -1) {
+							if (visibleCategories.indexOf(taxonomyItem.type) > -1) {
 							return <a href={href} key={`record-list-item-${_props.id}-${i}`}>{l(taxonomyItem.name)}</a>;
 							}
 						}
