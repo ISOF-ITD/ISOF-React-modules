@@ -176,32 +176,35 @@ export default class TranscriptionOverlay extends React.Component {
 					*/}
 
 					<div className="row">
-					<label className="six columns">Berättat av:</label>
-					<label className="two columns">Född år:</label>
-					<label className="four columns">Född i:</label>
-					</div>
-
-					<div className="row">
+						<div className="six columns">
+						<label>Berättat av:</label>
 						<div className="mark-informant-img">
-						<input name="informantNameInput" className="six columns" type="text" value={this.state.informantNameInput} onChange={this.inputChangeHandler} />
+						<input name="informantNameInput" className="" size="40" type="text" value={this.state.informantNameInput} onChange={this.inputChangeHandler} />
 						<figure>
 						    <img src="img/ifgh-card-upperpart-name.png" width="400" height="100" alt="photo"></img>
 						</figure>
 						</div>
+						</div>
 
+						<div className="two columns">
+						<label>Född år:</label>
 						<div className="mark-informant-img">
-						<input name="informantBirthDateInput" className="two columns" type="text" value={this.state.informantBirthDateInput} onChange={this.inputChangeHandler} />
+						<input name="informantBirthDateInput" className="" type="text" value={this.state.informantBirthDateInput} onChange={this.inputChangeHandler} />
 						<figure>
 						    <img src="img/ifgh-card-upperpart-birthyear.png" width="400" height="100" alt="photo"></img>
 						</figure>
 						</div>
+						</div>
 
+						<div className="four columns">
+						<label>Född i:</label>
 						<div className="mark-informant-img mark-informant-birthplace">
-						<input name="informantBirthPlaceInput" className="four columns" type="text" value={this.state.informantBirthPlaceInput} onChange={this.inputChangeHandler} />
+						<input name="informantBirthPlaceInput" className="" type="text" value={this.state.informantBirthPlaceInput} onChange={this.inputChangeHandler} />
 						<figure>
 						    <img src="img/ifgh-card-upperpart-birthplace.png" width="400" height="100" alt="photo"></img>
 							<div id="circle3"></div>
 						</figure>
+						</div>
 						</div>
 					</div>
 
