@@ -175,40 +175,35 @@ export default class TranscriptionOverlay extends React.Component {
 
 					*/}
 
-					<div className="row">
-					<label className="six columns">Berättat av:</label>
-					<label className="two columns">Född år:</label>
-					<label className="four columns">Född i:</label>
-					</div>
-
-					<div className="row">
+					<label className="u-full-width margin-bottom-zero">Berättat av:</label>
 						<div className="mark-informant-img">
-						<input name="informantNameInput" className="six columns" type="text" value={this.state.informantNameInput} onChange={this.inputChangeHandler} />
+						<input name="informantNameInput" className="u-full-width margin-bottom-minimal" type="text" value={this.state.informantNameInput} onChange={this.inputChangeHandler} />
 						<figure>
 						    <img src="img/ifgh-card-upperpart-name.png" width="400" height="100" alt="photo"></img>
 						</figure>
 						</div>
 
+					<label className="u-full-width  margin-bottom-zero">Född år:</label>
 						<div className="mark-informant-img">
-						<input name="informantBirthDateInput" className="two columns" type="text" value={this.state.informantBirthDateInput} onChange={this.inputChangeHandler} />
+						<input name="informantBirthDateInput" className="u-full-width margin-bottom-minimal" type="text" value={this.state.informantBirthDateInput} onChange={this.inputChangeHandler} />
 						<figure>
 						    <img src="img/ifgh-card-upperpart-birthyear.png" width="400" height="100" alt="photo"></img>
 						</figure>
 						</div>
 
+					<label className="u-full-width margin-bottom-zero">Född i:</label>
 						<div className="mark-informant-img mark-informant-birthplace">
-						<input name="informantBirthPlaceInput" className="four columns" type="text" value={this.state.informantBirthPlaceInput} onChange={this.inputChangeHandler} />
+						<input name="informantBirthPlaceInput" className="u-full-width margin-bottom-minimal" type="text" value={this.state.informantBirthPlaceInput} onChange={this.inputChangeHandler} />
 						<figure>
 						    <img src="img/ifgh-card-upperpart-birthplace.png" width="400" height="100" alt="photo"></img>
 							<div id="circle3"></div>
 						</figure>
 						</div>
-					</div>
 
-					<label className="u-full-width">Övrig information om informanten:</label>
-					<input name="informantInformationInput" className="u-full-width" type="text" value={this.state.informantInformationInput} onChange={this.inputChangeHandler} />
+					<label className="u-full-width margin-bottom-zero">Övrig information om informanten:</label>
+					<input name="informantInformationInput" className="u-full-width margin-bottom-minimal" type="text" value={this.state.informantInformationInput} onChange={this.inputChangeHandler} />
 
-					<label className="u-full-width">Text:</label>
+					<label className="u-full-width margin-bottom-zero">Text:</label>
 					<textarea name="messageInput" className="u-full-width" value={this.state.messageInput} onChange={this.inputChangeHandler} style={{height: 380}}></textarea>
 
 					<label className="u-full-width">{l('Kommentar till avskriften:')}</label>
