@@ -93,8 +93,18 @@ export default class MapView extends React.Component {
 				has_metadata: params.has_metadata || undefined
 			};
 
+			//TODO Replace with "Application defined filter parameter" where it is used (Sägenkartan)
 			if (!params.nordic) {
 				fetchParams.country = config.country;
+			}
+
+			// Add Application defined filter parameter
+			if (config.filterParameterName && config.filterParameterValues) {
+				if (params.filter == 'true' || params.filter == true) {
+					fetchParams[config.filterParameterName] = config.filterParameterValues[1];
+				} else {
+					fetchParams[config.filterParameterName] = config.filterParameterValues[0];
+				}
 			}
 
 			this.collections.fetch(fetchParams);
