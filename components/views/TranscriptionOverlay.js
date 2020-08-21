@@ -98,44 +98,51 @@ export default class TranscriptionOverlay extends React.Component {
 
 	sendButtonClickHandler() {
 		//console.log(this.state);
-
-		var data = {
-			url: this.state.url,
-			recordid: this.state.id,
-			recordtitle: this.state.title,
-			from_email: this.state.emailInput,
-			from_name: this.state.nameInput,
-			subject: "Crowdsource: Transkribering",
-			informantName: this.state.informantNameInput,
-			informantBirthDate: this.state.informantBirthDateInput,
-			informantBirthPlace: this.state.informantBirthPlaceInput,
-			informantInformation: this.state.informantInformationInput,
-			message: this.state.messageInput,
-			messageComment: this.state.messageCommentInput,
-/*			message: this.state.title+'\n'+
-				this.state.url+'\n\n'+
-				'Från: '+this.state.nameInput+' ('+this.state.emailInput+')\n\n'+
-				this.state.messageInput
-*/		};
-
-		var formData = new FormData();
-		formData.append("json", JSON.stringify(data) );
-		// console.log('formData' + formData);
-
-		fetch(config.restApiUrl+'transcribe/', {
-			method: "POST",
-			body: formData
-		})
-		.then(function(response) {
-			return response.json()
-		}).then(function(json) {
-			if (json.success) {
-				this.setState({
-					// Show thank you message:
-					messageSent: true
-				})
+		let text = this.state.messageInput;
+		let isMinimum2Words = text.trim().indexOf(' ') != -1;
+		if (!isMinimum2Words) {
+			alert(l('Avskriften kan inte sparas. Fältet "Text" ska innehålla en avskrift!'));
+		}
+		else {
+			var data = {
+				url: this.state.url,
+				recordid: this.state.id,
+				recordtitle: this.state.title,
+				from_email: this.state.emailInput,
+				from_name: this.state.nameInput,
+				subject: "Crowdsource: Transkribering",
+				informantName: this.state.informantNameInput,
+				informantBirthDate: this.state.informantBirthDateInput,
+				informantBirthPlace: this.state.informantBirthPlaceInput,
+				informantInformation: this.state.informantInformationInput,
+				message: this.state.messageInput,
+				messageComment: this.state.messageCommentInput,
 			}
-		}.bind(this));
+	/*			message: this.state.title+'\n'+
+					this.state.url+'\n\n'+
+					'Från: '+this.state.nameInput+' ('+this.state.emailInput+')\n\n'+
+					this.state.messageInput
+	*/		
+
+			var formData = new FormData();
+			formData.append("json", JSON.stringify(data) );
+			// console.log('formData' + formData);
+
+			fetch(config.restApiUrl+'transcribe/', {
+				method: "POST",
+				body: formData
+			})
+			.then(function(response) {
+				return response.json()
+			}).then(function(json) {
+				if (json.success) {
+					this.setState({
+						// Show thank you message:
+						messageSent: true
+					})
+				}
+			}.bind(this));
+		}
 	}
 
 	UNSAFE_componentWillReceiveProps() {
