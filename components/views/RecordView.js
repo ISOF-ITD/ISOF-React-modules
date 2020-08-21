@@ -324,7 +324,7 @@ export default class RecordView extends React.Component {
 						pages = parseInt(pages);
 					}
 					let total_pages = parseInt(this.state.data.archive.total_pages);
-					if (total_pages > 0){
+					if (total_pages > 1){
 						let endpage = pages;
 						endpage = endpage + total_pages - 1;
 						pages = pages.toString() + '-' + endpage.toString();
