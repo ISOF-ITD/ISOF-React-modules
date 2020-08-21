@@ -314,6 +314,24 @@ export default class RecordView extends React.Component {
 				});
 			}
 
+			// Prepares pages
+			let pages = '';
+			if (this.state.data.archive && this.state.data.archive.archive){
+				pages = this.state.data.archive.page;
+				if (this.state.data.archive.total_pages){
+					if (typeof pages === 'string') {
+						pages = pages.replace(/\D/g,'');
+						pages = parseInt(pages);
+					}
+					let total_pages = parseInt(this.state.data.archive.total_pages);
+					if (total_pages > 0){
+						let endpage = pages;
+						endpage = endpage + total_pages - 1;
+						pages = pages.toString() + '-' + endpage.toString();
+					}
+				}
+			}
+
 			return <div className={'container'+(this.state.data.id ? '' : ' loading')}>
 
 					<div className="container-header">
@@ -532,7 +550,7 @@ export default class RecordView extends React.Component {
 
 							{
 								this.state.data.archive && this.state.data.archive.archive &&
-								<p><strong>{l('Sid. nr')}</strong><br/>{this.state.data.archive.page}</p>
+								<p><strong>{l('Sid. nr')}</strong><br/>{pages}</p>
 							}
 						</div>
 
