@@ -29,6 +29,21 @@ export default class PlaceView extends React.Component {
 		if (params.nordic != 'true') {
 			fetchParams.country = config.country;
 		}
+
+		// Add Application defined filter parameter
+		// Now fetchParams seems to be ignored?!
+		// TODO: Use fetchParams as query values in fetch call
+		// TODO: MapView uses params.['filter'] instead - should it be the same here?
+		if (config.filterParameterName && config.filterParameterValues) {
+			if ('filter' in params) {
+				if (params['filter'] == 'true' || params['filter'] == true) {
+					fetchParams[config.filterParameterName] = config.filterParameterValues[1];
+				} else {
+					fetchParams[config.filterParameterName] = config.filterParameterValues[0];
+				}
+			}
+		}
+
 		this.fetchData(fetchParams);
 
 		var state = {};
