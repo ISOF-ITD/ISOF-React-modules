@@ -41,6 +41,7 @@ export default class RecordListWrapper extends React.Component {
 				<div className="row">
 					<div className="records-list-wrapper">
 						<RecordList 
+							searchParams={this.props.match.params}
 							search={this.props.match.params.search || null} 
 							search_field={this.props.match.params.search_field || null} 
 							type={this.props.match.params.type || null} 
