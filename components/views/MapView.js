@@ -100,10 +100,12 @@ export default class MapView extends React.Component {
 
 			// Add Application defined filter parameter
 			if (config.filterParameterName && config.filterParameterValues) {
-				if (params.filter == 'true' || params.filter == true) {
-					fetchParams[config.filterParameterName] = config.filterParameterValues[1];
-				} else {
-					fetchParams[config.filterParameterName] = config.filterParameterValues[0];
+				if ('filter' in params) {
+					if (params['filter'] == 'true' || params['filter'] == true) {
+						fetchParams[config.filterParameterName] = config.filterParameterValues[1];
+					} else {
+						fetchParams[config.filterParameterName] = config.filterParameterValues[0];
+					}
 				}
 			}
 
