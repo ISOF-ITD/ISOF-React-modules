@@ -176,8 +176,8 @@ export default class RecordList extends React.Component {
 
 					{
 						this.state.total > 50 &&
-						<div className="list-pagination">
-							<p className="page-info"><strong>{l('Visar')+' '+((this.state.currentPage*50)-49)+'-'+(this.state.currentPage*50 > this.state.total ? this.state.total : this.state.currentPage*50)+' '+l('av')+' '+this.state.total}</strong></p><br/>
+						<div className="">
+							<strong>{l('Visar')+' '+((this.state.currentPage*50)-49)+'-'+(this.state.currentPage*50 > this.state.total ? this.state.total : this.state.currentPage*50)+' '+l('av')+' '+this.state.total}</strong>
 						</div>
 					}
 
