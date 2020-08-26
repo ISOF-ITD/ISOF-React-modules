@@ -46,7 +46,11 @@ export default class FeedbackOverlay extends React.Component {
 
 	closeButtonClickHandler() {
 		this.setState({
-			visible: false
+			visible: false,
+			messageSent: false,
+			messageInputValue: '',
+			nameInputValue: '',
+			emailInputValue: '',
 		});
 	}
 
