@@ -135,7 +135,7 @@ export default class ContributeinfoOverlay extends React.Component {
 	render() {
 		if (this.state.messageSent) {
 			var overlayContent = <div>
-				<p>Meddelande skickat. Tack.</p>
+				<p>Tack för ditt bidrag. Meddelande skickat.</p>
 				<p><br/><button className="button-primary" onClick={this.closeButtonClickHandler}>Stäng</button></p>
 			</div>;
 		}

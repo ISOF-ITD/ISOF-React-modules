@@ -135,7 +135,7 @@ export default class FeedbackOverlay extends React.Component {
 	render() {
 		if (this.state.messageSent) {
 			var overlayContent = <div>
-				<p>Meddelande skickat. Tack.</p>
+				<p>Vi återkommer så fort vi kan. Tack.</p>
 				<p><br/><button className="button-primary" onClick={this.closeButtonClickHandler}>Stäng</button></p>
 			</div>;
 		}
