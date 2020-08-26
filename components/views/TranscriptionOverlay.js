@@ -80,7 +80,13 @@ export default class TranscriptionOverlay extends React.Component {
 
 	closeButtonClickHandler() {
 		this.setState({
-			visible: false
+			visible: false,		
+			informantName: '',
+			informantBirthDate: '',
+			informantBirthPlace: '',
+			informantInformation: '',
+			message: '',
+			messageComment: '',
 		});
 	}
 
