@@ -17,6 +17,7 @@ export default class FeedbackButton extends React.Component {
 				url: config.siteUrl+'#'+this.props.location.pathname,
 				title: this.props.title,
 				type: this.props.type,
+				country: this.props.country,
 				appUrl: config.appUrl,
 			});
 		}

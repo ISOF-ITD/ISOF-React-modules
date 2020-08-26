@@ -284,6 +284,12 @@ export default class RecordView extends React.Component {
 				}
 			}
 
+			// Prepares country for this record
+			let country = 'unknown';
+			if ('archive' in this.state.data && 'country' in this.state.data.archive) {
+				country = this.state.data.archive.country;
+			}
+
 			// Förbereder metadata items. siteOptions i config bestämmer vilken typ av metadata ska synas
 			var metadataItems = [];
 
@@ -355,11 +361,11 @@ export default class RecordView extends React.Component {
 
 						{
 							!config.siteOptions.hideContactButton &&
-							<FeedbackButton title={this.state.data.title} type="Uppteckning" {..._props}/>
+							<FeedbackButton title={this.state.data.title} type="Uppteckning" country={country} {..._props}/>
 						}
 						{
 							!config.siteOptions.hideContactButton &&
-							<ContributeInfoButton title={this.state.data.title} type="Uppteckning" {..._props}/>
+							<ContributeInfoButton title={this.state.data.title} type="Uppteckning" country={country} {..._props}/>
 						}
 					</div>
 
