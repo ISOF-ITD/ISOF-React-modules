@@ -322,18 +322,23 @@ export default class RecordView extends React.Component {
 
 			// Prepares pages
 			let pages = '';
-			if (this.state.data.archive && this.state.data.archive.archive){
+			if ('archive' in this.state.data && 'page' in this.state.data.archive){
 				pages = this.state.data.archive.page;
-				if (this.state.data.archive.total_pages){
-					if (typeof pages === 'string') {
-						pages = pages.replace(/\D/g,'');
-						pages = parseInt(pages);
-					}
-					let total_pages = parseInt(this.state.data.archive.total_pages);
-					if (total_pages > 1){
-						let endpage = pages;
-						endpage = endpage + total_pages - 1;
-						pages = pages.toString() + '-' + endpage.toString();
+				// If pages is not an interval separated with '-': calculate interval
+				// pages can be recorded as interval in case of pages '10a-10b'
+				if (pages.indexOf('-') == -1) {
+					if (this.state.data.archive.total_pages){
+						//Remove uncommon non numeric characters in pages (like 10a) for simplicity
+						if (typeof pages === 'string') {
+							pages = pages.replace(/\D/g,'');
+							pages = parseInt(pages);
+						}
+						let total_pages = parseInt(this.state.data.archive.total_pages);
+						if (total_pages > 1){
+							let endpage = pages;
+							endpage = endpage + total_pages - 1;
+							pages = pages.toString() + '-' + endpage.toString();
+						}
 					}
 				}
 			}
