@@ -326,7 +326,7 @@ export default class RecordView extends React.Component {
 				pages = this.state.data.archive.page;
 				// If pages is not an interval separated with '-': calculate interval
 				// pages can be recorded as interval in case of pages '10a-10b'
-				if (pages.indexOf('-') == -1) {
+				if (!!pages && pages.indexOf('-') == -1) {
 					if (this.state.data.archive.total_pages){
 						//Remove uncommon non numeric characters in pages (like 10a) for simplicity
 						if (typeof pages === 'string') {

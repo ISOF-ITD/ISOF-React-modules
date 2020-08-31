@@ -45,9 +45,9 @@ export default class SitevisionContent extends React.Component {
 			headers: headers
 		}).then(function(response) {
 			response.text().then(function(text) {
-				console.log(text);
+				// console.log(text);
 				this.parseHtml(text);
-				console.log('after parseHtml');
+				// console.log('after parseHtml');
 			}.bind(this))
 		}.bind(this)).catch(function(err) {
 			console.log('fetch error');
@@ -56,7 +56,7 @@ export default class SitevisionContent extends React.Component {
 	}
 
 	parseHtml(html) {
-		console.log(html);
+		// console.log(html);
 		var parser = new DOMParser();
 		var document = parser.parseFromString(html, 'text/html');
 		
