@@ -63,7 +63,7 @@ export default class TranscriptionHelpOverlay extends React.Component {
 				<p><strong>Flera sidor? </strong></p>
 				<p>Består uppteckningen av flera sidor får du gärna skriva in samtliga sidor i samma ruta.</p>
 				<p><strong>Vilka är personerna som nämns i texten?</strong></p>
-				<p>Känner du till någon av personerna som omnämns i uppteckningen? Kontakta oss så fall gärna via e-post (fredrik.skott@isof.se) eller genom knappen Vet du mer? [länk som öppnar den]</p>
+				<p>Känner du till någon av personerna som omnämns i uppteckningen? Kontakta oss knappen "Vet du mer" på uppteckningen. </p>
 				<p><strong>Vad händer efter att du tryckt på ”Skicka in?”</strong></p>
 				<p>Efter kvalitetssäkring kommer texten sedan att publiceras på TradArk och införlivas i Isofs digitala arkiv. </p>
 				<p><a href="https://www.isof.se/om-oss/kartor/sagenkartan/transkribera.html"><strong>{l('Läs mer om att skriva av.')}</strong></a><br/><br/></p>

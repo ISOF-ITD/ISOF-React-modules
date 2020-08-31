@@ -31,6 +31,7 @@ export default class ContributeinfoOverlay extends React.Component {
 					visible: true,
 					type: event.target.type,
 					title: event.target.title,
+					country: event.target.country,
 					url: event.target.url,
 					appUrl: event.target.appUrl,
 				});
@@ -45,7 +46,11 @@ export default class ContributeinfoOverlay extends React.Component {
 
 	closeButtonClickHandler() {
 		this.setState({
-			visible: false
+			visible: false,
+			messageSent: false,
+			messageInputValue: '',
+			nameInputValue: '',
+			emailInputValue: '',
 		});
 	}
 
@@ -81,8 +86,23 @@ export default class ContributeinfoOverlay extends React.Component {
 				this.state.messageInputValue
 		};
 
+		//Set "send to" email address if activated in config:
+		//1. Use general application specific config
+		//2. Use application specific config by country using component property "country"
+		let feedbackEmail = null;
 		if (config.siteOptions.feedbackEmail) {
-			data.send_to = config.siteOptions.feedbackEmail;
+			feedbackEmail = this.state.feedbackEmail;
+		}
+		if ('country' in this.state) {
+			if ('feedbackEmailByCountry' in config) {
+				let country = this.state.country.toLowerCase();
+				if (country in config.feedbackEmailByCountry) {
+					feedbackEmail = config.feedbackEmailByCountry[country];
+				}
+			}
+		}
+		if (feedbackEmail) {
+			data.send_to = feedbackEmail;
 		}
 
 		var formData = new FormData();
@@ -115,7 +135,7 @@ export default class ContributeinfoOverlay extends React.Component {
 	render() {
 		if (this.state.messageSent) {
 			var overlayContent = <div>
-				<p>Meddelande skickat. Tack.</p>
+				<p>{l('Tack för ditt bidrag. Meddelande skickat.')}</p>
 				<p><br/><button className="button-primary" onClick={this.closeButtonClickHandler}>Stäng</button></p>
 			</div>;
 		}

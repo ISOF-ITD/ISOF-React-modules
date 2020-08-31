@@ -24,6 +24,6 @@ export default class TranscriptionHelpButton extends React.Component {
 	}
 
 	render() {
-		return <button className="feedback-button transcriptionhelp-button" onClick={this.helpButtonClick}>{l('Instuktioner')}</button>;
+		return <button className="feedback-button transcriptionhelp-button" onClick={this.helpButtonClick}>{l('Instruktioner')}</button>;
 	}
 }

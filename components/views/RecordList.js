@@ -139,8 +139,21 @@ export default class RecordList extends React.Component {
 			has_metadata: params.has_metadata || undefined
 		};
 
+		// TODO Replace with "Application defined filter parameter" where it is used (Sägenkartan)
 		if (!params.nordic) {
 			fetchParams.country = config.country;
+		}
+
+		// Add Application defined filter parameter
+		// TODO: MapView uses params.['filter'] instead - should it be the same here?
+		if (config.filterParameterName && config.filterParameterValues) {
+			if ('searchParams' in params && 'filter' in params.searchParams) {
+				if (params.searchParams['filter'] == 'true' || params.searchParams['filter'] == true) {
+					fetchParams[config.filterParameterName] = config.filterParameterValues[1];
+				} else {
+					fetchParams[config.filterParameterName] = config.filterParameterValues[0];
+				}
+			}
 		}
 
 		this.collections.fetch(fetchParams);
@@ -159,6 +172,13 @@ export default class RecordList extends React.Component {
 		if (this.state.records) {
 			return (
 				<div className={'table-wrapper records-list list-container'+(this.state.records.length == 0 ? ' loading' : this.state.fetchingPage ? ' loading-page' : '')}>
+
+					{
+						this.state.total > 50 &&
+						<div className="">
+							<strong>{l('Visar')+' '+((this.state.currentPage*50)-49)+'-'+(this.state.currentPage*50 > this.state.total ? this.state.total : this.state.currentPage*50)+' '+l('av')+' '+this.state.total}</strong>
+						</div>
+					}
 
 					<table width="100%" className="table-responsive">
 						<thead>

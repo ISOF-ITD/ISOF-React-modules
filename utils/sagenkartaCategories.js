@@ -85,6 +85,41 @@ export default {
 			letter: 'n',
 			label: 'Övernaturliga djur',
 			label_no: 'Overnaturlige dyr'
+		},
+		{
+			letter: 'o',
+			label: 'Syndig handling',
+			label_no: 'Syndig handling'
+		},
+		{
+			letter: 'p',
+			label: 'Bortbytningar',
+			label_no: 'Bortbytningar'
+		},
+		{
+			letter: 'q',
+			label: 'Sjukdomar förkroppsligade',
+			label_no: 'Sjukdomar förkroppsligade'
+		},
+		{
+			letter: 'r',
+			label: 'Kyrkor, kyrkklockor',
+			label_no: 'Kyrkor, kyrkklockor'
+		},
+		{
+			letter: 's',
+			label: 'Skatter',
+			label_no: 'Skatter'
+		},
+		{
+			letter: 't',
+			label: 'Varsel, spådomar, syner',
+			label_no: 'Varsel, spådomar, syner'
+		},
+		{
+			letter: 'u',
+			label: 'Drömmar',
+			label_no: 'Drömmar'
 		}
 	],
 
