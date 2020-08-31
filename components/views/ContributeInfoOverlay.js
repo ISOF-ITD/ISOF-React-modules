@@ -150,10 +150,10 @@ export default class ContributeinfoOverlay extends React.Component {
 				<hr/>
 
 				<label>Ditt namn:</label>
-				<input autocomplete="name" className="u-full-width" type="text" value={this.state.nameInputValue} onChange={this.nameInputChangeHandler} />
+				<input autoComplete="name" className="u-full-width" type="text" value={this.state.nameInputValue} onChange={this.nameInputChangeHandler} />
 
 				<label>Din e-post adress:</label>
-				<input autocomplete="email" className="u-full-width" type="email" value={this.state.emailInputValue} onChange={this.emailInputChangeHandler} />
+				<input autoComplete="email" className="u-full-width" type="email" value={this.state.emailInputValue} onChange={this.emailInputChangeHandler} />
 
 				<label>Meddelande:</label>
 				<textarea className="u-full-width" value={this.state.messageInputValue} onChange={this.messageInputChangeHandler}></textarea>
