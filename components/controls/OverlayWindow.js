@@ -75,7 +75,7 @@ export default class OverlayWindow extends React.Component {
 					{this.state.title}
 					{
 						this.state.showClose &&
-						<button className="close-button white" onClick={(this.closeButtonClickHandler)}></button>
+						<button title="stäng" className="close-button white" onClick={(this.closeButtonClickHandler)}></button>
 					} 
 				</div>
 

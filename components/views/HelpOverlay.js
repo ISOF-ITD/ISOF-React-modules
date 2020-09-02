@@ -63,7 +63,7 @@ export default class HelpOverlay extends React.Component {
 				
 				<div className="overlay-header">
 					{l('Hjälp')}
-					<button className="close-button white" onClick={this.closeButtonClickHandler}></button>
+					<button title="stäng" className="close-button white" onClick={this.closeButtonClickHandler}></button>
 				</div>
 
 				{overlayContent}

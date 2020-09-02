@@ -76,7 +76,7 @@ export default class TranscriptionHelpOverlay extends React.Component {
 				
 				<div className="overlay-header">
 					{l('Instruktioner')}
-					<button className="close-button white" onClick={this.closeButtonClickHandler}></button>
+					<button title="stäng" className="close-button white" onClick={this.closeButtonClickHandler}></button>
 				</div>
 
 				{overlayContent}

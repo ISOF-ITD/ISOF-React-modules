@@ -73,7 +73,7 @@ export default class LocalLibraryView extends React.Component {
 				{
 					item.title
 				}
-				<div className="close-button" data-id={item.id} onClick={this.itemRemoveButtonClickHander}></div>
+				<div title="stäng" className="close-button" data-id={item.id} onClick={this.itemRemoveButtonClickHander}></div>
 				{
 					item.place && <span className="u-pull-right">{item.place}</span>
 				}

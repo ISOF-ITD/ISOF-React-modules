@@ -253,7 +253,7 @@ export default class TranscriptionOverlay extends React.Component {
 
 				<div className="overlay-header">
 					{l('Skriv av')} {this.state.title}
-					<button className="close-button white" onClick={this.closeButtonClickHandler}></button>
+					<button title="stäng" className="close-button white" onClick={this.closeButtonClickHandler}></button>
 					{
 						!config.siteOptions.hideContactButton &&
 						<FeedbackButton title={this.state.title} type="Uppteckning" {..._props}/>

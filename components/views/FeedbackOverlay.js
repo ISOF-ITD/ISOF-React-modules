@@ -164,7 +164,7 @@ export default class FeedbackOverlay extends React.Component {
 				
 				<div className="overlay-header">
 					{l('Frågor och synpunkter')}
-					<button className="close-button white" onClick={this.closeButtonClickHandler}></button>
+					<button title="stäng" className="close-button white" onClick={this.closeButtonClickHandler}></button>
 				</div>
 
 				{overlayContent}

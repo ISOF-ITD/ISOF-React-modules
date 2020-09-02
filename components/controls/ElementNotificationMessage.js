@@ -131,7 +131,7 @@ export default class ElementNotificationMessage extends React.Component {
 
 				<div className={'arrow arrow-'+(this.props.placement || 'under')} style={this.getArrowStyle()}></div>
 
-				<div className="close-button white"></div>
+				<div title="stäng" className="close-button white"></div>
 			</div>
 		</div>;
 	}

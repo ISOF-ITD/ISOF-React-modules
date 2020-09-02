@@ -53,10 +53,10 @@ export default class PopupWindow extends React.Component {
 
 	render() {
 		return (
-			<div className={'popup-wrapper'+(this.state.windowOpen ? ' visible' : '')}>
-				<div ref="contentWrapper" className={'popup-content-wrapper'}>
+			<div tabIndex={-1} className={'popup-wrapper'+(this.state.windowOpen ? ' visible' : '')}>
+				<div tabIndex={-1} ref="contentWrapper" className={'popup-content-wrapper'} tabIndex={-1}>
 					<div className="page-content">
-						<a className={'close-button'+(this.props.closeButtonStyle == 'dark' ? '' : this.props.closeButtonStyle == 'white' ? ' white' : ' white')} onClick={this.closeButtonClick}></a>
+						<a tabIndex={0} title='stäng' className={'close-button'+(this.props.closeButtonStyle == 'dark' ? '' : this.props.closeButtonStyle == 'white' ? ' white' : ' white')} onClick={this.closeButtonClick}></a>
 						{this.props.children}
 					</div>
 				</div>
