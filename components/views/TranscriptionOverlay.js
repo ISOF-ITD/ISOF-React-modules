@@ -218,20 +218,20 @@ export default class TranscriptionOverlay extends React.Component {
 						</div>
 					</div>
 
-					<label className="u-full-width">Övrig information om informanten:</label>
-					<input name="informantInformationInput" className="u-full-width" type="text" value={this.state.informantInformationInput} onChange={this.inputChangeHandler} />
+					<label for="transcription_informant" className="u-full-width">Övrig information om informanten:</label>
+					<input id="transcription_informant" name="informantInformationInput" className="u-full-width" type="text" value={this.state.informantInformationInput} onChange={this.inputChangeHandler} />
 
-					<label className="u-full-width">Text:</label>
-					<textarea name="messageInput" className="u-full-width" value={this.state.messageInput} onChange={this.inputChangeHandler} style={{height: 380}}></textarea>
+					<label for="transcription_text" className="u-full-width">Text:</label>
+					<textarea id="transcription_text" name="messageInput" className="u-full-width" value={this.state.messageInput} onChange={this.inputChangeHandler} style={{height: 380}}></textarea>
 
-					<label className="u-full-width">{l('Kommentar till avskriften:')}</label>
-					<input name="messageCommentInput" className="u-full-width" type="text" value={this.state.messageCommentInput} onChange={this.inputChangeHandler} />
+					<label for="transcription_comment" className="u-full-width">{l('Kommentar till avskriften:')}</label>
+					<input id="transcription_comment" name="messageCommentInput" className="u-full-width" type="text" value={this.state.messageCommentInput} onChange={this.inputChangeHandler} />
 					<p>{l('Vill du att vi på TradArk anger att det är du som har skrivit av uppteckningen? Ange i så fall ditt namn och din e-postadress nedan. Vi hanterar personuppgifter enligt dataskyddsförordningen. ')}<a href="https://www.isof.se/om-oss/behandling-av-personuppgifter.html"><strong>{l('Läs mer.')}</strong></a></p>
 
-					<label>Ditt namn (frivilligt):</label>
-					<input autoComplete="name" name="nameInput" className="u-full-width" type="text" value={this.state.nameInput} onChange={this.inputChangeHandler} />
-					<label>Din e-post adress (frivilligt):</label>
-					<input autoComplete="" name="emailInput" className="u-full-width" type="email" value={this.state.emailInput} onChange={this.inputChangeHandler} />
+					<label for="transcription_name">Ditt namn (frivilligt):</label>
+					<input id="transcription_name" autoComplete="name" name="nameInput" className="u-full-width" type="text" value={this.state.nameInput} onChange={this.inputChangeHandler} />
+					<label for="transcription_email">Din e-post adress (frivilligt):</label>
+					<input id="transcription_email" autoComplete="" name="emailInput" className="u-full-width" type="email" value={this.state.emailInput} onChange={this.inputChangeHandler} />
 
 					<button className="button-primary" onClick={this.sendButtonClickHandler}>Skicka</button>
 				</div>

@@ -149,14 +149,14 @@ export default class ContributeinfoOverlay extends React.Component {
 
 				<hr/>
 
-				<label>Ditt namn:</label>
-				<input autoComplete="name" className="u-full-width" type="text" value={this.state.nameInputValue} onChange={this.nameInputChangeHandler} />
+				<label for="contribute_name">Ditt namn:</label>
+				<input id="contribute_name" autoComplete="name" className="u-full-width" type="text" value={this.state.nameInputValue} onChange={this.nameInputChangeHandler} />
 
-				<label>Din e-post adress:</label>
-				<input autoComplete="email" className="u-full-width" type="email" value={this.state.emailInputValue} onChange={this.emailInputChangeHandler} />
+				<label for="contribute_email">Din e-post adress:</label>
+				<input id="contribute_email" autoComplete="email" className="u-full-width" type="email" value={this.state.emailInputValue} onChange={this.emailInputChangeHandler} />
 
-				<label>Meddelande:</label>
-				<textarea className="u-full-width" value={this.state.messageInputValue} onChange={this.messageInputChangeHandler}></textarea>
+				<label for="contribute_message">Meddelande:</label>
+				<textarea id="contribute_message" className="u-full-width" value={this.state.messageInputValue} onChange={this.messageInputChangeHandler}></textarea>
 
 				<button className="button-primary" onClick={this.sendButtonClickHandler}>Skicka</button>
 			</div>;
