@@ -92,8 +92,13 @@ export default class RecordView extends React.Component {
 	}
 
 	fetchData(params) {
+		// Add index to callback if defined in config.
+		let index = '';
+		if ('requiredParams' in config && 'index' in config.requiredParams) {
+				index = '?index=' + config.requiredParams.index;
+		}
 		if (params.record_id) {
-			fetch(this.url+params.record_id+'/')
+			fetch(this.url+params.record_id+'/' + index)
 				.then(function(response) {
 					return response.json()
 				}).then(function(json) {
