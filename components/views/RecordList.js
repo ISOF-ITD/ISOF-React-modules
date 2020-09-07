@@ -29,7 +29,7 @@ export default class RecordList extends React.Component {
 
 			this.setState({
 				records: json.data,
-				total: json.metadata.total,
+				total: json.metadata.total.value || json.metadata.total, // ES7 vs ES5
 				fetchingPage: false
 			});
 		}.bind(this));
