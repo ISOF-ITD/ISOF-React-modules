@@ -55,6 +55,7 @@ export default class RecordListItem extends React.Component {
 			}
 		}
 
+		// Prepare transcriptionStatus
 		//var transcriptionStatusArr = {'untranscribed':'Ej transkribera', 'readytotranscribe':'<span style="color:red"> Ej avskriven <span style="color:red">', 'transcribed':'Under granskning', 'reviewing':'Under granskning', 'approved':'Avskriven','published':'Avskriven'};
 		var transcriptionStatusArr = {'untranscribed':'Ej transkribera', 'readytotranscribe':'Nej', 'transcribed':'Granskas', 'reviewing':'Granskas', 'approved':'Granskas','published':'Ja'};
 		var transcriptionStatusElement = '';
@@ -64,6 +65,12 @@ export default class RecordListItem extends React.Component {
 			transcriptionStatusElement = transcriptionstatus.replace(transcriptionstatus, transcriptionStatusArr[transcriptionstatus]);
 		}
 
+		// Prepare title
+		let titleText = this.props.item._source.title;
+		if (transcriptionStatusElement == 'Granskas') {
+			titleText = 'Titel granskas';
+		}
+
 		return <tr className={'list-item'+(displayTextSummary ? ' highlighted' : '')}>
 			<td className="text-larger">
 				<a className="item-title" target={config.embeddedApp ? '_parent' : '_self'} href={(config.embeddedApp ? (window.applicationSettings && window.applicationSettings.landingPage ? window.applicationSettings.landingPage : config.siteUrl) : '')+'#records/'+this.props.item._source.id+(this.props.routeParams ? this.props.routeParams : '')}>
@@ -71,7 +78,7 @@ export default class RecordListItem extends React.Component {
 						config.siteOptions.recordList && config.siteOptions.recordList.displayPlayButton && audioItem != undefined &&
 						<ListPlayButton disablePlayback={true} media={audioItem} recordId={this.props.item._source.id} recordTitle={this.props.item._source.title && this.props.item._source.title != '' ? this.props.item._source.title : l('(Utan titel)')} />
 					}
-					{this.props.item._source.title && this.props.item._source.title != '' ? this.props.item._source.title : l('(Utan titel)')}
+					{titleText && titleText != '' ? titleText : l('(Utan titel)')}
 				</a>
 				{
 					displayTextSummary &&

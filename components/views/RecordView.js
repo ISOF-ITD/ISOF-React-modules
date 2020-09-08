@@ -348,12 +348,19 @@ export default class RecordView extends React.Component {
 				}
 			}
 
+			// Prepare title
+			let titleText = this.state.data.title;
+			let transcriptionStatusElement = this.state.data.transcriptionstatus;
+			if (transcriptionStatusElement == 'transcribed' || transcriptionStatusElement == 'reviewing' || transcriptionStatusElement == 'approved') {
+				titleText = 'Titel granskas';
+			}
+
 			return <div className={'container'+(this.state.data.id ? '' : ' loading')}>
 
 					<div className="container-header">
 						<div className="row">
 							<div className="twelve columns">
-								<h2>{this.state.data.title && this.state.data.title != '' ? this.state.data.title : l('(Utan titel)')} <ElementNotificationMessage
+								<h2>{titleText && titleText != '' ? titleText : l('(Utan titel)')} <ElementNotificationMessage
 																placement="under"
 																placementOffsetX="-1"
 																messageId="saveLegendsNotification"
