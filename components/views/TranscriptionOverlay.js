@@ -85,6 +85,7 @@ export default class TranscriptionOverlay extends React.Component {
 			informantBirthDate: '',
 			informantBirthPlace: '',
 			informantInformation: '',
+			title: '',
 			message: '',
 			messageComment: '',
 		});
@@ -218,8 +219,13 @@ export default class TranscriptionOverlay extends React.Component {
 						</div>
 					</div>
 
+					{/*
 					<label for="transcription_informant" className="u-full-width">Övrig information om informanten:</label>
 					<input id="transcription_informant" name="informantInformationInput" className="u-full-width" type="text" value={this.state.informantInformationInput} onChange={this.inputChangeHandler} />
+					*/}
+
+					<label for="transcription_title" className="u-full-width">Titel:</label>
+					<input id="transcription_title" name="title" className="u-full-width" type="text" value={this.state.title} onChange={this.inputChangeHandler} />
 
 					<label for="transcription_text" className="u-full-width">Text:</label>
 					<textarea id="transcription_text" name="messageInput" className="u-full-width" value={this.state.messageInput} onChange={this.inputChangeHandler} style={{height: 380}}></textarea>
