@@ -189,28 +189,28 @@ export default class TranscriptionOverlay extends React.Component {
 					*/}
 
 					<div className="row">
-					<label className="six columns">Berättat av:</label>
-					<label className="two columns">Född år:</label>
-					<label className="four columns">Född i:</label>
+					<label for="transcription_informantname" className="six columns">Berättat av:</label>
+					<label for="transcription_informantbirthdate" className="two columns">Född år:</label>
+					<label for="transcription_informantbirthplace" className="four columns">Född i:</label>
 					</div>
 
 					<div className="row">
 						<div className="mark-informant-img">
-						<input name="informantNameInput" className="six columns" type="text" value={this.state.informantNameInput} onChange={this.inputChangeHandler} />
+						<input id="transcription_informantname" name="informantNameInput" className="six columns" type="text" value={this.state.informantNameInput} onChange={this.inputChangeHandler} />
 						<figure>
 						    <img src="img/ifgh-card-upperpart-name.png" width="400" height="100" alt="photo"></img>
 						</figure>
 						</div>
 
 						<div className="mark-informant-img">
-						<input name="informantBirthDateInput" className="two columns" type="text" value={this.state.informantBirthDateInput} onChange={this.inputChangeHandler} />
+						<input id="transcription_informantbirthdate" name="informantBirthDateInput" className="two columns" type="text" value={this.state.informantBirthDateInput} onChange={this.inputChangeHandler} />
 						<figure>
 						    <img src="img/ifgh-card-upperpart-birthyear.png" width="400" height="100" alt="photo"></img>
 						</figure>
 						</div>
 
 						<div className="mark-informant-img mark-informant-birthplace">
-						<input name="informantBirthPlaceInput" className="four columns" type="text" value={this.state.informantBirthPlaceInput} onChange={this.inputChangeHandler} />
+						<input id="transcription_informantbirthplace" name="informantBirthPlaceInput" className="four columns" type="text" value={this.state.informantBirthPlaceInput} onChange={this.inputChangeHandler} />
 						<figure>
 						    <img src="img/ifgh-card-upperpart-birthplace.png" width="400" height="100" alt="photo"></img>
 							<div id="circle3"></div>
