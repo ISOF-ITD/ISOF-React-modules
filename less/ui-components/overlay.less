@@ -214,7 +214,7 @@
 /* 
 Show instuction image with css hover over
 
-	<div className="mark-informant-img">
+	<div className="mark-below-img">
 	<input name="informantNameInput" className="six columns" type="text" value={this.state.informantNameInput} onChange={this.inputChangeHandler} />
 	<figure>
 	    <img src="img/ifgh-card-upperpart-name.png" width="400" height="100" alt="photo"></img> 
@@ -224,24 +224,45 @@ Show instuction image with css hover over
 	</figure>
 
 */
-.mark-informant-img img {
+.mark-below-img img {
   display: block;
   border-radius: 0.8em;
   max-width: 100%;
   height: auto;
 }
 
-.mark-informant-img:hover figure {
+.mark-below-img:hover figure {
   display: block;
 }
 
-.mark-informant-img figure {
+.mark-below-img figure {
   display: none;
   position: absolute;
   top: 15em;
   left: 2em;
   z-index: 4000;
 }
+
+
+.mark-above-img img {
+  display: block;
+  border-radius: 0.8em;
+  max-width: 100%;
+  height: auto;
+}
+
+.mark-above-img:hover figure {
+  display: block;
+}
+
+.mark-above-img figure {
+  display: none;
+  position: absolute;
+  top: 5em;
+  left: 2em;
+  z-index: 4000;
+}
+
 
 /* 
 Show instuction "image" with css hover over
