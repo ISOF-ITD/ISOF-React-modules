@@ -220,28 +220,28 @@ export default class TranscriptionOverlay extends React.Component {
 					</div>
 
 					{/*
-					<label for="transcription_informant" className="u-full-width">Övrig information om informanten:</label>
-					<input id="transcription_informant" name="informantInformationInput" className="u-full-width" type="text" value={this.state.informantInformationInput} onChange={this.inputChangeHandler} />
+					<label for="transcription_informant" className="u-full-width margin-bottom-zero">Övrig information om informanten:</label>
+					<input id="transcription_informant" name="informantInformationInput" className="u-full-width margin-bottom-minimal" type="text" value={this.state.informantInformationInput} onChange={this.inputChangeHandler} />
 					*/}
 
 					<div className="mark-above-img">
-						<label for="transcription_title" className="u-full-width">Titel:</label>
-						<input id="transcription_title" name="title" className="u-full-width" type="text" value={this.state.title} onChange={this.inputChangeHandler} />
+						<label for="transcription_title" className="u-full-width margin-bottom-zero">Titel:</label>
+						<input id="transcription_title" name="title" className="u-full-width margin-bottom-minimal" type="text" value={this.state.title} onChange={this.inputChangeHandler} />
 						<figure>
 						    <img src="img/ifgh-card-upperpart-title.png" width="400" height="100" alt="photo"></img>
 						</figure>
 					</div>
 
 					<div className="mark-above-img">
-						<label for="transcription_text" className="u-full-width">Text:</label>
-						<textarea id="transcription_text" name="messageInput" className="u-full-width" value={this.state.messageInput} onChange={this.inputChangeHandler} style={{height: 380}}></textarea>
+						<label for="transcription_text" className="u-full-width margin-bottom-zero">Text:</label>
+						<textarea id="transcription_text" name="messageInput" className="u-full-width margin-bottom-minimal" value={this.state.messageInput} onChange={this.inputChangeHandler} style={{height: 380}}></textarea>
 						<figure>
 						    <img src="img/ifgh-card-upperpart-text.png" width="400" height="100" alt="photo"></img>
 						</figure>
 					</div>
 
-					<label for="transcription_comment" className="u-full-width">{l('Kommentar till avskriften:')}</label>
-					<input id="transcription_comment" name="messageCommentInput" className="u-full-width" type="text" value={this.state.messageCommentInput} onChange={this.inputChangeHandler} />
+					<label for="transcription_comment" className="u-full-width margin-bottom-zero">{l('Kommentar till avskriften:')}</label>
+					<input id="transcription_comment" name="messageCommentInput" className="u-full-width margin-bottom-minimal" type="text" value={this.state.messageCommentInput} onChange={this.inputChangeHandler} />
 					<p>{l('Vill du att vi på TradArk anger att det är du som har skrivit av uppteckningen? Ange i så fall ditt namn och din e-postadress nedan. Vi hanterar personuppgifter enligt dataskyddsförordningen. ')}<a href="https://www.isof.se/om-oss/behandling-av-personuppgifter.html"><strong>{l('Läs mer.')}</strong></a></p>
 
 					<label for="transcription_name">Ditt namn (frivilligt):</label>
