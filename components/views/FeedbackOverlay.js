@@ -146,13 +146,13 @@ export default class FeedbackOverlay extends React.Component {
 
 				<hr/>
 
-				<label for="feedback_name">Ditt namn:</label>
+				<label htmlFor="feedback_name">Ditt namn:</label>
 				<input id="feedback_name" autoComplete="name" className="u-full-width" type="text" value={this.state.nameInputValue} onChange={this.nameInputChangeHandler} />
 
-				<label for="feedback_email">Din e-post adress:</label>
+				<label htmlFor="feedback_email">Din e-post adress:</label>
 				<input id="feedback_email" className="u-full-width" type="email" value={this.state.emailInputValue} onChange={this.emailInputChangeHandler} />
 
-				<label for="feedback_message">Meddelande:</label>
+				<label htmlFor="feedback_message">Meddelande:</label>
 				<textarea id="feedback_message" className="u-full-width" value={this.state.messageInputValue} onChange={this.messageInputChangeHandler}></textarea>
 
 				<button className="button-primary" onClick={this.sendButtonClickHandler}>Skicka</button>
