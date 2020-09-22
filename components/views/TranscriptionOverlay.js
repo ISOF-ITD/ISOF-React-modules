@@ -190,9 +190,9 @@ export default class TranscriptionOverlay extends React.Component {
 					*/}
 
 					<div className="row">
-					<label for="transcription_informantname" className="six columns">Berättat av:</label>
-					<label for="transcription_informantbirthdate" className="two columns">Född år:</label>
-					<label for="transcription_informantbirthplace" className="four columns">Född i:</label>
+					<label htmlFor="transcription_informantname" className="six columns">Berättat av:</label>
+					<label htmlFor="transcription_informantbirthdate" className="two columns">Född år:</label>
+					<label htmlFor="transcription_informantbirthplace" className="four columns">Född i:</label>
 					</div>
 
 					<div className="row">
@@ -220,12 +220,12 @@ export default class TranscriptionOverlay extends React.Component {
 					</div>
 
 					{/*
-					<label for="transcription_informant" className="u-full-width margin-bottom-zero">Övrig information om informanten:</label>
+					<label htmlFor="transcription_informant" className="u-full-width margin-bottom-zero">Övrig information om informanten:</label>
 					<input id="transcription_informant" name="informantInformationInput" className="u-full-width margin-bottom-minimal" type="text" value={this.state.informantInformationInput} onChange={this.inputChangeHandler} />
 					*/}
 
 					<div className="mark-above-img">
-						<label for="transcription_title" className="u-full-width margin-bottom-zero">Titel:</label>
+						<label htmlFor="transcription_title" className="u-full-width margin-bottom-zero">Titel:</label>
 						<input id="transcription_title" name="title" className="u-full-width margin-bottom-minimal" type="text" value={this.state.title} onChange={this.inputChangeHandler} />
 						<figure>
 						    <img src="img/ifgh-card-upperpart-title.png" width="400" height="100" alt="photo"></img>
@@ -233,7 +233,7 @@ export default class TranscriptionOverlay extends React.Component {
 					</div>
 
 					<div className="mark-above-img">
-						<label for="transcription_text" className="u-full-width margin-bottom-zero">Text:</label>
+						<label htmlFor="transcription_text" className="u-full-width margin-bottom-zero">Text:</label>
 						<textarea id="transcription_text" name="messageInput" className="u-full-width margin-bottom-minimal" value={this.state.messageInput} onChange={this.inputChangeHandler} style={{height: 380}}></textarea>
 						<figure>
 						    <img src="img/ifgh-card-upperpart-text.png" width="400" height="100" alt="photo"></img>
