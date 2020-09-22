@@ -240,13 +240,13 @@ export default class TranscriptionOverlay extends React.Component {
 						</figure>
 					</div>
 
-					<label for="transcription_comment" className="u-full-width margin-bottom-zero">{l('Kommentar till avskriften:')}</label>
+					<label htmlFor="transcription_comment" className="u-full-width margin-bottom-zero">{l('Kommentar till avskriften:')}</label>
 					<input id="transcription_comment" name="messageCommentInput" className="u-full-width margin-bottom-minimal" type="text" value={this.state.messageCommentInput} onChange={this.inputChangeHandler} />
 					<p>{l('Vill du att vi på TradArk anger att det är du som har skrivit av uppteckningen? Ange i så fall ditt namn och din e-postadress nedan. Vi hanterar personuppgifter enligt dataskyddsförordningen. ')}<a href="https://www.isof.se/om-oss/behandling-av-personuppgifter.html"><strong>{l('Läs mer.')}</strong></a></p>
 
-					<label for="transcription_name">Ditt namn (frivilligt):</label>
+					<label htmlFor="transcription_name">Ditt namn (frivilligt):</label>
 					<input id="transcription_name" autoComplete="name" name="nameInput" className="u-full-width" type="text" value={this.state.nameInput} onChange={this.inputChangeHandler} />
-					<label for="transcription_email">Din e-post adress (frivilligt):</label>
+					<label htmlFor="transcription_email">Din e-post adress (frivilligt):</label>
 					<input id="transcription_email" autoComplete="" name="emailInput" className="u-full-width" type="email" value={this.state.emailInput} onChange={this.inputChangeHandler} />
 
 					<button className="button-primary" onClick={this.sendButtonClickHandler}>Skicka</button>
