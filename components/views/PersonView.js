@@ -58,14 +58,48 @@ export default class PersonView extends React.Component {
 	render() {
 		let _props = this.props;
 
+		//Prepare person county/region:
+		let person_county = '';
+		if (!!this.state.data.places) {
+			if (!!this.state.data.places[0]) {
+				let place = this.state.data.places[0];
+				if (!!place) {
+					person_county = place.name;
+					if (!!place.landskap) {
+						person_county = person_county + ', ' + place.landskap;
+					} 
+					// TODO: set landskap = fylke in database and remove this?
+					if (!!place.fylke) {
+						person_county = person_county + ', ' + place.fylke;
+					}
+				}
+			}
+		}
+
+			
+		// TODO: Check if RecordList component below has replaced this part so: it is not used anymore and can be removed?
 		var recordItems = this.state.data.records && this.state.data.records.length > 0 ? this.state.data.records.map(function(record, index) {
+
+			//Prepare county/region:
+			let county = '';
+			if (!!record.places[0]) {
+				county = record.places[0].name;
+				if (!!record.places[0].landskap) {
+					county = county + ', ' + record.places[0].landskap;
+				} 
+				// TODO: set landskap = fylke in database and remove this?
+				if (!!record.places[0].fylke) {
+					county = county + ', ' + record.places[0].fylke;
+				}
+			}
+
 			return <tr key={index}>
 				<td data-title=""><a href={'#records/'+record.id}>{record.title ? record.title : l('(Utan titel)')}</a></td>
 				<td data-title={l('Kategori')+':'}>{record.taxonomy.name}</td>
 				<td data-title={l('Socken, Landskap')+':'}>
 					{
 						record.places &&
-						<a href={'#places/'+record.places[0].id}>{record.places[0].name+', '+record.places[0].landskap}</a>
+						<a href={'#places/'+record.places[0].id}>{county}</a>
 					}
 				</td>
 				<td data-title={l('Roll')+':'}>{record.relation == 'c' ? l('Upptecknare') : record.relation == 'i' ? l('Informant') : ''}</td>
@@ -88,7 +122,7 @@ export default class PersonView extends React.Component {
 							}
 							{
 								this.state.data.places && this.state.data.places.length > 0 &&
-								<a href={'#places/'+this.state.data.places[0].id}>{this.state.data.places[0].name+', '+this.state.data.places[0].landskap}</a>
+								<a href={'#places/'+this.state.data.places[0].id}>{person_county}</a>
 							}
 							</p>
 						</div>
