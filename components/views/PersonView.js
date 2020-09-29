@@ -76,7 +76,15 @@ export default class PersonView extends React.Component {
 			}
 		}
 
-			
+		// Prepare nordic:
+		// TODO Replace with "Application defined filter parameter" where it is used (Sägenkartan)
+		let nordic = '';
+		if (window.applicationSettings) {
+			if (window.applicationSettings.includeNordic) {
+					nordic = '/nordic/true';
+			}
+		}
+		
 		// TODO: Check if RecordList component below has replaced this part so: it is not used anymore and can be removed?
 		var recordItems = this.state.data.records && this.state.data.records.length > 0 ? this.state.data.records.map(function(record, index) {
 
@@ -99,7 +107,7 @@ export default class PersonView extends React.Component {
 				<td data-title={l('Socken, Landskap')+':'}>
 					{
 						record.places &&
-						<a href={'#places/'+record.places[0].id}>{county}</a>
+						<a href={'#places/'+record.places[0].id+nordic}>{county}</a>
 					}
 				</td>
 				<td data-title={l('Roll')+':'}>{record.relation == 'c' ? l('Upptecknare') : record.relation == 'i' ? l('Informant') : ''}</td>
@@ -122,7 +130,7 @@ export default class PersonView extends React.Component {
 							}
 							{
 								this.state.data.places && this.state.data.places.length > 0 &&
-								<a href={'#places/'+this.state.data.places[0].id}>{person_county}</a>
+								<a href={'#places/'+this.state.data.places[0].id+nordic}>{person_county}</a>
 							}
 							</p>
 						</div>
