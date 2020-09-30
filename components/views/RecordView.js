@@ -382,7 +382,7 @@ export default class RecordView extends React.Component {
 						}
 						{
 							!config.siteOptions.hideContactButton &&
-							<ContributeInfoButton title={this.state.data.title} type="Uppteckning" country={country} {..._props}/>
+							<ContributeInfoButton title={this.state.data.title} type="Uppteckning" country={country} id={this.state.data.id} {..._props}/>
 						}
 					</div>
 

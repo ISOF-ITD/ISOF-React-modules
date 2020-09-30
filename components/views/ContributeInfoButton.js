@@ -18,6 +18,7 @@ export default class ContributeInfoButton extends React.Component {
 				type: this.props.type,
 				country: this.props.country,
 				appUrl: config.appUrl,
+				id: this.props.id
 			});
 		}
 	}

@@ -34,6 +34,7 @@ export default class ContributeinfoOverlay extends React.Component {
 					country: event.target.country,
 					url: event.target.url,
 					appUrl: event.target.appUrl,
+					id: event.target.id,
 				});
 			}.bind(this));
 			window.eventBus.addEventListener('overlay.hide', function(event) {
@@ -80,30 +81,13 @@ export default class ContributeinfoOverlay extends React.Component {
 			from_email: this.state.emailInputValue,
 			from_name: this.state.nameInputValue,
 			subject: subject.split(/[/]+/).pop()+": ContributeInfo",
+			recordid: this.state.id,
 			message: this.state.type+': '+this.state.title+'\n'+
 				this.state.url+'\n\n'+
 				'Från: '+this.state.nameInputValue+' ('+this.state.emailInputValue+')\n\n'+
 				this.state.messageInputValue
 		};
 
-		//Set "send to" email address if activated in config:
-		//1. Use general application specific config
-		//2. Use application specific config by country using component property "country"
-		let feedbackEmail = null;
-		if (config.siteOptions.feedbackEmail) {
-			feedbackEmail = this.state.feedbackEmail;
-		}
-		if ('country' in this.state) {
-			if ('feedbackEmailByCountry' in config) {
-				let country = this.state.country.toLowerCase();
-				if (country in config.feedbackEmailByCountry) {
-					feedbackEmail = config.feedbackEmailByCountry[country];
-				}
-			}
-		}
-		if (feedbackEmail) {
-			data.send_to = feedbackEmail;
-		}
 
 		var formData = new FormData();
 		formData.append("json", JSON.stringify(data) );
