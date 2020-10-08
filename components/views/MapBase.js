@@ -31,18 +31,22 @@ export default class MapBase extends React.Component {
 
 		var mapOptions = {
 			center: this.props.center || [63.5, 16.7211],
-			zoom: this.props.zoom || 4,
-			minZoom: 4,
-			maxZoom: 13,
+			zoom: parseInt(this.props.zoom) || 4,
+			minZoom: parseInt(this.props.minZoom) || 4,
+			maxZoom: parseInt(this.props.maxZoom) || 13,
 			layers: [layers[Object.keys(layers)[0]]],
 			scrollWheelZoom: this.props.scrollWheelZoom || false,
 			zoomControl: false
 		};
 
+		//this.map.options.crs = L.CRS.EPSG3857;
+
 		if (!this.props.disableSwedenMap) {
-			mapOptions.crs = mapHelper.getSweref99crs();
-			mapOptions.zoom = 1;
-			mapOptions.minZoom = 1;
+			if (Object.keys(layers)[0].indexOf('(SWEREF99)') > -1) {
+				mapOptions.crs = mapHelper.getSweref99crs();
+				mapOptions.zoom = 1;
+				mapOptions.minZoom = 1;
+			}
 		}
 
 		this.map = L.map(this.refs.mapView, mapOptions);
@@ -94,7 +98,8 @@ export default class MapBase extends React.Component {
 	}
 
 	mapBaseLayerChangeHandler(event) {
-		if (event.name.indexOf('Lantmäteriet') > -1 && this.map.options.crs.code != 'EPSG:3006') {
+		// Change to Spatial reference system to SWEREF99 if SWEREF99
+		if (event.name.indexOf('(SWEREF99)') > -1 && this.map.options.crs.code != 'EPSG:3006') {
 			var mapCenter = this.map.getCenter();
 			var mapZoom = this.map.getZoom();
 
@@ -108,7 +113,8 @@ export default class MapBase extends React.Component {
 			});
 		}
 
-		if (event.name.indexOf('Lantmäteriet') == -1 && this.map.options.crs.code == 'EPSG:3006') {
+		// Change Spatial reference system to EPSG3857 if not SWEREF99
+		if (event.name.indexOf('(SWEREF99)') == -1 && this.map.options.crs.code == 'EPSG:3006') {
 			var mapCenter = this.map.getCenter();
 			var mapZoom = this.map.getZoom();
 

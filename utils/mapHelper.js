@@ -50,9 +50,22 @@ export default {
 	}),
 
 	tileLayers: [
+		/*
+		// Lantmäteriet topografisk karta SWEREF99
+		{
+			label: 'Lantmäteriet topografisk karta (SWEREF99)',
+			url: 'https://frigg.isof.se/sagendatabas/api/lm_proxy/{z}/{y}/{x}.png',
+			options: {
+				attribution: '&copy; <a href="https://www.lantmateriet.se/en/">Lantmäteriet</a> Topografisk Webbkarta Visning',
+				crossOrigin: true,
+			}
+		},
+		*/
+		// Lantmäteriet topografisk karta epsg3857 WGS 84 
+		// It seems maxZoom="17": Can be set as prop to MapBase component
 		{
 			label: 'Lantmäteriet topografisk karta',
-			url: 'https://frigg.isof.se/sagendatabas/api/lm_proxy/{z}/{y}/{x}.png',
+			url: 'https://frigg.isof.se/sagendatabas/api/lm_epsg3857_proxy/{z}/{y}/{x}.png',
 			options: {
 				attribution: '&copy; <a href="https://www.lantmateriet.se/en/">Lantmäteriet</a> Topografisk Webbkarta Visning',
 				crossOrigin: true,
@@ -84,6 +97,15 @@ export default {
 			url: 'https://korona.geog.uni-heidelberg.de/tiles/roads/x={x}&y={y}&z={z}',
 			options: {
 				attribution: 'Imagery from <a href="https://giscience.uni-hd.de/">GIScience Research Group @ University of Heidelberg</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+			}
+		},
+		{
+			label: 'Lantmäteriet ortofoto karta',
+			url: 'https://frigg-test.isof.se/sagendatabas/api/lm_orto_proxy/',
+			//url: 'http://ifsf0001:h52w0OaX5eW@maps.lantmateriet.se/ortofoto/wms/v1.3',
+			options: {
+				attribution: '&copy; <a href="https://www.lantmateriet.se/en/">Lantmäteriet</a> Topografisk Ortofoto Visning',
+				crossOrigin: true,
 			}
 		},
 		*/
