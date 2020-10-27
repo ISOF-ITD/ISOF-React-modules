@@ -1,10 +1,12 @@
 import React from 'react';
 import config from './../../../scripts/config.js';
 
-// Help support for both ContributeInfo and Feedback. See also ContributeInfoOverlay and FeedbackOverlay.
+// Help support for both ContributeInfo and Feedback. See also HelpOverlay, ContributeInfoOverlay and FeedbackOverlay.
+// Similar to HelpOverlay but without dependency to config.js of app.js. 
+// The instanciating component InformationButton has property text instead.
 // Main CSS: ui-components/overlay.less
 
-export default class HelpOverlay extends React.Component {
+export default class InformationOverlay extends React.Component {
 	constructor(props) {
 		//console.log('HelpOverlay');
 		super(props);
@@ -20,7 +22,7 @@ export default class HelpOverlay extends React.Component {
 		};
 
 		if (window.eventBus) {
-			window.eventBus.addEventListener('overlay.help', function(event) {
+			window.eventBus.addEventListener('overlay.information', function(event) {
 				//console.log('HelpOverlay help');
 				this.setState({
 					visible: true,
@@ -28,6 +30,7 @@ export default class HelpOverlay extends React.Component {
 					title: event.target.title,
 					url: event.target.url,
 					appUrl: event.target.appUrl,
+					text: event.target.text,
 				});
 			}.bind(this));
 			window.eventBus.addEventListener('overlay.hide', function(event) {
@@ -45,17 +48,14 @@ export default class HelpOverlay extends React.Component {
 	}
 
 	render() {
-		if (this.state.messageSent) {
-			var overlayContent = <div>
-				<p>Meddelande skickat. Tack.</p>
-				<p><br/><button className="button-primary" onClick={this.closeButtonClickHandler}>Stäng</button></p>
-			</div>;
+		var title = 'Hjälp';
+		if (this.state.title) {
+			var title = this.state.title;
 		}
-		else {
-			var overlayContent = <div>
-				<p>{config.siteOptions.helpText || 'Här kan du läsa mer om hur du använder applikationen: Här kan du läsa mer om hur du bidrar genom att t.ex. skriva av uppteckningar: '}</p>
-				<p><a href="https://www.isof.se/om-oss/kartor/sagenkartan/transkribera.html"><strong>{l('Läs mer om att skriva av.')}</strong></a><br/><br/></p>
 
+		if (this.state.text) {
+			var overlayContent = <div>
+				<p dangerouslySetInnerHTML={{__html: this.state.text}} />
 			</div>;
 		}
 
@@ -63,7 +63,7 @@ export default class HelpOverlay extends React.Component {
 			<div className="overlay-window">
 				
 				<div className="overlay-header">
-					{l('Hjälp')}
+					{l(title)}
 					<button title="stäng" className="close-button white" onClick={this.closeButtonClickHandler}></button>
 				</div>
 

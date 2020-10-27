@@ -1,6 +1,7 @@
 import React from 'react';
 import config from './../../../scripts/config.js';
 
+// FeedbackOverlay support for Feedback but not ContributeInfo. See also ContributeInfoOverlay and FeedbackOverlay.
 // Main CSS: ui-components/overlay.less
 
 export default class FeedbackOverlay extends React.Component {

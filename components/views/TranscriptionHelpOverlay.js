@@ -1,6 +1,7 @@
 import React from 'react';
 import config from './../../../scripts/config.js';
 
+// Transcription help support only for transcription support. See also HelpOverlay, ContributeInfoOverlay and FeedbackOverlay.
 // Main CSS: ui-components/overlay.less
 
 export default class TranscriptionHelpOverlay extends React.Component {
