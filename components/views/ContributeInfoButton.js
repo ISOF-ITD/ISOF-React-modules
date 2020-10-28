@@ -2,6 +2,7 @@ import React from 'react';
 
 import config from './../../../scripts/config.js';
 
+// Main CSS: /ui-components/feedback-buttons.less";
 export default class ContributeInfoButton extends React.Component {
 	constructor(props) {
 		super(props);
