@@ -198,24 +198,33 @@ export default class TranscriptionOverlay extends React.Component {
 					<div className="row">
 						<div className="mark-below-img">
 						<input id="transcription_informantname" name="informantNameInput" className="six columns" type="text" value={this.state.informantNameInput} onChange={this.inputChangeHandler} />
-						<figure>
-						    <img src="img/ifgh-card-upperpart-name.png" width="400" height="100" alt="photo"></img>
-						</figure>
+						{//
+						//	<figure>
+						 //   <img src="img/ifgh-card-upperpart-name.png" width="400" height="100" alt="photo"></img>
+						//</figure>
+						//
+					}
 						</div>
 
 						<div className="mark-below-img">
 						<input id="transcription_informantbirthdate" name="informantBirthDateInput" className="two columns" type="text" value={this.state.informantBirthDateInput} onChange={this.inputChangeHandler} />
-						<figure>
-						    <img src="img/ifgh-card-upperpart-birthyear.png" width="400" height="100" alt="photo"></img>
-						</figure>
+						{//
+						//	<figure>
+						 //   <img src="img/ifgh-card-upperpart-birthyear.png" width="400" height="100" alt="photo"></img>
+						//</figure>
+						//
+					}
 						</div>
 
 						<div className="mark-below-img">
 						<input id="transcription_informantbirthplace" name="informantBirthPlaceInput" className="four columns" type="text" value={this.state.informantBirthPlaceInput} onChange={this.inputChangeHandler} />
-						<figure>
-						    <img src="img/ifgh-card-upperpart-birthplace.png" width="400" height="100" alt="photo"></img>
-							<div id="circle3"></div>
-						</figure>
+						{//
+						//	<figure>
+						//    <img src="img/ifgh-card-upperpart-birthplace.png" width="400" height="100" alt="photo"></img>
+						//	<div id="circle3"></div>
+						//</figure>
+						//
+					}
 						</div>
 					</div>
 
@@ -227,17 +236,23 @@ export default class TranscriptionOverlay extends React.Component {
 					<div className="mark-above-img">
 						<label htmlFor="transcription_title" className="u-full-width margin-bottom-zero">Titel:</label>
 						<input id="transcription_title" name="title" className="u-full-width margin-bottom-minimal" type="text" value={this.state.title} onChange={this.inputChangeHandler} />
-						<figure>
-						    <img src="img/ifgh-card-upperpart-title.png" width="400" height="100" alt="photo"></img>
-						</figure>
+						{//
+						//	<figure>
+						//    <img src="img/ifgh-card-upperpart-title.png" width="400" height="100" alt="photo"></img>
+						//	</figure>
+						//	
+					}
 					</div>
 
 					<div className="mark-above-img">
 						<label htmlFor="transcription_text" className="u-full-width margin-bottom-zero">Text:</label>
 						<textarea id="transcription_text" name="messageInput" className="u-full-width margin-bottom-minimal" value={this.state.messageInput} onChange={this.inputChangeHandler} style={{height: 380}}></textarea>
-						<figure>
-						    <img src="img/ifgh-card-upperpart-text.png" width="400" height="100" alt="photo"></img>
-						</figure>
+						{//
+						//	<figure>
+						//    <img src="img/ifgh-card-upperpart-text.png" width="400" height="100" alt="photo"></img>
+						//</figure>
+						//
+					}
 					</div>
 
 					<label htmlFor="transcription_comment" className="u-full-width margin-bottom-zero">{l('Kommentar till avskriften:')}</label>
