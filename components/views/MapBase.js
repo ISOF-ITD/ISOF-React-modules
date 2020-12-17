@@ -31,9 +31,14 @@ export default class MapBase extends React.Component {
 
 		var mapOptions = {
 			center: this.props.center || [63.5, 16.7211],
-			zoom: parseInt(this.props.zoom) || 4,
-			minZoom: parseInt(this.props.minZoom) || 4,
-			maxZoom: parseInt(this.props.maxZoom) || 13,
+			//For epsg3857 webmercator:
+			zoom: parseInt(this.props.zoom) || 5,
+			minZoom: parseInt(this.props.minZoom) || 5,
+			maxZoom: parseInt(this.props.maxZoom) || 17,
+			//For SWEREF 99:
+			//zoom: parseInt(this.props.zoom) || 4,
+			//minZoom: parseInt(this.props.minZoom) || 4,
+			//maxZoom: parseInt(this.props.maxZoom) || 13,
 			layers: [layers[Object.keys(layers)[0]]],
 			scrollWheelZoom: this.props.scrollWheelZoom || false,
 			zoomControl: false
