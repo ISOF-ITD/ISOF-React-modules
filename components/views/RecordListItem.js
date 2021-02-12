@@ -86,6 +86,14 @@ export default class RecordListItem extends React.Component {
 				}
 			</td>
 			{
+				!config.siteOptions.recordList || !config.siteOptions.recordList.hideAccessionpage == true &&
+					<td className="table-buttons" data-title={l('Accession:Sida')+':'}>
+					{
+						this.props.item._source.archive.archive_id + (this.props.item._source.archive.page && ":" || "") + (this.props.item._source.archive.page || "")
+					}
+				</td>
+			}
+			{
 				!config.siteOptions.recordList || !config.siteOptions.recordList.hideCategories == true &&
 				<td className="table-buttons" data-title={l('Kategori')+':'}>
 					{
