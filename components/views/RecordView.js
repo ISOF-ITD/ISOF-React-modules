@@ -267,7 +267,7 @@ export default class RecordView extends React.Component {
 			}
 			// Annars visar vi texten som vanligt
 			else {
-				textElement = <div class="record-text" dangerouslySetInnerHTML={{__html: this.state.data.text}} />;
+				textElement = <div className="record-text" dangerouslySetInnerHTML={{__html: this.state.data.text}} />;
 			}
 
 			// Förbereder kategori länk
