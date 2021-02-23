@@ -8,7 +8,7 @@ export default {
 				return item.letter.toLowerCase() == categoryLetter.toLowerCase();
 			}.bind(this));
 
-			return categoryObj ? categoryObj.label : categoryLetter.indexOf(';') > -1 ? 'Flera kategorier' : '(Ingen kategori)';
+			return categoryObj.label
 		}
 		else {
 			return null;
