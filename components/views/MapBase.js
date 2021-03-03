@@ -24,6 +24,7 @@ export default class MapBase extends React.Component {
 
 	componentDidMount() {
 		var layers = mapHelper.createLayers();
+		var overlayLayers = mapHelper.createOverlayLayers();
 
 		if (this.props.disableSwedenMap) {
 			delete layers[mapHelper.tileLayers[0].label];
@@ -81,7 +82,7 @@ export default class MapBase extends React.Component {
 			}).addTo(this.map);
 		}
 
-		this.layersControl = L.control.activeLayers(layers, null, {
+		this.layersControl = L.control.activeLayers(layers, overlayLayers, {
 			position: this.props.layersControlPosition || 'topright',
 			collapsed: !this.props.layersControlStayOpen
 		}).addTo(this.map);
