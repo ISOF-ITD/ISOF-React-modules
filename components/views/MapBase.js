@@ -24,9 +24,23 @@ export default class MapBase extends React.Component {
 
 	componentDidMount() {
 		var layers = mapHelper.createLayers();
+		var overlayLayers = mapHelper.createOverlayLayers();
 
 		if (this.props.disableSwedenMap) {
 			delete layers[mapHelper.tileLayers[0].label];
+		}
+
+		// Add first baselayer to map 
+		var visibleLayers = [layers[Object.keys(layers)[0]]]
+
+		// Add first overlay layer if param hidden false to map 
+		if (!!overlayLayers) {
+			if (!layers[Object.keys(overlayLayers)[0]]) {
+				var visibleOverlayLayer = overlayLayers[Object.keys(overlayLayers)[0]];
+				if (visibleOverlayLayer.wmsParams.hidden == false) {
+					visibleLayers.push(visibleOverlayLayer);
+				}
+			}
 		}
 
 		var mapOptions = {
@@ -39,7 +53,8 @@ export default class MapBase extends React.Component {
 			//zoom: parseInt(this.props.zoom) || 4,
 			//minZoom: parseInt(this.props.minZoom) || 4,
 			//maxZoom: parseInt(this.props.maxZoom) || 13,
-			layers: [layers[Object.keys(layers)[0]]],
+			layers: visibleLayers,
+			//layers: [layers[Object.keys(layers)[0]]],
 			scrollWheelZoom: this.props.scrollWheelZoom || false,
 			zoomControl: false
 		};
@@ -81,7 +96,7 @@ export default class MapBase extends React.Component {
 			}).addTo(this.map);
 		}
 
-		this.layersControl = L.control.activeLayers(layers, null, {
+		this.layersControl = L.control.activeLayers(layers, overlayLayers, {
 			position: this.props.layersControlPosition || 'topright',
 			collapsed: !this.props.layersControlStayOpen
 		}).addTo(this.map);

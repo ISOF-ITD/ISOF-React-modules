@@ -134,9 +134,28 @@ export default {
 */
 	],
 
+	overlayTileLayers: [
+		// Socken RAÄ
+		{
+			isWms: true,
+			label: 'Sockengränser',
+			url: 'https://karta.raa.se/geo/arkreg_v1.0/wms',
+			layers: "socken",
+			TILED: true,
+			TILESORIGIN: "-2238400, 5287200",
+			ISBASELAYER: false,
+			maxZoom: 17,
+			minZoom: 11,
+			options: {
+				attribution: '&copy; <a href="https://www.raa.se/en/">Riksankikvarieämbetet</a> Sockenkarta',
+				crossOrigin: true,
+			}
+		},
+	],
+
 	createLayers() {
 		var ret = {};
-
+		
 		for (var i = 0; i<this.tileLayers.length; i++) {
 			var newLayer;
 
@@ -153,9 +172,36 @@ export default {
 			}
 			ret[this.tileLayers[i].label] = newLayer;
 		}
-
 		return ret;
 	},
+	createOverlayLayers() {
+		var ret = {};	
+		if (!!this.overlayTileLayers) {
+			for (var i = 0; i<this.overlayTileLayers.length; i++) {
+				var newLayer;
+
+				if (this.overlayTileLayers[i].isWms) {
+					newLayer = L.tileLayer.wms(this.overlayTileLayers[i].url, {
+						layers: this.overlayTileLayers[i].layers,
+						minZoom: this.overlayTileLayers[i].minZoom || 3,
+						maxZoom: this.overlayTileLayers[i].maxZoom,
+						format: 'image/png',
+						transparent: true,
+						hidden: false,
+						TILED: this.overlayTileLayers[i].TILED,
+						ISBASELAYER: this.overlayTileLayers[i].ISBASELAYER,
+						TILESORIGIN: this.overlayTileLayers[i].TILESORIGIN,
+					});
+				}
+				else {
+					newLayer = L.tileLayer(this.overlayTileLayers[i].url, this.overlayTileLayers[i].options);
+				}
+				ret[this.overlayTileLayers[i].label] = newLayer;
+			}
+		}
+		return ret;
+	},
+
 /*
 	inSweden(lat, lng) {
 		return (turfInside({
