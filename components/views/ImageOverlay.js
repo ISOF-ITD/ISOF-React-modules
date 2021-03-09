@@ -49,7 +49,7 @@ export default class ImageOverlay extends React.Component {
 			}
 			{
 				this.state.imageUrl && this.state.type == 'pdf' &&
-				<PdfViewer url={config.imageUrl+this.state.imageUrl} height="100%" />
+				<PdfViewer url={(config.pdfUrl || config.imageUrl)+this.state.imageUrl} height="100%" />
 			}
 
 			<button title="stäng" className="close-button white" onClick={this.closeButtonClickHandler}></button>
