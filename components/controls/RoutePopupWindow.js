@@ -11,6 +11,7 @@ export default class RoutePopupWindow extends React.Component {
 		this.openButtonClickHandler = this.openButtonClickHandler.bind(this);
 		this.openButtonKeyUpHandler = this.openButtonKeyUpHandler.bind(this);
 		this.languageChangedHandler = this.languageChangedHandler.bind(this);
+		this.showRoutePopup = this.showRoutePopup.bind(this);
 
 		this.state = {
 			windowOpen: false,
@@ -55,9 +56,17 @@ export default class RoutePopupWindow extends React.Component {
 		this.forceUpdate();
 	}
 
+	showRoutePopup() {
+		this.setState({
+			windowOpen: false,
+			manualOpen: true,
+		})
+	}
+
 	componentDidMount() {
 		if (window.eventBus) {
 			window.eventBus.addEventListener('Lang.setCurrentLang', this.languageChangedHandler)
+			window.eventBus.addEventListener('routePopup.show', this.showRoutePopup)
 		}
 		
 		this.setState({
