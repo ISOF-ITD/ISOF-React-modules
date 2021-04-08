@@ -72,6 +72,14 @@ export default {
 			}
 		},
 		{
+			label: 'Lantmäteriet topografisk karta nedtonad',
+			url: 'https://frigg.isof.se/sagendatabas/api/lm_nedtonad_epsg3857_proxy/{z}/{y}/{x}.png',
+			options: {
+				attribution: '&copy; <a href="https://www.lantmateriet.se/en/">Lantmäteriet</a> Topografisk Webbkarta Visning',
+				crossOrigin: true,
+			}
+		},
+		{
 			label: 'Open Street Map Mapnik',
 			url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 			options: {
