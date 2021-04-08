@@ -22,6 +22,10 @@ export default class TranscriptionOverlay extends React.Component {
 
 		this.state = {
 			visible: false,
+			informantNameInput: '',
+			informantBirthDateInput: '',
+			informantBirthPlaceInput: '',
+			informantInformationInput: '',
 			messageInput: '',
 			nameInput: '',
 			emailInput: '',
@@ -145,8 +149,13 @@ export default class TranscriptionOverlay extends React.Component {
 				if (json.success) {
 					this.setState({
 						// Show thank you message:
-						messageSent: true
+						messageSent: true,
+						// Clear transcribe fields:
+						messageInput: ''
 					})
+				} else {
+						// Show message:
+						console.log('Server does not repond for: ' + this.state.url);
 				}
 			}.bind(this));
 		}
@@ -155,9 +164,11 @@ export default class TranscriptionOverlay extends React.Component {
 	UNSAFE_componentWillReceiveProps() {
 		this.setState({
 			messageSent: false,
-			emailInputValue: '',
-			nameInputValue: '',
-			messageInputValue: ''
+			informantNameInput: '',
+			informantBirthDateInput: '',
+			informantBirthPlaceInput: '',
+			informantInformationInput: '',
+			messageInput: '',
 		});
 	}
 
