@@ -143,6 +143,41 @@ export default {
 	],
 
 	overlayTileLayers: [
+		// Historiska Ortofoto LM
+		{
+			isWms: true,
+			label: 'Lantmäteriet Ortofoto 1960',
+			url: 'https://frigg.isof.se/sagendatabas/api/lm_historto_proxy',
+			layers: "OI.Histortho_60",
+			TILED: true,
+			TILESORIGIN: "-2238400, 5287200",
+			ISBASELAYER: false,
+			hidden: true,
+			maxZoom: 17,
+			minZoom: 11,
+			options: {
+				attribution: '&copy; <a href="https://www.lantmateriet.se/sv/Kartor-och-geografisk-information/geodataprodukter/produktlista/historiska-ortofoton-visning/">Lantmäteriverket</a> Ortofoto 1960',
+				crossOrigin: true,
+			}
+		},
+		// Ortofoto LM
+		{
+			isWms: true,
+			label: 'Lantmäteriet Ortofoto',
+			url: 'https://frigg.isof.se/sagendatabas/api/lm_orto_proxy',
+			layers: "Ortofoto_0.5,Ortofoto_0.4,Ortofoto_0.25,Ortofoto_0.16",
+			//layers: "Ortofoto_0.5%2COrtofoto_0.4%2COrtofoto_0.25%2COrtofoto_0.16",
+			TILED: true,
+			TILESORIGIN: "-2238400, 5287200",
+			ISBASELAYER: false,
+			hidden: true,
+			maxZoom: 17,
+			minZoom: 11,
+			options: {
+				attribution: '&copy; <a href="https://www.lantmateriet.se/sv/Kartor-och-geografisk-information/geodataprodukter/produktlista/ortofoto-visning/">Lantmäteriverket</a> Ortofoto',
+				crossOrigin: true,
+			}
+		},
 		// Socken RAÄ
 		{
 			isWms: true,
@@ -152,6 +187,7 @@ export default {
 			TILED: true,
 			TILESORIGIN: "-2238400, 5287200",
 			ISBASELAYER: false,
+			hidden: false,
 			maxZoom: 17,
 			minZoom: 11,
 			options: {
@@ -195,7 +231,7 @@ export default {
 						maxZoom: this.overlayTileLayers[i].maxZoom,
 						format: 'image/png',
 						transparent: true,
-						hidden: false,
+						hidden: this.overlayTileLayers[i].hidden,
 						TILED: this.overlayTileLayers[i].TILED,
 						ISBASELAYER: this.overlayTileLayers[i].ISBASELAYER,
 						TILESORIGIN: this.overlayTileLayers[i].TILESORIGIN,
