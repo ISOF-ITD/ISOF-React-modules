@@ -154,7 +154,7 @@ export default {
 			ISBASELAYER: false,
 			hidden: true,
 			maxZoom: 17,
-			minZoom: 11,
+			minZoom: 6,
 			options: {
 				attribution: '&copy; <a href="https://www.lantmateriet.se/sv/Kartor-och-geografisk-information/geodataprodukter/produktlista/historiska-ortofoton-visning/">Lantmäteriverket</a> Ortofoto 1960',
 				crossOrigin: true,
@@ -172,7 +172,7 @@ export default {
 			ISBASELAYER: false,
 			hidden: true,
 			maxZoom: 17,
-			minZoom: 4,
+			minZoom: 6,
 			options: {
 				attribution: '&copy; <a href="https://www.lantmateriet.se/sv/Kartor-och-geografisk-information/geodataprodukter/produktlista/ortofoto-visning/">Lantmäteriverket</a> Ortofoto',
 				crossOrigin: true,
