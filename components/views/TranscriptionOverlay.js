@@ -27,6 +27,7 @@ export default class TranscriptionOverlay extends React.Component {
 			informantBirthPlaceInput: '',
 			informantInformationInput: '',
 			messageInput: '',
+			messageCommentInput: '',
 			nameInput: '',
 			emailInput: '',
 			messageSent: false,
@@ -169,6 +170,7 @@ export default class TranscriptionOverlay extends React.Component {
 			informantBirthPlaceInput: '',
 			informantInformationInput: '',
 			messageInput: '',
+			messageCommentInput: '',
 		});
 	}
 
