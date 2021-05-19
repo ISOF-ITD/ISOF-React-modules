@@ -24,7 +24,11 @@ export default class MapBase extends React.Component {
 
 	componentDidMount() {
 		var layers = mapHelper.createLayers();
-		var overlayLayers = mapHelper.createOverlayLayers();
+		var overlayLayers;
+		// If ignoreOverlayLayers then do not add overlayLayers
+		if (!this.props.ignoreOverlayLayers) {
+			overlayLayers = mapHelper.createOverlayLayers();
+		}
 
 		if (this.props.disableSwedenMap) {
 			delete layers[mapHelper.tileLayers[0].label];
