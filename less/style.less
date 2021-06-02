@@ -5,11 +5,26 @@
 @import "MarkerCluster.Default.css";
 @import "nouislider.css";
 
-// Global less parameters also defined in style-basic.less
+// Global less parameters also defined in each applications style-basic.less
 // TODO Set all global less parameters in one place: Here or in each app:
+
+//isof profile colors until june 2021:
 @color-red: #a6192e;
 @color-red-lighter: #d4454c;
 @color-red-divider: #b62837;
+
+//isof profile colors from june 2021:
+//Ljusare färg för knapp för icke-aktiv
+//Mörkare färg för knapp för aktiv+hover
+
+//Text alternativfärg:
+//Icke aktiv knapp: 
+@color-text-contrast-isof: #097C44;
+//Profilfärg
+@color-lighter-isof: #005462;
+//Text alternativfärg (ej standard dvs vanligtvis svart):
+//Aktiv knapp + knapp-hover-over: 
+@color-darker-isof: #1c3f49;
 
 @viewport {
 	zoom: 0.75;
@@ -67,7 +82,7 @@ h2 {
 		width: 137px;
 		height: 85px;
 
-		background: url('../img/logo_v2.png');
+		background: url('../img/Isof_logotyp.png');
 		background-size: 137px 85px;
 
 		@media (max-width: 1045px) {

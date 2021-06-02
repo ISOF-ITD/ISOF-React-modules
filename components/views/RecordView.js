@@ -130,7 +130,10 @@ export default class RecordView extends React.Component {
 		archiveLogos['SLS'] = 'img/SLS-logga.svg';
 		archiveLogos['Svenska litteratursällskapet i Finland (SLS)'] = 'img/SLS-logga.svg';
 		
-		return archiveLogos[archive] ? config.appUrl+archiveLogos[archive] : config.appUrl+archiveLogos['DAG'];
+		//Absolute path (old)
+		//return archiveLogos[archive] ? config.appUrl+archiveLogos[archive] : config.appUrl+archiveLogos['DAG'];
+		//Relative path
+		return archiveLogos[archive] ? ''+archiveLogos[archive] : ''+archiveLogos['DAG'];
 	}
 
 	render() {
@@ -267,7 +270,7 @@ export default class RecordView extends React.Component {
 			}
 			// Annars visar vi texten som vanligt
 			else {
-				textElement = <div className="record-text" dangerouslySetInnerHTML={{__html: this.state.data.text}} />;
+				textElement = <p dangerouslySetInnerHTML={{__html: this.state.data.text}} />;
 			}
 
 			// Förbereder kategori länk
