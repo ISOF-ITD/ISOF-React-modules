@@ -114,9 +114,9 @@ export default class MapBase extends React.Component {
 	}
 
 	nordicLegendsUpdateHandler(event, data) {
-		// Byt karta till OpenStreetMap
+		// Byt karta till OpenStreetMap (index=2)
 		if (!this.props.disableSwedenMap && data.includeNordic && this.layersControl.getActiveBaseLayer().name.indexOf('Lantmäteriet') > -1) {
-			mapView.mapBase.layersControl._layers[1].layer.addTo(mapView.mapBase.map);
+			mapView.mapBase.layersControl._layers[2].layer.addTo(mapView.mapBase.map);
 			mapView.mapBase.layersControl._onInputClick();
 		}
 	}
