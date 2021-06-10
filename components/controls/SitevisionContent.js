@@ -35,7 +35,6 @@ export default class SitevisionContent extends React.Component {
 		//console.log(url);
 		//url = url.replace('http://www.isof.se/','https://frigg.isof.se/sagendatabas/api/isofhomepage/')
 		url = url.replace('http://','https://')
-		url = url.replace('https://www.isof.se/',config.isofHomepageUrl)	// TODO: Check if this is used at all. Remove? It works if the primary domain is used in SV. (It is now redirected correctly)
 		//console.log(url);
 		var headers = new Headers();
 		headers.append('Content-Type', 'text/html');
