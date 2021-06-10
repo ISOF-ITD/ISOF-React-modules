@@ -5,8 +5,21 @@
 @import "MarkerCluster.Default.css";
 @import "nouislider.css";
 
-// Global less parameters also defined in each applications style-basic.less
-// TODO Set all global less parameters in one place: Here or in each app:
+// Two main style-files: Application-repo/less/style-basic.less VS common repo ISOF-React-modules/less/style.less
+// There is overlap and some same settings in both.
+// Regarding for example:
+// @less-parameters 
+// less-css-rules
+//
+// TODO: Rules and routines for what to put where? 
+
+// @color parameters in rules in less files based on basic less parameters named on either:
+// 1) color intensity perspective or 
+// 2) color function perspective
+
+// TODO: Strategy:
+// Use 1) "color intensity perspective" until change is needed
+// Change to 2) "color function perspective" when updating colors
 
 //isof profile colors until june 2021:
 @color-red: #a6192e;
@@ -26,6 +39,15 @@
 //Text alternativfärg (ej standard dvs vanligtvis svart):
 //Aktiv knapp + knapp-hover-over: 
 @color-darker-isof: #1c3f49;
+
+// 2. Colors defined in color function perspective
+//
+//Step 1: Defined less values for usage directly in rules from function perspective in adjusted rules (new from june 2021):
+@color-button-unselected: @color-text-contrast-isof;
+@color-button-hover: @color-darker-isof;
+@color-button-selected: @color-darker-isof;
+@color-slider-selected-range: @color-darker-isof;
+
 
 @viewport {
 	zoom: 0.75;
