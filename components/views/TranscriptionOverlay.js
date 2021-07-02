@@ -31,6 +31,7 @@ export default class TranscriptionOverlay extends React.Component {
 			nameInput: '',
 			emailInput: '',
 			messageSent: false,
+			messageOnFailure: '',
 			currentImage: null
 		};
 
@@ -74,10 +75,25 @@ export default class TranscriptionOverlay extends React.Component {
 		.then(function(response) {
 			return response.json()
 		}).then(function(json) {
+			var responseSuccess = false;
 			if (json.success) {
+				if (json.success == 'true') {
+					responseSuccess = true;
+					this.setState({
+						// Do not show any message:
+						messageSent: false
+					})
+				}
+			}
+			if (!responseSuccess) {
+				var messageOnFailure = 'Failure!';
+				if (json.message) {
+					messageOnFailure = json.message;
+				}
 				this.setState({
-					// Do not show any message:
-					messageSent: false
+					// show message:
+					messageSent: true,
+					messageOnFailure: messageOnFailure
 				})
 			}
 		}.bind(this));
@@ -93,6 +109,7 @@ export default class TranscriptionOverlay extends React.Component {
 			title: '',
 			message: '',
 			messageComment: '',
+			messageOnFailure: '',
 		});
 	}
 
@@ -171,6 +188,7 @@ export default class TranscriptionOverlay extends React.Component {
 			informantInformationInput: '',
 			messageInput: '',
 			messageCommentInput: '',
+			messageOnFailure: '',
 		});
 	}
 
@@ -178,8 +196,12 @@ export default class TranscriptionOverlay extends React.Component {
 		let _props = this.props;
 
 		if (this.state.messageSent) {
+			var message = 'Tack för din avskrift som nu skickats till Institutet för språk och folkminnen. Inom kort kommer den att publiceras på TradArk.'
+			if (this.state.messageOnFailure) {
+				message = this.state.messageOnFailure;
+			}
 			var overlayContent = <div>
-				<p>{l('Tack för din avskrift som nu skickats till Institutet för språk och folkminnen. Inom kort kommer den att publiceras på TradArk.')}</p>
+				<p>{l(message)}</p>
 				<p><br/><button className="button-primary" onClick={this.closeButtonClickHandler}>Stäng</button></p>
 			</div>;
 		}
