@@ -196,7 +196,7 @@ export default class TranscriptionOverlay extends React.Component {
 		let _props = this.props;
 
 		if (this.state.messageSent) {
-			var message = 'Tack för din avskrift som nu skickats till Institutet för språk och folkminnen. Inom kort kommer den att publiceras på TradArk.'
+			var message = 'Tack för din avskrift som nu skickats till Institutet för språk och folkminnen. Inom kort kommer den att publiceras i denna applikation.'
 			if (this.state.messageOnFailure) {
 				message = this.state.messageOnFailure;
 			}
