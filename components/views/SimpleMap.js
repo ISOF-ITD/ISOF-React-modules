@@ -19,6 +19,7 @@ export default class SimpleMap extends React.Component {
 
 	constructor(props) {
 		super(props);
+		this.mapView = React.createRef();
 	}
 
 	componentDidMount() {
@@ -42,7 +43,7 @@ export default class SimpleMap extends React.Component {
 	removeMarkers() {
 		if (this.markers) {
 			_.each(this.markers, function(marker) {
-				this.refs.mapView.map.removeLayer(marker);
+				this.mapView.current.map.removeLayer(marker);
 			}.bind(this));
 		}
 	}
@@ -67,7 +68,7 @@ export default class SimpleMap extends React.Component {
 
 			if (this.marker && !allowMultiple) {
 				animateMap = true;
-				this.refs.mapView.map.removeLayer(this.marker);
+				this.mapView.current.map.removeLayer(this.marker);
 			}
 
 			var location = Number(markerData.lat) && Number(markerData.lng) ? [Number(markerData.lat), Number(markerData.lng)] :
@@ -86,9 +87,9 @@ export default class SimpleMap extends React.Component {
 					this.marker = marker;
 				}
 
-				this.refs.mapView.map.addLayer(marker);
+				this.mapView.current.map.addLayer(marker);
 
-				this.refs.mapView.map.panTo(location, {
+				this.mapView.current.map.panTo(location, {
 					animate: animateMap
 				});
 			}
@@ -97,7 +98,7 @@ export default class SimpleMap extends React.Component {
 
 	render() {
 		return (
-			<MapBase ref="mapView" />
+			<MapBase ref={this.mapView} />
 		);
 	}
 }

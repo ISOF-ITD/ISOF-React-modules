@@ -16,6 +16,7 @@ import mapHelper from './../../utils/mapHelper';
 export default class MapBase extends React.Component {
 	constructor(props) {
 		super(props);
+		this.mapView = React.createRef();
 
 		this.nordicLegendsUpdateHandler = this.nordicLegendsUpdateHandler.bind(this);
 
@@ -73,7 +74,7 @@ export default class MapBase extends React.Component {
 			}
 		}
 
-		this.map = L.map(this.refs.mapView, mapOptions);
+		this.map = L.map(this.mapView.current, mapOptions);
 
 		L.control.zoom({
 			position: this.props.zoomControlPosition || 'topright'
@@ -171,7 +172,7 @@ export default class MapBase extends React.Component {
 
 	render() {
 		return (
-			<div className={this.props.className || 'map-container small'} ref="mapView" style={this.props.mapHeight ? {height: (this.props.mapHeight.indexOf('px') == -1 ? this.props.mapHeight+'px' : this.props.mapHeight)} : null}></div>
+			<div className={this.props.className || 'map-container small'} ref={this.mapView} style={this.props.mapHeight ? {height: (this.props.mapHeight.indexOf('px') == -1 ? this.props.mapHeight+'px' : this.props.mapHeight)} : null}></div>
 		);
 	}
 }
