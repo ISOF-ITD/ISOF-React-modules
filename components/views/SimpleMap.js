@@ -31,7 +31,7 @@ export default class SimpleMap extends React.Component {
 		}
 	}
 
-	UNSAFE_componentWillReceiveProps(props) {
+ 	UNSAFE_componentWillReceiveProps(props) {
 		if (props.marker) {
 			this.addMarker(props.marker);
 		}
@@ -64,7 +64,10 @@ export default class SimpleMap extends React.Component {
 		}
 
 		if (markerData && ((markerData.lat && markerData.lng) || (markerData.location && markerData.location.lat && markerData.location.lon))) {
-			var animateMap = this.props.animate;
+			var animateMap = false;
+			if (this.props.animate) {
+				animateMap = this.props.animate;
+			}
 
 			if (this.marker && !allowMultiple) {
 				animateMap = true;
@@ -97,8 +100,29 @@ export default class SimpleMap extends React.Component {
 	}
 
 	render() {
+		let center = this.props.center
+		if (this.props.marker) {
+			let markerData = this.props.marker;
+			var location = Number(markerData.lat) && Number(markerData.lng) ? [Number(markerData.lat), Number(markerData.lng)] :
+				(markerData.location && Number(markerData.location.lat) && Number(markerData.location.lon) ? [Number(markerData.location.lat), Number(markerData.location.lon)] : null);		
+			if (location) {
+				center = location;
+			}
+		}
+
 		return (
-			<MapBase ref={this.mapView} />
+			<MapBase ref={this.mapView}
+			className="map-view"
+			layersControlPosition={this.props.layersControlPosition || 'topleft'}
+			zoomControlPosition={this.props.zoomControlPosition || 'topleft'} 
+			disableLocateControl={true} // Inte visa locateControl knappen (som kan visa på kartan var användaren är)
+			scrollWheelZoom={true}
+			zoom={this.props.zoom}
+			center={center}
+			disableSwedenMap={this.props.disableSwedenMap}
+			onBaseLayerChange={this.mapBaseLayerChangeHandler}
+			mapHeight='200' />
+			// <MapBase ref={this.mapView} marker={this.props.marker}/>
 		);
 	}
 }
