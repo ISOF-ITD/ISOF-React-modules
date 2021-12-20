@@ -263,10 +263,8 @@ export default class TranscriptionOverlay extends React.Component {
 						</div>
 					</div>
 
-					{/*
-					<label htmlFor="transcription_informant" className="u-full-width margin-bottom-zero">Övrig information om informanten:</label>
+					<label htmlFor="transcription_informant" className="u-full-width margin-bottom-zero">Fält under berättat av:</label>
 					<input id="transcription_informant" name="informantInformationInput" className="u-full-width margin-bottom-minimal" type="text" value={this.state.informantInformationInput} onChange={this.inputChangeHandler} />
-					*/}
 
 					<div className="mark-above-img">
 						<label htmlFor="transcription_title" className="u-full-width margin-bottom-zero">Titel:</label>
