@@ -107,7 +107,7 @@ export default class TranscriptionOverlay extends React.Component {
 			informantBirthPlace: '',
 			informantInformation: '',
 			title: '',
-			message: '',
+			messageInput: '',
 			messageComment: '',
 			messageOnFailure: '',
 		});
@@ -169,7 +169,14 @@ export default class TranscriptionOverlay extends React.Component {
 						// Show thank you message:
 						messageSent: true,
 						// Clear transcribe fields:
-						messageInput: ''
+						informantName: '',
+						informantBirthDate: '',
+						informantBirthPlace: '',
+						informantInformation: '',
+						title: '',
+						messageInput: '',
+						messageComment: '',
+						messageOnFailure: '',
 					})
 				} else {
 						// Show message:
