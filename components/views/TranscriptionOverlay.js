@@ -116,6 +116,19 @@ export default class TranscriptionOverlay extends React.Component {
 			messageComment: '',
 			messageOnFailure: '',
 		});
+
+		var data = {
+			recordid: this.state.id,
+			transcribesession: this.state.transcribesession,
+		};
+
+		var formData = new FormData();
+		formData.append("json", JSON.stringify(data) );
+
+		fetch(config.restApiUrl+'transcribecancel/', {
+			method: "POST",
+			body: formData
+		})
 	}
 
 	mediaImageClickHandler(event) {
