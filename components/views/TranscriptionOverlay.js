@@ -78,10 +78,15 @@ export default class TranscriptionOverlay extends React.Component {
 			var responseSuccess = false;
 			if (json.success) {
 				if (json.success == 'true') {
+					var transcribesession = false;
+					if (json.data) {
+						transcribesession = json.data.transcribesession;
+					};
 					responseSuccess = true;
 					this.setState({
 						// Do not show any message:
-						messageSent: false
+						messageSent: false,
+						transcribesession: transcribesession
 					})
 				}
 			}
@@ -134,6 +139,7 @@ export default class TranscriptionOverlay extends React.Component {
 		}
 		else {
 			var data = {
+				transcribesession: this.state.transcribesession,
 				url: this.state.url,
 				recordid: this.state.id,
 				recordtitle: this.state.title,
@@ -176,7 +182,7 @@ export default class TranscriptionOverlay extends React.Component {
 						title: '',
 						messageInput: '',
 						messageComment: '',
-						messageOnFailure: '',
+						messageOnFailure: json.message,
 					})
 				} else {
 						// Show message:
