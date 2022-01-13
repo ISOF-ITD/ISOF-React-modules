@@ -59,7 +59,6 @@ export default class TranscriptionHelpOverlay extends React.Component {
 				<p>Vill du hjälpa till att tillgängliggöra samlingarna? Här finns möjligheten att skriva av berättelser, t.ex. från en viss ort eller ett visst ämne. Detta gör inte bara berättelserna mer tillgängliga för fler personer utan möjliggör också fritextsökningar.</p>
 				<p><strong>Vilken information i vilken ruta? </strong></p>
 				<p>Varje textfält som ska fyllas i motsvarar en särskild rad i uppteckningen som du ser på höger sida. Ibland saknas text på vissa rader. Lämna då samma textfält tomt.</p>
-				<p>Håll muspekaren över respektive tomt textfält. Den efterfrågade informationen ringas in av en röd ring, vilket gör att du enkelt kan hitta informationen i uppteckningen till höger</p>
 				<p><strong>Oläsliga ord?</strong></p>
 				<p>Om du inte kan läsa något ord på uppteckningen, ange ”###” istället för ordet ifråga. Är det flera ord bredvid varandra som inte kan tydas, skriv ”###” för varje ord.</p>
 				<p><strong>Ny rad?</strong></p>
