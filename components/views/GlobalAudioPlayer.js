@@ -61,6 +61,11 @@ export default class GlobalAudioPlayer extends React.Component {
 		return (minutes < 10 ? '0' : '')+minutes+":"+(seconds < 10 ? '0' : '')+seconds;
 	}
 
+	componentWillUnmount() {
+		this.audio.pause();
+		clearInterval(this.durationInterval);
+	}
+
 	audioCanPlayHandler(event) {
 		this.setState({
 			loaded: true
@@ -78,7 +83,21 @@ export default class GlobalAudioPlayer extends React.Component {
 				durationTime: this.audio.duration
 			});
 			this.refs.slider.set(this.audio.currentTime);
-		}.bind(this), 1000);
+
+			if (this.props.signalDurationInterval) {
+				window.eventBus.dispatch('audio.duration', {
+					duration: this.audio.currentTime,
+					record: this.state.record
+				});
+			}
+		}.bind(this), 100);
+
+		setTimeout(function() {
+			if (typeof this.seekOnCanPlay !== 'undefined') {
+				this.audio.currentTime = this.seekOnCanPlay;
+				this.seekOnCanPlay = undefined;
+			}
+		}.bind(this), 200);
 	}
 
 	audioEndedHandler(event) {
@@ -105,7 +124,7 @@ export default class GlobalAudioPlayer extends React.Component {
 
 		if (window.eventBus) {
 			window.eventBus.dispatch('audio.play');
-		}		
+		}
 
 		this.setState({
 			playing: true,
@@ -121,7 +140,7 @@ export default class GlobalAudioPlayer extends React.Component {
 			window.eventBus.dispatch('audio.stop', {
 				paused: true
 			});
-		}		
+		}
 
 		this.setState({
 			playing: false,
@@ -158,13 +177,25 @@ export default class GlobalAudioPlayer extends React.Component {
 		}
 	}
 
+	seek(seconds) {
+		this.audio.currentTime = seconds;
+	}
+
 	durationSliderChangeHandler(event) {
 		this.audio.currentTime = event.target.value[0];
 	}
 
 	playAudio(data) {
-		if (isofAudioPlayer.currentAudio.record == data.record.id && isofAudioPlayer.currentAudio.media == data.audio.source && this.state.paused) {
-			this.resumeAudio();
+		if (isofAudioPlayer.currentAudio.record == data.record.id &&
+			isofAudioPlayer.currentAudio.media == data.audio.source
+		) {
+			if (this.state.paused) {
+				this.resumeAudio();
+			}
+
+			if (typeof data.seek !== 'undefined') {
+				this.seek(data.seek);
+			}
 		}
 		else {
 			isofAudioPlayer.currentAudio.record = data.record.id;
@@ -175,6 +206,10 @@ export default class GlobalAudioPlayer extends React.Component {
 				audio: data.audio,
 				record: data.record
 			});
+
+			if (typeof data.seek !== 'undefined') {
+				this.seekOnCanPlay = data.seek;
+			}
 
 			this.audio.src = config.audioUrl+data.audio.source;
 			this.audio.load();
@@ -193,7 +228,7 @@ export default class GlobalAudioPlayer extends React.Component {
 				<div className="player-content">
 					{
 						this.state.record &&
-						<div className="player-label"><a href={'#records/'+this.state.record.id}>{this.state.record.title}</a></div>
+						<div className="player-label"><a href={'#'+(this.props.baseRecordsUrl || 'records/')+this.state.record.id}>{this.state.record.title}</a></div>
 					}
 					{
 						/*

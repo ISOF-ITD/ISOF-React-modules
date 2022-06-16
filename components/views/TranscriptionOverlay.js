@@ -234,7 +234,7 @@ export default class TranscriptionOverlay extends React.Component {
 		else {
 			if (this.state.images && this.state.images.length > 0) {
 				var imageItems = this.state.images.map(function(mediaItem, index) {
-					if (mediaItem.source.indexOf('.pdf') == -1) {
+					if (mediaItem.source && mediaItem.source.indexOf('.pdf') == -1) {
 						return <img data-index={index} key={index} className="image-item" data-image={mediaItem.source} onClick={this.mediaImageClickHandler} src={config.imageUrl+mediaItem.source} alt="" />;
 					}
 				}.bind(this));
