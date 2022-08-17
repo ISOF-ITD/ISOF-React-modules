@@ -1,6 +1,7 @@
 import React from 'react';
 import CheckBoxList from './CheckBoxList';
 import _ from 'underscore';
+import config from '../../../scripts/config';
 
 // Main CSS: ui-components/checkbox-list.less
 
@@ -66,7 +67,22 @@ export default class PopulatedCheckBoxList extends React.Component {
 	}
 
 	render() {
-		if (this.props.filteredBy && this.state.filterOptions) {
+		if (this.props.filteredBy ==='type' && config.predefinedCategoryType) {
+			let values =  _.filter(this.state.data, function(item) {
+				return item[this.props.filteredBy] == config.predefinedCategoryType;
+			}.bind(this));
+
+			return <div>
+				<CheckBoxList values={values}
+					valueField={this.props.valueField}
+					labelField={this.props.labelField}
+					labelFunction={this.props.labelFunction}
+					selectedItems={this.state.selectedItems}
+					onSelectionChange={this.checkBoxListChangeHandler} />
+			</div>;
+
+		}
+		else if (this.props.filteredBy && this.state.filterOptions) {
 			var values = _.filter(this.state.data, function(item) {
 				return item[this.props.filteredBy] == this.state.currentFilter;
 			}.bind(this));
