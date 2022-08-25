@@ -53,7 +53,8 @@ export default class CheckBoxList extends React.Component {
 			}
 		}.bind(this)) : [];
 		return (
-			<div className="checkbox-list">
+			// <div className="checkbox-list">
+			<div>
 				{items}
 			</div>
 		);

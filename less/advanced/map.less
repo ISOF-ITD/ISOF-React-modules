@@ -98,7 +98,9 @@ path.leaflet-interactive {
 }
 
 .map-timeline-container {
-	position: absolute;
+	// position: absolute;
+	// timeline container is below map
+	position: relative;
 	
 	left: 50%;
 	bottom: 20px;
@@ -123,7 +125,8 @@ path.leaflet-interactive {
 	z-index: 400;
 
 	&.minimized {
-		max-height: 45px;
+		max-height: 94px;
+		background: rgba(255, 255, 255, 0.3);
 	}
 
 	&.disabled {
