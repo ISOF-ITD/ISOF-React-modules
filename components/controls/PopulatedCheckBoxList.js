@@ -69,8 +69,13 @@ export default class PopulatedCheckBoxList extends React.Component {
 	render() {
 		if (this.props.filteredBy ==='type' && config.predefinedCategoryType) {
 			let values =  _.filter(this.state.data, function(item) {
-				return item[this.props.filteredBy] == config.predefinedCategoryType;
+				return(
+					item[this.props.filteredBy] == config.predefinedCategoryType
+					// quick fix: Filtrera bort "Ej kategoriserat"
+					&& item['key'] !== 'trad16'
+				);
 			}.bind(this));
+			values = _.sortBy(values, 'name');
 
 			return <div>
 				<CheckBoxList values={values}
