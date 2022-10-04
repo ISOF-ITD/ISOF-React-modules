@@ -23,11 +23,11 @@ export class TabsContainer extends React.Component {
 
 	render() {
 		var tabs = this.props.children.map(function(children, index) {
-			return <a key={index} className={'tab tab-'+index+(index == this.state.tabIndex ? ' selected' : '')} data-tabindex={index} onClick={this.tabClickHandler}>{children.props.tabName}</a>
+			return <a key={index} style={{display: children.props.visible === false ? 'none' : 'inline-block'}} className={'tab tab-'+index+(index == this.state.tabIndex ? ' selected' : '')} data-tabindex={index} onClick={this.tabClickHandler}>{children.props.tabName}</a>
 		}.bind(this));
 
 		var tabPanels = this.props.children.map(function(children, index) {
-			return <div key={index} className={'tab-container tab-'+index+(index == this.state.tabIndex ? ' open' : ' hidden')}>{children}</div>
+			return <div key={index} style={{display: children.props.visible === false ? 'none' : 'inline-block'}} className={'tab-container tab-'+index+(index == this.state.tabIndex ? ' open' : ' hidden')}>{children}</div>
 		}.bind(this));
 
 		return (
