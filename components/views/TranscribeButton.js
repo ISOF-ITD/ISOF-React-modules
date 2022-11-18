@@ -13,7 +13,7 @@ export default class TranscribeButton extends React.Component {
 	transcribeButtonClick() {
 		if (window.eventBus) {
 			window.eventBus.dispatch('overlay.transcribe', {
-				url: config.siteUrl+'#records/'+this.props.recordId,
+				url: config.siteUrl+'#/records/'+this.props.recordId,
 				id: this.props.recordId,
 				title: this.props.title,
 				type: this.props.type,

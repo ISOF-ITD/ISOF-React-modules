@@ -206,7 +206,7 @@ export default class RecordView extends React.Component {
 							(
 								config.siteOptions.disableInformantLinks == true && person.relation == 'i' ?
 								person.name :
-								<a href={'#person/'+person.id +(routeParams ? routeParams : '')}>{person.name ? person.name : ''}</a>
+								<a href={'#/person/'+person.id +(routeParams ? routeParams : '')}>{person.name ? person.name : ''}</a>
 							) :
 							person.name
 						}
@@ -215,7 +215,7 @@ export default class RecordView extends React.Component {
 					<td data-title="Födelseort">
 						{
 							person.home && person.home.length > 0 &&
-							<a href={'#places/'+person.home[0].id+(routeParams ? routeParams : '')}>{person.home[0].name+', '+person.home[0].harad}</a>
+							<a href={'#/places/'+person.home[0].id+(routeParams ? routeParams : '')}>{person.home[0].name+', '+person.home[0].harad}</a>
 						}
 					</td>
 					<td data-title="Roll">{person.relation == 'c' ? l('Upptecknare') : person.relation == 'i' ? l('Informant') : ''}</td>
@@ -225,7 +225,7 @@ export default class RecordView extends React.Component {
 			// Förberedar lista över socknar
 			var placeItems = this.state.data.places && this.state.data.places.length > 0 ? this.state.data.places.map(function(place, index) {
 				return <tr key={index}>
-					<td><a href={'#places/'+place.id+(routeParams ? routeParams : '')}>{place.name+', '+(place.fylke ? place.fylke : place.harad)}</a></td>
+					<td><a href={'#/places/'+place.id+(routeParams ? routeParams : '')}>{place.name+', '+(place.fylke ? place.fylke : place.harad)}</a></td>
 				</tr>;
 			}) : [];
 
