@@ -17,7 +17,8 @@ export default class TranscribeButton extends React.Component {
 				id: this.props.recordId,
 				title: this.props.title,
 				type: this.props.type,
-				images: this.props.images
+				images: this.props.images,
+				transcriptionType: this.props.transcriptionType,
 			});
 		}
 	}

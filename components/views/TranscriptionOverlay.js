@@ -5,6 +5,10 @@ import ImageMap from './ImageMap';
 import ContributeInfoButton from './ContributeInfoButton';
 import FeedbackButton from './FeedbackButton';
 import TranscriptionHelpButton from './TranscriptionHelpButton';
+
+import Uppteckningsblankett from './transcriptionForms/Uppteckningsblankett';
+import Fritext from './transcriptionForms/Fritext';
+
 // Main CSS: ui-components/overlay.less
 // ImageMap CSS: ui-components/image-map.less
 
@@ -32,7 +36,8 @@ export default class TranscriptionOverlay extends React.Component {
 			emailInput: '',
 			messageSent: false,
 			messageOnFailure: '',
-			currentImage: null
+			currentImage: null,
+			transcriptionType: '',
 		};
 
 		if (window.eventBus) {
@@ -45,6 +50,7 @@ export default class TranscriptionOverlay extends React.Component {
 					id: event.target.id,
 					url: event.target.url,
 					images: event.target.images,
+					transcriptionType: event.target.transcriptionType,
 					imageIndex: 0
 				});
 				this.transcribeStart(event.target.id);
@@ -218,6 +224,44 @@ export default class TranscriptionOverlay extends React.Component {
 		});
 	}
 
+	renderTranscribeForm() {
+		// write a switch-statement for the different transcription types
+		// and return the correct form
+		switch (this.state.transcriptionType) {
+			case 'uppteckningsblankett':
+				return (
+					<Uppteckningsblankett 
+						informantNameInput={this.state.informantNameInput}
+						informantBirthDateInput={this.state.informantBirthDateInput}
+						informantBirthPlaceInput={this.state.informantBirthPlaceInput}
+						informantInformationInput={this.state.informantInformationInput}
+						title={this.state.title}
+						messageInput={this.state.messageInput}
+						inputChangeHandler={this.inputChangeHandler} 
+						/>
+				);
+			case 'fritext':
+				return (
+					<Fritext 
+						messageInput={this.state.messageInput}
+						inputChangeHandler={this.inputChangeHandler} 
+					/>
+				);
+			default:
+				return (
+					<Uppteckningsblankett 
+						informantNameInput={this.state.informantNameInput}
+						informantBirthDateInput={this.state.informantBirthDateInput}
+						informantBirthPlaceInput={this.state.informantBirthPlaceInput}
+						informantInformationInput={this.state.informantInformationInput}
+						title={this.state.title}
+						messageInput={this.state.messageInput}
+						inputChangeHandler={this.inputChangeHandler} 
+					/>
+				);
+		}
+	}
+
 	render() {
 		let _props = this.props;
 
@@ -249,70 +293,7 @@ export default class TranscriptionOverlay extends React.Component {
 					<hr/>
 
 					*/}
-
-					<div className="row">
-					<label htmlFor="transcription_informantname" className="six columns">Berättat av:</label>
-					<label htmlFor="transcription_informantbirthdate" className="two columns">Född år:</label>
-					<label htmlFor="transcription_informantbirthplace" className="four columns">Född i:</label>
-					</div>
-
-					<div className="row">
-						<div className="mark-below-img">
-						<input id="transcription_informantname" name="informantNameInput" className="six columns" type="text" value={this.state.informantNameInput} onChange={this.inputChangeHandler} />
-						{//
-						//	<figure>
-						 //   <img src="img/ifgh-card-upperpart-name.png" width="400" height="100" alt="photo"></img>
-						//</figure>
-						//
-					}
-						</div>
-
-						<div className="mark-below-img">
-						<input id="transcription_informantbirthdate" name="informantBirthDateInput" className="two columns" type="text" value={this.state.informantBirthDateInput} onChange={this.inputChangeHandler} />
-						{//
-						//	<figure>
-						 //   <img src="img/ifgh-card-upperpart-birthyear.png" width="400" height="100" alt="photo"></img>
-						//</figure>
-						//
-					}
-						</div>
-
-						<div className="mark-below-img">
-						<input id="transcription_informantbirthplace" name="informantBirthPlaceInput" className="four columns" type="text" value={this.state.informantBirthPlaceInput} onChange={this.inputChangeHandler} />
-						{//
-						//	<figure>
-						//    <img src="img/ifgh-card-upperpart-birthplace.png" width="400" height="100" alt="photo"></img>
-						//	<div id="circle3"></div>
-						//</figure>
-						//
-					}
-						</div>
-					</div>
-
-					<label htmlFor="transcription_informant" className="u-full-width margin-bottom-zero">Fält under berättat av:</label>
-					<input id="transcription_informant" name="informantInformationInput" className="u-full-width margin-bottom-minimal" type="text" value={this.state.informantInformationInput} onChange={this.inputChangeHandler} />
-
-					<div className="mark-above-img">
-						<label htmlFor="transcription_title" className="u-full-width margin-bottom-zero">Titel:</label>
-						<input id="transcription_title" name="title" className="u-full-width margin-bottom-minimal" type="text" value={this.state.title} onChange={this.inputChangeHandler} />
-						{//
-						//	<figure>
-						//    <img src="img/ifgh-card-upperpart-title.png" width="400" height="100" alt="photo"></img>
-						//	</figure>
-						//	
-					}
-					</div>
-
-					<div className="mark-above-img">
-						<label htmlFor="transcription_text" className="u-full-width margin-bottom-zero">Text:</label>
-						<textarea id="transcription_text" name="messageInput" className="u-full-width margin-bottom-minimal" value={this.state.messageInput} onChange={this.inputChangeHandler} style={{height: 380}}></textarea>
-						{//
-						//	<figure>
-						//    <img src="img/ifgh-card-upperpart-text.png" width="400" height="100" alt="photo"></img>
-						//</figure>
-						//
-					}
-					</div>
+					{this.renderTranscribeForm()}
 
 					<label htmlFor="transcription_comment" className="u-full-width margin-bottom-zero">{l('Kommentar till avskriften:')}</label>
 					<textarea id="transcription_comment" name="messageCommentInput" className="u-full-width margin-bottom-minimal" type="text" value={this.state.messageCommentInput} onChange={this.inputChangeHandler} />
