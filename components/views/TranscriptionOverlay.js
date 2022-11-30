@@ -89,6 +89,9 @@ export default class TranscriptionOverlay extends React.Component {
 						transcribesession = json.data.transcribesession;
 					};
 					responseSuccess = true;
+					// localStorage.setItem(`transcribesession ${recordid}`, transcribesession);
+					
+
 					this.setState({
 						// Do not show any message:
 						messageSent: false,
@@ -110,7 +113,7 @@ export default class TranscriptionOverlay extends React.Component {
 		}.bind(this));
 	}
 
-	closeButtonClickHandler() {
+	transcribeCancel() {
 		this.setState({
 			visible: false,		
 			informantName: '',
@@ -123,18 +126,29 @@ export default class TranscriptionOverlay extends React.Component {
 			messageOnFailure: '',
 		});
 
-		var data = {
-			recordid: this.state.id,
-			transcribesession: this.state.transcribesession,
-		};
+		if(!this.state.messageSent) {
+			
+			// localStorage.removeItem(`transcribesession ${this.state.id}`);
+			
+			var data = {
+				recordid: this.state.id,
+				transcribesession: this.state.transcribesession,
+			};
+			
+			var formData = new FormData();
+			formData.append("json", JSON.stringify(data) );
+			
+			fetch(config.restApiUrl+'transcribecancel/', {
+				method: "POST",
+				body: formData,
+			})
+		} else {
+			return null;
+		}
+	}
 
-		var formData = new FormData();
-		formData.append("json", JSON.stringify(data) );
-
-		fetch(config.restApiUrl+'transcribecancel/', {
-			method: "POST",
-			body: formData
-		})
+	closeButtonClickHandler() {
+		this.transcribeCancel();
 	}
 
 	mediaImageClickHandler(event) {
@@ -262,6 +276,10 @@ export default class TranscriptionOverlay extends React.Component {
 		}
 	}
 
+	componentWillUnmount() {
+		this.transcribeCancel();
+	}
+
 	render() {
 		let _props = this.props;
 
@@ -297,7 +315,7 @@ export default class TranscriptionOverlay extends React.Component {
 
 					<label htmlFor="transcription_comment" className="u-full-width margin-bottom-zero">{l('Kommentar till avskriften:')}</label>
 					<textarea id="transcription_comment" name="messageCommentInput" className="u-full-width margin-bottom-minimal" type="text" value={this.state.messageCommentInput} onChange={this.inputChangeHandler} />
-					<p>{l('Vill du att vi anger att det är du som har skrivit av uppteckningen? Ange i så fall ditt namn och din e-postadress nedan. Vi hanterar personuppgifter enligt dataskyddsförordningen. ')}<a href="https://www.isof.se/om-oss/behandling-av-personuppgifter.html"><strong>{l('Läs mer.')}</strong></a></p>
+					<p>{l('Vill du att vi anger att det är du som har skrivit av uppteckningen? Ange i så fall ditt namn och din e-postadress nedan. Vi hanterar personuppgifter enligt dataskyddsförordningen. ')}<a href="https://www.isof.se/om-oss/behandling-av-personuppgifter.html" target={"_blank"}><strong>{l('Läs mer.')}</strong></a></p>
 
 					<label htmlFor="transcription_name">Ditt namn (frivilligt):</label>
 					<input id="transcription_name" autoComplete="name" name="nameInput" className="u-full-width" type="text" value={this.state.nameInput} onChange={this.inputChangeHandler} />
