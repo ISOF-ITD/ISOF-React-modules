@@ -48,6 +48,7 @@ export default class TranscriptionOverlay extends React.Component {
 					type: event.target.type,
 					title: event.target.title,
 					id: event.target.id,
+					archiveId: event.target.archiveId || null,
 					url: event.target.url,
 					images: event.target.images,
 					transcriptionType: event.target.transcriptionType,
@@ -341,7 +342,11 @@ export default class TranscriptionOverlay extends React.Component {
 			<div className="overlay-window large">
 
 				<div className="overlay-header">
-					{l('Skriv av')} {this.state.title}
+					{l('Skriv av')} {this.state.title ? `"${this.state.title}"` : 'uppteckning'}
+					{ this.state.archiveId &&
+						<small>&nbsp;(ur {this.state.archiveId})</small>
+						
+					}
 					<button title="stäng" className="close-button white" onClick={this.closeButtonClickHandler}></button>
 					{
 						!config.siteOptions.hideContactButton &&
