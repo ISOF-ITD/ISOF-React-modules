@@ -17,7 +17,7 @@ export default class TranscribeButton extends React.Component {
 				console.log("r");
 				// get random document and save its data to current state
 				// todo: create params with required params from config
-				fetch("http://localhost:5000/api/es/random_document/?type=arkiv&recordtype=one_record&transcriptionstatus=readytotranscribe&mark_metadata=transcriptionstatus&categorytypes=tradark&publishstatus=published")
+				fetch(`${config.apiUrl}random_document/?type=arkiv&recordtype=one_record&transcriptionstatus=readytotranscribe&mark_metadata=transcriptionstatus&categorytypes=tradark&publishstatus=published`)
 				.then(function(response) {
 								return response.json()
 							})
