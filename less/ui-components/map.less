@@ -215,6 +215,17 @@
 	}
 }
 
+.leaflet-bottom {
+	@leaflet-bottom-val: 70px;
+	bottom: @leaflet-bottom-val;
+	.leaflet-control-attribution {
+		bottom: -(@leaflet-bottom-val);
+	}
+}
+ .leaflet-right {
+	right: 15px;
+ }
+
 .leaflet-control {
 	.map-location-icon {
 		display: block;
