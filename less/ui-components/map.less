@@ -218,6 +218,9 @@
 .leaflet-bottom {
 	@leaflet-bottom-val: 70px;
 	bottom: @leaflet-bottom-val;
+	@media screen and (max-width: 550px) {
+		bottom: 95px;
+	}
 	.leaflet-control-attribution {
 		bottom: -(@leaflet-bottom-val);
 	}
