@@ -52,7 +52,8 @@ export default class TranscriptionOverlay extends React.Component {
 					url: event.target.url,
 					images: event.target.images,
 					transcriptionType: event.target.transcriptionType,
-					imageIndex: 0
+					imageIndex: 0,
+					placeString: event.target.placeString || null,
 				});
 				this.transcribeStart(event.target.id);
 			}.bind(this));
@@ -344,7 +345,7 @@ export default class TranscriptionOverlay extends React.Component {
 				<div className="overlay-header">
 					{l('Skriv av')} {this.state.title ? `"${this.state.title}"` : 'uppteckning'}
 					{ this.state.archiveId &&
-						<small>&nbsp;(ur {this.state.archiveId})</small>
+						<small>&nbsp;(ur {this.state.archiveId}{this.state.placeString ? ` ${this.state.placeString}` : ''})</small>
 						
 					}
 					<button title="stäng" className="close-button white" onClick={this.closeButtonClickHandler}></button>
