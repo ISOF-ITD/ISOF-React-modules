@@ -13,6 +13,7 @@ export default class RecordView extends React.Component {
 		super(props);
 
 		this.linkClickHandler = this.linkClickHandler.bind(this);
+        this.handleCopyLinkClick = this.handleCopyLinkClick.bind(this);
 	}
 
 	componentDidMount() {
@@ -32,6 +33,14 @@ export default class RecordView extends React.Component {
 			}
 		}		
 	}
+
+    handleCopyLinkClick(event) {
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(event.target);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    }
 
 	initialize() {
 		if (this.initialized) {
@@ -100,7 +109,7 @@ export default class RecordView extends React.Component {
                         <FontAwesomeIcon icon={faCopy} />
                     </a>
                     &nbsp;
-                    <span>
+                    <span className='copy-link' onClick={this.handleCopyLinkClick}>
                         {this.props.path}
                     </span>
                 </div>
