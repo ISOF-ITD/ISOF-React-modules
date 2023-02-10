@@ -7,7 +7,7 @@ export default class Uppteckningsblankett extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className='transcriptionform uppteckningsblankett'>
                 <div className="row">
                     <label htmlFor="transcription_informantname" className="six columns">Berättat av:</label>
                     <label htmlFor="transcription_informantbirthdate" className="two columns">Född år:</label>
@@ -63,7 +63,7 @@ export default class Uppteckningsblankett extends React.Component {
 
                 <div className="mark-above-img">
                     <label htmlFor="transcription_text" className="u-full-width margin-bottom-zero">Text:</label>
-                    <textarea id="transcription_text" name="messageInput" className="u-full-width margin-bottom-minimal" defaultValue={this.props.messageInput} onChange={this.props.inputChangeHandler} style={{ height: 380 }}></textarea>
+                    <textarea id="transcription_text" name="messageInput" className="u-full-width margin-bottom-minimal" defaultValue={this.props.messageInput} onChange={this.props.inputChangeHandler}></textarea>
                     {//
                         //	<figure>
                         //    <img src="img/ifgh-card-upperpart-text.png" width="400" height="100" alt="photo"></img>
