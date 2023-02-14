@@ -56,7 +56,6 @@ export default class TranscriptionOverlay extends React.Component {
 					})
 					.then(function(json) {
 						const randomDocument = json.hits.hits[0]._source;
-						console.log(randomDocument)
 						this.setState({
 							visible: true,
 							url: config.siteUrl+'#/records/'+randomDocument.id,
@@ -330,7 +329,9 @@ export default class TranscriptionOverlay extends React.Component {
 			var overlayContent = <div>
 				<p>{l(message)}</p>
 				<p><br/>
-				<TranscribeButton className='button-primary' random={true} label={l('Skriv av en annan slumpmässig uppteckning')} />
+				<TranscribeButton className='button-primary' random={true} label={
+					this.state.random ? l('Skriv av en till slumpmässig uppteckning') : l('Skriv av en slumpmässigt utvald uppteckning')
+				} />
 				&nbsp;
 				<button className="button-primary" onClick={this.closeButtonClickHandler}>Stäng</button></p>
 			</div>;
@@ -390,13 +391,13 @@ export default class TranscriptionOverlay extends React.Component {
 						
 					}
 					{/* om detta är en slumpmässig uppteckning, visa en knapp som heter "skriv av annan slumpmässig uppteckning" */}
-					{ this.state.random &&
+					{ this.state.random && !this.state.messageSent &&
 						<div className={'next-random-record-button-container'}>
-						<TranscribeButton
-							label={l('Skriv av annan slumpmässig uppteckning')}
-							random={true}
-							onClick={this.randomButtonClickHandler}
-							className="button-primary next-random-record-button"
+							<TranscribeButton
+								label={l('Skriv av annan slumpmässig uppteckning')}
+								random={true}
+								onClick={this.randomButtonClickHandler}
+								className="button-primary next-random-record-button"
 							/>
 						</div>
 					}
