@@ -10,7 +10,7 @@ export default class Fritext extends React.Component {
             <div className='transcriptionform fritext'>
                 <div className="mark-above-img">
                     <label htmlFor="transcription_text" className="u-full-width margin-bottom-zero">Text:</label>
-                    <textarea lang="sv" spellcheck="false" id="transcription_text" name="messageInput" className="u-full-width margin-bottom-minimal" defaultValue={this.props.messageInput} onChange={this.props.inputChangeHandler}></textarea>
+                    <textarea lang="sv" spellCheck="false" id="transcription_text" name="messageInput" className="u-full-width margin-bottom-minimal" defaultValue={this.props.messageInput} onChange={this.props.inputChangeHandler}></textarea>
                     {//
                         //	<figure>
                         //    <img src="img/ifgh-card-upperpart-text.png" width="400" height="100" alt="photo"></img>
