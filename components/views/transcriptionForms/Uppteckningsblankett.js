@@ -63,7 +63,7 @@ export default class Uppteckningsblankett extends React.Component {
 
                 <div className="mark-above-img">
                     <label htmlFor="transcription_text" className="u-full-width margin-bottom-zero">Text:</label>
-                    <textarea id="transcription_text" name="messageInput" className="u-full-width margin-bottom-minimal" defaultValue={this.props.messageInput} onChange={this.props.inputChangeHandler}></textarea>
+                    <textarea lang="sv" id="transcription_text" name="messageInput" className="u-full-width margin-bottom-minimal" defaultValue={this.props.messageInput} onChange={this.props.inputChangeHandler}></textarea>
                     {//
                         //	<figure>
                         //    <img src="img/ifgh-card-upperpart-text.png" width="400" height="100" alt="photo"></img>

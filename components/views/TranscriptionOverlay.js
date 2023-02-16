@@ -357,7 +357,7 @@ export default class TranscriptionOverlay extends React.Component {
 					{this.renderTranscribeForm()}
 
 					<label htmlFor="transcription_comment" className="u-full-width margin-bottom-zero">{l('Kommentar till avskriften:')}</label>
-					<textarea id="transcription_comment" name="messageCommentInput" className="u-full-width margin-bottom-minimal" type="text" value={this.state.messageCommentInput} onChange={this.inputChangeHandler} />
+					<textarea lang="sv" id="transcription_comment" name="messageCommentInput" className="u-full-width margin-bottom-minimal" type="text" value={this.state.messageCommentInput} onChange={this.inputChangeHandler} />
 					<p>{l('Vill du att vi anger att det är du som har skrivit av uppteckningen? Ange i så fall ditt namn och din e-postadress nedan. E-postadressen publiceras inte.')}
 					<br/>{l('Vi hanterar personuppgifter enligt dataskyddsförordningen. ')}<a href="https://www.isof.se/om-oss/behandling-av-personuppgifter.html" target={"_blank"}><strong>{l('Läs mer.')}</strong></a></p>
 
