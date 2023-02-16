@@ -9,6 +9,9 @@ import TranscriptionHelpButton from './TranscriptionHelpButton';
 import Uppteckningsblankett from './transcriptionForms/Uppteckningsblankett';
 import Fritext from './transcriptionForms/Fritext';
 
+import { getPlaceString } from '../utils/helpers.js';
+import TranscribeButton from './TranscribeButton.js';
+
 // Main CSS: ui-components/overlay.less
 // ImageMap CSS: ui-components/image-map.less
 
@@ -24,6 +27,8 @@ export default class TranscriptionOverlay extends React.Component {
 
 		this.sendButtonClickHandler = this.sendButtonClickHandler.bind(this);
 
+		this.randomButtonClickHandler = this.randomButtonClickHandler.bind(this);
+
 		this.state = {
 			visible: false,
 			informantNameInput: '',
@@ -38,23 +43,51 @@ export default class TranscriptionOverlay extends React.Component {
 			messageOnFailure: '',
 			currentImage: null,
 			transcriptionType: '',
+			random: false,
 		};
 
 		if (window.eventBus) {
 			//console.log('TranscriptionOverlay window.eventBus');
 			window.eventBus.addEventListener('overlay.transcribe', function(event) {
-				this.setState({
-					visible: true,
-					type: event.target.type,
-					title: event.target.title,
-					id: event.target.id,
-					archiveId: event.target.archiveId || null,
-					url: event.target.url,
-					images: event.target.images,
-					transcriptionType: event.target.transcriptionType,
-					imageIndex: 0
-				});
-				this.transcribeStart(event.target.id);
+				if(event.target.random){
+					fetch(`${config.apiUrl}random_document/?type=arkiv&recordtype=one_record&transcriptionstatus=readytotranscribe&mark_metadata=transcriptionstatus&categorytypes=tradark&publishstatus=published`)
+					.then(function(response) {
+						return response.json()
+					})
+					.then(function(json) {
+						const randomDocument = json.hits.hits[0]._source;
+						this.setState({
+							visible: true,
+							url: config.siteUrl+'#/records/'+randomDocument.id,
+							id: randomDocument.id,
+							archiveId: randomDocument.archive.archive_id,
+							title: randomDocument.title,
+							images: randomDocument.media,
+							transcriptionType: randomDocument.transcriptiontype,
+							imageIndex: 0,
+							placeString: getPlaceString(randomDocument.places),
+							random: true,
+						});
+						this.transcribeStart(randomDocument.id);
+					}.bind(this));
+				} else {
+					this.setState({
+						visible: true,
+						type: event.target.type,
+						title: event.target.title,
+						id: event.target.id,
+						archiveId: event.target.archiveId || null,
+						url: event.target.url,
+						images: event.target.images,
+						transcriptionType: event.target.transcriptionType,
+						imageIndex: 0,
+						placeString: event.target.placeString || null,
+						random: event.target.random,
+					}, function() {
+						this.transcribeStart(event.target.id);
+					}.bind(this));
+
+				}
 			}.bind(this));
 			window.eventBus.addEventListener('overlay.hide', function(event) {
 				this.setState({
@@ -65,8 +98,6 @@ export default class TranscriptionOverlay extends React.Component {
 	}
 
 	transcribeStart(recordid) {
-		//console.log(this.state);
-		//console.log('transcribeStart' + recordid);
 
 		var data = {
 			recordid: recordid,
@@ -152,6 +183,15 @@ export default class TranscriptionOverlay extends React.Component {
 		this.transcribeCancel();
 	}
 
+	randomButtonClickHandler() {
+		this.transcribeCancel();
+		if(window.eventBus) {
+			window.eventBus.dispatch('overlay.transcribe', {
+				random: true,
+			});
+		}
+	}
+
 	mediaImageClickHandler(event) {
 		this.setState({
 			imageIndex: event.currentTarget.dataset.index
@@ -186,16 +226,10 @@ export default class TranscriptionOverlay extends React.Component {
 				informantInformation: this.state.informantInformationInput,
 				message: this.state.messageInput,
 				messageComment: this.state.messageCommentInput,
-			}
-	/*			message: this.state.title+'\n'+
-					this.state.url+'\n\n'+
-					'Från: '+this.state.nameInput+' ('+this.state.emailInput+')\n\n'+
-					this.state.messageInput
-	*/		
+			};	
 
 			var formData = new FormData();
 			formData.append("json", JSON.stringify(data) );
-			// console.log('formData' + formData);
 
 			fetch(config.restApiUrl+'transcribe/', {
 				method: "POST",
@@ -210,8 +244,11 @@ export default class TranscriptionOverlay extends React.Component {
 						messageSent: true,
 						// Clear transcribe fields:
 						informantName: '',
+						informantNameInput: '',
 						informantBirthDate: '',
+						informantBirthDateInput: '',
 						informantBirthPlace: '',
+						informantBirthPlaceInput: '',
 						informantInformation: '',
 						title: '',
 						messageInput: '',
@@ -285,13 +322,18 @@ export default class TranscriptionOverlay extends React.Component {
 		let _props = this.props;
 
 		if (this.state.messageSent) {
-			var message = 'Tack för din avskrift som nu skickats till Institutet för språk och folkminnen. Efter granskning kommer den att publiceras i denna applikation.'
+			let message = 'Tack för din avskrift som nu skickats till Institutet för språk och folkminnen. Efter granskning kommer den att publiceras.'
 			if (this.state.messageOnFailure) {
 				message = this.state.messageOnFailure;
 			}
 			var overlayContent = <div>
 				<p>{l(message)}</p>
-				<p><br/><button className="button-primary" onClick={this.closeButtonClickHandler}>Stäng</button></p>
+				<p><br/>
+				<TranscribeButton className='button-primary' random={true} label={
+					this.state.random ? l('Skriv av en till slumpmässig uppteckning') : l('Skriv av en slumpmässigt utvald uppteckning')
+				} />
+				&nbsp;
+				<button className="button-primary" onClick={this.closeButtonClickHandler}>Stäng</button></p>
 			</div>;
 		}
 		else {
@@ -316,7 +358,8 @@ export default class TranscriptionOverlay extends React.Component {
 
 					<label htmlFor="transcription_comment" className="u-full-width margin-bottom-zero">{l('Kommentar till avskriften:')}</label>
 					<textarea id="transcription_comment" name="messageCommentInput" className="u-full-width margin-bottom-minimal" type="text" value={this.state.messageCommentInput} onChange={this.inputChangeHandler} />
-					<p>{l('Vill du att vi anger att det är du som har skrivit av uppteckningen? Ange i så fall ditt namn och din e-postadress nedan. Vi hanterar personuppgifter enligt dataskyddsförordningen. ')}<a href="https://www.isof.se/om-oss/behandling-av-personuppgifter.html" target={"_blank"}><strong>{l('Läs mer.')}</strong></a></p>
+					<p>{l('Vill du att vi anger att det är du som har skrivit av uppteckningen? Ange i så fall ditt namn och din e-postadress nedan. E-postadressen publiceras inte.')}
+					<br/>{l('Vi hanterar personuppgifter enligt dataskyddsförordningen. ')}<a href="https://www.isof.se/om-oss/behandling-av-personuppgifter.html" target={"_blank"}><strong>{l('Läs mer.')}</strong></a></p>
 
 					<label htmlFor="transcription_name">Ditt namn (frivilligt):</label>
 					<input id="transcription_name" autoComplete="name" name="nameInput" className="u-full-width" type="text" value={this.state.nameInput} onChange={this.inputChangeHandler} />
@@ -344,8 +387,19 @@ export default class TranscriptionOverlay extends React.Component {
 				<div className="overlay-header">
 					{l('Skriv av')} {this.state.title ? `"${this.state.title}"` : 'uppteckning'}
 					{ this.state.archiveId &&
-						<small>&nbsp;(ur {this.state.archiveId})</small>
+						<small>&nbsp;(ur {this.state.archiveId}{this.state.placeString ? ` ${this.state.placeString}` : ''})</small>
 						
+					}
+					{/* om detta är en slumpmässig uppteckning, visa en knapp som heter "skriv av annan slumpmässig uppteckning" */}
+					{ this.state.random && !this.state.messageSent &&
+						<div className={'next-random-record-button-container'}>
+							<TranscribeButton
+								label={l('Skriv av annan slumpmässig uppteckning')}
+								random={true}
+								onClick={this.randomButtonClickHandler}
+								className="button-primary next-random-record-button"
+							/>
+						</div>
 					}
 					<button title="stäng" className="close-button white" onClick={this.closeButtonClickHandler}></button>
 					{
@@ -355,7 +409,6 @@ export default class TranscriptionOverlay extends React.Component {
 					{
 						!config.siteOptions.hideContactButton &&
 						<ContributeInfoButton title={this.state.title} type="Uppteckning" {..._props}/>
-						//<ContributeInfoButton title={this.state.data.title} type="Sägen" />
 					}
 					{
 						!config.siteOptions.hideContactButton &&
