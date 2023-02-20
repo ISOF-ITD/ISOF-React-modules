@@ -250,9 +250,11 @@ export default class TranscriptionOverlay extends React.Component {
 						informantBirthPlace: '',
 						informantBirthPlaceInput: '',
 						informantInformation: '',
+						informantInformationInput: '',
 						title: '',
 						messageInput: '',
 						messageComment: '',
+						messageCommentInput: '',
 						messageOnFailure: json.message,
 					})
 				} else {
@@ -261,19 +263,6 @@ export default class TranscriptionOverlay extends React.Component {
 				}
 			}.bind(this));
 		}
-	}
-
-	UNSAFE_componentWillReceiveProps() {
-		this.setState({
-			messageSent: false,
-			informantNameInput: '',
-			informantBirthDateInput: '',
-			informantBirthPlaceInput: '',
-			informantInformationInput: '',
-			messageInput: '',
-			messageCommentInput: '',
-			messageOnFailure: '',
-		});
 	}
 
 	renderTranscribeForm() {
