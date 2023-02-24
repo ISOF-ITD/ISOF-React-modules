@@ -145,9 +145,9 @@ export default class TranscriptionOverlay extends React.Component {
 		}.bind(this));
 	}
 
-	transcribeCancel() {
+	transcribeCancel(keepOverlayVisible = false) {
 		this.setState({
-			visible: false,		
+			visible: keepOverlayVisible,
 			informantName: '',
 			informantBirthDate: '',
 			informantBirthPlace: '',
@@ -184,7 +184,7 @@ export default class TranscriptionOverlay extends React.Component {
 	}
 
 	randomButtonClickHandler() {
-		this.transcribeCancel();
+		this.transcribeCancel({ keepOverlayVisible: true });
 		if(window.eventBus) {
 			window.eventBus.dispatch('overlay.transcribe', {
 				random: true,
