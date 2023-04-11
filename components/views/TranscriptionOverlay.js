@@ -239,6 +239,10 @@ export default class TranscriptionOverlay extends React.Component {
 				return response.json()
 			}).then(function(json) {
 				if (json.success) {
+					// send signal to current view to re-mount
+					if(window.eventBus) {
+						window.eventBus.dispatch('overlay.transcribe.sent');
+					}
 					this.setState({
 						// Show thank you message:
 						messageSent: true,
