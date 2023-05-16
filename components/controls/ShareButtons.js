@@ -105,7 +105,11 @@ export default class RecordView extends React.Component {
 			</a> */}
             { !this.props.hideLink &&
                 <div>
-                    <a href={this.props.path} onClick={this.linkClickHandler}>
+                    <a onClick={this.linkClickHandler} style={
+						{
+							cursor: 'pointer',
+						}
+					}>
                         <FontAwesomeIcon icon={faCopy} />
                     </a>
                     &nbsp;
