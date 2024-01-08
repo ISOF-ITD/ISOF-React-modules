@@ -54,7 +54,7 @@ export default {
 		// Lantmäteriet topografisk karta SWEREF99
 		{
 			label: 'Lantmäteriet topografisk karta (SWEREF99)',
-			url: 'https://frigg.isof.se/sagendatabas/api/lm_proxy/{z}/{y}/{x}.png',
+			url: 'https://garm.isof.se/folkeservice/api/lm_proxy/{z}/{y}/{x}.png',
 			options: {
 				attribution: '&copy; <a href="https://www.lantmateriet.se/en/">Lantmäteriet</a> Topografisk Webbkarta Visning',
 				crossOrigin: true,
@@ -65,7 +65,7 @@ export default {
 		// It seems maxZoom="17": Can be set as prop to MapBase component
 		{
 			label: 'Lantmäteriet topografisk karta',
-			url: 'https://frigg.isof.se/sagendatabas/api/lm_epsg3857_proxy/{z}/{y}/{x}.png',
+			url: 'https://garm.isof.se/folkeservice/api/lm_epsg3857_proxy/{z}/{y}/{x}.png',
 			options: {
 				attribution: '&copy; <a href="https://www.lantmateriet.se/en/">Lantmäteriet</a> Topografisk Webbkarta Visning',
 				crossOrigin: true,
@@ -73,7 +73,7 @@ export default {
 		},
 		{
 			label: 'Lantmäteriet topografisk karta nedtonad',
-			url: 'https://frigg.isof.se/sagendatabas/api/lm_nedtonad_epsg3857_proxy/{z}/{y}/{x}.png',
+			url: 'https://garm.isof.se/folkeservice/api/lm_nedtonad_epsg3857_proxy/{z}/{y}/{x}.png',
 			options: {
 				attribution: '&copy; <a href="https://www.lantmateriet.se/en/">Lantmäteriet</a> Topografisk Webbkarta Visning',
 				crossOrigin: true,
@@ -147,7 +147,7 @@ export default {
 		{
 			isWms: true,
 			label: 'Lantmäteriet Ortofoto 1960',
-			url: 'https://frigg.isof.se/sagendatabas/api/lm_historto_proxy',
+			url: 'https://garm.isof.se/folkeservice/api/lm_historto_proxy',
 			layers: "OI.Histortho_60",
 			TILED: true,
 			TILESORIGIN: "-2238400, 5287200",
@@ -164,7 +164,7 @@ export default {
 		{
 			isWms: true,
 			label: 'Lantmäteriet Ortofoto',
-			url: 'https://frigg.isof.se/sagendatabas/api/lm_orto_proxy',
+			url: 'https://garm.isof.se/folkeservice/api/lm_orto_proxy',
 			layers: "Ortofoto_0.5,Ortofoto_0.4,Ortofoto_0.25,Ortofoto_0.16",
 			//layers: "Ortofoto_0.5%2COrtofoto_0.4%2COrtofoto_0.25%2COrtofoto_0.16",
 			TILED: true,
