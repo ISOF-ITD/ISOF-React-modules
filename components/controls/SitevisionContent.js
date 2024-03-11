@@ -66,11 +66,12 @@ export default class SitevisionContent extends React.Component {
 		if (mainElement) {
 			var htmlContent = mainElement.innerHTML;
 			//console.log(htmlContent);
-			htmlContent = htmlContent.replace('src="/images/','src="' + config.isofHomepageUrl + 'images/')
-			htmlContent = htmlContent.replace('srcset="/images/','srcset="' + config.isofHomepageUrl + 'images/')
-			htmlContent = htmlContent.replace(', /images/',', ' + config.isofHomepageUrl + 'images/')
-			// Extra replace as js string.replace removes first item only:
-			htmlContent = htmlContent.replace(', /images/',', ' + config.isofHomepageUrl + 'images/')
+			// htmlContent = htmlContent.replace('src="/images/','src="' + config.isofHomepageUrl + 'images/')
+			// htmlContent = htmlContent.replace('srcset="/images/','srcset="' + config.isofHomepageUrl + 'images/')
+			htmlContent = htmlContent.replaceAll('/images/', config.isofHomepageUrl + 'images/')
+			htmlContent = htmlContent.replace(/(["'])[^"']*?\/pdf\.png\1/g, '"https://matkult.se/sitevision/util/images/mime/pdf.png"');
+			// // Extra replace as js string.replace removes first item only:
+			// htmlContent = htmlContent.replace(', /images/',', ' + config.isofHomepageUrl + 'images/')
 			//console.log(htmlContent);
 			var scripts = mainElement.getElementsByTagName('script');
 
