@@ -2,6 +2,8 @@ import React from 'react';
 
 import config from './../../../scripts/config.js';
 
+import { getPlaceString } from './../utils/helpers.js';
+
 // Main CSS: /ui-components/feedback-buttons.less";
 export default class TranscribeButton extends React.Component {
 	constructor(props) {
@@ -12,17 +14,34 @@ export default class TranscribeButton extends React.Component {
 
 	transcribeButtonClick() {
 		if (window.eventBus) {
-			window.eventBus.dispatch('overlay.transcribe', {
-				url: config.siteUrl+'#records/'+this.props.recordId,
-				id: this.props.recordId,
-				title: this.props.title,
-				type: this.props.type,
-				images: this.props.images
-			});
+			if (this.props.random) {
+				window.eventBus.dispatch('overlay.transcribe', {
+					random: true,
+				});
+			}
+			else {
+				window.eventBus.dispatch('overlay.transcribe', {
+					url: config.siteUrl + '#/records/' + this.props.recordId,
+					id: this.props.recordId,
+					archiveId: this.props.archiveId,
+					title: this.props.title,
+					type: this.props.type,
+					images: this.props.images,
+					transcriptionType: this.props.transcriptionType,
+					placeString: getPlaceString(this.props.places),
+				});
+			}
+
 		}
 	}
 
 	render() {
-		return <button className={'transcribe-button'+this.props.className ? ' '+this.props.className : ''} onClick={this.transcribeButtonClick}>{this.props.label}</button>;
+		return <button 
+			className={'transcribe-button'+(this.props.className ? ' '+this.props.className : '')}
+			// run transcribeButtonClick if onClick is not defined in props
+			onClick={this.props.onClick || this.transcribeButtonClick}
+			>
+				{this.props.label}
+			</button>;
 	}
 }

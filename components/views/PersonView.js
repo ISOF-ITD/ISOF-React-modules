@@ -102,12 +102,12 @@ export default class PersonView extends React.Component {
 			}
 
 			return <tr key={index}>
-				<td data-title=""><a href={'#records/'+record.id}>{record.title ? record.title : l('(Utan titel)')}</a></td>
+				<td data-title=""><a href={'#/records/'+record.id}>{record.title ? record.title : l('(Utan titel)')}</a></td>
 				<td data-title={l('Kategori')+':'}>{record.taxonomy.name}</td>
 				<td data-title={l('Socken, Landskap')+':'}>
 					{
 						record.places &&
-						<a href={'#places/'+record.places[0].id+nordic}>{county}</a>
+						<a href={'#/places/'+record.places[0].id+nordic}>{county}</a>
 					}
 				</td>
 				<td data-title={l('Roll')+':'}>{record.relation == 'c' ? l('Upptecknare') : record.relation == 'i' ? l('Informant') : ''}</td>
@@ -130,7 +130,7 @@ export default class PersonView extends React.Component {
 							}
 							{
 								this.state.data.places && this.state.data.places.length > 0 &&
-								<a href={'#places/'+this.state.data.places[0].id+nordic}>{person_county}</a>
+								<a href={'#/places/'+this.state.data.places[0].id+nordic}>{person_county}</a>
 							}
 							</p>
 						</div>

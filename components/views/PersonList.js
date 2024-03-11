@@ -81,7 +81,7 @@ export default class PersonList extends React.Component {
 						(
 							config.siteOptions.disableInformantLinks == true && person.relation == 'i' ?
 							person.name :
-							<a href={'#person/'+person.id +(routeParams ? routeParams : '')}>{person.name ? person.name : ''}</a>
+							<a href={'#/person/'+person.id +(routeParams ? routeParams : '')}>{person.name ? person.name : ''}</a>
 						) :
 						person.name
 					}

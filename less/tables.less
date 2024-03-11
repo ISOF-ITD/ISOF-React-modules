@@ -36,7 +36,7 @@ table {
 			opacity: 0;
 		}
 
-		>.list-pagination {
+		>.list-pagination:last-child {
 			opacity: 0;
 		}
 	}
@@ -71,6 +71,10 @@ table {
 			&:hover {
 				text-decoration: underline;
 			}
+		}
+
+		button {
+			margin-left: 1rem;
 		}
 	}
 
@@ -153,7 +157,7 @@ table.table-responsive {
 			}
 			&:nth-child(2n)
 			{
-				background-color: #ccc;
+				background-color: #fff; // #ccc;
 			}
 
 			border-bottom: 1px solid #7e7e7e;

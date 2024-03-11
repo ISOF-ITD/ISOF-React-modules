@@ -3,6 +3,9 @@ import React from 'react';
 import config from './../../../scripts/config.js';
 import clipboard from './../../utils/clipboard';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCopy } from '@fortawesome/free-solid-svg-icons';
+
 // Main CSS: ui-components/share-buttons.less
 
 export default class RecordView extends React.Component {
@@ -10,6 +13,7 @@ export default class RecordView extends React.Component {
 		super(props);
 
 		this.linkClickHandler = this.linkClickHandler.bind(this);
+        this.handleCopyLinkClick = this.handleCopyLinkClick.bind(this);
 	}
 
 	componentDidMount() {
@@ -29,6 +33,14 @@ export default class RecordView extends React.Component {
 			}
 		}		
 	}
+
+    handleCopyLinkClick(event) {
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(event.target);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    }
 
 	initialize() {
 		if (this.initialized) {
@@ -77,21 +89,35 @@ export default class RecordView extends React.Component {
 	render() {
 		return <div className="share-buttons">
 			{
-				this.props.title && this.props.title != '' && 
+				this.props.title && this.props.title != '' &&
 				<div>
 					<label>{this.props.title}</label>
 					<div className="u-cf" />
 				</div>
 			}
-			<div className="fb-share-button" 
+			{/* <div className="fb-share-button" 
 				data-href={this.props.path} 
-				data-layout="button_count"></div>
+				data-layout="button_count">	
+			</div>
 			<a className="twitter-share-button"
-				href={'https://twitter.com/intent/tweet?text='+(this.props.text == undefined ? '' : this.props.text)+'&url='+this.props.path}><span style={{display: 'none'}}>Tweet</span></a>
-				{
-					!this.props.hideLink &&
-					<span><br/><a className="text-smaller" href={this.props.path} onClick={this.linkClickHandler}>{this.props.path}</a></span>
-				}
+				href={'https://twitter.com/intent/tweet?text='+(this.props.text == undefined ? '' : this.props.text)+'&url='+this.props.path}>
+					<span style={{display: 'none'}}>Tweet</span>
+			</a> */}
+            { !this.props.hideLink &&
+                <div>
+                    <a onClick={this.linkClickHandler} style={
+						{
+							cursor: 'pointer',
+						}
+					}>
+                        <FontAwesomeIcon icon={faCopy} />
+                    </a>
+                    &nbsp;
+                    <span className='copy-link' onClick={this.handleCopyLinkClick}>
+                        {this.props.path}
+                    </span>
+                </div>
+            }
 		</div>;
 	}
 }
