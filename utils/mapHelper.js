@@ -64,24 +64,22 @@ export default {
 		// Lantmäteriet topografisk karta epsg3857 WGS 84 
 		// It seems maxZoom="17": Can be set as prop to MapBase component
 
-		// ====== DRIFTSTÖRNINGAR LANTMÄTERIET 2025-10-10 ===
-		// {
-		// 	label: 'Lantmäteriet topografisk karta',
-		// 	url: 'https://garm.isof.se/folkeservice/api/lm_epsg3857_proxy/{z}/{y}/{x}.png',
-		// 	options: {
-		// 		attribution: '&copy; <a href="https://www.lantmateriet.se/en/">Lantmäteriet</a> Topografisk Webbkarta Visning',
-		// 		crossOrigin: true,
-		// 	}
-		// },
-		// {
-		// 	label: 'Lantmäteriet topografisk karta nedtonad',
-		// 	url: 'https://garm.isof.se/folkeservice/api/lm_nedtonad_epsg3857_proxy/{z}/{y}/{x}.png',
-		// 	options: {
-		// 		attribution: '&copy; <a href="https://www.lantmateriet.se/en/">Lantmäteriet</a> Topografisk Webbkarta Visning',
-		// 		crossOrigin: true,
-		// 	}
-		// },
-		// ==================================================
+		{
+			label: 'Lantmäteriet topografisk karta',
+			url: 'https://garm.isof.se/folkeservice/api/lm_epsg3857_proxy/{z}/{y}/{x}.png',
+			options: {
+				attribution: '&copy; <a href="https://www.lantmateriet.se/en/">Lantmäteriet</a> Topografisk Webbkarta Visning',
+				crossOrigin: true,
+			}
+		},
+		{
+			label: 'Lantmäteriet topografisk karta nedtonad',
+			url: 'https://garm.isof.se/folkeservice/api/lm_nedtonad_epsg3857_proxy/{z}/{y}/{x}.png',
+			options: {
+				attribution: '&copy; <a href="https://www.lantmateriet.se/en/">Lantmäteriet</a> Topografisk Webbkarta Visning',
+				crossOrigin: true,
+			}
+		},
 		{
 			label: 'Open Street Map Mapnik',
 			url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
