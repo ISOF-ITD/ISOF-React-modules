@@ -272,7 +272,12 @@ export default class RecordView extends React.Component {
 			}
 			// Annars visar vi texten som vanligt
 			else {
-				textElement = <p dangerouslySetInnerHTML={{__html: this.state.data.text}} />;
+				formatted_text = ""
+				if (this.state.data.text) {
+					var formatted_text = this.state.data.text.replaceAll("\r\n","<br>"); 
+				}
+				textElement = <p dangerouslySetInnerHTML={{__html: formatted_text}} />;
+				// textElement = <p dangerouslySetInnerHTML={{__html: this.state.data.text}} />;
 			}
 
 			// Förbereder kategori länk

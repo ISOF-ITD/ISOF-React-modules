@@ -34,7 +34,7 @@ export default class SitevisionContent extends React.Component {
 		return <div className="pdf-viewer">
 			{
 				this.state.url &&
-				<object data={this.props.url} width="100%" height={this.state.height} type="application/pdf">
+				<object data={this.props.url} key={this.props.url} width="100%" height={this.state.height} type="application/pdf">
 					<a href={this.props.url}>Öppna pdf</a>
 				</object>
 			}

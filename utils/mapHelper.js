@@ -63,6 +63,7 @@ export default {
 		*/
 		// Lantmäteriet topografisk karta epsg3857 WGS 84 
 		// It seems maxZoom="17": Can be set as prop to MapBase component
+
 		{
 			label: 'Lantmäteriet topografisk karta',
 			url: 'https://ull.isof.se/folkeservice/api/lm_epsg3857_proxy/{z}/{y}/{x}.png',
